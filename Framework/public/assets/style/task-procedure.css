@@ -1,0 +1,21 @@
+ul.task-procedure{
+	width: 100%;
+	display: block;
+	background-color: red;
+	text-align: center;
+	padding: 0px;
+}
+ul.task-procedure li{
+	text-align: center;
+	float: left;
+	list-style-type: none;
+	background-color: #ccc;
+	height: 100px;
+	line-height: 100px;
+}
+ul.first li.first,
+ul.second li.second,
+ul.third li.third{
+	color: #fff;
+	background-color: #369;
+}

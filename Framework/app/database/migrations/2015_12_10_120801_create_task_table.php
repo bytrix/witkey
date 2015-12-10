@@ -16,12 +16,12 @@ class CreateTaskTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id');
-			$table->string('task_title');
-			$table->text('task_detail');
+			$table->string('title');
+			$table->text('detail');
 			$table->integer('bidder_id');
-			$table->decimal('reward');
+			$table->decimal('amount');
 			$table->boolean('overdue');
-			$table->integer('expire');
+			$table->date('expire');
 			$table->timestamps();
 		});
 	}
@@ -33,7 +33,7 @@ class CreateTaskTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('task');
+		Schema::drop('Task');
 	}
 
 }

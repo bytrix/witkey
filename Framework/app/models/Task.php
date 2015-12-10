@@ -1,10 +1,10 @@
 <?php
 
-class Goods extends Eloquent {
+class Task extends Eloquent {
 
 	protected $table = 'Task';
 
-	public function User() {
+	public function user() {
 		return $this->belongsTo('User');
 	}
 	

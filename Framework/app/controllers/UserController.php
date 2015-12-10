@@ -17,10 +17,16 @@ class UserController extends BaseController {
 	}
 
 	public function dashboard() {
-		return View::make('user.dashboard');
+		return View::make('user.dashboard.profile');
 	}
 
+	public function mytask() {
+		return View::make('user.dashboard.mytask');
+	}
 
+	public function security() {
+		return View::make('user.dashboard.security');
+	}
 
 
 	// post
@@ -40,14 +46,11 @@ class UserController extends BaseController {
 			if(Auth::attempt($userInput)) {
 				return Redirect::to('dashboard');
 			} else {
-				// return Redirect::to('login')->with('message', 'email or password is incorrect!');
 				return View::make('user.login')->with('message', 'email or password is incorrect!');
-				// return Redirect::to('login')->withErrors($validator);
 			}
 		} else {
 			return Redirect::to('login')->withErrors($validator);
 		}
-		// return View::make('user.login');
 	}
 
 	public function postRegister() {

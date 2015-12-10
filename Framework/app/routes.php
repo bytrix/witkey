@@ -10,12 +10,23 @@
 |
 */
 Route::get('/', 'TaskController@index');
+Route::get('about', function() { return View::make('layout.about'); });
 Route::get('login', 'UserController@login');
 Route::get('logout', 'UserController@logout');
 Route::get('register', 'UserController@register');
-Route::get('dashboard', ['before'=>'auth', 'uses'=>'UserController@dashboard']);
+Route::get('task/list', 'TaskController@listTask');
+Route::get('task/{id}', 'TaskController@detail')->where('id', '[0-9]+');
 
-
+Route::group(['before'=>'auth'], function() {
+	Route::get('dashboard', 'UserController@dashboard');
+	Route::get('dashboard/profile', 'UserController@dashboard');
+	Route::get('dashboard/mytask', 'UserController@mytask');
+	Route::get('dashboard/security', 'UserController@security');
+	Route::get('task/new', 'TaskController@create');
+	Route::get('task/new/set-reward', 'TaskController@setReward');
+	Route::get('task/new/bill', 'TaskController@bill');
+	Route::get('task/new/postTask', 'TaskController@postTask');
+});
 
 Route::post('login', 'UserController@postLogin');
 Route::post('register', 'UserController@postRegister');
