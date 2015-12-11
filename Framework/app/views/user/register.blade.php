@@ -9,14 +9,34 @@
 
 			<h2 class="form-signin-heading">Registration</h2>
 
-			{{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}}
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="icon-envelope"></i></span>
+					{{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}}
+				</div>
+			</div>
 
-			{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control'])}}
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="icon-key"></i></span>
+					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control'])}}
+				</div>
+			</div>
 
-			{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control'])}}
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="icon-key"></i></span>
+					{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control'])}}
+				</div>
+			</div>
 
-			{{Form::submit('Register', ['class'=>'btn btn-lg btn-primary btn-block'])}}
+			<div class="form-group">
+				{{Form::submit('Register', ['class'=>'btn btn-lg btn-primary btn-block'])}}
+			</div>
 
+			<div class="form-group">
+				<a href="login">Register already?</a>
+			</div>
 		{{Form::close()}}
 
 

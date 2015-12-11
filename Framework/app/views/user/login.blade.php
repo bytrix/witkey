@@ -8,15 +8,38 @@
 		{{Form::open(['class'=>'form-signin'])}}
 		{{Form::token()}}
 			<h2 class="form-signin-heading">Please sign in</h2>
-			{{Form::text('email', '', ['placeholder'=>'email', 'class'=>'form-control'])}}
-			{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control'])}}
-			<div class="checkbox">
-				<label>
-					{{Form::checkbox('check', 'remember-me', false)}}
-					Remember me
-				</label>
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="icon-envelope"></i></span>
+					{{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}}
+				</div>
 			</div>
-			{{Form::submit('Sign in', ['class'=>'btn btn-lg btn-primary btn-block'])}}
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="icon-key"></i></span>
+					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control'])}}
+				</div>
+			</div>
+			
+			<div class="form-group form-inline">
+				<div class="checkbox">
+					<label>
+						{{Form::checkbox('check', 'remember-me', false)}}
+						Remember me
+					</label>
+				</div>
+				<a href="/" class="pull-right">Forget password</a>
+			</div>
+			
+			<div class="form-group">
+				{{Form::submit('Sign in', ['class'=>'btn btn-lg btn-primary btn-block'])}}
+			</div>
+
+			<div class="form-group">
+				<a href="register">Register for new account</a>
+			</div>
 		{{Form::close()}}
 
 

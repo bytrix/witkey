@@ -16,7 +16,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'User';
 
-	public function Task() {
+	public function task() {
 		return $this->hasMany('Task');
 	}
 

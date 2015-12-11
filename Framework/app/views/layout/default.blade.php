@@ -6,15 +6,20 @@
 	<title>Campus Witkey</title>
 	<link rel="stylesheet" href="">
   {{HTML::style('assets/style/bootstrap.min.css')}}
+  {{HTML::style('assets/style/font-awesome.min.css')}}
   @yield('procedure-style')
 
   {{HTML::script('assets/script/jquery-1.11.3.min.js')}}
   {{HTML::script('assets/script/bootstrap.min.js')}}
+  {{HTML::script('assets/script/bootstrap.file-input.js')}}
 
   <style>
   body {
     min-height: 2000px;
     padding-top: 70px;
+  }
+  .panel-group{
+    margin-bottom: 40px;
   }
   </style>
   @yield('style')
@@ -36,24 +41,7 @@
         <div id="navbar" class="navbar-collapse collapse">
 
           @yield('menu')
-
-{{-- 
-          @section('menu')
-            <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Task Center <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/task/new">Publish Task</a></li>
-                <li><a href="/task/list">Task List</a></li>
-              </ul>
-            </li>
-            </ul>
-          @stop
- --}}
-
+          
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
               <li><a href="/dashboard">Dashboard ( <strong>{{Auth::user()->email}}</strong> )</a></li>
