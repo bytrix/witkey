@@ -15,16 +15,51 @@ class TaskController extends BaseController {
 
 	// 2. SET A REWARD AMOUNT FOR YOUR TASK
 	public function setReward() {
-		Session::set('title', Input::get('title'));
-		Session::set('detail', Input::get('detail'));
-		return View::make('task.publish.set-reward');
+		$userInput = [
+			'title'=>Input::get('title'),
+			'detail'=>Input::get('detail')
+		];
+		$rules = [
+			'title'=>'required',
+			'detail'=>'required'
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			Session::set('title', Input::get('title'));
+			Session::set('detail', Input::get('detail'));
+			return View::make('task.publish.set-reward');
+		} else {
+			return Redirect::to('/task/new')->withErrors($validator);
+		}
 	}
 
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function bill() {
-		Session::set('amount', Input::get('amount'));
-		Session::set('expire', Input::get('date'));
-		return View::make('task.publish.bill');
+
+		Validator::extend('positive', function($attribute, $value, $parameters) {
+			// dd($value);
+			if ($value <= 0) {
+				return false;
+			} else {
+				return true;
+			}
+		},"This amount field need to be positive");
+		$userInput = [
+			'amount'=>Input::get('amount'),
+			'expire'=>Input::get('date')
+		];
+		$rules = [
+			'amount'=>'required|numeric|positive',
+			'expire'=>'required|date'
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			Session::set('amount', Input::get('amount'));
+			Session::set('expire', Input::get('date'));
+			return View::make('task.publish.bill');
+		} else {
+			return Redirect::back()->withErrors($validator);
+		}
 	}
 
 	public function postTask() {

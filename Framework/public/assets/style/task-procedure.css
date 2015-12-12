@@ -9,7 +9,7 @@ ul.task-procedure li{
 	text-align: center;
 	float: left;
 	list-style-type: none;
-	background-color: #ccc;
+	background-color: #eee;
 	height: 100px;
 	line-height: 100px;
 }
@@ -17,5 +17,5 @@ ul.first li.first,
 ul.second li.second,
 ul.third li.third{
 	color: #fff;
-	background-color: #369;
+	background-color: #337ab7;
 }

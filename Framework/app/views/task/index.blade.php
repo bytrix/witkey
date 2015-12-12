@@ -1,5 +1,8 @@
 @extends('layout.home')
 
+
+
+
 @section('content')
 
     <div class="container">

@@ -6,7 +6,7 @@
   	<li class="active"><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/mytask">My Task</a></li>
-    <li><a href="/dashboard/certification">Real-name Certification</a></li>
+    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
 </div>
@@ -16,12 +16,30 @@
 
 	<div class="row clearfix panel-group">
 		<h1 class="page-header">Overview</h1>
-		<div class="col-md-8">
-			<div class="avartar">
-				<img src="http://www.qqzhuangban.com/uploadfile/2014/06/1/20140619102309896.jpg" alt="">
+
+
+
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="alert alert-dismissable alert-info">
+					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						We use Gravartar as our avartar service, go <a href="https://cn.gravatar.com/" target="blank"><strong>here</strong></a> to register a gravartar account.
+				</div>
 			</div>
+		</div>
+
+
+
+		<div class="col-md-8">
+			<div class="avartar thumbnail">
+				<img src="{{$gravartar_path}}" class="img-rounded">
+			</div>
+
 			<div class="greeting">
-				<h1>Morning, {{Auth::user()->username}}!</h1>
+				<h1>{{$greeting}}, {{Auth::user()->username}}!</h1>
+				<span>
+					<img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}">
+				</span>
 				<p>Joined on {{explode(' ', Auth::user()->created_at)[0]}}</p>
 			</div>
 		</div>
@@ -74,7 +92,7 @@
 								<div class="alert alert-danger">
 									No task published recently!
 									<br>
-									<a href="task/new">Publish Now?</a>
+									<a href="task/new" class="alert-link">Publish Now?</a>
 								</div>
 							@endif
 						</div>
@@ -104,7 +122,7 @@
 								<div class="alert alert-danger">
 									No task done or doing recently!
 									<br>
-									<a href="task/list">Do Now?</a>
+									<a href="task/list" class="alert-link">Do Now?</a>
 								</div>
 							@endif
 						</div>

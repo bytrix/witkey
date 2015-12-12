@@ -4,7 +4,7 @@
   {{HTML::style('assets/style/dashboard.css')}}
   <style>
   	.avartar>img{
-  		width: 180px;
+  		width: 120px;
   	}
   	.avartar{
   		/*background-color: blue;*/
@@ -16,6 +16,7 @@
   	}
     .idcard_image{
       width: 300px;
+      height: 200px;
     }
   </style>
 @stop

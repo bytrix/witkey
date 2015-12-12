@@ -44,8 +44,8 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard">Dashboard ( <strong>{{Auth::user()->email}}</strong> )</a></li>
-              <li><a href="/logout">Logout</a></li>
+              <li><a href="/dashboard"><i class="icon-envelope"></i> <strong>{{Auth::user()->email}}</strong></a></li>
+              <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
             @else
               <li><a href="/login">Login</a></li>
               <li><a href="/register">Register</a></li>

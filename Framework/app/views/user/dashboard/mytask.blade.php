@@ -6,7 +6,7 @@
   	<li><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
     <li class="active"><a href="/dashboard/mytask">My Task</a></li>
-    <li><a href="/dashboard/certification">Real-name Certification</a></li>
+    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
 </div>
@@ -40,7 +40,7 @@
 		<div class="alert alert-danger">
 			No task published recently!
 			<br>
-			<a href="task/new">Publish Now?</a>
+			<a href="/task/new" class="alert-link">Publish Now?</a>
 		</div>
 	@endif
 

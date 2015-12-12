@@ -28,7 +28,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('dashboard', 'UserController@overview');
 	Route::get('dashboard/profile', 'UserController@profile');
 	Route::get('dashboard/mytask', 'UserController@mytask');
-	Route::get('dashboard/certification', 'UserController@certification');
+	Route::get('dashboard/authentication', 'UserController@authentication');
 	Route::get('dashboard/security', 'UserController@security');
 	Route::get('task/new', 'TaskController@create');
 	Route::get('task/new/set-reward', 'TaskController@setReward');
@@ -36,5 +36,5 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/new/postTask', 'TaskController@postTask');
 	// POST
 	Route::post('dashboard/security', 'UserController@postSecurity');
-	Route::post('dashboard/certification', 'UserController@postCertification');
+	Route::post('dashboard/authentication', 'UserController@postAuthentication');
 });

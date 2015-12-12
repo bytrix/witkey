@@ -28,15 +28,31 @@
 
 
 		{{Form::open(['url'=>'/task/new/bill', 'method'=>'get'])}}
-			<div class="input-group">
-				<div class="input-group-addon">&yen;</div>
-				{{Form::text('amount', '', ['placeholder'=>'Amount', 'class'=>'form-control'])}}
+
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">&yen;</div>
+					{{Form::text('amount', '', ['placeholder'=>'Amount', 'class'=>'form-control'])}}
+				</div>
 			</div>
 
-			<input class="form-control" type="date" name="date" value="{{date('Y-m-d')}}" placeholder="">
+			<div class="form-group">
+				<input class="form-control" type="date" name="date" value="{{date('Y-m-d')}}" placeholder="">
+			</div>
 
-			{{Form::submit('Continue', ['class'=>'btn btn-primary'])}}
+			<div class="form-group">
+				{{Form::submit('Continue', ['class'=>'btn btn-primary'])}}
+			</div>
+
 		{{Form::close()}}
+
+		@if (count($errors->all()))
+			<div class="alert alert-danger">
+				@foreach ($errors->all() as $error)
+					<p>{{$error}}</p>
+				@endforeach
+			</div>
+		@endif
 
 	</div>
 @stop
