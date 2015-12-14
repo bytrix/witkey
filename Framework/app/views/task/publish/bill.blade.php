@@ -18,6 +18,6 @@
 			<br>
 			{{Session::get('detail')}}
 		</p>
-		{{HTML::link('task/new/postTask', 'Publish', ['class'=>'btn btn-primary'])}}
+		{{HTML::link('demand/new/postDemand', 'Publish', ['class'=>'btn btn-primary'])}}
 	</div>
 @stop

@@ -27,7 +27,7 @@
 
 
 
-		{{Form::open(['url'=>'/task/new/bill', 'method'=>'get'])}}
+		{{Form::open(['url'=>'/demand/new/bill', 'method'=>'get'])}}
 
 			<div class="form-group">
 				<div class="input-group">

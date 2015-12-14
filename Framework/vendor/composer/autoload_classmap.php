@@ -28,6 +28,7 @@ return array(
     'ClassPreloader\\Parser\\DirVisitor' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/DirVisitor.php',
     'ClassPreloader\\Parser\\FileVisitor' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/FileVisitor.php',
     'ClassPreloader\\Parser\\NodeTraverser' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/NodeTraverser.php',
+    'CreateTaskBidder' => $baseDir . '/app/database/migrations/2015_12_13_222013_create_task_bidder.php',
     'CreateTaskTable' => $baseDir . '/app/database/migrations/2015_12_10_120801_create_task_table.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2015_12_10_120718_create_user_table.php',
     'Crypt_AES' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/AES.php',

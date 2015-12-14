@@ -1,6 +1,19 @@
 @extends('layout.home')
 
-
+@section('style')
+<style>
+  .category-block{
+    background-color: #ccc;
+    width: 300px;
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+    font-size: 20px;
+    margin: 20px;
+    margin-left: 20px;
+  }
+</style>
+@stop
 
 
 @section('content')
@@ -10,11 +23,49 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Campus Witkey</h1>
-        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>To see the difference between static and fixed top navbars, just scroll.</p>
+        <p>Enjoy school life.</p>
+
         <p>
-          <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+          <a class="btn btn-lg btn-primary" href="/" role="button">Explore &raquo;</a>
         </p>
+      </div>
+
+
+
+      <div class="col-sm-4">
+        <div class="category-block">
+          Study guide
+        </div>
+        <div class="category-block">
+          Buy breakfast
+        </div>
+        <div class="category-block">
+          Express delivery
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="category-block">
+          Computer maintenance
+        </div>
+        <div class="category-block">
+          Hiring
+        </div>
+        <div class="category-block">
+          Boon for student
+        </div> 
+      </div>
+
+      <div class="col-sm-4">
+        <div class="category-block">
+          Part-time job
+        </div>
+        <div class="category-block">
+          Gaming
+        </div> 
+        <div class="category-block">
+          Others
+        </div>  
       </div>
 
     </div> <!-- /container -->

@@ -1,3 +1,8 @@
+
+
+
+
+
 @extends('user.dashboard.dashboard')
 
 @section('control-panel')
@@ -5,7 +10,7 @@
   <ul class="nav nav-sidebar">
   	<li class="active"><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/mytask">My Task</a></li>
+    <li><a href="/dashboard/myDemands">My Task</a></li>
     <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
@@ -23,7 +28,7 @@
 			<div class="col-md-12 column">
 				<div class="alert alert-dismissable alert-info">
 					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						We use Gravartar as our avartar service, go <a href="https://cn.gravatar.com/" target="blank"><strong>here</strong></a> to register a gravartar account.
+						We use Gravatar as our avatar service, go <a href="https://cn.gravatar.com/" target="blank"><strong>here</strong></a> to register a gravatar account.
 				</div>
 			</div>
 		</div>
@@ -31,8 +36,8 @@
 
 
 		<div class="col-md-8">
-			<div class="avartar thumbnail">
-				<img src="{{$gravartar_path}}" class="img-rounded">
+			<div class="avatar-md thumbnail">
+				<img src="{{$gravatar_path}}" class="img-rounded">
 			</div>
 
 			<div class="greeting">
@@ -59,15 +64,27 @@
 				<div class="tabbable" id="tabs-613887">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							 <a href="#panel-463291" data-toggle="tab">Task published</a>
+							 <a href="#panel-463291" data-toggle="tab">Demand published</a>
 						</li>
 						<li>
 							 <a href="#panel-239884" data-toggle="tab">Task done/doing</a>
 						</li>
 					</ul>
+
+{{-- 
+@foreach (Auth::user()->demands as $demand)
+	<p>
+		{{$demand->title}}
+		{{$demand->created_at}}
+	</p>
+@endforeach
+ --}}
+
+
 					<div class="tab-content">
 						<div class="tab-pane active" id="panel-463291">
-							@if (count(Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()))
+							{{-- @if (count(Auth::user()->tasks->->orderBy('created_at', 'desc')->get())) --}}
+							@if (count(Auth::user()->demands->all()))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -78,26 +95,31 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach (Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $task)
+										{{-- @foreach (Auth::user()->demands->orderBy('created_at', 'desc')->get() as $demand) --}}
+										@foreach (Auth::user()->demands->all() as $demand)
 										<tr>
-											<th>{{$task->id}}</th>
-											<td>{{$task->title}}</td>
-											<td align="right">&yen; {{$task->amount}}</td>
-											<td>{{$task->created_at}}</td>
+											<th>{{$demand->id}}</th>
+											<td>{{$demand->title}}</td>
+											<td align="right">&yen; {{$demand->amount}}</td>
+											<td>{{$demand->created_at}}</td>
 										</tr>
 										@endforeach
 									</tbody>
 								</table>
 							@else
 								<div class="alert alert-danger">
-									No task published recently!
+									No demand published recently!
 									<br>
-									<a href="task/new" class="alert-link">Publish Now?</a>
+									<a href="demand/new" class="alert-link">Publish Now?</a>
 								</div>
 							@endif
 						</div>
+
+
+
+
 						<div class="tab-pane" id="panel-239884">
-							@if (count(Task::where('bidder_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()))
+							@if (count(Auth::user()->tasks->all()))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -108,7 +130,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach (Task::where('bidder_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $task)
+										@foreach (Auth::user()->tasks->all() as $task)
 										<tr>
 											<th>{{$task->id}}</th>
 											<td>{{$task->title}}</td>
@@ -126,6 +148,10 @@
 								</div>
 							@endif
 						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>

@@ -5,7 +5,7 @@
   <ul class="nav nav-sidebar">
   	<li><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/mytask">My Task</a></li>
+    <li><a href="/dashboard/myDemands">My Task</a></li>
     <li class="active"><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
@@ -61,11 +61,18 @@
 			</div>
 		</div>
 
-		{{-- Identify Card --}}
+		{{-- Browse Button --}}
 		<div class="form-group">
 			{{Form::label('identify_card', 'Identify Card Image', ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{Form::file('idcard_image', ['class'=>'btn btn-primary'])}}
+			</div>
+		</div>
+
+		{{-- Identify Card --}}
+		<div class="form-group">
+			<span class="col-sm-2"></span>
+			<div class="col-sm-4">
 				@if (Auth::user()->identity_card)
 					{{HTML::image(URL::asset('upload/' . md5(Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
 				@else

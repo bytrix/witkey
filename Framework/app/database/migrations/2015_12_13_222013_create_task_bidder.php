@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskTable extends Migration {
+class CreateTaskBidder extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,12 @@ class CreateTaskTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('Task', function(Blueprint $table)
+		Schema::create('Task_Bidder', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('user_id');
-			$table->string('title');
-			$table->text('detail');
-			$table->integer('winning_bidder_id');
-			$table->decimal('amount');
-			$table->boolean('overdue');
-			$table->date('expire');
 			$table->timestamps();
+			$table->integer('task_id');
+			$table->integer('bidder_id');
 		});
 	}
 
@@ -33,7 +28,7 @@ class CreateTaskTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('Task');
+		Schema::drop('Task_Bidder');
 	}
 
 }

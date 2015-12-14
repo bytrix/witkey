@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="">
   {{HTML::style('assets/style/bootstrap.min.css')}}
   {{HTML::style('assets/style/font-awesome.min.css')}}
+  {{HTML::style('assets/style/main.css')}}
   @yield('procedure-style')
 
   {{HTML::script('assets/script/jquery-1.11.3.min.js')}}
@@ -21,6 +22,23 @@
   .panel-group{
     margin-bottom: 40px;
   }
+
+  .avatar-sm{
+    float: left;
+    width: 40px;
+    margin-right: 12px;
+    margin-bottom: 4px;
+  }
+  .avatar-md{
+    float: left;
+    width: 130px;
+    margin-right: 20px;
+  }
+  .avatar-lg{
+    float: left;
+    margin-right: 20px;
+  }
+
   </style>
   @yield('style')
 </head>

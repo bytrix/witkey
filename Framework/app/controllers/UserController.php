@@ -3,7 +3,7 @@
 class UserController extends BaseController {
 
 
-	function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
+	public static function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
 		$url = 'http://www.gravatar.com/avatar/';
 		$url .= md5( strtolower( trim( $email ) ) );
 		$url .= "?s=$s&d=$d&r=$r";
@@ -56,7 +56,7 @@ class UserController extends BaseController {
 		// dd($this->get_gravatar('wengzhijie@126.com'));
 
 
-		return View::make('user.dashboard.overview')->with('greeting', $greeting)->with('gravartar_path', $this->get_gravatar(Auth::user()->email));
+		return View::make('user.dashboard.overview')->with('greeting', $greeting)->with('gravatar_path', $this->get_gravatar(Auth::user()->email));
 	}
 
 	public function profile() {
@@ -64,8 +64,8 @@ class UserController extends BaseController {
 	}
 
 
-	public function mytask() {
-		return View::make('user.dashboard.mytask');
+	public function myDemands() {
+		return View::make('user.dashboard.myDemands');
 	}
 
 	public function authentication() {

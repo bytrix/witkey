@@ -27,14 +27,15 @@ Route::group(['before'=>'auth'], function() {
 	// GET
 	Route::get('dashboard', 'UserController@overview');
 	Route::get('dashboard/profile', 'UserController@profile');
-	Route::get('dashboard/mytask', 'UserController@mytask');
+	Route::get('dashboard/myDemands', 'UserController@myDemands');
 	Route::get('dashboard/authentication', 'UserController@authentication');
 	Route::get('dashboard/security', 'UserController@security');
-	Route::get('task/new', 'TaskController@create');
-	Route::get('task/new/set-reward', 'TaskController@setReward');
-	Route::get('task/new/bill', 'TaskController@bill');
-	Route::get('task/new/postTask', 'TaskController@postTask');
+	Route::get('demand/new', 'TaskController@create');
+	Route::get('demand/new/set-reward', 'TaskController@setReward');
+	Route::get('demand/new/bill', 'TaskController@bill');
+	Route::get('demand/new/postDemand', 'TaskController@postDemand');
 	// POST
 	Route::post('dashboard/security', 'UserController@postSecurity');
 	Route::post('dashboard/authentication', 'UserController@postAuthentication');
+	Route::post('task/{id}/enrollment', 'TaskController@enrollment')->where('id', '[0-9]+');
 });

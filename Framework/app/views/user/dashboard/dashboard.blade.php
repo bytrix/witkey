@@ -6,11 +6,6 @@
   	.avartar>img{
   		width: 120px;
   	}
-  	.avartar{
-  		/*background-color: blue;*/
-  		float: left;
-  		margin-right: 20px;
-  	}
   	.greeting{
   		/*background-color: red;*/
   	}

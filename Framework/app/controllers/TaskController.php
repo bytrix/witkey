@@ -6,14 +6,14 @@ class TaskController extends BaseController {
 	}
 
 	/*
-	* TASK PUBLISHMENT IN 3 STEPS
+	* DEMAND PUBLISHMENT IN 3 STEPS
 	*/
-	// 1. CREATE A TASK WITH TITLE AND DETAIL
+	// 1. CREATE A DEMAND WITH TITLE AND DETAIL
 	public function create() {
 		return View::make('task.publish.create');
 	}
 
-	// 2. SET A REWARD AMOUNT FOR YOUR TASK
+	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function setReward() {
 		$userInput = [
 			'title'=>Input::get('title'),
@@ -29,7 +29,7 @@ class TaskController extends BaseController {
 			Session::set('detail', Input::get('detail'));
 			return View::make('task.publish.set-reward');
 		} else {
-			return Redirect::to('/task/new')->withErrors($validator);
+			return Redirect::to('/demand/new')->withErrors($validator);
 		}
 	}
 
@@ -62,7 +62,7 @@ class TaskController extends BaseController {
 		}
 	}
 
-	public function postTask() {
+	public function postDemand() {
 		$task = new Task;
 		$task->user_id = Auth::user()->id;
 		$task->title = Session::get('title');
@@ -80,7 +80,30 @@ class TaskController extends BaseController {
 
 	public function detail($id) {
 		$task = Task::where('id', $id)->first();
-		return View::make('task.detail')->with('task', $task);
+		return View::make('task.detail')->with('id', $id)->with('task', $task);
+	}
+
+
+	public function enrollment($id) {
+		$whetherEnroll = Auth::user()->whetherEnroll($id);
+		if (!$whetherEnroll) {
+			$task_bidder = new TaskBidder;
+			$task_bidder->task_id = $id;
+			$task_bidder->bidder_id = Auth::user()->id;
+			$task_bidder->save();
+		}
+		return Redirect::to("/task/$id");
+	}
+
+	public function quit($id) {
+		$whetherEnroll = Auth::user()->whetherEnroll($id);
+		if ($whetherEnroll) {
+			$task_bidder = new TaskBidder;
+			$task_bidder->task_id = $id;
+			$task_bidder->bidder_id = Auth::user()->id;
+			$task_bidder->save();
+		}
+		return Redirect::to("/task/$id");
 	}
 
 }
