@@ -35,7 +35,7 @@
 
 			<div class="col-sm-6">
 				<h4><strong>School location:</strong> {{$task->user->school}}</h4>
-				<h4><strong>Date Published:</strong> {{explode(' ', $task->created_at)[0]}}</h4>
+				<h4><strong>Expiration:</strong> {{explode(' ', $task->expire)[0]}}</h4>
 				<p></p>
 			</div>
 
@@ -107,8 +107,25 @@
 				</span>
 				<p>Joined on {{explode(' ', $task->user->created_at)[0]}}</p>
 
+				@if (strlen($task->user->tel))
+					@if (Auth::check())
+						@if (Auth::user()->whetherEnroll($id) || ($task->user_id == Auth::user()->id))
+							<p><i class="icon-phone"></i> {{$task->user->tel}}</p>
+						@else
+							<p><i class="icon-phone"></i> {{$task->user->asteriskTel()}}</p>
+						@endif
+					@endif
+				@endif
 
-				<p><i class="icon-phone"></i> {{$task->user->tel}}</p>
+				@if (strlen($task->user->dorm))
+					@if (Auth::check())
+						@if (Auth::user()->whetherEnroll($id) || ($task->user_id == Auth::user()->id))
+							<p><i class="icon-map-marker"></i> {{$task->user->dorm}}</p>
+						@else
+							<p><i class="icon-map-marker"></i> {{$task->user->asteriskDorm()}}</p>
+						@endif
+					@endif
+				@endif
 
 
 

@@ -24,7 +24,7 @@ class CreateUserTable extends Migration {
 			$table->string('dorm')->nullable();
 			$table->string('ip');
 			$table->integer('credit')->default(2000);
-			$table->decimal('balance');
+			$table->decimal('balance')->default(10);
 			$table->boolean('active')->default(true);
 			$table->string('remember_token');
 			$table->string('real_name')->nullable();
@@ -42,6 +42,7 @@ class CreateUserTable extends Migration {
 			*/
 			$table->tinyInteger('authenticated')->default(0);
 			$table->string('city')->nullable();
+			$table->string('fingerprint')->nullable();
 			$table->timestamps();
 		});
 	}

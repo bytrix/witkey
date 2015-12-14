@@ -10,17 +10,19 @@
 		</ul>
 	</div>
 	<div class="container">
-		<h1>Publish you demand</h1>
-		{{Form::open(['url'=>'demand/new/set-reward', 'method'=>'get', 'class'=>'form-custom'])}}
-		{{Form::token()}}
+		<h1 class="page-header">Publish you demand</h1>
+		{{Form::open(['url'=>'demand/new/set-reward', 'method'=>'post', 'class'=>'form-custom'])}}
 			<div class="form-group">
-				{{Form::text('title', '', ['placeholder'=>'Title', 'class'=>'form-control'])}}
+				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
+				{{Form::text('title', Session::get('title'), ['placeholder'=>'Title', 'class'=>'form-control'])}}
 			</div>
 			<div class="form-group">
-				{{Form::textarea('detail', '', ['placeholder'=>'Detail', 'class'=>'form-control'])}}
+				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
+				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control'])}}
 			</div>
 			<div class="form-group">
-				{{Form::submit('Continue', ['class'=>'btn btn-primary'])}}
+				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
+				{{-- {{HTML::link('demand/new/set-reward', 'Next', ['class'=>'btn btn-primary'])}} --}}
 			</div>
 		{{Form::close()}}
 

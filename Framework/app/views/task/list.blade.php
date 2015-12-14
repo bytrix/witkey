@@ -20,20 +20,25 @@
 
 @section('style')
 <style>
-.created_at{
-	margin-left: 8px;
+.metadata,
+.metadata a{
 	color: #888;
+	text-decoration: none;
+}
+.metadata a:hover{
+	color: #666;
+}
+.metadata .property{
+	margin-left: 10px;
 }
 .item-inline{
 	display: inline-block;
 }
 .amount{
-	/*color: yellow;*/
-	/*background-color: red;*/
 	font-size: 16px;
 	margin-bottom: 5px;
 }
-.list-group a{
+.list-group-item-heading>a{
 	color: #000;
 }
 </style>
@@ -59,9 +64,11 @@
 								<span class="amount badge">&yen; {{$task->amount}}</span>
 								<a href="/task/{{$task->id}}">{{$task->title}}</a>
 							</h4>
-								<span class="created_at">
-									<i class="icon-user"></i> {{$task->user->username}}
-									<i class="icon-calendar"></i> {{explode(' ', $task->created_at)[0]}}
+								<span class="metadata">
+									<a href="/user/{{$task->user->id}}" class="property">
+										<i class="icon-user"></i> {{$task->user->username}}
+									</a>
+									<i class="icon-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
 								</span>
 							
 						</div>

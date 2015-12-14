@@ -21,7 +21,7 @@ class CreateTaskTable extends Migration {
 			$table->integer('winning_bidder_id');
 			$table->decimal('amount');
 			$table->boolean('overdue');
-			$table->date('expire');
+			$table->date('expiration');
 			$table->timestamps();
 		});
 	}

@@ -15,6 +15,7 @@ Route::get('about', function() { return View::make('layout.about'); });
 Route::get('login', 'UserController@login');
 Route::get('logout', 'UserController@logout');
 Route::get('register', 'UserController@register');
+Route::get('user/{id}', 'UserController@mxp')->where('id', '[0-9]+');
 Route::get('task/list', 'TaskController@listTask');
 Route::get('task/{id}', 'TaskController@detail')->where('id', '[0-9]+');
 
@@ -38,4 +39,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('dashboard/security', 'UserController@postSecurity');
 	Route::post('dashboard/authentication', 'UserController@postAuthentication');
 	Route::post('task/{id}/enrollment', 'TaskController@enrollment')->where('id', '[0-9]+');
+	Route::post('task/{id}/quit', 'TaskController@quit')->where('id', '[0-9]+');
+	Route::post('demand/new/set-reward', 'TaskController@setReward');
+	Route::post('demand/new/bill', 'TaskController@bill');
 });

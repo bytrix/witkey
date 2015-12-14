@@ -10,14 +10,22 @@
 	</div>
 	<div class="container">
 
-		<h1>success</h1>
-		<p><h2>{{Session::get('title')}}</h2></p>
-		<p>Reward: &yen;{{Session::get('amount')}}</p>
-		<p>
-			<span>Task description: </span>
-			<br>
-			{{Session::get('detail')}}
-		</p>
-		{{HTML::link('demand/new/postDemand', 'Publish', ['class'=>'btn btn-primary'])}}
+		<h1 class="page-header">Success</h1>
+
+
+		<div class="form-custom">
+
+			<p><h2>{{Session::get('title')}}</h2></p>
+			<p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p>
+			<p>
+				<strong>Task description: </strong>
+				<br>
+				{{Session::get('detail')}}
+			</p>
+
+			{{HTML::link('demand/new/set-reward', 'Previous', ['class'=>'btn btn-default'])}}
+			{{HTML::link('demand/new/postDemand', 'Publish', ['class'=>'btn btn-primary'])}}
+
+		</div>
 	</div>
 @stop

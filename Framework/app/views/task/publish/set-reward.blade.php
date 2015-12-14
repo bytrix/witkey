@@ -9,7 +9,7 @@
 		</ul>
 	</div>
 	<div class="container">
-		<h1>Set your reward</h1>
+		<h1 class="page-header">Set your reward</h1>
 
 
 {{-- 
@@ -27,21 +27,27 @@
 
 
 
-		{{Form::open(['url'=>'/demand/new/bill', 'method'=>'get'])}}
+		{{Form::open(['url'=>'/demand/new/bill', 'method'=>'post', 'class'=>'form-custom'])}}
 
 			<div class="form-group">
+				{{Form::label('amount', 'Amount:', ['class'=>'control-label'])}}
 				<div class="input-group">
 					<div class="input-group-addon">&yen;</div>
-					{{Form::text('amount', '', ['placeholder'=>'Amount', 'class'=>'form-control'])}}
+					{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control'])}}
 				</div>
 			</div>
 
 			<div class="form-group">
-				<input class="form-control" type="date" name="date" value="{{date('Y-m-d')}}" placeholder="">
+				{{Form::label('date', 'When you wish task to be done:', ['class'=>'control-label'])}}
+
+				<input class="form-control" type="date" name="expire" value="{{date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+7, date('Y')))}}" placeholder="">
 			</div>
 
 			<div class="form-group">
-				{{Form::submit('Continue', ['class'=>'btn btn-primary'])}}
+				<a href="/demand/new" class="btn btn-default">Previous</a>
+				{{-- <a href="/demand/new/bill" class="btn btn-primary">Next</a> --}}
+				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
+				
 			</div>
 
 		{{Form::close()}}

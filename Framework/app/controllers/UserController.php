@@ -4,7 +4,7 @@ class UserController extends BaseController {
 
 
 	public static function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
-		$url = 'http://www.gravatar.com/avatar/';
+		$url = 'https://secure.gravatar.com/avatar/';
 		$url .= md5( strtolower( trim( $email ) ) );
 		$url .= "?s=$s&d=$d&r=$r";
 		if ( $img ) {
@@ -15,6 +15,23 @@ class UserController extends BaseController {
 		}
 		return $url;
 	}
+
+
+	// public static function downloadImage($url = '', $fileName = '') {
+	// 	$ch = curl_init();
+	// 	$fp = fopen('./public/avatar/' . $fileName, 'wb');
+
+	// 	curl_setopt($ch, CURLOPT_URL, $url);
+	// 	curl_setopt($ch, CURLOPT_FILE, $fp);
+	// 	curl_setopt($ch, CURLOPT_HEADER, 0);
+	// 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	// 	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+
+	// 	curl_exec($ch);
+	// 	curl_close($ch);
+	// 	fclose($fp);
+	// }
+
 
 
 
@@ -31,6 +48,11 @@ class UserController extends BaseController {
 	public function logout() {
 		Auth::logout();
 		return Redirect::to('/');
+	}
+
+	public function mxp($id) {
+		$user = User::where('id', $id)->first();
+		return View::make('user.profile')->with('user', $user);
 	}
 
 
@@ -123,6 +145,10 @@ class UserController extends BaseController {
 			$user->password = $userInput['password'];
 			$user->email = $userInput['email'];
 			$user->save();
+			// $fingerprint = md5($user->id . $user->created_at);
+			// $this->downloadImage($this->get_gravatar($user->email), $fingerprint);
+			// $user->fingerprint = $fingerprint;
+			// $user->save();
 			Auth::login($user, true);
 			return Redirect::to('dashboard');
 		} else {

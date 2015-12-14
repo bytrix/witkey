@@ -50,9 +50,32 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
+	public function asteriskTel() {
+		$phoneNumber = $this->tel;
+		$headNumber = substr($phoneNumber, 0, 3);
+		$tailNumber = substr($phoneNumber, -3);
+		$asteriskBody = '';
+		for ($i=0; $i < strlen($phoneNumber)-6; $i++) { 
+			$asteriskBody .= '*';
+		}
+		return $headNumber . $asteriskBody . $tailNumber;
+	}
+
+	public function asteriskDorm() {
+		$dorm = $this->dorm;
+		$headDorm = mb_substr($dorm, 0, 1);
+		$tailDorm = mb_substr($dorm, -1);
+		$asteriskBody = '';
+		for ($i=0; $i < strlen($dorm)-2; $i++) { 
+			$asteriskBody .= '*';
+		}
+		return $headDorm . $asteriskBody . $tailDorm;
+	}
+
 
 	public function setPasswordAttribute($data) {
 		$this->attributes['password'] = Hash::make($data);
 	}
+
 
 }
