@@ -36,16 +36,32 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{UserController::get_gravatar($user->email)}}" class="thumbnail">
+					<img src="{{UserController::getGravatar($user->email)}}" class="thumbnail">
 				</div>
 				<h4>{{$user->username}}</h4>
 
 
 				<span>
-					<img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}">
+					{{-- <img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
+					@if ($user->gender == 'M')
+						<i class="fa fa-mars"></i>
+					@elseif($user->gender == 'F')
+						<i class="fa fa-venus"></i>
+					@endif
 				</span>
 				<p>Joined on {{explode(' ', $user->created_at)[0]}}</p>
 
+
+				<p>
+					<i class="fa fa-map-marker"></i>
+					{{UserController::$schoolList[$user->school]}}
+				</p>
+
+				<p>
+					{{UserController::$majorCategoryList[$user->major_category]}}
+					-
+					{{UserController::$majorList[$user->major]}}
+				</p>
 
 
 

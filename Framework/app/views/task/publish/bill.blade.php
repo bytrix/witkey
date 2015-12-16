@@ -1,5 +1,20 @@
 @extends('layout.task')
 
+@section('style')
+<style>
+	.end-price-bar{
+		font-size: 20px;
+		display: block;
+		padding: 10px;
+		float: right;
+	}
+	.end-price-bar strong{
+		font-size: 25px;
+		padding-left: 12px;
+	}
+</style>
+@stop
+
 @section('content')
 	<div class="container">
 		<ul class='task-procedure third'>
@@ -16,15 +31,22 @@
 		<div class="form-custom">
 
 			<p><h2>{{Session::get('title')}}</h2></p>
-			<p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p>
+			{{-- <p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p> --}}
 			<p>
 				<strong>Task description: </strong>
 				<br>
 				{{Session::get('detail')}}
 			</p>
 
-			{{HTML::link('demand/new/set-reward', 'Previous', ['class'=>'btn btn-default'])}}
-			{{HTML::link('demand/new/postDemand', 'Publish', ['class'=>'btn btn-primary'])}}
+			<div class="end-price-bar">
+				<span>Reward:</span>
+				<strong>&yen;{{Session::get('amount')}}</strong>
+			</div>
+
+			<div style="clear: both">
+				{{HTML::link('task/new/set-reward', 'Previous', ['class'=>'btn btn-default'])}}
+				{{HTML::link('task/new/postTask', 'Publish', ['class'=>'btn btn-primary'])}}
+			</div>
 
 		</div>
 	</div>

@@ -5,7 +5,7 @@
   <ul class="nav nav-sidebar">
   	<li><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/myDemands">My Task</a></li>
+    <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li class="active"><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
@@ -57,7 +57,20 @@
 		<div class="form-group">
 			{{Form::label('school', 'School', ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
-				{{Form::text('school', Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+{{-- 				{{Form::text('school', Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}} --}}
+				{{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control'])}}
+			</div>
+		</div>
+
+
+		{{-- Major --}}
+		<div class="form-group">
+			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
+			<div class="col-sm-4">
+				{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+			</div>
+			<div class="col-sm-4">
+				{{Form::select('major', $majorList, Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
 			</div>
 		</div>
 

@@ -2,8 +2,71 @@
 
 class UserController extends BaseController {
 
+		public static $schoolList = [
+			'Peking University',
+			'福州大学至诚学院',
+		];
+		public static $majorCategoryList = [
+			'电气工程系',
+			'信息工程系',
+			'环境资源工程系',
+			'生物工程系',
+			'机械工程系',
+			'材料工程系',
+			'计算机工程系',
+			'化学工程系',
+			'土木工程系',
+			'建筑系',
+			'财经系',
+			'管理系',
+			'社会事务管理系',
+			'外国语系',
+			'音乐系',
+			'创意与设计系'
+		];
+		public static $majorList = [
+			'电气工程及其自动化',
+			'自动化',
+			'电子信息工程',
+			'通信工程',
+			'电子科学与技术',
+			'微电子科学与工程',
+			'计算机科学与技术',
+			'软件工程',
+			'网络工程',
+			'机械设计制造及其自动化',
+			'过程装备与控制工程',
+			'工业设计',
+			'材料成型及控制工程',
+			'材料科学与工程',
+			'环境工程',
+			'安全工程',
+			'生物工程',
+			'食品科学与工程',
+			'材料化学',
+			'应用化学',
+			'化学工程与工艺',
+			'土木工程',
+			'建筑学',
+			'包装工程',
+			'生物技术',
+			'人文地理与城乡规划',
+			'工程管理',
+			'金融工程',
+			'国际经济与贸易',
+			'财务管理',
+			'行政管理',
+			'信息管理与信息系统',
+			'物流管理',
+			'英语',
+			'日语',
+			'商务英语',
+			'汉语言文学',
+			'音乐学',
+			'产品设计',
+		];
 
-	public static function get_gravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
+	public static function getGravatar( $email, $s = 200, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
 		$url = 'https://secure.gravatar.com/avatar/';
 		$url .= md5( strtolower( trim( $email ) ) );
 		$url .= "?s=$s&d=$d&r=$r";
@@ -14,6 +77,12 @@ class UserController extends BaseController {
 			$url .= ' />';
 		}
 		return $url;
+	}
+
+	public static function getCity() {
+		$city = file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=php');
+		$city = explode('	', mb_convert_encoding($city, 'utf-8', 'gbk'));
+		return $city[5];
 	}
 
 
@@ -75,10 +144,10 @@ class UserController extends BaseController {
 
 
 
-		// dd($this->get_gravatar('wengzhijie@126.com'));
+		// dd($this->getGravatar('wengzhijie@126.com'));
 
 
-		return View::make('user.dashboard.overview')->with('greeting', $greeting)->with('gravatar_path', $this->get_gravatar(Auth::user()->email));
+		return View::make('user.dashboard.overview')->with('greeting', $greeting)->with('gravatar_path', $this->getGravatar(Auth::user()->email));
 	}
 
 	public function profile() {
@@ -86,12 +155,16 @@ class UserController extends BaseController {
 	}
 
 
-	public function myDemands() {
-		return View::make('user.dashboard.myDemands');
+	public function taskOrder() {
+		return View::make('user.dashboard.taskOrder');
 	}
 
 	public function authentication() {
-		return View::make('user.dashboard.authentication');
+		// dd(var_dump(unserialize(Auth::user()->school)));
+		return View::make('user.dashboard.authentication')
+			->with('schoolList', self::$schoolList)
+			->with('majorCategoryList', self::$majorCategoryList)
+			->with('majorList', self::$majorList);
 	}
 
 	public function security() {
@@ -144,9 +217,11 @@ class UserController extends BaseController {
 			$user->username = rand();
 			$user->password = $userInput['password'];
 			$user->email = $userInput['email'];
+			$user->ip = Request::ip();
+			$user->city = UserController::getCity();
 			$user->save();
 			// $fingerprint = md5($user->id . $user->created_at);
-			// $this->downloadImage($this->get_gravatar($user->email), $fingerprint);
+			// $this->downloadImage($this->getGravatar($user->email), $fingerprint);
 			// $user->fingerprint = $fingerprint;
 			// $user->save();
 			Auth::login($user, true);
@@ -195,20 +270,26 @@ class UserController extends BaseController {
 	}
 
 	public function postAuthentication() {
-
-		// var_dump(empty(Auth::user()->identify_card));
-
-
+		// dd(var_dump(Input::all()));
+		// $major = [
+		// 	'majorCategory'=>self::$majorCategoryList[Input::get('major_category')],
+		// 	'majorName'=>self::$majorList[Input::get('major')]
+		// ];
 		// TEXT INPUT
 		$userInput = [
 			'real_name'=>Input::get('real_name'),
-			'school'=>Input::get('school'),
-			'idcard_image'=>Input::file('idcard_image')
+			// 'school'=>self::$schoolList[Input::get('school')],
+			'school' => Input::get('school'),
+			'idcard_image'=>Input::file('idcard_image'),
+			'major_category'=>Input::get('major_category'),
+			'major' => Input::get('major'),
 		];
 		$rules = [
 			'real_name'=>'required',
 			'school'=>'required',
-			'idcard_image'=>'mimes:jpeg,jpg,gif,bmp|max:1024'
+			'idcard_image'=>'mimes:jpeg,jpg,gif,bmp|max:1024',
+			'major_category'=>'required',
+			'major'=>'required'
 		];
 		$validator = Validator::make($userInput, $rules);
 
@@ -222,21 +303,38 @@ class UserController extends BaseController {
 		// $fileValidator = Validator::make($fileInput, $fileRules);
 
 		if ($validator->passes()) {
-			User::where('id', Auth::user()->id)->update(['real_name'=>$userInput['real_name'], 'school'=>$userInput['school']]);
-			if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->identity_card)) {	// when the file exists in database (replace the original)
-				return View::make('user.dashboard.authentication')->with('error', 'File not uploaded!');
+			if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->fingerprint)) {	// when the file exists in database (replace the original)
+				return View::make('user.dashboard.authentication')
+				->with('schoolList', self::$schoolList)
+				->with('majorCategoryList', self::$majorCategoryList)
+				->with('majorList', self::$majorList)
+				->with('error', 'File not uploaded!');
 			} else {
 				if (Input::hasFile('idcard_image')) {
 					$file = Input::file('idcard_image');
 					$fingerprint = md5(Auth::user()->id.Auth::user()->created_at);
 					// dd($fingerprint);
 					$file->move(public_path().'/upload', $fingerprint);
-					User::where('id', Auth::user()->id)->update(['identity_card'=>$fingerprint, 'authenticated'=>1]);
+					User::where('id', Auth::user()->id)->update(['fingerprint'=>$fingerprint, 'authenticated'=>1]);
 				}
 			}
-			return Redirect::to('/dashboard/authentication')->with('message', 'Save successfully!');
+			User::where('id', Auth::user()->id)->update([
+				'real_name'=>$userInput['real_name'],
+				'school'=>$userInput['school'],
+				'major_category'=>$userInput['major_category'],
+				'major' => $userInput['major'],
+			]);
+			return Redirect::to('/dashboard/authentication')
+				->with('schoolList', self::$schoolList)
+				->with('majorCategoryList', self::$majorCategoryList)
+				->with('majorList', self::$majorList)
+				->with('message', 'Save successfully!');
 		} else {
-			return Redirect::to('/dashboard/authentication')->withErrors($validator);
+			return Redirect::to('/dashboard/authentication')
+				->with('schoolList', self::$schoolList)
+				->with('majorCategoryList', self::$majorCategoryList)
+				->with('majorList', self::$majorList)
+				->withErrors($validator);
 		}
 
 
@@ -244,7 +342,7 @@ class UserController extends BaseController {
 
 
 
-		// if (strlen(Auth::user()->identity_card) && !Input::hasFile('idcard_image')) {
+		// if (strlen(Auth::user()->fingerprint) && !Input::hasFile('idcard_image')) {
 		// 	return View::make('user.dashboard.authentication')->with('error', 'No file selected!');
 		// }
 
@@ -262,7 +360,7 @@ class UserController extends BaseController {
 		// ];
 		// $fileValidator = Validator::make($fileInput, $fileRules);
 
-		// if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->identity_card)) {
+		// if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->fingerprint)) {
 		// 	// file not uploaded
 		// } else if($fileValidator->fails()) {
 		// 	// filetype error
@@ -272,7 +370,7 @@ class UserController extends BaseController {
 		// 	$file = Input::file('idcard_image');
 		// 	$fingerprint = md5(Auth::user()->id.Auth::user()->created_at);
 		// 	$file->move(public_path().'/upload', $fingerprint);
-		// 	User::where('id', Auth::user()->id)->update(['identity_card'=>$fingerprint]);
+		// 	User::where('id', Auth::user()->id)->update(['fingerprint'=>$fingerprint]);
 		// }
 
 

@@ -12,7 +12,7 @@ class Task extends Eloquent {
 
 	// task(n) -------------- bidder(n)
 	public function bidders() {
-		return $this->belongsToMany('User', 'Task_Bidder', 'bidder_id');
+		return $this->belongsToMany('User', 'Task_Bidder', 'task_id', 'bidder_id');
 	}
 
 	// overdue_task(n) -------------- winning_bidder(1)

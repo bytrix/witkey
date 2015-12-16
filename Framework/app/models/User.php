@@ -41,7 +41,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Task', 'winning_bidder_id');
 	}
 
-	public function whetherEnroll($taskId) {
+	public function isBidder($taskId) {
 		$arr = TaskBidder::where(['task_id'=>$taskId, 'bidder_id'=>Auth::user()->id])->get();
 		if (count($arr)) {
 			return true;

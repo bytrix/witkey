@@ -1,8 +1,3 @@
-
-
-
-
-
 @extends('user.dashboard.dashboard')
 
 @section('control-panel')
@@ -10,7 +5,7 @@
   <ul class="nav nav-sidebar">
   	<li class="active"><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/myDemands">My Task</a></li>
+    <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
@@ -36,14 +31,19 @@
 
 
 		<div class="col-md-8">
-			<div class="avatar-md thumbnail">
-				<img src="{{$gravatar_path}}" class="img-rounded">
-			</div>
+			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{$gravatar_path}}">
+
+
 
 			<div class="greeting">
 				<h1>{{$greeting}}, {{Auth::user()->username}}!</h1>
 				<span>
-					<img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}">
+					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
+					@if (Auth::user()->gender == 'M')
+						<i class="fa fa-mars"></i>
+					@elseif(Auth::user()->gender == 'F')
+						<i class="fa fa-venus"></i>
+					@endif
 				</span>
 				<p>Joined on {{explode(' ', Auth::user()->created_at)[0]}}</p>
 			</div>
@@ -99,7 +99,9 @@
 										@foreach (Auth::user()->demands->all() as $demand)
 										<tr>
 											<th>{{$demand->id}}</th>
-											<td>{{$demand->title}}</td>
+											<td>
+												<a href="/task/{{$demand->id}}">{{$demand->title}}</a>
+											</td>
 											<td align="right">&yen; {{$demand->amount}}</td>
 											<td>{{$demand->created_at}}</td>
 										</tr>

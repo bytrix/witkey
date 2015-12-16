@@ -4,7 +4,7 @@
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
-	<li><a href="/demand/new">Publish Demand</a></li>
+	<li><a href="/task/new">Publish Task</a></li>
 	<li class="active"><a href="/task/list">Task List</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
@@ -41,6 +41,9 @@
 .list-group-item-heading>a{
 	color: #000;
 }
+.avatar-sm{
+	float: left;
+}
 </style>
 
 @stop
@@ -55,7 +58,7 @@
 
 
 						<div class="item-inline">
-							<img class="avatar-sm img-rounded" src="{{UserController::get_gravatar($task->user->email)}}" alt="">
+							<img class="avatar-sm img-rounded" src="{{UserController::getGravatar($task->user->email)}}" alt="">
 						</div>
 
 						<div class="item-inline">

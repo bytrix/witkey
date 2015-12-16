@@ -3,7 +3,7 @@
 @section('style')
   {{HTML::style('assets/style/dashboard.css')}}
   <style>
-  	.avartar>img{
+  	.avartar-md{
   		width: 120px;
   	}
   	.greeting{

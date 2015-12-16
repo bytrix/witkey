@@ -5,7 +5,7 @@
   <ul class="nav nav-sidebar">
   	<li><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
-    <li class="active"><a href="/dashboard/mytask">My Task</a></li>
+    <li class="active"><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
@@ -13,7 +13,7 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">My Demands</h1>
+	<h1 class="page-header">Task Order</h1>
 	
 	@if (count(Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()))
 		<table class="table table-hover table-striped">
@@ -29,7 +29,9 @@
 				@foreach (Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $demand)
 				<tr>
 					<th>{{$demand->id}}</th>
-					<td>{{$demand->title}}</td>
+					<td>
+						<a href="/task/{{$demand->id}}">{{$demand->title}}</a>
+					</td>
 					<td align="right">&yen; {{$demand->amount}}</td>
 					<td>{{$demand->created_at}}</td>
 				</tr>

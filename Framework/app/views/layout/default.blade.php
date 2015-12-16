@@ -24,19 +24,37 @@
   }
 
   .avatar-sm{
-    float: left;
-    width: 40px;
+    /*float: left;*/
+    width: 30px;
     margin-right: 12px;
     margin-bottom: 4px;
   }
   .avatar-md{
-    float: left;
+    /*float: left;*/
     width: 130px;
     margin-right: 20px;
   }
   .avatar-lg{
-    float: left;
+    /*float: left;*/
     margin-right: 20px;
+  }
+  .avatar-bar{
+    /*background-color: red;*/
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  .detail{
+    padding: 10px;
+    padding-left: 20px;
+    display: block;
+  }
+  .fa-mars{
+    color: #286090;
+    font-weight: bold;
+  }
+  .fa-venus{
+    color: #d9534f;
+    font-weight: bold;
   }
 
   </style>
@@ -62,8 +80,8 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard"><i class="icon-envelope"></i> <strong>{{Auth::user()->email}}</strong></a></li>
-              <li><a href="/logout"><i class="icon-signout"></i> Logout</a></li>
+              <li><a href="/dashboard"><i class="fa fa-envelope"></i> <strong>{{Auth::user()->email}}</strong></a></li>
+              <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
             @else
               <li><a href="/login">Login</a></li>
               <li><a href="/register">Register</a></li>
