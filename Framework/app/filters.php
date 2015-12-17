@@ -54,6 +54,12 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('realname', function() {
+	if (Auth::user()->authenticated != 2) {
+		return View::make('user.realnameAuthenticationAlert');
+	}
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

@@ -119,7 +119,7 @@ class UserController extends BaseController {
 		return Redirect::to('/');
 	}
 
-	public function mxp($id) {
+	public function profile($id) {
 		$user = User::where('id', $id)->first();
 		return View::make('user.profile')->with('user', $user);
 	}
@@ -147,16 +147,26 @@ class UserController extends BaseController {
 		// dd($this->getGravatar('wengzhijie@126.com'));
 
 
-		return View::make('user.dashboard.overview')->with('greeting', $greeting)->with('gravatar_path', $this->getGravatar(Auth::user()->email));
+		return View::make('user.dashboard.overview')
+			->with('greeting', $greeting)
+			->with('gravatar_path', $this->getGravatar(Auth::user()->email));
 	}
 
-	public function profile() {
+	public function myProfile() {
 		return View::make('user.dashboard.profile');
 	}
 
 
 	public function taskOrder() {
 		return View::make('user.dashboard.taskOrder');
+	}
+
+	// public function postcard() {
+	// 	return View::make('user.dashboard.postcard');
+	// }
+
+	public function taskFollow() {
+		return View::make('user.dashboard.taskFollow');
 	}
 
 	public function authentication() {
@@ -224,7 +234,7 @@ class UserController extends BaseController {
 			// $this->downloadImage($this->getGravatar($user->email), $fingerprint);
 			// $user->fingerprint = $fingerprint;
 			// $user->save();
-			Auth::login($user, true);
+			Auth::login($user);
 			return Redirect::to('dashboard');
 		} else {
 			return Redirect::to('register')->withErrors($validator);
@@ -234,12 +244,13 @@ class UserController extends BaseController {
 
 	}
 
-	public function postProfile() {
+	public function postMyProfile() {
 		$userModify = [
 			'username'=>Input::get('username'),
 			'gender'=>Input::get('gender'),
 			'tel'=>Input::get('tel'),
-			'dorm'=>Input::get('dorm')
+			'dorm'=>Input::get('dorm'),
+			'skill_tag'=>Input::get('skill_tag'),
 		];
 		User::where('id', Auth::user()->id)->update($userModify);
 		return Redirect::to('dashboard/profile')->with('message', 'Username has been saved successfully!');
@@ -278,18 +289,19 @@ class UserController extends BaseController {
 		// TEXT INPUT
 		$userInput = [
 			'real_name'=>Input::get('real_name'),
-			// 'school'=>self::$schoolList[Input::get('school')],
 			'school' => Input::get('school'),
 			'idcard_image'=>Input::file('idcard_image'),
 			'major_category'=>Input::get('major_category'),
 			'major' => Input::get('major'),
+			'enrollment_date'=>Input::get('enrollment_date'),
 		];
 		$rules = [
 			'real_name'=>'required',
 			'school'=>'required',
 			'idcard_image'=>'mimes:jpeg,jpg,gif,bmp|max:1024',
 			'major_category'=>'required',
-			'major'=>'required'
+			'major'=>'required',
+			'enrollment_date'=>'required',
 		];
 		$validator = Validator::make($userInput, $rules);
 
@@ -323,6 +335,7 @@ class UserController extends BaseController {
 				'school'=>$userInput['school'],
 				'major_category'=>$userInput['major_category'],
 				'major' => $userInput['major'],
+				'enrollment_date'=>$userInput['enrollment_date'],
 			]);
 			return Redirect::to('/dashboard/authentication')
 				->with('schoolList', self::$schoolList)

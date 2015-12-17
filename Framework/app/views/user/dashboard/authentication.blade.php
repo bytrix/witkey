@@ -2,12 +2,16 @@
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar">
+  <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li class="active"><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
+  </ul>
+  <ul class="nav nav-sidebar nav-list">
+  	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
+    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li class="active"><a href="/dashboard/authentication">Real-name Authentication</a></li>
   </ul>
 </div>
 @stop
@@ -58,7 +62,16 @@
 			{{Form::label('school', 'School', ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 {{-- 				{{Form::text('school', Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}} --}}
-				{{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control'])}}
+				{{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+			</div>
+		</div>
+
+
+		{{-- Enrollment Date --}}
+		<div class="form-group">
+			{{Form::label('enrollment_date', 'Enrollment Date', ['class'=>'control-label col-sm-2', ])}}
+			<div class="col-sm-4">
+				<input type="date" name='enrollment_date' value="{{Auth::user()->enrollment_date}}" placeholder="Enrollment Date" class="form-control"  {{Auth::user()->authenticated == 2 ? 'disabled' : ''}}>
 			</div>
 		</div>
 
@@ -66,34 +79,62 @@
 		{{-- Major --}}
 		<div class="form-group">
 			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
-			<div class="col-sm-4">
-				{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
-			</div>
-			<div class="col-sm-4">
-				{{Form::select('major', $majorList, Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
-			</div>
+
+			@if (Auth::user()->authenticated == 2)
+				<div class="col-sm-4">
+					{{Form::text('major',
+						UserController::$majorCategoryList[Auth::user()->major_category].
+							' - '.
+							UserController::$majorList[Auth::user()->major],
+						['class'=>'form-control', 'disabled']
+					)}}
+				</div>
+			@else
+				<div class="col-sm-4">
+					{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+				</div>
+				<div class="col-sm-4">
+					{{Form::select('major', $majorList, Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+				</div>
+			@endif
+
+
 		</div>
 
-		{{-- Browse Button --}}
-		<div class="form-group">
-			{{Form::label('identify_card', 'Identify Card Image', ['class'=>'control-label col-sm-2'])}}
-			<div class="col-sm-4">
-				{{Form::file('idcard_image', ['class'=>'btn btn-primary'])}}
-			</div>
-		</div>
 
-		{{-- Identify Card --}}
-		<div class="form-group">
-			<span class="col-sm-2"></span>
-			<div class="col-sm-4">
-				@if (Auth::user()->identity_card)
-					{{HTML::image(URL::asset('upload/' . md5(Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
-				@else
-					{{HTML::image(URL::asset('assets/image/idcard_image.jpg'), '', ['class'=>'thumbnail'])}}
-				@endif
-				
+
+		@if (Auth::user()->authenticated == 2)
+		@else
+
+
+			{{-- Browse Button --}}
+			<div class="form-group">
+				{{Form::label('identify_card', 'Identify Card Image', ['class'=>'control-label col-sm-2'])}}
+				<div class="col-sm-4">
+					{{Form::file('idcard_image', ['class'=>'btn btn-primary'])}}
+				</div>
 			</div>
-		</div>
+
+			{{-- Identify Card --}}
+			<div class="form-group">
+				<span class="col-sm-2"></span>
+				<div class="col-sm-4">
+					@if (Auth::user()->fingerprint)
+						{{HTML::image(URL::asset('upload/' . md5(Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
+					@else
+						{{HTML::image(URL::asset('assets/image/idcard_image.jpg'), '', ['class'=>'thumbnail'])}}
+					@endif
+					
+				</div>
+			</div>
+
+
+		@endif
+
+
+
+
+
 
 		<div class="form-group">
 			<span class="col-sm-2"></span>

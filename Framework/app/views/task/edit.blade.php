@@ -4,8 +4,8 @@
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
 	<li class="active"><a href="/task/list">Task List</a></li>
+	<li><a href="/task/new">Publish Task</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
@@ -54,7 +54,7 @@
 			</div>
 			<div class="form-group">
 				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
-				{{Form::textarea('detail', $task->detail, ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'20'])}}
+				{{Form::textarea('detail', $task->detail, ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
 
 
 {{-- 
@@ -64,7 +64,7 @@
 			</div>
 			<div class="form-group">
 				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
-				{{-- {{HTML::link('task/new/set-reward', 'Next', ['class'=>'btn btn-primary'])}} --}}
+				{{HTML::link("task/$task->id", 'Cancel', ['class'=>'btn btn-default'])}}
 			</div>
 
 

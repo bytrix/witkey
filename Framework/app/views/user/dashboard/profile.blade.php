@@ -2,12 +2,16 @@
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar">
+  <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
     <li class="active"><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
+  </ul>
+  <ul class="nav nav-sidebar nav-list">
+  	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
+    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
   </ul>
 </div>
 @stop
@@ -56,15 +60,37 @@
 	<div class="form-group">
 		{{Form::label('dorm', 'Dorm', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('dorm', Auth::user()->dorm, ['class'=>'form-control'])}}
+			{{Form::text('dorm', Auth::user()->dorm, ['class'=>'form-control', 'id'=>'dorm'])}}
+		</div>
+		<div class="col-sm-4">
+			<div class="checkbox">
+				<label>
+					{{Form::checkbox('resident', 1, 1, ['id'=>'residentCheckbox'])}}
+					Resident
+				</label>
+			</div>
+			<script>
+			$(function() {
+				$('#dorm').attr('enabled', 'enabled');
+				$('#residentCheckbox').click(function() {
+					if ($('#dorm').attr('enabled') == 'enabled') {
+						$('#dorm').removeAttr('enabled', 'enabled');
+						$('#dorm').attr('disabled', 'disabled');
+					} else {
+						$('#dorm').removeAttr('disabled', 'disabled');
+						$('#dorm').attr('enabled', 'enabled');
+					};
+				});
+			});
+			</script>
 		</div>
 	</div>
 
-	{{-- Special Tag --}}
+	{{-- Skill Tag --}}
 	<div class="form-group">
-		{{Form::label('specialtyTag', 'Specialty Tag', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('skill_tag', 'Skill Tag', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('specialtyTag', '', ['class'=>'form-control'])}}
+			{{Form::text('skill_tag', Auth::user()->skill_tag, ['class'=>'form-control'])}}
 		</div>
 	</div>
 

@@ -1,15 +1,25 @@
 @extends('user.dashboard.dashboard')
 
 @section('control-panel')
+
+
+
+
 <div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar">
+  <ul class="nav nav-sidebar nav-list">
   	<li class="active"><a href="/dashboard">Overview</a></li>
     <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
+  <ul class="nav nav-sidebar nav-list">
+  	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
+    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
+  </ul>
 </div>
+
+
 @stop
 
 @section('user-panel')
@@ -46,6 +56,7 @@
 					@endif
 				</span>
 				<p>Joined on {{explode(' ', Auth::user()->created_at)[0]}}</p>
+				<p>Living in {{Auth::user()->city}}</p>
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -64,27 +75,27 @@
 				<div class="tabbable" id="tabs-613887">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							 <a href="#panel-463291" data-toggle="tab">Demand published</a>
+							 <a href="#panel-463291" data-toggle="tab">My Orders</a>
 						</li>
 						<li>
-							 <a href="#panel-239884" data-toggle="tab">Task done/doing</a>
+							 <a href="#panel-239884" data-toggle="tab">Tasks done/doing</a>
 						</li>
 					</ul>
 
 {{-- 
-@foreach (Auth::user()->demands as $demand)
+@foreach (Auth::user()->orders as $order)
 	<p>
-		{{$demand->title}}
-		{{$demand->created_at}}
+		{{$order->title}}
+		{{$order->created_at}}
 	</p>
 @endforeach
  --}}
 
-
+					{{-- Tab: My Orders --}}
 					<div class="tab-content">
 						<div class="tab-pane active" id="panel-463291">
 							{{-- @if (count(Auth::user()->tasks->->orderBy('created_at', 'desc')->get())) --}}
-							@if (count(Auth::user()->demands->all()))
+							@if (count(Auth::user()->orders->all()))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -95,31 +106,32 @@
 										</tr>
 									</thead>
 									<tbody>
-										{{-- @foreach (Auth::user()->demands->orderBy('created_at', 'desc')->get() as $demand) --}}
-										@foreach (Auth::user()->demands->all() as $demand)
+										{{-- @foreach (Auth::user()->orders->orderBy('created_at', 'desc')->get() as $order) --}}
+										@foreach (Auth::user()->orders->all() as $order)
 										<tr>
-											<th>{{$demand->id}}</th>
+											<th>{{$order->id}}</th>
 											<td>
-												<a href="/task/{{$demand->id}}">{{$demand->title}}</a>
+												<a href="/task/{{$order->id}}">{{$order->title}}</a>
 											</td>
-											<td align="right">&yen; {{$demand->amount}}</td>
-											<td>{{$demand->created_at}}</td>
+											<td align="right">&yen; {{$order->amount}}</td>
+											<td>{{$order->created_at}}</td>
 										</tr>
 										@endforeach
 									</tbody>
 								</table>
+								{{-- Paginator --}}
 							@else
 								<div class="alert alert-danger">
-									No demand published recently!
+									No order published recently!
 									<br>
-									<a href="demand/new" class="alert-link">Publish Now?</a>
+									<a href="order/new" class="alert-link">Publish Now?</a>
 								</div>
 							@endif
 						</div>
 
 
 
-
+						{{-- Tab: Tasks --}}
 						<div class="tab-pane" id="panel-239884">
 							@if (count(Auth::user()->tasks->all()))
 								<table class="table table-hover table-striped">

@@ -2,6 +2,7 @@
 
 @section('content')
 	<div class="container">
+		<h1 class="page-header">Set your reward</h1>
 		<ul class='task-procedure second'>
 			<li class="first col-md-4">CREATE TASK</li>
 			<li class="second col-md-4">SET REWARD</li>
@@ -9,7 +10,6 @@
 		</ul>
 	</div>
 	<div class="container">
-		<h1 class="page-header">Set your reward</h1>
 
 
 {{-- 
@@ -46,7 +46,7 @@
 					<div class="input-group-addon">
 						<i class="fa fa-calendar"></i>
 					</div>
-					<input class="form-control" type="date" name="expiration" value="{{date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+7, date('Y')))}}" placeholder="">
+					<input class="form-control" type="datetime-local" name="expiration" value="{{date('Y-m-d\TH:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')))}}" placeholder="">
 				</div>
 			</div>
 

@@ -4,8 +4,8 @@
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
 	<li class="active"><a href="/task/list">Task List</a></li>
+	<li><a href="/task/new">Publish Task</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
@@ -18,6 +18,16 @@
 
 @stop
 
+@section('script')
+<script>
+	$(function() {
+		$('#edit').click(function() {
+			window.location.href = "/task/{{$task->id}}/edit";
+		});
+	});
+</script>
+@stop
+
 @section('content')
 	<div class="container">
 
@@ -27,8 +37,9 @@
 				<h1>
 					{{$task->title}}
 					@if ($task->user_id == Auth::user()->id)
-						<a href="/task/{{$task->id}}/edit"><small>[Edit task]</small></a>
+						<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="edit"></i>
 					@endif
+					<i class="fa fa-heart-o pull-right follow" data-toggle="tooltip" data-placement="top" title="follow"></i>
 				</h1>
 			</div>
 
@@ -39,8 +50,13 @@
 
 
 			<div class="col-sm-6">
-				<h4><strong>School location:</strong> {{UserController::$schoolList[$task->user->school]}}</h4>
-				<h4><strong>Expiration:</strong> {{explode(' ', $task->expiration)[0]}}</h4>
+				<h4><strong>School location:</strong>
+				@if ($task->user->school == NULL)
+					<span class="label label-danger">No School</span>
+				@else
+					{{UserController::$schoolList[$task->user->school]}}</h4>
+				@endif
+				<h4><strong>Expiration:</strong> {{$task->expiration}}</h4>
 				<p></p>
 			</div>
 
@@ -112,7 +128,7 @@
 				<div>
 					<img src="{{UserController::getGravatar($task->user->email)}}" class="thumbnail">
 				</div>
-				<h4><a href="/user/{{$id}}">{{$task->user->username}}</a></h4>
+				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 
 
 				<span>

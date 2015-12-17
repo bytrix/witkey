@@ -121,6 +121,7 @@ class TaskController extends BaseController {
 	}
 
 	public function postTask() {
+		// dd(var_dump(Session::all()));
 		$task = new Task;
 		$task->user_id = Auth::user()->id;
 		$task->title = Session::get('title');
@@ -138,7 +139,7 @@ class TaskController extends BaseController {
 	}
 
 	public function listTask() {
-		$tasks = Task::orderBy('created_at', 'desc')->get();
+		$tasks = Task::orderBy('created_at', 'desc')->paginate(10);
 		return View::make('task.list')->with('tasks', $tasks);
 	}
 

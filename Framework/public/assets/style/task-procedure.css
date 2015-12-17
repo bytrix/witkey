@@ -9,13 +9,65 @@ ul.task-procedure li{
 	text-align: center;
 	float: left;
 	list-style-type: none;
-	background-color: #ccc;
+	color: #999;
+	/*background-color: #ccc;*/
 	height: 100px;
-	line-height: 100px;
+	line-height: 150px;
 }
 ul.first li.first,
 ul.second li.second,
 ul.third li.third{
+	color: #337ab7;
+	font-weight: bold;
+	/*background-color: #337ab7;*/
+}
+/*Circle*/
+ul.first li.first:after,
+ul.second li.second:after,
+ul.third li.third:after{
+	color: #fff;
+	background-color: #337ab7;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	margin-left: -8px;
+	margin-top: -8px;
+	/*border: 8px solid #337ab7;*/
+}
+
+ul.task-procedure li:after{
+	content: '';
+	background-color: #ccc;
+	display: block;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	position: absolute;
+	left: 50%;
+	top: 40%;
+	margin-left: -5px;
+	margin-top: -5px;
+}
+
+
+/*Line*/
+ul.first li.first:before,
+ul.second li.second:before,
+ul.third li.third:before{
 	color: #fff;
 	background-color: #337ab7;
 }
+
+ul.task-procedure li:before{
+	content: '';
+	width: 100%;
+	height: 1px;
+	display: block;
+	background-color: #ccc;
+	position: absolute;
+	left: 0px;
+	top: 40%;
+}
+
+
+

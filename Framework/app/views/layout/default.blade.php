@@ -8,15 +8,24 @@
   {{HTML::style('assets/style/bootstrap.min.css')}}
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/main.css')}}
+  {{HTML::style('assets/style/sticky-footer.css')}}
+
   @yield('procedure-style')
 
   {{HTML::script('assets/script/jquery-1.11.3.min.js')}}
   {{HTML::script('assets/script/bootstrap.min.js')}}
   {{HTML::script('assets/script/bootstrap.file-input.js')}}
 
+  <script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+  </script>
+  @yield('script')
+
   <style>
   body {
-    min-height: 2000px;
+    /*min-height: 2000px;*/
     padding-top: 70px;
   }
   .panel-group{
@@ -57,6 +66,26 @@
     font-weight: bold;
   }
 
+  #edit{
+    font-size: 0.6em;
+    cursor: pointer;
+    color: #666;
+    margin-left: 0.6em;
+  }
+  #edit:hover{
+    color: #333;
+  }
+
+  .follow{
+    cursor: pointer;
+    font-size: 0.6em;
+    margin-top: 1.1em;
+    margin-right: 1.7em;
+  }
+  .follow:hover{
+    color: red;
+  }
+
   </style>
   @yield('style')
 </head>
@@ -94,5 +123,14 @@
   @yield('procedure')
 
 	@yield('content')
+
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">
+        &copy; Campus Witkey
+      </p>
+    </div>
+  </footer>
+  </div>
 </body>
 </html>

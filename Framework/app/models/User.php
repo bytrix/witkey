@@ -25,7 +25,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password', 'remember_token');
 
 	// user(1) -------------- demand(n)
-	public function demands() {
+	public function orders() {
 		return $this->hasMany('Task')->orderBy('created_at', 'desc');
 	}
 

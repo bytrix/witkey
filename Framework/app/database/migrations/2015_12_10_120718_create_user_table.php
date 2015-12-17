@@ -32,7 +32,7 @@ class CreateUserTable extends Migration {
 			$table->date('enrollment_date')->nullable();		// The date when the user enroll school
 			$table->string('major_category')->nullable();
 			$table->string('major')->nullable();				// The profession which the user majored
-			$table->string('specialty_tag')->nullable();		// The specialties or interests the user has
+			$table->string('skill_tag')->nullable();		// The skills or interests the user has
 
 			/*
 				To check whether the user passes through Real-name authentication.

@@ -7,7 +7,7 @@
 <style>
 #editor {
 	overflow:scroll;
-	max-height:300px;
+	/*max-height:300px;*/
 }
 </style>
 
@@ -23,6 +23,7 @@
 
 @section('content')
 	<div class="container">
+		<h1 class="page-header">Publish you task</h1>
 		<ul class='task-procedure first'>
 			<li class="first col-md-4">CREATE TASK</li>
 			<li class="second col-md-4">SET REWARD</li>
@@ -30,7 +31,6 @@
 		</ul>
 	</div>
 	<div class="container">
-		<h1 class="page-header">Publish you task</h1>
 		{{Form::open(['url'=>'task/new/set-reward', 'method'=>'post', 'class'=>'form-custom'])}}
 			<div class="form-group">
 				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
@@ -38,7 +38,7 @@
 			</div>
 			<div class="form-group">
 				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
-				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'20'])}}
+				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
 
 
 {{-- 
