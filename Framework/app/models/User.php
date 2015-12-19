@@ -32,7 +32,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	// bidder(n) -------------- task(n)
 	public function tasks() {
-		return $this->belongsToMany('Task', 'Task_Bidder', 'bidder_id')->orderBy('created_at', 'desc');
+		return $this->belongsToMany('Task', 'Task_Bidder', 'bidder_id', 'task_id')->orderBy('created_at', 'desc');
+		// return $this->belongsToMany('Task', 'Task_Bidder', 'bidder_id', 'task_id');
+	}
+
+	public function favoriteTasks (){
+		return $this->belongsToMany('Task', 'TaskFavorite_User', 'user_id', 'task_favorite_id');
 	}
 
 
@@ -76,6 +81,40 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function setPasswordAttribute($data) {
 		$this->attributes['password'] = Hash::make($data);
 	}
+
+
+
+
+
+
+
+
+
+
+
+	// POST API PART
+	// if Auth user favorite some task, return true, else return false
+	public function hasFavoriteTask($tid) {
+		$taskfavorite_user = TaskfavoriteUserPivot::where(['task_favorite_id'=>$tid, 'user_id'=>Auth::user()->id])->first();
+		if (count($taskfavorite_user)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function markFavoriteTask($tid) {
+		$taskfavorite_user = new TaskfavoriteUserPivot;
+		$taskfavorite_user->task_favorite_id = $tid;
+		$taskfavorite_user->user_id = Auth::user()->id;
+		$taskfavorite_user->save();
+	}
+
+	public function removeFavoriteTask($tid) {
+		$taskfavorite_user = TaskfavoriteUserPivot::where(['task_favorite_id'=>$tid, 'user_id'=>Auth::user()->id]);
+		$taskfavorite_user->delete();
+	}
+	// END POST API PART
 
 
 }

@@ -8,13 +8,13 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
   	<li class="active"><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
     <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
   </ul>
 </div>
@@ -107,11 +107,11 @@
 									</thead>
 									<tbody>
 										{{-- @foreach (Auth::user()->orders->orderBy('created_at', 'desc')->get() as $order) --}}
-										@foreach (Auth::user()->orders->all() as $order)
+										@foreach (Auth::user()->orders()->paginate(10) as $order)
 										<tr>
 											<th>{{$order->id}}</th>
 											<td>
-												<a href="/task/{{$order->id}}">{{$order->title}}</a>
+												<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
 											</td>
 											<td align="right">&yen; {{$order->amount}}</td>
 											<td>{{$order->created_at}}</td>
@@ -120,6 +120,7 @@
 									</tbody>
 								</table>
 								{{-- Paginator --}}
+								{{Auth::user()->orders()->paginate(1)->links()}}
 							@else
 								<div class="alert alert-danger">
 									No order published recently!

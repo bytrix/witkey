@@ -4,13 +4,13 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
     <li class="active"><a href="/dashboard/authentication">Real-name Authentication</a></li>
   </ul>
 </div>
@@ -81,14 +81,20 @@
 			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
 
 			@if (Auth::user()->authenticated == 2)
-				<div class="col-sm-4">
-					{{Form::text('major',
-						UserController::$majorCategoryList[Auth::user()->major_category].
-							' - '.
-							UserController::$majorList[Auth::user()->major],
-						['class'=>'form-control', 'disabled']
-					)}}
-				</div>
+				@if (Auth::user()->major_category == NULL || Auth::user()->major == NULL)
+					<div class="col-sm-4">
+						{{Form::text('major', '未填写', ['class'=>'form-control', 'disabled'])}}
+					</div>
+				@else
+					<div class="col-sm-4">
+						{{Form::text('major',
+							UserController::$majorCategoryList[Auth::user()->major_category].
+								' - '.
+								UserController::$majorList[Auth::user()->major],
+							['class'=>'form-control', 'disabled']
+						)}}
+					</div>
+				@endif
 			@else
 				<div class="col-sm-4">
 					{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
@@ -128,6 +134,13 @@
 				</div>
 			</div>
 
+			<div class="form-group">
+				<span class="col-sm-2"></span>
+				<div class="col-sm-4">
+					{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+				</div>
+			</div>
+
 
 		@endif
 
@@ -136,12 +149,6 @@
 
 
 
-		<div class="form-group">
-			<span class="col-sm-2"></span>
-			<div class="col-sm-4">
-				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
-			</div>
-		</div>
 
 		<script>
 		$('input[type=file]').bootstrapFileInput();

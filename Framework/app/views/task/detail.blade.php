@@ -18,11 +18,49 @@
 
 @stop
 
+@section('style')
+<style>
+  .avatar-sm{
+    /*float: left;*/
+    cursor: pointer;
+    width: 30px;
+    margin-right: 12px;
+    margin-bottom: 4px;
+  }
+  .avatar-sm:hover{
+    box-shadow: 0 0 2px #337ab7;
+  }
+</style>
+@stop
+
 @section('script')
 <script>
+	function favorite() {
+		$('#favorite').addClass('fa-heart');
+		$('#favorite').removeClass('fa-heart-o');
+		$('#favorite').attr('data-original-title', 'Uncollect');
+		$('#tip').html('Collected');
+	}
+	function unfavorite() {
+		$('#favorite').removeClass('fa-heart');
+		$('#favorite').addClass('fa-heart-o');
+		$('#favorite').attr('data-original-title', 'Collect');
+		$('#tip').html('Collect');
+	}
 	$(function() {
 		$('#edit').click(function() {
 			window.location.href = "/task/{{$task->id}}/edit";
+		});
+		$.ajax({
+			type: 'post',
+			url: '/hasFavoriteTask/'+{{$id}},
+			success: function(state) {
+				if (state == 'true') {
+					favorite();
+				} else if(state == 'false') {
+					unfavorite();
+				}
+			}
 		});
 	});
 </script>
@@ -34,13 +72,50 @@
 
 		<div class="col-md-8">
 			<div class="page-header">
-				<h1>
-					{{$task->title}}
-					@if ($task->user_id == Auth::user()->id)
-						<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="edit"></i>
+				<h3>
+					@if (strlen($task->title) > 40)
+						<span title="{{$task->title}}" class="detail-title">
+							{{str_limit($task->title, 40)}}
+						</span>
+					@else
+						{{$task->title}}
 					@endif
-					<i class="fa fa-heart-o pull-right follow" data-toggle="tooltip" data-placement="top" title="follow"></i>
-				</h1>
+					<div class="pull-right">
+						{{-- Edit Button --}}
+						<div class="col-sm-6">
+							@if (Auth::check())
+								@if ($task->user_id == Auth::user()->id)
+									<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+								@endif
+							@endif
+						</div>
+						<div class="col-sm-6">
+							{{-- Favorite Button --}}
+							<i class="fa fa-heart-o favorite" id="favorite" data-toggle="tooltip" data-placement="top" title="favorite"></i>
+							<span id="tip">favorite</span>
+						</div>
+					</div>
+				</h3>
+				<script>
+
+				$('#favorite').click(function() {
+					$.ajax({
+						type: 'post',
+						url: '/markFavoriteTask/'+{{$id}},
+						success: function(state) {
+							if (state == 'remove') {
+								unfavorite();
+							} else if(state == 'create') {
+								favorite();
+							}
+						},
+						error: function(data) {
+							console.log(data);
+							window.location.href = '/login';
+						}
+					});
+				});
+				</script>
 			</div>
 
 			<div class="col-sm-6">
@@ -75,14 +150,32 @@
 
 
 				<h4><strong>Task Description:</strong></h4>
-				<div class="detail">
-					{{$task->detail}}
+				<div class="detail" id="detail">
+					{{{str_limit($task->detail, 1200)}}}
 				</div>
+				@if (strlen($task->detail) > 1200)
+					<div>
+						<a href="javascript:;" id="more">More</a>
+					</div>
+					<script>
+					$('#more').click(function() {
+						// alert($(this).html());
+						$('#detail').html("{{$task->detail}}");
+						if($(this).html() == 'Fold') {
+							// alert('fold');
+							$(this).html('More');
+							$('#detail').html("{{str_limit($task->detail, 1200)}}");
+						} else {
+							$(this).html('Fold');
+						}
+					})
+					</script>
+				@endif
 
 				<h4><strong>Bidders({{count($task->bidders)}}):</strong></h4>
 				<div class="avatar-bar">
 					@foreach ($task->bidders as $bidder)
-						<img class='avatar-sm' src="{{UserController::getGravatar($bidder->email)}}" alt="">
+						<img class='avatar-sm' src="{{UserController::getGravatar($bidder->email)}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
 					@endforeach
 				</div>
 
@@ -154,13 +247,16 @@
 				@if (strlen($task->user->dorm))
 					@if (Auth::check())
 						@if (Auth::user()->isBidder($id) || ($task->user_id == Auth::user()->id))
-							<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
+							@if ($task->user->dorm == 'no')
+								<span class="label label-warning">Non-resident</span>
+							@else
+								<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
+							@endif
 						@else
 							<p><i class="fa fa-map-marker"></i> {{$task->user->asteriskDorm()}}</p>
 						@endif
 					@endif
 				@endif
-
 
 
 

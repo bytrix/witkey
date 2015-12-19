@@ -3,7 +3,6 @@
 class UserController extends BaseController {
 
 		public static $schoolList = [
-			'Peking University',
 			'福州大学至诚学院',
 		];
 		public static $majorCategoryList = [
@@ -153,7 +152,7 @@ class UserController extends BaseController {
 	}
 
 	public function myProfile() {
-		return View::make('user.dashboard.profile');
+		return View::make('user.dashboard.myProfile');
 	}
 
 
@@ -165,8 +164,9 @@ class UserController extends BaseController {
 	// 	return View::make('user.dashboard.postcard');
 	// }
 
-	public function taskFollow() {
-		return View::make('user.dashboard.taskFollow');
+	public function favoriteTask() {
+		$favoriteTasks = Auth::user()->favoriteTasks();
+		return View::make('user.dashboard.favoriteTask')->with('favoriteTasks', $favoriteTasks);
 	}
 
 	public function authentication() {
@@ -245,15 +245,16 @@ class UserController extends BaseController {
 	}
 
 	public function postMyProfile() {
+		// dd(Input::all());
 		$userModify = [
 			'username'=>Input::get('username'),
 			'gender'=>Input::get('gender'),
 			'tel'=>Input::get('tel'),
-			'dorm'=>Input::get('dorm'),
+			'dorm'=>(Input::get('dorm_state')=='no' ? 'no' : Input::get('dorm')),
 			'skill_tag'=>Input::get('skill_tag'),
 		];
 		User::where('id', Auth::user()->id)->update($userModify);
-		return Redirect::to('dashboard/profile')->with('message', 'Username has been saved successfully!');
+		return Redirect::to('dashboard/myProfile')->with('message', 'Data has been saved successfully!');
 	}
 
 	public function postSecurity() {
@@ -328,6 +329,8 @@ class UserController extends BaseController {
 					// dd($fingerprint);
 					$file->move(public_path().'/upload', $fingerprint);
 					User::where('id', Auth::user()->id)->update(['fingerprint'=>$fingerprint, 'authenticated'=>1]);
+				} else {
+					User::where('id', Auth::user()->id)->update(['authenticated'=>1]);
 				}
 			}
 			User::where('id', Auth::user()->id)->update([

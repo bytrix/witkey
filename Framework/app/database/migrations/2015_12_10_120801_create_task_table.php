@@ -20,6 +20,8 @@ class CreateTaskTable extends Migration {
 			$table->text('detail');
 			$table->integer('winning_bidder_id');
 			$table->decimal('amount');
+			$table->tinyInteger('type');
+
 			/**
 			 * Indicate a state of current task
 			 *	0 for CLOSED
@@ -30,7 +32,7 @@ class CreateTaskTable extends Migration {
 			 *	1
 			 *	1
 			 */
-			$table->boolean('state');
+			$table->tinyInteger('state');
 			$table->datetime('expiration');
 			$table->timestamps();
 		});

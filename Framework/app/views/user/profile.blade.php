@@ -46,6 +46,7 @@
 					
 					<div class="tab-content">
 						<div class="tab-pane active" id="panel-822933">
+{{-- 
 							@if (count(Task::where('user_id', $user->id)->get()))
 								@foreach (Task::where('user_id', $user->id)->get() as $task)
 									<li>{{$task->title}}</li>
@@ -53,6 +54,18 @@
 							@else
 								<p>No task published</p>
 							@endif
+							 --}}
+							 <?php $tasks = $user->tasks()->paginate(10) ?>
+							 @if (count($tasks))
+								 @foreach ($tasks as $task)
+								 	<li>{{$task->title}}</li>
+								 @endforeach
+							 @else
+							 	<p class="alert alert-danger">No task done.</p>
+							 @endif
+							{{-- Paginator --}}
+							{{$tasks->links()}}
+
 						</div>
 						<div class="tab-pane" id="panel-486166">
 							<p>
@@ -80,7 +93,7 @@
 					<img src="{{UserController::getGravatar($user->email)}}" class="thumbnail">
 				</div>
 				<h4>{{$user->username}}</h4>
-
+				<p>{{$user->email}}</p>
 
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
@@ -95,7 +108,7 @@
 
 				<p>
 					<?php
-						$schoolAge = Utility::Sec2Year(strtotime(date('Y-m-d')) - strtotime(Auth::user()->enrollment_date));
+						$schoolAge = Utility::Sec2Year(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
 					?>
 					{{Utility::grade($schoolAge)}}
 				</p>
@@ -123,7 +136,7 @@
 				<div>
 					<strong>Skill Tag</strong>
 					<div>
-						@foreach (explode(',', Auth::user()->skill_tag) as $tag)
+						@foreach (explode(',', $user->skill_tag) as $tag)
 							<span class="label label-info">{{$tag}}</span>
 						@endforeach
 					</div>

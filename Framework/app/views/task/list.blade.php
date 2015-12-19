@@ -58,20 +58,20 @@
 
 
 						<div class="item-inline">
-							<img class="avatar-sm img-rounded" src="{{UserController::getGravatar($task->user->email)}}" alt="">
+							<img class="avatar-sm" src="{{UserController::getGravatar($task->user->email)}}" alt="">
 						</div>
 
 						<div class="item-inline">
 
 							<h4 class="list-group-item-heading">
-								<span class="amount badge">&yen; {{$task->amount}}</span>
-								<a href="/task/{{$task->id}}">{{$task->title}}</a>
+								<span class="amount badge">&yen; {{{$task->amount}}}</span>
+								<a href="/task/{{$task->id}}">{{{str_limit($task->title, 45)}}}</a>
 							</h4>
 								<span class="metadata">
 									<a href="/user/{{$task->user->id}}" class="property">
-										<i class="icon-user"></i> {{$task->user->username}}
+										<i class="fa fa-user"></i> {{{$task->user->username}}}
 									</a>
-									<i class="icon-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
+									<i class="fa fa-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
 								</span>
 							
 						</div>

@@ -43,7 +43,7 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::guest('login')->with('login_alert', 'You have not logined in, please login in below form.');
 		}
 	}
 });

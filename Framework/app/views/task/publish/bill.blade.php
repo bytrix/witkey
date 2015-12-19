@@ -32,18 +32,18 @@
 
 			<p>
 				<strong>Task Title: </strong>
-				<h2>{{Session::get('title')}}</h2>
+				<h2>{{{Session::get('title')}}}</h2>
 			</p>
 			{{-- <p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p> --}}
 			<p>
 				<strong>Task description: </strong>
 				<br>
-				{{Session::get('detail')}}
+				{{{Session::get('detail')}}}
 			</p>
 
 			<div class="end-price-bar">
 				<span>Reward:</span>
-				<strong>&yen;{{Session::get('amount')}}</strong>
+				<strong>&yen;{{{Session::get('amount')}}}</strong>
 			</div>
 
 			<div style="clear: both">

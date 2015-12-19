@@ -29,6 +29,16 @@
 
 		{{Form::open(['url'=>'/task/new/bill', 'method'=>'post', 'class'=>'form-custom'])}}
 
+
+			<div class="form-group">
+				<div class="radio-inline">
+					<label>{{Form::radio('type', '1')}}XS</label>
+				</div>
+				<div class="radio-inline">
+					<label>{{Form::radio('type', '2')}}ZB</label>
+				</div>
+			</div>
+
 			<div class="form-group">
 				{{Form::label('amount', 'Amount:', ['class'=>'control-label'])}}
 				<div class="input-group">

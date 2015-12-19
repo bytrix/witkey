@@ -11,21 +11,21 @@
 
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
 					{{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}}
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-key"></i></span>
+					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
 					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control'])}}
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-key"></i></span>
+					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
 					{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control'])}}
 				</div>
 			</div>

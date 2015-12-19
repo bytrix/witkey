@@ -19,6 +19,9 @@
 
 @section('content')
 <div class="container">
-	<div class="alert alert-danger">You are not passed through Realname Authentication,please login to your <a class="alert-link" href="/dashboard">dashboard</a> and authenticate.</div>
+	<div class="alert alert-danger">
+		<h4>Permission Deny</h4>
+		You are not passed through Realname Authentication,please login to your <a class="alert-link" href="/dashboard/authentication">dashboard</a> and authenticate.
+	</div>
 </div>
 @stop

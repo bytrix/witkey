@@ -33,7 +33,6 @@
   }
 
   .avatar-sm{
-    /*float: left;*/
     width: 30px;
     margin-right: 12px;
     margin-bottom: 4px;
@@ -56,6 +55,7 @@
     padding: 10px;
     padding-left: 20px;
     display: block;
+    word-break: break-all;
   }
   .fa-mars{
     color: #286090;
@@ -67,23 +67,39 @@
   }
 
   #edit{
-    font-size: 0.6em;
+    font-size: 0.8em;
     cursor: pointer;
     color: #666;
     margin-left: 0.6em;
+    margin-right: 0.7em;
   }
   #edit:hover{
     color: #333;
   }
 
-  .follow{
+  .favorite{
     cursor: pointer;
-    font-size: 0.6em;
-    margin-top: 1.1em;
+    font-size: 0.8em;
+    margin-top: 0.3em;
     margin-right: 1.7em;
-  }
-  .follow:hover{
     color: red;
+  }
+  #tip{
+    display: block;
+    margin-left: -20px;
+    position: absolute;
+    color: red;
+    font-size: 12px;
+    /*background-color: blue;*/
+    width: 60px;
+    text-align: center;
+  }
+  .detail-title{
+    width: 570px;
+    word-break: break-all;
+    display: inline-block;
+    /*background-color: red;*/
+    /*float: left;*/
   }
 
   </style>
@@ -127,7 +143,11 @@
   <footer class="footer">
     <div class="container">
       <p class="text-muted">
-        &copy; Campus Witkey
+        <span class="col-sm-4"></span>
+        <span class="col-sm-4" align="center">
+          &copy; Campus Witkey.
+          Made with <i class="fa fa-heart"></i>
+        </span>
       </p>
     </div>
   </footer>

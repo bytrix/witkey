@@ -4,20 +4,20 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
-    <li class="active"><a href="/dashboard/profile">Profile<span class="sr-only">(current)</span></a></li>
+    <li class="active"><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/security">Security</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/taskFollow">Task Follow</a></li>
+    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
     <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
   </ul>
 </div>
 @stop
 
 @section('user-panel')
-<h1 class="page-header">Profile</h1>
+<h1 class="page-header">My Profile</h1>
 
 @if (Session::has('message'))
 	<div class="alert alert-success">{{Session::get('message')}}</div>
@@ -60,25 +60,40 @@
 	<div class="form-group">
 		{{Form::label('dorm', 'Dorm', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('dorm', Auth::user()->dorm, ['class'=>'form-control', 'id'=>'dorm'])}}
+			{{Form::text(
+				'dorm',
+				Auth::user()->dorm=='no' ? 'Non-resident' : Auth::user()->dorm,
+					[
+						'class'=>'form-control',
+						'id'=>'dorm',
+						Auth::user()->dorm=='no' ? 'disabled' : 'enabled'
+					]
+			)}}
+			{{Form::hidden('dorm_state', '', ['id'=>'dorm_state'])}}
 		</div>
 		<div class="col-sm-4">
 			<div class="checkbox">
 				<label>
-					{{Form::checkbox('resident', 1, 1, ['id'=>'residentCheckbox'])}}
-					Resident
+					{{Form::checkbox('resident', 1, Auth::user()->dorm=='no', ['id'=>'residentCheckbox'])}}
+					Non-resident
 				</label>
 			</div>
 			<script>
 			$(function() {
-				$('#dorm').attr('enabled', 'enabled');
+				// $('#dorm').attr('enabled', 'enabled');
 				$('#residentCheckbox').click(function() {
 					if ($('#dorm').attr('enabled') == 'enabled') {
+						// Non-resident
 						$('#dorm').removeAttr('enabled', 'enabled');
 						$('#dorm').attr('disabled', 'disabled');
+						$('#dorm').val('Non-resident');
+						$('#dorm_state').val('no');
 					} else {
+						// Resident
 						$('#dorm').removeAttr('disabled', 'disabled');
 						$('#dorm').attr('enabled', 'enabled');
+						$('#dorm').val('');
+						$('#dorm_state').val('yes');
 					};
 				});
 			});

@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ApiController' => $baseDir . '/app/controllers/ApiController.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
     'Boris\\CLIOptionsHandler' => $vendorDir . '/d11wtq/boris/lib/Boris/CLIOptionsHandler.php',
@@ -30,6 +31,7 @@ return array(
     'ClassPreloader\\Parser\\NodeTraverser' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/NodeTraverser.php',
     'CreateTaskBidder' => $baseDir . '/app/database/migrations/2015_12_13_222013_create_task_bidder.php',
     'CreateTaskTable' => $baseDir . '/app/database/migrations/2015_12_10_120801_create_task_table.php',
+    'CreateTaskfollowedUserTable' => $baseDir . '/app/database/migrations/2015_12_18_223706_create_taskfollowed_user_table.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2015_12_10_120718_create_user_table.php',
     'Crypt_AES' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/AES.php',
     'Crypt_Base' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Base.php',
@@ -1936,10 +1938,15 @@ return array(
     'System_SSH_Agent' => $vendorDir . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php',
     'System_SSH_Agent_Identity' => $vendorDir . '/phpseclib/phpseclib/phpseclib/System/SSH/Agent.php',
     'Task' => $baseDir . '/app/models/Task.php',
+    'TaskBidder' => $baseDir . '/app/models/TaskBidder.php',
     'TaskController' => $baseDir . '/app/controllers/TaskController.php',
+    'TaskTableSeeder' => $baseDir . '/app/database/seeds/TaskTableSeeder.php',
+    'TaskfollowedUser' => $baseDir . '/app/models/TaskfollowedUser.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'User' => $baseDir . '/app/models/User.php',
     'UserController' => $baseDir . '/app/controllers/UserController.php',
+    'UserTableSeeder' => $baseDir . '/app/database/seeds/UserTableSeeder.php',
+    'Utility' => $baseDir . '/app/controllers/Utility.php',
     'Whoops\\Exception\\ErrorException' => $vendorDir . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
     'Whoops\\Exception\\Formatter' => $vendorDir . '/filp/whoops/src/Whoops/Exception/Formatter.php',
     'Whoops\\Exception\\Frame' => $vendorDir . '/filp/whoops/src/Whoops/Exception/Frame.php',

@@ -23,5 +23,13 @@ class Task extends Eloquent {
 	public function scopeRecent($query) {
         return $query->orderBy('created_at', 'desc');
 	}
+
+	public function setTitleAttribute($data) {
+		$this->attributes['title'] = e("$data");
+	}
+
+	public function setDetailAttribute($data) {
+		$this->attributes['detail'] = e("$data");
+	}
 	
 }

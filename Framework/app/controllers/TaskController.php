@@ -173,4 +173,16 @@ class TaskController extends BaseController {
 		return Redirect::to("/task/$id");
 	}
 
+
+
+	public function favorite($tid) {
+		// return $tid;
+		// $taskfavorite_user = TaskfavoriteUser::create(['task_favoriteed_id'=>$tid, 'user_id'=>Auth::user()->id]);
+		$taskfavorite_user = new TaskfavoriteUser;
+		$taskfavorite_user->task_favorite_id = $tid;
+		$taskfavorite_user->user_id = Auth::user()->id;
+		$taskfavorite_user->save();
+		return 'ok';
+	}
+
 }
