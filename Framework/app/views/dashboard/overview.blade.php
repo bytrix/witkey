@@ -1,4 +1,4 @@
-@extends('user.dashboard.dashboard')
+@extends('dashboard.master')
 
 @section('control-panel')
 
@@ -95,7 +95,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="panel-463291">
 							{{-- @if (count(Auth::user()->tasks->->orderBy('created_at', 'desc')->get())) --}}
-							@if (count(Auth::user()->orders->all()))
+							@if (count(Auth::user()->order->all()))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -107,7 +107,7 @@
 									</thead>
 									<tbody>
 										{{-- @foreach (Auth::user()->orders->orderBy('created_at', 'desc')->get() as $order) --}}
-										@foreach (Auth::user()->orders()->paginate(10) as $order)
+										@foreach (Auth::user()->order()->paginate(10) as $order)
 										<tr>
 											<th>{{$order->id}}</th>
 											<td>
@@ -120,12 +120,12 @@
 									</tbody>
 								</table>
 								{{-- Paginator --}}
-								{{Auth::user()->orders()->paginate(1)->links()}}
+								{{Auth::user()->order()->paginate(1)->links()}}
 							@else
 								<div class="alert alert-danger">
 									No order published recently!
 									<br>
-									<a href="order/new" class="alert-link">Publish Now?</a>
+									<a href="task/create" class="alert-link">Publish Now?</a>
 								</div>
 							@endif
 						</div>
@@ -134,7 +134,7 @@
 
 						{{-- Tab: Tasks --}}
 						<div class="tab-pane" id="panel-239884">
-							@if (count(Auth::user()->tasks->all()))
+							@if (count(Auth::user()->task->all()))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -145,7 +145,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach (Auth::user()->tasks->all() as $task)
+										@foreach (Auth::user()->task->all() as $task)
 										<tr>
 											<th>{{$task->id}}</th>
 											<td>{{$task->title}}</td>

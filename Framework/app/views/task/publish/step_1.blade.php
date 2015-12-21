@@ -1,4 +1,4 @@
-@extends('layout.task')
+@extends('task.master')
 
 
 
@@ -31,7 +31,7 @@
 		</ul>
 	</div>
 	<div class="container">
-		{{Form::open(['url'=>'task/new/set-reward', 'method'=>'post', 'class'=>'form-custom'])}}
+		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom'])}}
 			<div class="form-group">
 				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
 				{{Form::text('title', Session::get('title'), ['placeholder'=>'Title', 'class'=>'form-control'])}}
@@ -48,7 +48,7 @@
 			</div>
 			<div class="form-group">
 				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
-				{{-- {{HTML::link('task/new/set-reward', 'Next', ['class'=>'btn btn-primary'])}} --}}
+				{{-- {{HTML::link('task/create/set-reward', 'Next', ['class'=>'btn btn-primary'])}} --}}
 			</div>
 
 

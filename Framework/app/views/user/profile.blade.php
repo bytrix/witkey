@@ -1,11 +1,11 @@
-@extends('layout.task')
+@extends('task.master')
 
 @section('menu')
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
 	<li><a href="/task/list">Task List</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
+	<li><a href="/task/create">Publish Task</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
@@ -55,7 +55,7 @@
 								<p>No task published</p>
 							@endif
 							 --}}
-							 <?php $tasks = $user->tasks()->paginate(10) ?>
+							 <?php $tasks = $user->task()->paginate(10) ?>
 							 @if (count($tasks))
 								 @foreach ($tasks as $task)
 								 	<li>{{$task->title}}</li>
@@ -90,7 +90,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{UserController::getGravatar($user->email)}}" class="thumbnail">
+					<img src="{{ThirdPartyController::getGravatar($user->email)}}" class="thumbnail">
 				</div>
 				<h4>{{$user->username}}</h4>
 				<p>{{$user->email}}</p>

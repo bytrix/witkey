@@ -1,4 +1,4 @@
-@extends('user.dashboard.dashboard')
+@extends('dashboard.master')
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
@@ -81,7 +81,7 @@
 			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
 
 			@if (Auth::user()->authenticated == 2)
-				@if (Auth::user()->major_category == NULL || Auth::user()->major == NULL)
+				@if (Auth::user()->major_category == NULL || Auth::user()->major_name == NULL)
 					<div class="col-sm-4">
 						{{Form::text('major', '未填写', ['class'=>'form-control', 'disabled'])}}
 					</div>
@@ -90,7 +90,7 @@
 						{{Form::text('major',
 							UserController::$majorCategoryList[Auth::user()->major_category].
 								' - '.
-								UserController::$majorList[Auth::user()->major],
+								UserController::$majorList[Auth::user()->major_name],
 							['class'=>'form-control', 'disabled']
 						)}}
 					</div>
@@ -100,7 +100,7 @@
 					{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
 				</div>
 				<div class="col-sm-4">
-					{{Form::select('major', $majorList, Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+					{{Form::select('major_name', $majorList, Auth::user()->major_name, ['class'=>'form-control', 'multiple', 'size'=>8])}}
 				</div>
 			@endif
 

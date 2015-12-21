@@ -5,7 +5,7 @@
 
 	<li><a href="/">Home</a></li>
 	<li><a href="/task/list">Task List</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
+	<li><a href="/task/create">Publish Task</a></li>
 	<li>
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">

@@ -1,4 +1,4 @@
-@extends('user.dashboard.dashboard')
+@extends('dashboard.master')
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
@@ -46,7 +46,7 @@
 		<div class="alert alert-danger">
 			No task published recently!
 			<br>
-			<a href="/task/new" class="alert-link">Publish Now?</a>
+			<a href="/task/create" class="alert-link">Publish Now?</a>
 		</div>
 	@endif
 

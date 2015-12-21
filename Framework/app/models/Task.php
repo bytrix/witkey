@@ -4,15 +4,14 @@ class Task extends Eloquent {
 
 	protected $table = 'Task';
 
-
 	// demand(n) -------------- user(1)
 	public function user() {
 		return $this->belongsTo('User');
 	}
 
 	// task(n) -------------- bidder(n)
-	public function bidders() {
-		return $this->belongsToMany('User', 'Task_Bidder', 'task_id', 'bidder_id');
+	public function bidder() {
+		return $this->belongsToMany('User', 'QuotePivot', 'task_id', 'user_id');
 	}
 
 	// overdue_task(n) -------------- winning_bidder(1)

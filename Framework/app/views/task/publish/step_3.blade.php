@@ -1,4 +1,4 @@
-@extends('layout.task')
+@extends('task.master')
 
 @section('style')
 <style>
@@ -25,9 +25,11 @@
 		</ul>
 	</div>
 	<div class="container">
-
-
-
+{{-- 
+<pre>
+	{{dd(Session::all())}}
+</pre>
+ --}}
 		<div class="form-custom">
 
 			<p>
@@ -41,14 +43,18 @@
 				{{{Session::get('detail')}}}
 			</p>
 
-			<div class="end-price-bar">
-				<span>Reward:</span>
-				<strong>&yen;{{{Session::get('amount')}}}</strong>
-			</div>
+				<div class="end-price-bar">
+					@if (Session::get('type') == 1)
+						<span>Reward:</span>
+					@elseif (Session::get('type') == 2)
+						<span>Budget:</span>
+					@endif
+					<strong>&yen;{{{Session::get('amount')}}}</strong>
+				</div>
 
 			<div style="clear: both">
-				{{HTML::link('task/new/set-reward', 'Previous', ['class'=>'btn btn-default'])}}
-				{{HTML::link('task/new/postTask', 'Publish', ['class'=>'btn btn-primary'])}}
+				{{HTML::link('task/create/step-2', 'Previous', ['class'=>'btn btn-default'])}}
+				{{HTML::link('task/create/postCreate', 'Publish', ['class'=>'btn btn-primary'])}}
 			</div>
 
 		</div>

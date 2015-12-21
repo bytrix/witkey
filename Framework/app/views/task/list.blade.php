@@ -1,11 +1,11 @@
-@extends('layout.task')
+@extends('task.master')
 
 @section('menu')
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
 	<li class="active"><a href="/task/list">Task List</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
+	<li><a href="/task/create">Publish Task</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
@@ -58,13 +58,18 @@
 
 
 						<div class="item-inline">
-							<img class="avatar-sm" src="{{UserController::getGravatar($task->user->email)}}" alt="">
+							<img class="avatar-sm" src="{{ThirdPartyController::getGravatar($task->user->email)}}" alt="">
 						</div>
 
 						<div class="item-inline">
 
 							<h4 class="list-group-item-heading">
-								<span class="amount badge">&yen; {{{$task->amount}}}</span>
+								<span class="label label-success">&yen; {{$task->amount}}</span>
+								@if ($task->type == 1)
+									<span class="label label-warning">Reward</span>
+								@elseif($task->type == 2)
+									<span class="label label-danger">Bid</span>
+								@endif
 								<a href="/task/{{$task->id}}">{{{str_limit($task->title, 45)}}}</a>
 							</h4>
 								<span class="metadata">

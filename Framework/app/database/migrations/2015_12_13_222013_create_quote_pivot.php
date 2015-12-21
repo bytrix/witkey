@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskfavoriteUserPivot extends Migration {
+class CreateQuotePivot extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,14 @@ class CreateTaskfavoriteUserPivot extends Migration {
 	 */
 	public function up()
 	{
-		// Relationship between TaskFavorite and User
-		Schema::create('TaskFavorite_User', function(Blueprint $table)
+		// Relationship between Task and Bidder
+		Schema::create('QuotePivot', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
-			$table->integer('task_favorite_id');
+			$table->integer('task_id');
 			$table->integer('user_id');
+			$table->integer('price');
 		});
 	}
 
@@ -29,7 +30,7 @@ class CreateTaskfavoriteUserPivot extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('TaskFavorite_User');
+		Schema::drop('Task_Bidder');
 	}
 
 }

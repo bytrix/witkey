@@ -1,4 +1,4 @@
-@extends('user.dashboard.dashboard')
+@extends('dashboard.master')
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">

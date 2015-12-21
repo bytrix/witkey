@@ -1,4 +1,4 @@
-@extends('user.dashboard.dashboard')
+@extends('dashboard.master')
 
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
@@ -19,7 +19,7 @@
 @section('user-panel')
 	<h1 class="page-header">Favorite Task</h1>
 
-  @foreach (Auth::user()->favoriteTasks as $favoriteTask)
+  @foreach (Auth::user()->favoriteTask as $favoriteTask)
     <li>{{$favoriteTask->title}}</li>
   @endforeach
 

@@ -31,7 +31,7 @@ class CreateUserTable extends Migration {
 			// $table->string('identity_card')->nullable();		// The image URL of a user's identity card (FOR STUDENT!)
 			$table->date('enrollment_date')->nullable();		// The date when the user enroll school
 			$table->string('major_category')->nullable();
-			$table->string('major')->nullable();				// The profession which the user majored
+			$table->string('major_name')->nullable();				// The profession which the user majored
 			$table->string('skill_tag')->nullable();		// The skills or interests the user has
 
 			/*

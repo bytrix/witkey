@@ -1,11 +1,11 @@
-@extends('layout.task')
+@extends('task.master')
 
 @section('menu')
 	<ul class="nav navbar-nav">
 
 	<li><a href="/">Home</a></li>
 	<li class="active"><a href="/task/list">Task List</a></li>
-	<li><a href="/task/new">Publish Task</a></li>
+	<li><a href="/task/create">Publish Task</a></li>
 	<li class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
@@ -120,9 +120,12 @@
 
 			<div class="col-sm-6">
 				<h4><strong>Task ID:</strong> #{{$task->id}}</h4>
-				<h4><strong>Task Amount:</strong> &yen;{{$task->amount}}</h4>
+				@if ($task->type == 1)
+					<h4><strong>Reward:</strong> &yen;{{$task->amount}}</h4>
+				@elseif ($task->type == 2)
+					<h4><strong>Budget:</strong> &yen;{{$task->amount}}</h4>
+				@endif
 			</div>
-
 
 			<div class="col-sm-6">
 				<h4><strong>School location:</strong>
@@ -134,9 +137,6 @@
 				<h4><strong>Expiration:</strong> {{$task->expiration}}</h4>
 				<p></p>
 			</div>
-
-
-
 
 			<div class="col-sm-12">
 
@@ -172,10 +172,10 @@
 					</script>
 				@endif
 
-				<h4><strong>Bidders({{count($task->bidders)}}):</strong></h4>
+				<h4><strong>Bidders({{count($task->bidder)}}):</strong></h4>
 				<div class="avatar-bar">
-					@foreach ($task->bidders as $bidder)
-						<img class='avatar-sm' src="{{UserController::getGravatar($bidder->email)}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+					@foreach ($task->bidder as $bidder)
+						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{ThirdPartyController::getGravatar($bidder->email)}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
 					@endforeach
 				</div>
 
@@ -213,13 +213,37 @@
 					<button class="btn btn-primary disabled">Not logined yet!</button>
 
 				@endif
+
+
+
+
+				{{-- COMMIT AREA --}}
+				@if ($task->type == 1)
+					{{-- reward --}}
+					{{Form::open()}}
+						{{Form::label('post', 'Post your work')}}
+						<div class="form-group">
+							{{Form::textarea('post', '', ['class'=>'form-control'])}}
+						</div>
+						<div class="form-group">
+							{{Form::submit('Commit', ['class'=>'btn btn-primary'])}}
+						</div>
+					{{Form::close()}}
+				@elseif ($task->type == 2)
+					{{-- bid --}}
+				@endif
+				{{-- END COMMIT AREA --}}
+
+
+
 			</div>
+
 		</div>
 
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{UserController::getGravatar($task->user->email)}}" class="thumbnail">
+					<img src="{{ThirdPartyController::getGravatar($task->user->email)}}" class="thumbnail">
 				</div>
 				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 
