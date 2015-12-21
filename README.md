@@ -11,7 +11,7 @@ This is my little web project made with Laravel 4.2 which aims to encourage stud
 > Fortunately, it's a chance for me because I can spend all my spare
 > time in programming learning. To summarize the self-study plan,
 > acturally I did learn something new that I don't know before like
-> linux, git and web framework.Previously, I do almost work in windows
+> linux, git and web framework.Previously, I did almost work in windows
 > and now I change to linux environment so that I could learn more about
 > programming with so much open source code.
 
