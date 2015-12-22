@@ -3,28 +3,74 @@
 @section('script')
 <script>
 	$(function() {
+		var hasBudget = true;
+		$('#budgetCheckboxDiv').hide();
 
-		function ChangeToReward() {
+		function budgetCheckboxToggle() {
+			// alert(hasBudget);
+			if ($('#budgetCheckbox').attr('checked') == 'checked') {
+				hasBudget = false;
+				disableAmount();
+			} else {
+				hasBudget = true;
+				enableAmount();
+			}
+		}
+
+
+		function changeToReward() {
 			$('#moneyType').html('Reward:');
 			$('#amount').attr('placeholder', 'Reward');
+			$('#budgetCheckboxDiv').hide();
+			enableAmount();
 		}
 
-		function ChangeToBid() {
+		function changeToBid() {
+			budgetCheckboxToggle();
 			$('#moneyType').html('Budget:');
 			$('#amount').attr('placeholder', 'Budget');
+			$('#budgetCheckboxDiv').show();
+			// alert(hasBudget);
+			if (hasBudget) {
+				enableAmount();
+			} else {
+				disableAmount();
+			}
 		}
 
+		function enableAmount() {
+			$('#amount').attr('enabled', true);
+			$('#amount').removeAttr('disabled');
+		}
+
+		function disableAmount() {
+			$('#amount').attr('disabled', true);
+			$('#amount').removeAttr('enabled');
+		}
 
 		if ($('#reward').attr('checked') == 'checked') {
-			ChangeToReward();
+			changeToReward();
 		} else if($('#bid').attr('checked') == 'checked') {
-			ChangeToBid();
+			changeToBid();
 		}
 		$('#reward').click(function() {
-			ChangeToReward();
+			changeToReward();
 		});
 		$('#bid').click(function() {
-			ChangeToBid();
+			changeToBid();
+		});
+
+		$('#budgetCheckbox').click(function() {
+			// budgetCheckboxToggle();
+			if ($('#budgetCheckbox').attr('checked') == 'checked') {
+				hasBudget = true;
+				enableAmount();
+				$('#budgetCheckbox').removeAttr('checked');
+			} else {
+				hasBudget = false;
+				disableAmount();
+				$('#budgetCheckbox').attr('checked', 'checked');
+			}
 		});
 	});
 </script>
@@ -59,6 +105,12 @@
 						<i class="fa fa-yen fa-fw"></i>
 					</div>
 					{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control', 'id'=>'amount'])}}
+				</div>
+				<div class="checkbox" id="budgetCheckboxDiv">
+					<label>
+						{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
+						No budget
+					</label>
 				</div>
 			</div>
 

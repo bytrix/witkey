@@ -26,6 +26,13 @@ class TaskTableSeeder extends Seeder {
 			'amount'=>200,
 			'expiration'=>date('Y-m-d', time())
 		]);
+		Task::create([
+			'user_id'=>3,
+			'title'=>'',
+			'detail'=>'',
+			'amount'=>,
+			'expiration'=>date('Y-m-d', time())
+		]);
 	}
 
 }

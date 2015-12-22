@@ -54,7 +54,7 @@ class TaskController extends BaseController {
 
 		} else {
 
-			return Redirect::to('/task/create/step-1')->withErrors($validator);
+			return Redirect::to('/task/create')->withErrors($validator);
 		}
 	}
 

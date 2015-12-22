@@ -69,6 +69,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
+	public function realname() {
+		if (Auth::check()) {
+			if (Auth::user()->authenticated == 2) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+
 	public function asteriskTel() {
 		$phoneNumber  = $this->tel;
 		$headNumber   = substr($phoneNumber, 0, 3);
@@ -76,6 +87,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$asteriskBody = '';
 
 		for ($i=0; $i < strlen($phoneNumber)-6; $i++) { 
+
+			$asteriskBody .= '*';
+		}
+
+		return $headNumber . $asteriskBody . $tailNumber;
+	}
+
+	public function asteriskQQ() {
+		$qqNumber  = $this->qq;
+		$headNumber   = substr($qqNumber, 0, 3);
+		$tailNumber   = substr($qqNumber, -3);
+		$asteriskBody = '';
+
+		for ($i=0; $i < strlen($qqNumber)-6; $i++) { 
 
 			$asteriskBody .= '*';
 		}

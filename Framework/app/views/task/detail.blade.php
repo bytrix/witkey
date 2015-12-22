@@ -247,7 +247,6 @@
 				</div>
 				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 
-
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{$task->user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if ($task->user->gender == 'M')
@@ -259,26 +258,30 @@
 				<p>Joined on {{explode(' ', $task->user->created_at)[0]}}</p>
 
 				@if (strlen($task->user->tel))
-					@if (Auth::check())
-						@if (Auth::user()->isBidder($id) || ($task->user_id == Auth::user()->id))
-							<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
-						@else
-							<p><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
-						@endif
+					@if (Auth::check() && $task->user->realname())
+						<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
+					@else
+						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
+					@endif
+				@endif
+
+				@if (strlen($task->user->qq))
+					@if (Auth::check() && $task->user->realname())
+						<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
+					@else
+						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskTel()}}</p>
 					@endif
 				@endif
 
 				@if (strlen($task->user->dorm))
-					@if (Auth::check())
-						@if (Auth::user()->isBidder($id) || ($task->user_id == Auth::user()->id))
-							@if ($task->user->dorm == 'no')
-								<span class="label label-warning">Non-resident</span>
-							@else
-								<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
-							@endif
+					@if (Auth::check() && $task->user->realname())
+						@if ($task->user->dorm == 'no')
+							<span class="label label-warning">Non-resident</span>
 						@else
-							<p><i class="fa fa-map-marker"></i> {{$task->user->asteriskDorm()}}</p>
+							<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
 						@endif
+					@else
+						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-map-marker"></i> {{$task->user->asteriskDorm()}}</p>
 					@endif
 				@endif
 

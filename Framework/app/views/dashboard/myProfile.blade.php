@@ -56,6 +56,17 @@
 		</div>
 	</div>
 
+	{{-- QQ --}}
+	<div class="form-group">
+		{{Form::label('qq', 'QQ', ['class'=>'control-label col-sm-2'])}}
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-qq"></i></span>
+				{{Form::text('qq', Auth::user()->qq, ['class'=>'form-control'])}}
+			</div>
+		</div>
+	</div>
+
 	{{-- Dorm --}}
 	<div class="form-group">
 		{{Form::label('dorm', 'Dorm', ['class'=>'control-label col-sm-2'])}}

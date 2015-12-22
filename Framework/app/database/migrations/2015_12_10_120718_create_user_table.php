@@ -20,6 +20,7 @@ class CreateUserTable extends Migration {
 			$table->char('gender')->default('M');
 			$table->string('email')->unique();
 			$table->string('tel')->nullable();
+			$table->string('qq')->nullable();
 			$table->string('school')->nullable();
 			$table->string('dorm')->nullable();
 			$table->string('ip');

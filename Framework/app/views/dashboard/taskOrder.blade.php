@@ -43,7 +43,7 @@
 			</tbody>
 		</table>
 	@else
-		<div class="alert alert-danger">
+		<div class="alert alert-warning">
 			No task published recently!
 			<br>
 			<a href="/task/create" class="alert-link">Publish Now?</a>

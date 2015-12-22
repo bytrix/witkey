@@ -58,7 +58,9 @@
 
 
 						<div class="item-inline">
-							<img class="avatar-sm" src="{{ThirdPartyController::getGravatar($task->user->email)}}" alt="">
+							<a href="/user/{{$task->user->id}}">
+								<img class="avatar-sm" src="{{ThirdPartyController::getGravatar($task->user->email)}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
+							</a>
 						</div>
 
 						<div class="item-inline">

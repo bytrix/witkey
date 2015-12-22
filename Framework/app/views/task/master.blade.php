@@ -4,7 +4,7 @@
 	<ul class="nav navbar-nav">
 		<li><a href="/">Home</a></li>
 		<li><a href="/task/list">Task List</a></li>
-		<li class="active"><a href="/task/create/step-1">Publish Task</a></li>
+		<li class="active"><a href="/task/create">Publish Task</a></li>
 		<li class="dropdown">
 		  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
 		  <ul class="dropdown-menu">

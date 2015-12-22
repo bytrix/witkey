@@ -122,7 +122,7 @@
 								{{-- Paginator --}}
 								{{Auth::user()->order()->paginate(1)->links()}}
 							@else
-								<div class="alert alert-danger">
+								<div class="alert alert-warning">
 									No order published recently!
 									<br>
 									<a href="task/create" class="alert-link">Publish Now?</a>
@@ -156,7 +156,7 @@
 									</tbody>
 								</table>
 							@else
-								<div class="alert alert-danger">
+								<div class="alert alert-warning">
 									No task done or doing recently!
 									<br>
 									<a href="task/list" class="alert-link">Do Now?</a>
