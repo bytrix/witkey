@@ -121,21 +121,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">witkey</a>
+          <a class="navbar-brand" href="/">Admin</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
           @yield('menu')
           
-          <ul class="nav navbar-nav navbar-right">
-            @if (Auth::check())
-              <li><a href="/dashboard"><i class="fa fa-envelope"></i> <strong>{{Auth::user()->email}}</strong></a></li>
-              <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
-            @else
-              <li><a href="/login">Login</a></li>
-              <li><a href="/register">Register</a></li>
-            @endif
-          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

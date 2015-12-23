@@ -11,7 +11,11 @@ class Task extends Eloquent {
 
 	// task(n) -------------- bidder(n)
 	public function bidder() {
-		return $this->belongsToMany('User', 'QuotePivot', 'task_id', 'user_id');
+		if ($this->type == 1) {
+			return $this->belongsToMany('User', 'CommitPivot', 'task_id', 'user_id')->distinct();
+		} else if($this->type == 2) {
+			return $this->belongsToMany('User', 'QuotePivot', 'task_id', 'user_id')->distinct();
+		}
 	}
 
 	// overdue_task(n) -------------- winning_bidder(1)
@@ -21,6 +25,13 @@ class Task extends Eloquent {
 
 	public function scopeRecent($query) {
         return $query->orderBy('created_at', 'desc');
+	}
+
+	public function scopeActiveUserFilter($query) {
+		if ($this->user->active == 0) {
+			return 'inactive';
+		}
+		return 'active';
 	}
 
 	public function setTitleAttribute($data) {

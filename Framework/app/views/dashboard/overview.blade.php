@@ -41,7 +41,7 @@
 
 
 		<div class="col-md-8">
-			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{$gravatar_path}}">
+			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('assets/avatar/' . Auth::user()->fingerprint )}}">
 
 
 

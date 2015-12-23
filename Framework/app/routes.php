@@ -15,8 +15,10 @@ Route::get('about'    , 'HomeController@about');
 Route::get('login'    , 'UserController@login');
 Route::get('logout'   , 'UserController@logout');
 Route::get('register' , 'UserController@register');
-Route::get('user/{id}', 'UserController@profile')->where('id', '[0-9]+');
-Route::get('task/{id}', 'TaskController@detail')->where('id', '[0-9]+');
+Route::get('user/{user_id}', 'UserController@profile')->where('user_id', '[0-9]+');
+
+	Route::get('task/{task_id}', 'TaskController@detail')->where('task_id', '[0-9]+');
+
 Route::get('task/list', 'TaskController@listTask');
 
 // POST
@@ -43,17 +45,24 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
 	Route::post('task/create/step-2'      , 'TaskController@step_2');
 	Route::post('task/create/step-3'      , 'TaskController@step_3');
-	Route::post('task/{id}/edit'          , 'TaskController@postEdit')->where('id', '[0-9]+');
-	Route::post('task/{id}/postQuit'      , 'TaskController@postQuit')->where('id', '[0-9]+');
+	Route::post('task/{task_id}/edit'          , 'TaskController@postEdit')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/postQuit'      , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 
 	// POST API FOR JAVASCRIPT
-	Route::post('hasFavoriteTask/{tid}'   , 'TaskApiController@hasFavoriteTask')->where('tid', '[0-9]+');
-	Route::post('markFavoriteTask/{tid}'  , 'TaskApiController@markFavoriteTask')->where('tid', '[0-9]+');
-	Route::post('removeFavoriteTask/{tid}', 'TaskApiController@removeFavoriteTask')->where('tid', '[0-9]+');
+	Route::post('hasFavoriteTask/{task_id}'   , 'TaskApiController@hasFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('markFavoriteTask/{task_id}'  , 'TaskApiController@markFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('removeFavoriteTask/{task_id}', 'TaskApiController@removeFavoriteTask')->where('task_id', '[0-9]+');
 
 	// realname Authentication
 	Route::group(['before'=>'realname'], function() {
-		Route::get('task/{id}/edit'       , 'TaskController@edit')->where('id', '[0-9]+');
-		Route::post('task/{id}/enrollment', 'TaskController@enrollment')->where('id', '[0-9]+');
+		Route::get('task/{task_id}/edit'		, 'TaskController@edit')->where('task_id', '[0-9]+');
+		Route::post('task/{task_id}/commit'	, 'TaskController@postCommit')->where('task_id', '[0-9]+');
+		Route::post('task/{task_id}/quote'	, 'TaskController@postQuote')->where('task_id', '[0-9]+');
 	});
 });
+
+
+
+
+Route::get('admin/auth', 'AdminController@auth');
+Route::post('admin/auth', 'AdminController@postAuth');

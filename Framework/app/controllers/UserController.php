@@ -86,9 +86,9 @@ class UserController extends BaseController {
 		return Redirect::to('/');
 	}
 
-	public function profile($id) {
+	public function profile($user_id) {
 
-		$user = User::where('id', $id)->first();
+		$user = User::where('id', $user_id)->first();
 		return View::make('user.profile')->with('user', $user);
 	}
 
@@ -129,6 +129,7 @@ class UserController extends BaseController {
 
 	public function postRegister() {
 
+
 		echo '<pre>';
 		var_dump(Input::all());
 		echo '</pre>';
@@ -155,10 +156,15 @@ class UserController extends BaseController {
 			$user->ip       = Request::ip();
 			$user->city     = ThirdPartyController::getCity();
 			$user->save();
-			// $fingerprint = md5($user->id . $user->created_at);
-			// $this->downloadImage($this->getGravatar($user->email), $fingerprint);
-			// $user->fingerprint = $fingerprint;
-			// $user->save();
+
+			$fingerprint = md5($user->id . $user->created_at);
+			$user->fingerprint = $fingerprint;
+
+			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
+			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/assets/avatar/' . $fingerprint);
+
+
+			$user->save();
 			Auth::login($user);
 			return Redirect::to('dashboard');
 

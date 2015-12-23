@@ -29,7 +29,7 @@ class CreateFavoriteTaskPivot extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('TaskFavorite_User');
+		Schema::drop('FavoriteTaskPivot');
 	}
 
 }

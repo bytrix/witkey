@@ -1,4 +1,4 @@
-@extends('task.master')
+@extends('task.publish.master')
 
 @section('script')
 <script>

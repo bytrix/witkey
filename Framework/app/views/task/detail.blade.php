@@ -1,22 +1,6 @@
+
+
 @extends('task.master')
-
-@section('menu')
-	<ul class="nav navbar-nav">
-
-	<li><a href="/">Home</a></li>
-	<li class="active"><a href="/task/list">Task List</a></li>
-	<li><a href="/task/create">Publish Task</a></li>
-	<li class="dropdown">
-	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
-	  <ul class="dropdown-menu">
-	    <li><a href="/about">About</a></li>
-	    {{-- <li><a href="/contact">Contact</a></li> --}}
-	  </ul>
-	</li>
-
-	</ul>
-
-@stop
 
 @section('style')
 <style>
@@ -29,6 +13,7 @@
   }
   .avatar-sm:hover{
     box-shadow: 0 0 2px #337ab7;
+    /*border: 1px solid #337ab7;*/
   }
 </style>
 @stop
@@ -53,7 +38,7 @@
 		});
 		$.ajax({
 			type: 'post',
-			url: '/hasFavoriteTask/'+{{$id}},
+			url: '/hasFavoriteTask/'+{{$task_id}},
 			success: function(state) {
 				if (state == 'true') {
 					favorite();
@@ -73,6 +58,11 @@
 		<div class="col-md-8">
 			<div class="page-header">
 				<h3>
+					@if ($task->type == 1)
+						<span class="label label-warning">REWARD</span>
+					@elseif($task->type == 2)
+						<span class="label label-danger">BID</span>
+					@endif
 					@if (strlen($task->title) > 40)
 						<span title="{{$task->title}}" class="detail-title">
 							{{str_limit($task->title, 40)}}
@@ -101,7 +91,7 @@
 				$('#favorite').click(function() {
 					$.ajax({
 						type: 'post',
-						url: '/markFavoriteTask/'+{{$id}},
+						url: '/markFavoriteTask/'+{{$task_id}},
 						success: function(state) {
 							if (state == 'remove') {
 								unfavorite();
@@ -121,9 +111,15 @@
 			<div class="col-sm-6">
 				<h4><strong>Task ID:</strong> #{{$task->id}}</h4>
 				@if ($task->type == 1)
-					<h4><strong>Reward:</strong> &yen;{{$task->amount}}</h4>
+					<h4>
+						<strong>Reward:</strong>
+						<span class="amount text-success">&yen;{{$task->amount}}</span>
+					</h4>
 				@elseif ($task->type == 2)
-					<h4><strong>Budget:</strong> &yen;{{$task->amount}}</h4>
+					<h4>
+						<strong>Budget:</strong>
+						<span class="amount text-success">&yen;{{$task->amount}}</span>
+					</h4>
 				@endif
 			</div>
 
@@ -181,59 +177,84 @@
 
 
 
-				{{-- logined user --}}
+
 				@if (Auth::check())
 
-					{{-- the task belongs to the logined user --}}
-					@if ($task->user_id == Auth::user()->id)
 
-						{{-- THIS IS YOUR TASK --}}
-						<a href="#" class="btn btn-success">Close task</a>
 
-					{{-- other logined user --}}
-					@else
+					@if (Auth::user()->realname())
 
-						{{-- user has recruit the task --}}
-						@if (Auth::user()->isBidder($id))
-							{{Form::open(['url'=>"/task/$id/quit"])}}
-								{{Form::submit('Quit', ['class'=>'btn btn-danger'])}}
-							{{Form::close()}}
-						{{-- user hasn't recruit the task --}}
-						@else
-							{{Form::open(['url'=>"/task/$id/enrollment"])}}
-								{{Form::submit('Enroll', ['class'=>'btn btn-primary'])}}
+
+
+						{{-- COMMIT AREA --}}
+						@if ($task->type == 1 && $task->user->id != Auth::user()->id)
+							{{Form::open(['url'=>"/task/$task_id/commit"])}}
+								{{Form::label('summary', 'Post your work')}}
+								<div class="form-group">
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Commit summary'])}}
+								</div>
+								<div class="form-group">
+									{{Form::submit('Commit', ['class'=>'btn btn-danger'])}}
+								</div>
 							{{Form::close()}}
 						@endif
+						{{-- END COMMIT AREA --}}
+
+
+
+						{{-- QUOTE AREA --}}
+						@if ($task->type == 2 && $task->user->id != Auth::user()->id)
+							{{Form::open(['url'=>"/task/$task_id/quote"])}}
+								{{Form::label('summary', 'Post your work')}}
+								<div class="form-group">
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Quote summary'])}}
+								</div>
+								<div class="form-group">
+									{{Form::submit('Quote', ['class'=>'btn btn-danger'])}}
+								</div>
+							{{Form::close()}}
+						@endif
+						{{-- END QUOTE AREA --}}
+
+
+					@else
+
+
+
+						{{Form::open()}}
+							{{Form::label('summary', 'Post your work')}}
+							<div class="form-group">
+								{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
+							</div>
+							<div class="form-group">
+								{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
+							</div>
+						{{Form::close()}}
+
+
 
 					@endif
 
 				@else
 
-					{{-- guest user --}}
-					<button class="btn btn-primary disabled">Not logined yet!</button>
-
-				@endif
-
-
-
-
-				{{-- COMMIT AREA --}}
-				@if ($task->type == 1)
-					{{-- reward --}}
 					{{Form::open()}}
-						{{Form::label('post', 'Post your work')}}
+						{{Form::label('summary', 'Post your work')}}
 						<div class="form-group">
-							{{Form::textarea('post', '', ['class'=>'form-control'])}}
+							{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not logined in', 'disabled'])}}
 						</div>
 						<div class="form-group">
-							{{Form::submit('Commit', ['class'=>'btn btn-primary'])}}
+							{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
 						</div>
 					{{Form::close()}}
-				@elseif ($task->type == 2)
-					{{-- bid --}}
-				@endif
-				{{-- END COMMIT AREA --}}
 
+				@endif
+
+
+				@if (count($errors))
+					<div class="alert alert-danger">
+						{{$errors->first()}}
+					</div>
+				@endif
 
 
 			</div>
@@ -243,7 +264,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{ThirdPartyController::getGravatar($task->user->email)}}" class="thumbnail">
+					<img src="{{URL::asset('assets/avatar/' . $task->user->fingerprint )}}" class="thumbnail">
 				</div>
 				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 

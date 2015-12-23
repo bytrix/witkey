@@ -8,9 +8,9 @@ This is my little web project made with Laravel 4.2 which aims to encourage stud
 > Software Engineering Student in school, crazy about technolygy and art
 > but not proficient. A short time ago, a little conflict happened in
 > school between someone and me so that I have to  quit school.
-> Fortunately, it's a chance for me because I can spend all my spare
+> However, it's a chance for me because I can spend all my spare
 > time in programming learning. To summarize the self-study plan,
-> acturally I did learn something new that I don't know before like
+> acturally I did learn something new that I didn't know before like
 > linux, git and web framework.Previously, I did almost work in windows
 > and now I change to linux environment so that I could learn more about
 > programming with so much open source code.

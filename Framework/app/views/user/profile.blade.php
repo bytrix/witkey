@@ -90,9 +90,14 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{ThirdPartyController::getGravatar($user->email)}}" class="thumbnail">
+					<img src="{{URL::asset('assets/avatar/' . $user->fingerprint )}}" class="thumbnail">
 				</div>
-				<h4>{{$user->username}}</h4>
+				<h4>
+					{{$user->username}}
+					@if ($user->active == 0)
+						<span class="label label-danger">[ Inactive ]</span>
+					@endif
+				</h4>
 				<p>{{$user->email}}</p>
 
 				<span>

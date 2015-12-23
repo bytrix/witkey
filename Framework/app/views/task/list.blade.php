@@ -1,22 +1,5 @@
 @extends('task.master')
 
-@section('menu')
-	<ul class="nav navbar-nav">
-
-	<li><a href="/">Home</a></li>
-	<li class="active"><a href="/task/list">Task List</a></li>
-	<li><a href="/task/create">Publish Task</a></li>
-	<li class="dropdown">
-	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
-	  <ul class="dropdown-menu">
-	    <li><a href="/about">About</a></li>
-	    {{-- <li><a href="/contact">Contact</a></li> --}}
-	  </ul>
-	</li>
-
-	</ul>
-
-@stop
 
 @section('style')
 <style>
@@ -54,17 +37,18 @@
 		@if (count($tasks))
 			<div class="list-group list-group-lg">
 				@foreach ($tasks as $task)
-					<div href="/task/{{$task->id}}" class="list-group-item">
 
+					@if ($task->activeUserFilter() == 'active')
+
+					<div href="/task/{{$task->id}}" class="list-group-item">
 
 						<div class="item-inline">
 							<a href="/user/{{$task->user->id}}">
-								<img class="avatar-sm" src="{{ThirdPartyController::getGravatar($task->user->email)}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
+								<img class="avatar-sm" src="{{URL::asset('assets/avatar/' . $task->user->fingerprint )}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
 							</a>
 						</div>
 
 						<div class="item-inline">
-
 							<h4 class="list-group-item-heading">
 								<span class="label label-success">&yen; {{$task->amount}}</span>
 								@if ($task->type == 1)
@@ -80,14 +64,14 @@
 									</a>
 									<i class="fa fa-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
 								</span>
-							
 						</div>
 
-						{{-- <div class="item-inline"> --}}
-							{{-- <span class="badge">&yen; {{$task->amount}}</span> --}}
-						{{-- </div> --}}
-
 					</div>
+
+					@endif
+
+
+
 				@endforeach
 			</div>
 			{{-- Paginator --}}

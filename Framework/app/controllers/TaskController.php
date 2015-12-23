@@ -4,10 +4,10 @@
 class TaskController extends BaseController {
 
 
-	public function edit($id) {
+	public function edit($task_id) {
 
 		$task = Task::where([
-			'id'      => $id,
+			'id'      => $task_id,
 			'user_id' => Auth::user()->id
 		])->first();
 
@@ -124,21 +124,25 @@ class TaskController extends BaseController {
 			->with('tasks', $tasks);
 	}
 
-	public function detail($id) {
+	public function detail($task_id) {
 
-		$task = Task::where('id', $id)->first();
+		$task = Task::where('id', $task_id)->first();
+
+		if ($task->user->active == 0) {
+			return View::make('task.closed');
+		}
 
 		return View::make('task.detail')
-			->with('id', $id)
+			->with('task_id', $task_id)
 			->with('task', $task);
 
 	}
 
 
 
-	public function postEdit($id) {
+	public function postEdit($task_id) {
 
-		$task = Task::where('id', $id);
+		$task = Task::where('id', $task_id);
 
 		$userInput = [
 			'title'  => Input::get('title'),
@@ -159,11 +163,11 @@ class TaskController extends BaseController {
 				'detail' => Input::get('detail')
 			]);
 
-			return Redirect::to("/task/$id");
+			return Redirect::to("/task/$task_id");
 
 		} else {
 
-			return Redirect::to("/task/$id/edit")->withErrors($validator);
+			return Redirect::to("/task/$task_id/edit")->withErrors($validator);
 
 		}
 
@@ -192,6 +196,49 @@ class TaskController extends BaseController {
 		Session::forget('expiration');
 
 		return Redirect::to('task/list');
+	}
+
+
+	public function postCommit($task_id) {
+		$userInput = [
+			'summary' => Input::get('summary'),
+		];
+		$rules = [
+			'summary' => 'required',
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			$commit = new CommitPivot;
+			$commit->task_id = $task_id;
+			$commit->user_id = Auth::user()->id;
+			$commit->summary = Input::get('summary');
+			$commit->save();
+			return Redirect::to("/task/$task_id");
+		} else {
+			return Redirect::to("/task/$task_id")
+				->withErrors($validator);
+		}
+	}
+
+	public function postQuote($task_id) {
+		$userInput = [
+			'summary' => Input::get('summary'),
+		];
+		$rules = [
+			'summary' => 'required',
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			$quote = new QuotePivot;
+			$quote->task_id = $task_id;
+			$quote->user_id = Auth::user()->id;
+			$quote->summary = Input::get('summary');
+			$quote->save();
+			return Redirect::to("/task/$task_id");
+		} else {
+			return Redirect::to("/task/$task_id")
+				->withErrors($validator);
+		}
 	}
 
 
