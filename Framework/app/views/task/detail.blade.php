@@ -15,6 +15,13 @@
     box-shadow: 0 0 2px #337ab7;
     /*border: 1px solid #337ab7;*/
   }
+  .time{
+  	/*font-size: 25px;*/
+  	/*background-color: red;*/
+  	color: #999;
+  	display: block;
+  	text-align: center;
+  }
 </style>
 @stop
 
@@ -49,6 +56,11 @@
 		});
 	});
 </script>
+{{HTML::script(URL::asset('assets/script/moment.js'))}}
+{{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
+{{HTML::script(URL::asset('assets/script/jquery.plugin.js'))}}
+{{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
+{{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
 @stop
 
 @section('content')
@@ -130,12 +142,21 @@
 				@else
 					{{UserController::$schoolList[$task->user->school]}}</h4>
 				@endif
-				<h4><strong>Expiration:</strong> {{$task->expiration}}</h4>
+				{{-- <h4><strong>Expiration:</strong> {{$task->expiration}}</h4> --}}
+				<h4>
+					<strong>Expiration:</strong>
+					<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
+					<script>
+					moment.lang('zh-cn');
+					var expiration = new Date("{{ $task->expiration }}");
+					var deltaSecond = expiration - new Date();
+					$('#expiration').html(moment().add(deltaSecond).calendar());
+					</script>
+				</h4>
 				<p></p>
 			</div>
 
 			<div class="col-sm-12">
-
 
 				<ul class='task-procedure first'>
 					<li class="first col-md-3">Enrollment</li>
@@ -143,6 +164,17 @@
 					<li class="third col-md-3">Check</li>
 					<li class="third col-md-3">Finish</li>
 				</ul>
+				
+				<div class="time">
+					距离任务结束时间：
+					<span id="countdown">
+						countdown
+					</span>
+					<script>
+						var expiration = new Date("{{ $task->expiration }}");
+						$('#countdown').countdown({until: expiration});
+					</script>
+				</div>
 
 
 				<h4><strong>Task Description:</strong></h4>
