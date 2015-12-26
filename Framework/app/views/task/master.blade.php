@@ -17,6 +17,7 @@
 
 @stop
 
+
 @section('procedure-style')
 	{{HTML::style('assets/style/task-procedure.css')}}
 @stop

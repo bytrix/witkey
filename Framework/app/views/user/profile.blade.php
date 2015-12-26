@@ -90,7 +90,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('assets/avatar/' . $user->fingerprint )}}" class="thumbnail">
+					<img src="{{URL::asset('assets/avatar/' . $user->avatar )}}" class="thumbnail">
 				</div>
 				<h4>
 					{{$user->username}}

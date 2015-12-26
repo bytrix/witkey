@@ -31,22 +31,22 @@
 
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-				<div class="alert alert-dismissable alert-info">
+{{-- 				<div class="alert alert-dismissable alert-info">
 					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						We use Gravatar as our avatar service, go <a href="https://cn.gravatar.com/" target="blank"><strong>here</strong></a> to register a gravatar account.
-				</div>
+				</div> --}}
 			</div>
 		</div>
 
 
 
 		<div class="col-md-8">
-			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('assets/avatar/' . Auth::user()->fingerprint )}}">
+			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('assets/avatar/' . Auth::user()->avatar )}}">
 
 
 
 			<div class="greeting">
-				<h1>{{$greeting}}, {{Auth::user()->username}}!</h1>
+				<h1>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="Change Username">{{Auth::user()->username}}</a>!</h1>
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if (Auth::user()->gender == 'M')

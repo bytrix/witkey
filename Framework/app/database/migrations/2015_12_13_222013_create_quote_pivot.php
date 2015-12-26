@@ -20,7 +20,7 @@ class CreateQuotePivot extends Migration {
 			$table->integer('task_id');
 			$table->integer('user_id');
 			$table->integer('price');
-			$table->string('summary');
+			$table->text('summary');
 		});
 	}
 

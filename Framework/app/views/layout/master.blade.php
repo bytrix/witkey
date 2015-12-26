@@ -105,6 +105,17 @@
     font-size: 24px;
     padding-left: 6px;
   }
+  .metadata,
+  .metadata a{
+    color: #888;
+    text-decoration: none;
+  }
+  .metadata a:hover{
+    color: #666;
+  }
+  .metadata .property{
+    margin-left: 10px;
+  }
 
   </style>
   @yield('style')
@@ -121,7 +132,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">witkey</a>
+          <a class="navbar-brand" href="/">
+            witkey
+            <span class="label label-primary">beta</span>
+          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 

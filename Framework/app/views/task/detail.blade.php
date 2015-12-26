@@ -1,32 +1,59 @@
-
-
 @extends('task.master')
 
 @section('style')
 <style>
-  .avatar-sm{
-    /*float: left;*/
-    cursor: pointer;
-    width: 30px;
-    margin-right: 12px;
-    margin-bottom: 4px;
-  }
-  .avatar-sm:hover{
-    box-shadow: 0 0 2px #337ab7;
-    /*border: 1px solid #337ab7;*/
-  }
-  .time{
-  	/*font-size: 25px;*/
-  	/*background-color: red;*/
-  	color: #999;
-  	display: block;
-  	text-align: center;
-  }
+	.avatar-sm{
+	/*float: left;*/
+	cursor: pointer;
+	width: 30px;
+	margin-right: 12px;
+	margin-bottom: 4px;
+	}
+	.avatar-sm:hover{
+	box-shadow: 0 0 2px #337ab7;
+	/*border: 1px solid #337ab7;*/
+	}
+	.time{
+		/*font-size: 25px;*/
+		/*background-color: red;*/
+		color: #999;
+		display: block;
+		text-align: center;
+	}
+	.item-inline{
+		display: inline-block;
+		/*border: 1px solid red;*/
+	}
+	.item-inline .avatar-sm{
+		float: left;
+	}
+	div#summary{
+		font-size: 18px;
+		padding-left: 50px;
+		/*background-color: #ccc;*/
+		/*width: 400px;*/
+	}
+	.no{
+		font-size: 20px;
+		color: #ccc;
+		display: inline-block;
+		/*background-color: red;*/
+		width: 40px;
+	}
+	#editor {
+		overflow:scroll;
+		/*max-height:300px;*/
+	}
 </style>
+{{HTML::style(URL::asset('assets/style/cover.css'))}}
+{{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
+{{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}}
+{{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}}
 @stop
 
 @section('script')
 <script>
+
 	function favorite() {
 		$('#favorite').addClass('fa-heart');
 		$('#favorite').removeClass('fa-heart-o');
@@ -61,9 +88,24 @@
 {{HTML::script(URL::asset('assets/script/jquery.plugin.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
+
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/nanoscroller.min.js'))}}
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/tether.min.js'))}}
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/config.js'))}}
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/util.js'))}}
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/jquery.emojiarea.js'))}}
+{{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/emoji-picker.js'))}}
+
+
+
+{{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
+{{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
+{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
+
 @stop
 
 @section('content')
+
 	<div class="container">
 
 
@@ -179,7 +221,7 @@
 
 				<h4><strong>Task Description:</strong></h4>
 				<div class="detail" id="detail">
-					{{{str_limit($task->detail, 1200)}}}
+					{{str_limit($task->detail, 1200)}}
 				</div>
 				@if (strlen($task->detail) > 1200)
 					<div>
@@ -200,37 +242,87 @@
 					</script>
 				@endif
 
-				<h4><strong>Bidders({{count($task->bidder)}}):</strong></h4>
+				<h4>
+					<strong>
+						Bidders
+						<span data-toggle="tooltip" data-placement="top" title="人数">({{count($task->bidder)}}</span>
+						/
+						<span data-toggle="tooltip" data-placement="top" title="交稿数">{{Session::get('commit_sum')}})</span>
+					</strong>
+				</h4>
 				<div class="avatar-bar">
 					@foreach ($task->bidder as $bidder)
-						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{ThirdPartyController::getGravatar($bidder->email)}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('assets/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+
 					@endforeach
 				</div>
-
-
 
 
 				@if (Auth::check())
 
 
+					<div class="list-group">
+
+						@if (isset($commits))
+							
+							@foreach ($commits as $commit)
+								<div class="list-group-item">
+									<span class="no"># {{$commit->id}}</span>
+									<a href="/">
+										{{HTML::image(URL::asset('assets/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
+									</a>
+									<span class="metadata">
+										<a href="/"><strong>{{$commit->user->username}}</strong></a>
+										committed at 
+										{{$commit->created_at}}
+									</span>
+									<div id="summary">
+										{{$commit->summary}}
+									</div>
+								</div>
+							@endforeach
+
+							{{$commits->links()}}
+
+
+						@elseif(isset($quotes))
+
+							@foreach ($quotes as $quote)
+								<div class="list-group-item">
+									{{$quote->user->username}} {{$quote->summary}}
+								</div>
+							@endforeach
+
+						@endif
+
+					</div>
+
+
+
 
 					@if (Auth::user()->realname())
-
-
 
 						{{-- COMMIT AREA --}}
 						@if ($task->type == 1 && $task->user->id != Auth::user()->id)
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}
-								{{Form::label('summary', 'Post your work')}}
+
+								{{Form::label('summary', 'Commit')}}
+
+								{{-- <div class="form-group emoji-picker-container">
+									{{Form::textarea('summary', '', ['class'=>'form-control textarea-control textarea', 'placeholder'=>'Commit summary', 'data-emojiable'=>'true', 'rows'=>'5'])}}
+								</div> --}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Commit summary'])}}
+									{{Form::textarea('summary', '', ['class'=>'form-control textarea', 'placeholder'=>'Commit summary'])}}
 								</div>
 								<div class="form-group">
 									{{Form::submit('Commit', ['class'=>'btn btn-danger'])}}
 								</div>
+
+
 							{{Form::close()}}
 						@endif
 						{{-- END COMMIT AREA --}}
+
 
 
 
@@ -252,16 +344,17 @@
 					@else
 
 
-
-						{{Form::open()}}
-							{{Form::label('summary', 'Post your work')}}
-							<div class="form-group">
-								{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
-							</div>
-							<div class="form-group">
-								{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
-							</div>
-						{{Form::close()}}
+						@if ($task->user->id != Auth::user()->id)
+							{{Form::open()}}
+								{{Form::label('summary', 'Post your work')}}
+								<div class="form-group">
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
+								</div>
+								<div class="form-group">
+									{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
+								</div>
+							{{Form::close()}}
+						@endif
 
 
 
@@ -296,7 +389,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('assets/avatar/' . $task->user->fingerprint )}}" class="thumbnail">
+					<img src="{{URL::asset('assets/avatar/' . $task->user->avatar )}}" class="thumbnail">
 				</div>
 				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 
@@ -346,4 +439,26 @@
 
 
 	</div>
+
+	<script>
+		$(function() {
+			// Initializes and creates emoji set from sprite sheet
+			window.emojiPicker = new EmojiPicker({
+				emojiable_selector: '[data-emojiable=true]',
+				assetsPath: "{{URL::asset('assets/extension/emoji-picker/lib/img')}}",
+				popupButtonClasses: 'fa fa-smile-o'
+			});
+			// Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+			// You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+			// It can be called as many times as necessary; previously converted input fields will not be converted again
+			window.emojiPicker.discover();
+
+			$('.textarea').wysihtml5({
+				toolbar: {
+					fa: true,
+				}
+			});
+		});
+	</script>
+
 @stop

@@ -1,21 +1,12 @@
 @extends('task.master')
 
-
 @section('style')
 <style>
-.metadata,
-.metadata a{
-	color: #888;
-	text-decoration: none;
-}
-.metadata a:hover{
-	color: #666;
-}
-.metadata .property{
-	margin-left: 10px;
-}
 .item-inline{
 	display: inline-block;
+}
+.item-inline .avatar-sm{
+	float: left;
 }
 .amount{
 	font-size: 16px;
@@ -24,11 +15,12 @@
 .list-group-item-heading>a{
 	color: #000;
 }
-.avatar-sm{
-	float: left;
-}
 </style>
 
+@stop
+
+@section('script')
+{{HTML::script(URL::asset('assets/script/moment.js'))}}
 @stop
 
 @section('content')
@@ -44,7 +36,7 @@
 
 						<div class="item-inline">
 							<a href="/user/{{$task->user->id}}">
-								<img class="avatar-sm" src="{{URL::asset('assets/avatar/' . $task->user->fingerprint )}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
+								<img class="avatar-sm" src="{{URL::asset('assets/avatar/' . $task->user->avatar )}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
 							</a>
 						</div>
 

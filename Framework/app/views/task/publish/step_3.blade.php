@@ -40,7 +40,7 @@
 			<p>
 				<strong>Task description: </strong>
 				<br>
-				{{{Session::get('detail')}}}
+				{{Session::get('detail')}}
 			</p>
 
 				<div class="end-price-bar">

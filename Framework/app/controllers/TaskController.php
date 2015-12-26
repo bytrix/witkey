@@ -126,11 +126,47 @@ class TaskController extends BaseController {
 
 	public function detail($task_id) {
 
+
 		$task = Task::where('id', $task_id)->first();
 
 		if ($task->user->active == 0) {
 			return View::make('task.closed');
 		}
+
+
+		if (Auth::check()) {
+			if ($task->type ==1) {
+				// dd(var_dump($task->user_id == Auth::user()->id));
+				Session::set('commit_sum', count(CommitPivot::where(['task_id'=>$task_id])->get()));
+				if ($task->user_id == Auth::user()->id) {
+					$all_commits = CommitPivot::where(['task_id'=>$task_id]);
+				} else {
+					// dd(var_dump(Auth::user()->isBidder($task_id)));
+					if (Auth::user()->isBidder($task_id)) {
+						$all_commits = CommitPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
+					} else {
+						return View::make('task.detail')
+							->with('task_id', $task_id)
+							->with('task', $task);
+					}
+				}
+				$commits = $all_commits->orderBy('created_at', 'desc')->paginate(5);
+				return View::make('task.detail')
+					->with('task_id', $task_id)
+					->with('task', $task)
+					->with('commits', $commits);
+
+			} else if($task->type ==2) {
+				$quote = QuotePivot::where(['task_id'=>$task_id])->paginate(5);
+				return View::make('task.detail')
+					->with('task_id', $task_id)
+					->with('task', $task)
+					->with('quotes', $quotes);
+
+			}
+		}
+
+
 
 		return View::make('task.detail')
 			->with('task_id', $task_id)
@@ -200,6 +236,8 @@ class TaskController extends BaseController {
 
 
 	public function postCommit($task_id) {
+		// header('content-type:charset=utf-8');
+		// dd(Input::all());
 		$userInput = [
 			'summary' => Input::get('summary'),
 		];

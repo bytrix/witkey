@@ -125,8 +125,8 @@
 			<div class="form-group">
 				<span class="col-sm-2"></span>
 				<div class="col-sm-4">
-					@if (Auth::user()->fingerprint)
-						{{HTML::image(URL::asset('upload/' . md5(Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
+					@if (Auth::user()->student_card)
+						{{HTML::image(URL::asset('upload/' . md5('student_card' . Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
 					@else
 						{{HTML::image(URL::asset('assets/image/idcard_image.jpg'), '', ['class'=>'thumbnail'])}}
 					@endif

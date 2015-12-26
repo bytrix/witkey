@@ -18,6 +18,10 @@ class Task extends Eloquent {
 		}
 	}
 
+	public function commitment() {
+		
+	}
+
 	// overdue_task(n) -------------- winning_bidder(1)
 	public function winningBidder() {
 		return $this->belongsTo('User', 'winning_bidder_id');
@@ -34,12 +38,12 @@ class Task extends Eloquent {
 		return 'active';
 	}
 
-	public function setTitleAttribute($data) {
-		$this->attributes['title'] = e("$data");
-	}
+	// public function setTitleAttribute($data) {
+	// 	$this->attributes['title'] = e("$data");
+	// }
 
-	public function setDetailAttribute($data) {
-		$this->attributes['detail'] = e("$data");
-	}
+	// public function setDetailAttribute($data) {
+	// 	$this->attributes['detail'] = e("$data");
+	// }
 	
 }

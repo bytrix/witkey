@@ -137,7 +137,7 @@ class DashboardController extends BaseController {
 		$rules = [
 			'real_name'       => 'required',
 			'school'          => 'required',
-			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp|max:1024',
+			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp,png|max:1024',
 			'major_category'  => 'required',
 			'major_name'      => 'required',
 			'enrollment_date' => 'required',
@@ -156,7 +156,7 @@ class DashboardController extends BaseController {
 
 		if ($validator->passes()) {
 
-			if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->fingerprint)) {
+			if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->student_card)) {
 			// when the file exists in database (replace the original)
 
 				return View::make('user.dashboard.authentication')
@@ -170,12 +170,12 @@ class DashboardController extends BaseController {
 				if (Input::hasFile('idcard_image')) {
 
 					$file        = Input::file('idcard_image');
-					$fingerprint = md5(Auth::user()->id.Auth::user()->created_at);
+					$student_card = md5(Auth::user()->id.Auth::user()->created_at);
 
-					$file->move(public_path() . '/upload', $fingerprint);
+					$file->move(public_path() . '/upload', $student_card);
 
 					User::where('id', Auth::user()->id)
-						->update(['fingerprint'=>$fingerprint, 'authenticated'=>1]);
+						->update(['student_card'=>$student_card, 'authenticated'=>1]);
 
 				} else {
 
@@ -187,11 +187,11 @@ class DashboardController extends BaseController {
 
 			User::where('id', Auth::user()->id)->update([
 
-				'real_name'       =>$userInput['real_name'],
-				'school'          =>$userInput['school'],
-				'major_category'  =>$userInput['major_category'],
+				'real_name'       => $userInput['real_name'],
+				'school'          => $userInput['school'],
+				'major_category'  => $userInput['major_category'],
 				'major_name'      => $userInput['major_name'],
-				'enrollment_date' =>$userInput['enrollment_date'],
+				'enrollment_date' => $userInput['enrollment_date'],
 
 			]);
 

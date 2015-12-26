@@ -15,10 +15,10 @@ class CreateUserTable extends Migration {
 		Schema::create('User', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('username')->unique();
+			$table->string('username');
 			$table->string('password');
 			$table->char('gender')->default('M');
-			$table->string('email')->unique();
+			$table->string('email');
 			$table->string('tel')->nullable();
 			$table->string('qq')->nullable();
 			$table->string('school')->nullable();
@@ -44,7 +44,9 @@ class CreateUserTable extends Migration {
 			*/
 			$table->tinyInteger('authenticated')->default(0);
 			$table->string('city')->nullable();
-			$table->string('fingerprint')->nullable();
+			// $table->string('fingerprint')->nullable();
+			$table->string('avatar');
+			$table->string('student_card')->nullable();
 			$table->timestamps();
 		});
 	}

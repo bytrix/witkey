@@ -141,7 +141,7 @@ class UserController extends BaseController {
 		];
 
 		$rules = [
-			'email'    => 'required|email',
+			'email'    => 'required|email|unique:User,email',
 			'password' => 'required|between:6,20|confirmed',
 		];
 
@@ -157,11 +157,11 @@ class UserController extends BaseController {
 			$user->city     = ThirdPartyController::getCity();
 			$user->save();
 
-			$fingerprint = md5($user->id . $user->created_at);
-			$user->fingerprint = $fingerprint;
+			$avatar = md5('avatar' . $user->id . $user->created_at);
+			$user->avatar = $avatar;
 
 			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
-			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/assets/avatar/' . $fingerprint);
+			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/assets/avatar/' . $avatar);
 
 
 			$user->save();

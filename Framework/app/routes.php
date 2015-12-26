@@ -63,4 +63,7 @@ Route::group(['before'=>'auth'], function() {
 
 
 Route::get('admin/auth'	, 'AdminController@auth');
-Route::post('admin/auth', 'AdminController@postAuth');
+Route::get('admin/getAuth', 'AdminController@getAuth');
+Route::get('admin/postAuthTobe/{user_id}', 'AdminController@postAuthTobe');
+Route::get('admin/postAuthSuccess/{user_id}', 'AdminController@postAuthSuccess');
+Route::get('admin/postAuthFail/{user_id}', 'AdminController@postAuthFail');

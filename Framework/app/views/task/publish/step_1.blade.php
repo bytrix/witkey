@@ -9,18 +9,20 @@
 }
 </style>
 
-{{HTML::style(URL::asset('assets/style/font-awesome.min.css'))}}
 {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}}
 
-{{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
-{{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
-{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
 
 @stop
 
+@section('script')
+	{{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
+	{{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
+	{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
+@stop
 
 @section('content')
 	<div class="container">
+
 		<h1 class="page-header">Publish you task</h1>
 		<ul class='task-procedure first'>
 			<li class="first col-md-4">CREATE TASK</li>
@@ -38,35 +40,22 @@
 				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
 				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
 
-
-{{-- 
-      <textarea class="textarea form-control" placeholder="Enter text ..."></textarea>
- --}}
-
 			</div>
 			<div class="form-group">
 				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
-				{{-- {{HTML::link('task/create/set-reward', 'Next', ['class'=>'btn btn-primary'])}} --}}
 			</div>
 
-
-
-
-
-
-	<script>
-  $('.textarea').wysihtml5({
-    toolbar: {
-      fa: true
-    }
-  });
-
-	</script>
-
-
-
+		<script>
+			$('.textarea').wysihtml5({
+				toolbar: {
+					fa: true,
+				}
+			});
+		</script>
 
 		{{Form::close()}}
+
+		
 
 		@if (count($errors->all()))
 			<div class="alert alert-danger">

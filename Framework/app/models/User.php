@@ -52,19 +52,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	// 	return $this->hasMany('Task', 'winning_bidder_id');
 	// }
 
+	// To check the current logined user whether is bidder of some task given by task_id
 	public function isBidder($task_id) {
 
-		$bidder_arrat = QuotePivot::where([
-			'task_id'   =>$task_id,
-			'user_id' =>Auth::user()->id
-		])->get();
+		$task = Task::where(['id'=>$task_id])->first();
 
-		if (count($bidder_arrat)) {
+		if ($task->type == 1) {
+			$bidder_array = CommitPivot::where([
+				'task_id'   =>$task_id,
+				'user_id' =>Auth::user()->id
+			])->get();
+		} else if ($task->type ==2) {
+			$bidder_array = QuotePivot::where([
+				'task_id'   =>$task_id,
+				'user_id' =>Auth::user()->id
+			])->get();
+		}
 
+		if (count($bidder_array)) {
 			return true;
-
 		} else {
-
 			return false;
 		}
 	}
