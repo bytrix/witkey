@@ -88,46 +88,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	public function asteriskTel() {
-		$phoneNumber  = $this->tel;
-		$headNumber   = substr($phoneNumber, 0, 3);
-		$tailNumber   = substr($phoneNumber, -3);
-		$asteriskBody = '';
-
-		for ($i=0; $i < strlen($phoneNumber)-6; $i++) { 
-
-			$asteriskBody .= '*';
-		}
-
-		return $headNumber . $asteriskBody . $tailNumber;
+		
+		return Util::asterisk($this->tel, 1, 1);
 	}
 
 	public function asteriskQQ() {
-		$qqNumber  = $this->qq;
-		$headNumber   = substr($qqNumber, 0, 3);
-		$tailNumber   = substr($qqNumber, -3);
-		$asteriskBody = '';
 
-		for ($i=0; $i < strlen($qqNumber)-6; $i++) { 
-
-			$asteriskBody .= '*';
-		}
-
-		return $headNumber . $asteriskBody . $tailNumber;
+		return Util::asterisk($this->qq, 1, 1);
 	}
 
 	public function asteriskDorm() {
 
-		$dorm         = $this->dorm;
-		$headDorm     = mb_substr($dorm, 0, 1);
-		$tailDorm     = mb_substr($dorm, -1);
-		$asteriskBody = '';
-
-		for ($i=0; $i < strlen($dorm)-2; $i++) { 
-
-			$asteriskBody .= '*';
-		}
-
-		return $headDorm . $asteriskBody . $tailDorm;
+		return Util::asterisk($this->dorm, 1, 1);
 	}
 
 
@@ -148,9 +120,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	// POST API PART
 	// if Auth user favorite some task, return true, else return false
-	public function hasFavoriteTask($tid) {
+	public function hasFavoriteTask($task_id) {
 
-		$favorite_task = FavoriteTaskPivot::where(['task_id'=>$tid, 'user_id'=>Auth::user()->id])->first();
+		$favorite_task = FavoriteTaskPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id])->first();
 
 		if (count($favorite_task)) {
 			return true;
@@ -160,17 +132,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
-	public function markFavoriteTask($tid) {
+	public function markFavoriteTask($task_id) {
 
 		$favorite_task          = new FavoriteTaskPivot;
-		$favorite_task->task_id = $tid;
+		$favorite_task->task_id = $task_id;
 		$favorite_task->user_id = Auth::user()->id;
 		$favorite_task->save();
 	}
 
-	public function removeFavoriteTask($tid) {
+	public function removeFavoriteTask($task_id) {
 
-		$favorite_task = FavoriteTaskPivot::where(['task_id'=>$tid, 'user_id'=>Auth::user()->id]);
+		$favorite_task = FavoriteTaskPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
 		$favorite_task->delete();
 	}
 	// END POST API PART

@@ -51,9 +51,9 @@
 
 		{{-- Real name --}}
 		<div class="form-group">
-			{{Form::label('real_name', 'Real Name', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('realname', 'Real Name', ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
-				{{Form::text('real_name', Auth::user()->real_name, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+				{{Form::text('realname', Auth::user()->realname, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
 			</div>
 		</div>
 
@@ -126,7 +126,7 @@
 				<span class="col-sm-2"></span>
 				<div class="col-sm-4">
 					@if (Auth::user()->student_card)
-						{{HTML::image(URL::asset('upload/' . md5('student_card' . Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
+						{{HTML::image(URL::asset('student_card/' . md5('student_card' . Auth::user()->id . Auth::user()->created_at)), '', ['class'=>'thumbnail idcard_image'])}}
 					@else
 						{{HTML::image(URL::asset('assets/image/idcard_image.jpg'), '', ['class'=>'thumbnail'])}}
 					@endif

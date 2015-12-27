@@ -1,28 +1,24 @@
 @extends('task.master')
 
 @section('style')
+@parent
 <style>
 	.avatar-sm{
-	/*float: left;*/
-	cursor: pointer;
-	width: 30px;
-	margin-right: 12px;
-	margin-bottom: 4px;
+		cursor: pointer;
+		width: 30px;
+		margin-right: 12px;
+		margin-bottom: 4px;
 	}
 	.avatar-sm:hover{
-	box-shadow: 0 0 2px #337ab7;
-	/*border: 1px solid #337ab7;*/
+		box-shadow: 0 0 2px #337ab7;
 	}
 	.time{
-		/*font-size: 25px;*/
-		/*background-color: red;*/
 		color: #999;
 		display: block;
 		text-align: center;
 	}
 	.item-inline{
 		display: inline-block;
-		/*border: 1px solid red;*/
 	}
 	.item-inline .avatar-sm{
 		float: left;
@@ -30,19 +26,43 @@
 	div#summary{
 		font-size: 18px;
 		padding-left: 50px;
-		/*background-color: #ccc;*/
-		/*width: 400px;*/
 	}
 	.no{
 		font-size: 20px;
 		color: #ccc;
 		display: inline-block;
-		/*background-color: red;*/
 		width: 40px;
 	}
 	#editor {
 		overflow:scroll;
 		/*max-height:300px;*/
+	}
+	#edit{
+		font-size: 0.8em;
+		cursor: pointer;
+		color: #666;
+		margin-left: 0.6em;
+		margin-right: 0.7em;
+	}
+	#edit:hover{
+		color: #333;
+	}
+	.favorite{
+		cursor: pointer;
+		font-size: 0.8em;
+		margin-top: 0.3em;
+		margin-right: 1.7em;
+		color: red;
+	}
+
+	#tip{
+		display: block;
+		margin-left: -20px;
+		position: absolute;
+		color: red;
+		font-size: 12px;
+		width: 60px;
+		text-align: center;
 	}
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
@@ -53,7 +73,6 @@
 
 @section('script')
 <script>
-
 	function favorite() {
 		$('#favorite').addClass('fa-heart');
 		$('#favorite').removeClass('fa-heart-o');
@@ -89,14 +108,14 @@
 {{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
 
+<!--
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/nanoscroller.min.js'))}}
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/tether.min.js'))}}
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/config.js'))}}
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/util.js'))}}
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/jquery.emojiarea.js'))}}
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/emoji-picker.js'))}}
-
-
+-->
 
 {{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
 {{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
@@ -107,7 +126,6 @@
 @section('content')
 
 	<div class="container">
-
 
 		<div class="col-md-8">
 			<div class="page-header">
@@ -247,7 +265,7 @@
 						Bidders
 						<span data-toggle="tooltip" data-placement="top" title="人数">({{count($task->bidder)}}</span>
 						/
-						<span data-toggle="tooltip" data-placement="top" title="交稿数">{{Session::get('commit_sum')}})</span>
+						<span data-toggle="tooltip" data-placement="top" title="交稿数">{{$commit_sum}})</span>
 					</strong>
 				</h4>
 				<div class="avatar-bar">
@@ -267,15 +285,25 @@
 							
 							@foreach ($commits as $commit)
 								<div class="list-group-item">
+
+									{{-- no --}}
 									<span class="no"># {{$commit->id}}</span>
+
+									{{-- avatar --}}
 									<a href="/">
 										{{HTML::image(URL::asset('assets/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
 									</a>
+
+									{{-- date --}}
 									<span class="metadata">
 										<a href="/"><strong>{{$commit->user->username}}</strong></a>
 										committed at 
 										{{$commit->created_at}}
 									</span>
+
+									{{-- bid_btn --}}
+									<a href="javascript:;" class="btn btn-danger pull-right">Bid</a>
+
 									<div id="summary">
 										{{$commit->summary}}
 									</div>
@@ -329,7 +357,7 @@
 						{{-- QUOTE AREA --}}
 						@if ($task->type == 2 && $task->user->id != Auth::user()->id)
 							{{Form::open(['url'=>"/task/$task_id/quote"])}}
-								{{Form::label('summary', 'Post your work')}}
+								{{Form::label('summary', 'Commit')}}
 								<div class="form-group">
 									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Quote summary'])}}
 								</div>
@@ -346,7 +374,7 @@
 
 						@if ($task->user->id != Auth::user()->id)
 							{{Form::open()}}
-								{{Form::label('summary', 'Post your work')}}
+								{{Form::label('summary', 'Commit')}}
 								<div class="form-group">
 									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
 								</div>
@@ -363,7 +391,7 @@
 				@else
 
 					{{Form::open()}}
-						{{Form::label('summary', 'Post your work')}}
+						{{Form::label('summary', 'Commit')}}
 						<div class="form-group">
 							{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not logined in', 'disabled'])}}
 						</div>
@@ -415,7 +443,7 @@
 					@if (Auth::check() && $task->user->realname())
 						<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
 					@else
-						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskTel()}}</p>
+						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskQQ()}}</p>
 					@endif
 				@endif
 
@@ -442,17 +470,6 @@
 
 	<script>
 		$(function() {
-			// Initializes and creates emoji set from sprite sheet
-			window.emojiPicker = new EmojiPicker({
-				emojiable_selector: '[data-emojiable=true]',
-				assetsPath: "{{URL::asset('assets/extension/emoji-picker/lib/img')}}",
-				popupButtonClasses: 'fa fa-smile-o'
-			});
-			// Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
-			// You may want to delay this step if you have dynamically created input fields that appear later in the loading process
-			// It can be called as many times as necessary; previously converted input fields will not be converted again
-			window.emojiPicker.discover();
-
 			$('.textarea').wysihtml5({
 				toolbar: {
 					fa: true,

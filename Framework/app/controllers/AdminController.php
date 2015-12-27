@@ -2,13 +2,11 @@
 
 class AdminController extends BaseController {
 	public function auth() {
-		$users = User::all();
-		return View::make('admin.auth')
-			->with('users', $users);
+		return View::make('admin.auth');
 	}
 
 	public function getAuth() {
-		return User::all();
+		return User::orderBy('authenticated')->get();
 	}
 
 	public function postAuthTobe($user_id) {

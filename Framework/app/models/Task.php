@@ -18,7 +18,7 @@ class Task extends Eloquent {
 		}
 	}
 
-	public function commitment() {
+	public function commit() {
 		
 	}
 

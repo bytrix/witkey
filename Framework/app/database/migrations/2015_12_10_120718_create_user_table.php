@@ -28,7 +28,7 @@ class CreateUserTable extends Migration {
 			$table->decimal('balance')->default(10);
 			$table->boolean('active')->default(true);
 			$table->string('remember_token');
-			$table->string('real_name')->nullable();
+			$table->string('realname')->nullable();
 			// $table->string('identity_card')->nullable();		// The image URL of a user's identity card (FOR STUDENT!)
 			$table->date('enrollment_date')->nullable();		// The date when the user enroll school
 			$table->string('major_category')->nullable();

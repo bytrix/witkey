@@ -1,6 +1,7 @@
 @extends('task.master')
 
 @section('style')
+@parent
 <style>
 .item-inline{
 	display: inline-block;
@@ -16,7 +17,6 @@
 	color: #000;
 }
 </style>
-
 @stop
 
 @section('script')
@@ -50,14 +50,19 @@
 								@endif
 								<a href="/task/{{$task->id}}">{{{str_limit($task->title, 45)}}}</a>
 							</h4>
-								<span class="metadata">
-									<a href="/user/{{$task->user->id}}" class="property">
-										<i class="fa fa-user"></i> {{{$task->user->username}}}
-									</a>
-									<i class="fa fa-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
-								</span>
+							<span class="metadata">
+								<a href="/user/{{$task->user->id}}" class="property">
+									<i class="fa fa-user"></i> {{{$task->user->username}}}
+								</a>
+								<i class="fa fa-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
+							</span>
 						</div>
 
+						<div class="item-inline pull-right metadata">
+							<h4>
+							{{count($task->bidder)}} people participated
+							</h4>
+						</div>
 					</div>
 
 					@endif

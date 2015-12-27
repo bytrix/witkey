@@ -48,9 +48,9 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('task/{task_id}/postQuit'	, 'TaskController@postQuit')->where('task_id', '[0-9]+');
 
 	// POST API FOR JAVASCRIPT
-	Route::post('hasFavoriteTask/{task_id}'		, 'TaskApiController@hasFavoriteTask')->where('task_id', '[0-9]+');
-	Route::post('markFavoriteTask/{task_id}'	, 'TaskApiController@markFavoriteTask')->where('task_id', '[0-9]+');
-	Route::post('removeFavoriteTask/{task_id}'	, 'TaskApiController@removeFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('api/hasFavoriteTask/{task_id}'		, 'TaskApiController@hasFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('api/markFavoriteTask/{task_id}'	, 'TaskApiController@markFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('api/removeFavoriteTask/{task_id}'	, 'TaskApiController@removeFavoriteTask')->where('task_id', '[0-9]+');
 
 	// realname Authentication
 	Route::group(['before'=>'realname'], function() {

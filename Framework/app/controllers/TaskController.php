@@ -1,18 +1,13 @@
 <?php
 
-
 class TaskController extends BaseController {
 
-
 	public function edit($task_id) {
-
 		$task = Task::where([
 			'id'      => $task_id,
 			'user_id' => Auth::user()->id
 		])->first();
-
 		return View::make('task.edit')->with('task', $task);
-
 	}
 
 	/*
@@ -26,7 +21,6 @@ class TaskController extends BaseController {
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function step_2() {
-
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Input::get('title'),
@@ -38,106 +32,85 @@ class TaskController extends BaseController {
 				'detail' => Session::get('detail')
 			];
 		}
-
 		$rules = [
 			'title'  => 'required',
 			'detail' => 'required'
 		];
-
 		$validator = Validator::make($userInput, $rules);
-
 		if ($validator->passes()) {
 
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
 			return View::make('task.publish.step_2');
-
 		} else {
-
 			return Redirect::to('/task/create')->withErrors($validator);
 		}
 	}
 
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function step_3() {
-
 		Validator::extend('positive', function($attribute, $value, $parameters) {
-
 			if ($value < 0) {
 				return false;
 			} else {
 				return true;
 			}
-
 		},"This amount field cannot be negative");
 		// if (!Session::has('amount') || !Session::has('expiration')) {
 		// 	Session::set('amount', Input::get('amount'));
 		// 	Session::set('expiration', Input::get('expiration'));
 		// }
 		if (Request::method() == "POST") {
-
 			$userInput = [
 				'type'       => Input::get('type'),
 				'amount'     => Input::get('amount', 0),
 				'expiration' => Input::get('expiration')
 			];
-
 		} else {
-
 			$userInput = [
 				'type'       => Session::get('type'),
 				'amount'     => Session::get('amount'),
 				'expiration' => Session::get('expiration')
 			];
-
 		}
-
 		$rules = [
 			'type'       => 'required',
 			'amount'     => 'required|numeric|positive',
 			'expiration' => 'required|date'
 		];
-
 		$validator = Validator::make($userInput, $rules);
 		// dd($userInput);
 		if ($validator->passes()) {
-
 			Session::set('type'      , $userInput['type']);
 			Session::set('amount'    , $userInput['amount']);
 			Session::set('expiration', $userInput['expiration']);
-			
 			return View::make('task.publish.step_3');
-
 		} else {
-
 			return Redirect::back()->withErrors($validator);
 		}
 	}
 
-
 	public function listTask() {
-
 		$tasks = Task::orderBy('created_at', 'desc')
 			->paginate(10);
-
 		return View::make('task.list')
 			->with('tasks', $tasks);
 	}
 
 	public function detail($task_id) {
 
-
 		$task = Task::where('id', $task_id)->first();
-
 		if ($task->user->active == 0) {
 			return View::make('task.closed');
 		}
-
-
+		if ($task->type == 1) {
+			$commit_sum = count(CommitPivot::where(['task_id'=>$task_id])->get());
+		} else if($task->type == 2) {
+			$commit_sum = count(QuotePivot::where(['task_id'=>$task_id])->get());
+		}
 		if (Auth::check()) {
-			if ($task->type ==1) {
+			if ($task->type == 1) {
 				// dd(var_dump($task->user_id == Auth::user()->id));
-				Session::set('commit_sum', count(CommitPivot::where(['task_id'=>$task_id])->get()));
 				if ($task->user_id == Auth::user()->id) {
 					$all_commits = CommitPivot::where(['task_id'=>$task_id]);
 				} else {
@@ -147,72 +120,56 @@ class TaskController extends BaseController {
 					} else {
 						return View::make('task.detail')
 							->with('task_id', $task_id)
-							->with('task', $task);
+							->with('task', $task)
+							->with('commit_sum', $commit_sum);
 					}
 				}
 				$commits = $all_commits->orderBy('created_at', 'desc')->paginate(5);
 				return View::make('task.detail')
 					->with('task_id', $task_id)
 					->with('task', $task)
-					->with('commits', $commits);
+					->with('commits', $commits)
+					->with('commit_sum', $commit_sum);
 
-			} else if($task->type ==2) {
+			} else if($task->type == 2) {
 				$quote = QuotePivot::where(['task_id'=>$task_id])->paginate(5);
 				return View::make('task.detail')
 					->with('task_id', $task_id)
 					->with('task', $task)
-					->with('quotes', $quotes);
-
+					->with('quotes', $quotes)
+					->with('commit_sum', $commit_sum);
 			}
 		}
 
-
-
 		return View::make('task.detail')
 			->with('task_id', $task_id)
-			->with('task', $task);
-
+			->with('task', $task)
+			->with('commit_sum', $commit_sum);
 	}
 
-
-
 	public function postEdit($task_id) {
-
 		$task = Task::where('id', $task_id);
-
 		$userInput = [
 			'title'  => Input::get('title'),
 			'detail' => Input::get('detail')
 		];
-
 		$rules = [
 			'title'  => 'required',
 			'detail' => 'required'
 		];
-
 		$validator = Validator::make($userInput, $rules);
-
 		if ($validator->passes()) {
-
 			$task->update([
 				'title'  => Input::get('title'),
 				'detail' => Input::get('detail')
 			]);
-
 			return Redirect::to("/task/$task_id");
-
 		} else {
-
 			return Redirect::to("/task/$task_id/edit")->withErrors($validator);
-
 		}
-
 	}
 
-
-
 	public function postCreate() {
-
 		$task             = new Task;
 		$task->user_id    = Auth::user()->id;
 		$task->type       = Session::get('type');
@@ -278,6 +235,5 @@ class TaskController extends BaseController {
 				->withErrors($validator);
 		}
 	}
-
 
 }

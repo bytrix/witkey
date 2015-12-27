@@ -24,8 +24,7 @@ class DashboardController extends BaseController {
 		}
 
 		return View::make('dashboard.overview')
-			->with('greeting', $greeting)
-			->with('gravatar_path', ThirdPartyController::getGravatar(Auth::user()->email));
+			->with('greeting', $greeting);
 	}
 
 	public function myProfile() {
@@ -68,6 +67,7 @@ class DashboardController extends BaseController {
 			'username'  => Input::get('username'),
 			'gender'    => Input::get('gender'),
 			'tel'       => Input::get('tel'),
+			'qq'        => Input::get('qq'),
 			'dorm'      => Input::get('dorm_state') == 'no' ? 'no' : Input::get('dorm'),
 			'skill_tag' => Input::get('skill_tag'),
 		];
@@ -126,7 +126,7 @@ class DashboardController extends BaseController {
 		// ];
 		// TEXT INPUT
 		$userInput = [
-			'real_name'       => Input::get('real_name'),
+			'realname'       => Input::get('realname'),
 			'school'          => Input::get('school'),
 			'idcard_image'    => Input::file('idcard_image'),
 			'major_category'  => Input::get('major_category'),
@@ -135,7 +135,7 @@ class DashboardController extends BaseController {
 		];
 
 		$rules = [
-			'real_name'       => 'required',
+			'realname'       => 'required',
 			'school'          => 'required',
 			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp,png|max:1024',
 			'major_category'  => 'required',
@@ -170,9 +170,9 @@ class DashboardController extends BaseController {
 				if (Input::hasFile('idcard_image')) {
 
 					$file        = Input::file('idcard_image');
-					$student_card = md5(Auth::user()->id.Auth::user()->created_at);
+					$student_card = md5('student_card' . Auth::user()->id.Auth::user()->created_at);
 
-					$file->move(public_path() . '/upload', $student_card);
+					$file->move(public_path() . '/student_card', $student_card);
 
 					User::where('id', Auth::user()->id)
 						->update(['student_card'=>$student_card, 'authenticated'=>1]);
@@ -187,7 +187,7 @@ class DashboardController extends BaseController {
 
 			User::where('id', Auth::user()->id)->update([
 
-				'real_name'       => $userInput['real_name'],
+				'realname'       => $userInput['realname'],
 				'school'          => $userInput['school'],
 				'major_category'  => $userInput['major_category'],
 				'major_name'      => $userInput['major_name'],

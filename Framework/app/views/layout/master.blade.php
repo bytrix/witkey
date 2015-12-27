@@ -18,10 +18,11 @@
 
   <script>
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+   $('[data-toggle="tooltip"]').tooltip()
   })
   </script>
-  @yield('script')
+@section('script')
+@show
 
   <style>
   body {
@@ -38,16 +39,13 @@
     margin-bottom: 4px;
   }
   .avatar-md{
-    /*float: left;*/
     width: 130px;
     margin-right: 20px;
   }
   .avatar-lg{
-    /*float: left;*/
     margin-right: 20px;
   }
   .avatar-bar{
-    /*background-color: red;*/
     margin-bottom: 10px;
     padding: 10px;
   }
@@ -66,40 +64,10 @@
     font-weight: bold;
   }
 
-  #edit{
-    font-size: 0.8em;
-    cursor: pointer;
-    color: #666;
-    margin-left: 0.6em;
-    margin-right: 0.7em;
-  }
-  #edit:hover{
-    color: #333;
-  }
-
-  .favorite{
-    cursor: pointer;
-    font-size: 0.8em;
-    margin-top: 0.3em;
-    margin-right: 1.7em;
-    color: red;
-  }
-  #tip{
-    display: block;
-    margin-left: -20px;
-    position: absolute;
-    color: red;
-    font-size: 12px;
-    /*background-color: blue;*/
-    width: 60px;
-    text-align: center;
-  }
   .detail-title{
     width: 570px;
     word-break: break-all;
     display: inline-block;
-    /*background-color: red;*/
-    /*float: left;*/
   }
   .amount{
     font-size: 24px;
@@ -116,9 +84,15 @@
   .metadata .property{
     margin-left: 10px;
   }
+  .detail img{
+    max-width: 800px;
+  }
 
   </style>
-  @yield('style')
+
+  @section('style')
+  @show
+
 </head>
 <body>
 
@@ -134,7 +108,7 @@
           </button>
           <a class="navbar-brand" href="/">
             witkey
-            <span class="label label-primary">beta</span>
+            <small><span class="label label-primary">beta</span></small>
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">

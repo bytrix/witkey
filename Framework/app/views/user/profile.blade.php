@@ -112,10 +112,7 @@
 
 
 				<p>
-					<?php
-						$schoolAge = Utility::Sec2Year(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
-					?>
-					{{Utility::grade($schoolAge)}}
+					{{$grade}}
 				</p>
 
 

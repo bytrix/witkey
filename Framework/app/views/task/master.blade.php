@@ -14,9 +14,11 @@
 		</li>
 
 	</ul>
-
 @stop
 
+@section('style')
+@parent
+@stop
 
 @section('procedure-style')
 	{{HTML::style('assets/style/task-procedure.css')}}

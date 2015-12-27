@@ -89,7 +89,13 @@ class UserController extends BaseController {
 	public function profile($user_id) {
 
 		$user = User::where('id', $user_id)->first();
-		return View::make('user.profile')->with('user', $user);
+
+		$schoolAge = Util::SecToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
+		$grade = Util::getGrade($schoolAge);
+
+		return View::make('user.profile')
+			->with('user', $user)
+			->with('grade', $grade);
 	}
 
 
@@ -154,7 +160,7 @@ class UserController extends BaseController {
 			$user->password = $userInput['password'];
 			$user->email    = $userInput['email'];
 			$user->ip       = Request::ip();
-			$user->city     = ThirdPartyController::getCity();
+			$user->city     = Util::getCity();
 			$user->save();
 
 			$avatar = md5('avatar' . $user->id . $user->created_at);

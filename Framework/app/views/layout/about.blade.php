@@ -23,6 +23,6 @@
 			About
 		</h1>
 		<h2>Campus Witkey Flowchart</h2>
-		{{HTML::image(URL::asset('assets/image/flowchart.png'))}}
+		{{HTML::image('https://raw.githubusercontent.com/bytrix/witkey/master/Diagram/Flowchart/Flowchart.png')}}
 	</div>
 @stop

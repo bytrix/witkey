@@ -1,6 +1,5 @@
 @extends('task.publish.master')
 
-@section('style')
 <style>
 	.end-price-bar{
 		font-size: 20px;
@@ -13,7 +12,6 @@
 		padding-left: 12px;
 	}
 </style>
-@stop
 
 @section('content')
 	<div class="container">
@@ -40,7 +38,9 @@
 			<p>
 				<strong>Task description: </strong>
 				<br>
-				{{Session::get('detail')}}
+				<p class="detail">
+					{{Session::get('detail')}}
+				</p>
 			</p>
 
 				<div class="end-price-bar">

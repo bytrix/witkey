@@ -4,20 +4,38 @@
 {{HTML::script(URL::asset('assets/script/angular.js'))}}
 @stop
 
+@section('style')
+@parent
+<style>
+	table img{
+		max-height: 50px;
+		max-width: 100px;
+	}
+	.table>tbody>tr>td,
+	.table>tbody>tr>th{
+		line-height: 50px;
+	}
+</style>
+@stop
+
 @section('content')
 <div class="container" ng-app>
 	<h1>Authentication Board</h1>
 
 
 
-		<table class="table table-striped table-hover table-condensed" ng-controller="UserController">
+		<table class="table table-hover table-condensed" ng-controller="UserController">
 			<thead>
 				<tr>
 					<th>Status</th>
 					<th>ID</th>
+					<th>Realname</th>
 					<th>Username</th>
 					<th>Email</th>
-					<th>Authenticated</th>
+					<th>Student Card</th>
+					<th>Enrollment Date</th>
+					<th>Registration Date</th>
+					<th>Authentication Operation</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,8 +48,14 @@
 						<span class="label label-danger" ng-show="user.authenticated==3">Authenticate Fail</span>
 					</td>
 					<th ng-bind="user.id"></th>
+					<td ng-bind="user.realname"></td>
 					<td ng-bind="user.username"></td>
 					<td ng-bind="user.email"></td>
+					<td>
+						<img src="{{URL::asset('student_card/')}}/@{{user.student_card}}" alt="">
+					</td>
+					<td ng-bind="user.enrollment_date"></td>
+					<td ng-bind="user.created_at"></td>
 					<td>
 						<button ng-disabled="user.authenticated==0" class="btn btn-warning" ng-click="authTobe(user.id)">TOBE-PASS</button>
 						<button ng-disabled="user.authenticated==0" class="btn btn-success" ng-click="authSuccess(user.id)">PASS</button>

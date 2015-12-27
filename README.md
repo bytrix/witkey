@@ -35,32 +35,39 @@ type localhost:8000 in browser and you can see the page
 
 Architecture
 ------------
-**Data Model**
-![Data Model][1]
+**Database E-R Diagram**
+
+![Database E-R Diagram][1]
 
 **Flowchart**
+
 ![Flowchart][2]
 
 **Class Diagram with MVC architecture**
+
 ![Class Diagram][3]
 
 
 References
 ----------
 
-bootstrap-wysiwyg/bootstrap3-wysiwyg
+bootstrap3-wysiwyg
+
 https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg
 
-moment/moment
+emoji-picker
+
+https://github.com/one-signal/emoji-picker
+
+moment.js
+
 https://github.com/moment/moment
 
-kbwood/countdown
-https://github.com/kbwood/countdown
+countdown.js
 
-one-signal/emoji-picker
-https://github.com/one-signal/emoji-picker
+https://github.com/kbwood/countdown
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png
   [2]: https://github.com/bytrix/witkey/raw/master/Diagram/Flowchart/Flowchart.png
-  [3]: https://github.com/bytrix/witkey/raw/master/Diagram/ClassDiagram/ClassDiafram.jpg
+  [3]: https://github.com/bytrix/witkey/raw/master/Diagram/ClassDiagram/ClassDiagram.jpg
