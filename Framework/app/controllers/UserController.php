@@ -91,7 +91,7 @@ class UserController extends BaseController {
 		$user = User::where('id', $user_id)->first();
 
 		$schoolAge = Util::SecToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
-		$grade = Util::getGrade($schoolAge);
+		$grade = Util::getGrade($user, $schoolAge);
 
 		return View::make('user.profile')
 			->with('user', $user)
@@ -167,7 +167,7 @@ class UserController extends BaseController {
 			$user->avatar = $avatar;
 
 			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
-			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/assets/avatar/' . $avatar);
+			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/avatar/' . $avatar);
 
 
 			$user->save();

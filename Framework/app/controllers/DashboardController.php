@@ -51,9 +51,9 @@ class DashboardController extends BaseController {
 	public function authentication() {
 
 		return View::make('dashboard.authentication')
-			->with('schoolList'       , UserController::$schoolList)
-			->with('majorCategoryList', UserController::$majorCategoryList)
-			->with('majorList'        , UserController::$majorList);
+			->with('schoolList'       , Academy::allAcademies())
+			->with('majorCategoryList', Academy::allMajors())
+			->with('majorList'        , Academy::allMajors());
 	}
 
 	public function security() {
@@ -126,20 +126,20 @@ class DashboardController extends BaseController {
 		// ];
 		// TEXT INPUT
 		$userInput = [
-			'realname'       => Input::get('realname'),
+			'realname'        => Input::get('realname'),
 			'school'          => Input::get('school'),
 			'idcard_image'    => Input::file('idcard_image'),
-			'major_category'  => Input::get('major_category'),
-			'major_name'      => Input::get('major_name'),
+			// 'major_category'  => Input::get('major_category'),
+			'major'      => Input::get('major'),
 			'enrollment_date' => Input::get('enrollment_date'),
 		];
 
 		$rules = [
-			'realname'       => 'required',
+			'realname'        => 'required',
 			'school'          => 'required',
 			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp,png|max:1024',
-			'major_category'  => 'required',
-			'major_name'      => 'required',
+			// 'major_category'  => 'required',
+			'major'      => 'required',
 			'enrollment_date' => 'required',
 		];
 
@@ -189,23 +189,23 @@ class DashboardController extends BaseController {
 
 				'realname'       => $userInput['realname'],
 				'school'          => $userInput['school'],
-				'major_category'  => $userInput['major_category'],
-				'major_name'      => $userInput['major_name'],
+				// 'major_category'  => $userInput['major_category'],
+				'major'      => $userInput['major'],
 				'enrollment_date' => $userInput['enrollment_date'],
 
 			]);
 
 			return Redirect::to('/dashboard/authentication')
-				->with('schoolList'       , UserController::$schoolList)
-				->with('majorCategoryList', UserController::$majorCategoryList)
+				->with('schoolList'       , Academy::allAcademies())
+				->with('majorCategoryList', Academy::allMajors())
 				->with('majorList'        , UserController::$majorList)
 				->with('message'          , 'Save successfully!');
 
 		} else {
 
 			return Redirect::to('/dashboard/authentication')
-				->with('schoolList'       , UserController::$schoolList)
-				->with('majorCategoryList', UserController::$majorCategoryList)
+				->with('schoolList'       , Academy::allAcademies())
+				->with('majorCategoryList', Academy::allMajors())
 				->with('majorList'        , UserController::$majorList)
 				->withErrors($validator);
 		}

@@ -59,11 +59,27 @@ Route::group(['before'=>'auth'], function() {
 	});
 });
 
-
-
+Route::get('/student_card/show/{hash}', function($hash) {
+	return View::make('admin.student_card')
+		->with('hash', $hash);
+});
 
 Route::get('admin/auth'	, 'AdminController@auth');
 Route::get('admin/getAuth', 'AdminController@getAuth');
 Route::get('admin/postAuthTobe/{user_id}', 'AdminController@postAuthTobe');
 Route::get('admin/postAuthSuccess/{user_id}', 'AdminController@postAuthSuccess');
 Route::get('admin/postAuthFail/{user_id}', 'AdminController@postAuthFail');
+
+Route::get('config/academy/', function() {
+	return Academy::allAcademies();
+});
+Route::get('config/academy/{academy_code}', function($academy_code) {
+	return Academy::getAcademy($academy_code);
+});
+
+Route::get('config/major/', function() {
+	return Academy::allMajors();
+});
+Route::get('config/major/{major_code}', function($major_code) {
+	return Academy::getMajor($major_code);
+});

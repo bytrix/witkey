@@ -37,7 +37,7 @@ class Util {
 		return ceil($year);
 	}
 
-	public static function getGrade($schoolAge) {
+	public static function getGrade($user, $schoolAge) {
 
 		switch ($schoolAge) {
 			case '0':
@@ -61,7 +61,13 @@ class Util {
 				break;
 			
 			default:
-				return '已毕业';
+				$thisYear = Date("Y");
+				if ($user->gender == "M") {
+					$gender = "学长";
+				} else {
+					$gender = "学姐";
+				}
+				return $thisYear - $schoolAge + 4 . "届" . $gender;
 				break;
 		}
 	}

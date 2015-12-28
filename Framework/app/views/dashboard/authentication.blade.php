@@ -20,14 +20,36 @@
 	<h1 class="page-header">Authentication</h1>
 
 
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="alert alert-dismissable alert-info">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<strong>Tip:</strong> Your authenticated infomation is secret and we will not expose it to others.
+	@if ( ! ( Session::has('message') || isset($error) || count($errors->all()) ) )
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="alert alert-dismissable alert-info">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<strong>Tip:</strong> Your authenticated infomation is secret and we will not expose it to others.
+				</div>
 			</div>
 		</div>
-	</div>
+	@endif
+
+	@if (Session::has('message'))
+		<div class="alert alert-success">
+			{{Session::get('message')}}
+		</div>
+	@endif
+	
+	@if (isset($error))
+		<div class="alert alert-danger">
+			{{$error}}
+		</div>
+	@endif
+
+	@if (count($errors->all()))
+		<div class="alert alert-danger">
+			@foreach ($errors->all() as $error)
+				<p>{{$error}}</p>
+			@endforeach
+		</div>
+	@endif
 
 
 	{{Form::open(['class'=>'form-horizontal', 'enctype'=>'multipart/form-data'])}}
@@ -81,26 +103,24 @@
 			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
 
 			@if (Auth::user()->authenticated == 2)
-				@if (Auth::user()->major_category == NULL || Auth::user()->major_name == NULL)
+				@if (Auth::user()->major == NULL)
 					<div class="col-sm-4">
 						{{Form::text('major', '未填写', ['class'=>'form-control', 'disabled'])}}
 					</div>
 				@else
 					<div class="col-sm-4">
 						{{Form::text('major',
-							UserController::$majorCategoryList[Auth::user()->major_category].
-								' - '.
-								UserController::$majorList[Auth::user()->major_name],
+							Academy::getMajor(Auth::user()->major),
 							['class'=>'form-control', 'disabled']
 						)}}
 					</div>
 				@endif
 			@else
-				<div class="col-sm-4">
+{{-- 				<div class="col-sm-4">
 					{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
-				</div>
+				</div> --}}
 				<div class="col-sm-4">
-					{{Form::select('major_name', $majorList, Auth::user()->major_name, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+					{{Form::select('major', Academy::allMajors(), Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
 				</div>
 			@endif
 
@@ -156,32 +176,5 @@
 
 	{{Form::close()}}
 
-	@if (Session::has('message'))
-		<div class="alert alert-success">
-			{{Session::get('message')}}
-		</div>
-	@endif
-{{-- 
-	@if (Session::has('error'))
-		<div class="alert alert-danger">
-			{{Session::get('error')}}
-		</div>
-	@endif
- --}}
-	@if (isset($error))
-		<div class="alert alert-danger">
-			{{$error}}
-		</div>
-	@endif
-
-	{{-- {{var_dump($errors)}} --}}
-
-	@if (count($errors->all()))
-		<div class="alert alert-danger">
-			@foreach ($errors->all() as $error)
-				<p>{{$error}}</p>
-			@endforeach
-		</div>
-	@endif
 
 @stop

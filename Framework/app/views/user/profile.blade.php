@@ -90,7 +90,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('assets/avatar/' . $user->avatar )}}" class="thumbnail">
+					<img src="{{URL::asset('/avatar/' . $user->avatar )}}" class="thumbnail">
 				</div>
 				<h4>
 					{{$user->username}}
@@ -111,27 +111,25 @@
 				<p>Joined on {{explode(' ', $user->created_at)[0]}}</p>
 
 
-				<p>
+				<p data-toggle="tooltip" title="Grade" data-placement="left">
 					{{$grade}}
 				</p>
 
 
-				<p>
+				<p data-toggle="tooltip" title="School" data-placement="left">
 					@if ($user->school == NULL)
 						<p class="text-danger">No School</p>
 					@else
 						<i class="fa fa-map-marker"></i>
-						{{UserController::$schoolList[$user->school]}}
+						{{Academy::getAcademy($user->school)}}
 					@endif
 				</p>
 
-				<p>
-					@if ($user->major == NULL || $user->major_category == NULL)
+				<p data-toggle="tooltip" title="Major" data-placement="left">
+					@if ($user->major == NULL)
 						<p class="text-danger">No Major</p>
 					@else
-						{{UserController::$majorCategoryList[$user->major_category]}}
-						-
-						{{UserController::$majorList[$user->major]}}
+						{{Academy::getMajor($user->major)}}
 					@endif
 				</p>
 

@@ -25,7 +25,10 @@
 
 @section('content')
 	<div class="container">
-		<h1>Task List</h1>
+		<h2>
+			<i class="fa fa-list"></i>
+			Task List
+		</h2>
 		@if (count($tasks))
 			<div class="list-group list-group-lg">
 				@foreach ($tasks as $task)
@@ -36,7 +39,7 @@
 
 						<div class="item-inline">
 							<a href="/user/{{$task->user->id}}">
-								<img class="avatar-sm" src="{{URL::asset('assets/avatar/' . $task->user->avatar )}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
+								<img class="avatar-sm" src="{{URL::asset('/avatar/' . $task->user->avatar )}}" data-toggle="tooltip" data-placement="left" title="{{$task->user->username}}">
 							</a>
 						</div>
 

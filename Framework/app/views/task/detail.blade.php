@@ -163,7 +163,7 @@
 				$('#favorite').click(function() {
 					$.ajax({
 						type: 'post',
-						url: '/markFavoriteTask/'+{{$task_id}},
+						url: '/api/markFavoriteTask/'+{{$task_id}},
 						success: function(state) {
 							if (state == 'remove') {
 								unfavorite();
@@ -200,7 +200,7 @@
 				@if ($task->user->school == NULL)
 					<span class="label label-danger">No School</span>
 				@else
-					{{UserController::$schoolList[$task->user->school]}}</h4>
+					{{Academy::getAcademy($task->user->school)}}</h4>
 				@endif
 				{{-- <h4><strong>Expiration:</strong> {{$task->expiration}}</h4> --}}
 				<h4>
@@ -270,7 +270,7 @@
 				</h4>
 				<div class="avatar-bar">
 					@foreach ($task->bidder as $bidder)
-						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('assets/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
 
 					@endforeach
 				</div>
@@ -291,7 +291,7 @@
 
 									{{-- avatar --}}
 									<a href="/">
-										{{HTML::image(URL::asset('assets/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
+										{{HTML::image(URL::asset('/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
 									</a>
 
 									{{-- date --}}
@@ -417,7 +417,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('assets/avatar/' . $task->user->avatar )}}" class="thumbnail">
+					<img src="{{URL::asset('/avatar/' . $task->user->avatar )}}" class="thumbnail">
 				</div>
 				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
 
