@@ -121,7 +121,15 @@
 					<div class="input-group-addon">
 						<i class="fa fa-calendar fa-fw"></i>
 					</div>
-					<input class="form-control" type="datetime-local" name="expiration" id="expiration" value="{{date('Y-m-d\TH:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')))}}" placeholder="">
+					{{-- <input class="form-control" type="datetime-local" name="expiration" id="expiration" value="{{date('Y-m-d\TH:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')))}}" placeholder=""> --}}
+					{{-- <input type="text" id="expiration" class="form-control"> --}}
+					{{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}}
+					<script>
+					$('#expiration').datetimepicker({
+						language: 'zh-CN',
+						startDate: '2010-01-01'
+					});
+					</script>
 				</div>
 			</div>
 

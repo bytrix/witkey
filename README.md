@@ -59,6 +59,10 @@ emoji-picker
 
 https://github.com/one-signal/emoji-picker
 
+jQuery-File-Upload
+
+https://github.com/blueimp/jQuery-File-Upload
+
 moment.js
 
 https://github.com/moment/moment

@@ -95,7 +95,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="panel-463291">
 							{{-- @if (count(Auth::user()->tasks->->orderBy('created_at', 'desc')->get())) --}}
-							@if (count(Auth::user()->order->all()))
+							@if (count($orders))
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -107,7 +107,7 @@
 									</thead>
 									<tbody>
 										{{-- @foreach (Auth::user()->orders->orderBy('created_at', 'desc')->get() as $order) --}}
-										@foreach (Auth::user()->order()->paginate(10) as $order)
+										@foreach ($orders as $order)
 										<tr>
 											<th>{{$order->id}}</th>
 											<td>
@@ -120,7 +120,7 @@
 									</tbody>
 								</table>
 								{{-- Paginator --}}
-								{{Auth::user()->order()->paginate(1)->links()}}
+								{{$orders->links()}}
 							@else
 								<div class="alert alert-warning">
 									No order published recently!

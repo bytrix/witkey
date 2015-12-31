@@ -25,12 +25,10 @@ class CreateTaskTable extends Migration {
 			/**
 			 * Indicate a state of current task
 			 *	0 for CLOSED
-			 *	1 for PUBLISHED
-			 *	2 for 
-			 *	1
-			 *	1
-			 *	1
-			 *	1
+			 *	1 for PUBLISHED & ENROLLMENT
+			 *	2 for PERFORMING
+			 *	3 for CHECK
+			 *	4 for FINISH
 			 */
 			$table->tinyInteger('state');
 			$table->datetime('expiration');

@@ -102,6 +102,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return Util::asterisk($this->dorm, 1, 1);
 	}
 
+	public function asteriskResident() {
+
+		return '***';
+	}
+
 
 	public function setPasswordAttribute($data) {
 
@@ -146,6 +151,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$favorite_task->delete();
 	}
 	// END POST API PART
+
+
+
+	public function hasUserById($user_id) {
+		$user = User::where(['id'=>$user_id])->first();
+		if ($user) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 
 }

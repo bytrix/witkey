@@ -64,6 +64,19 @@
 		width: 60px;
 		text-align: center;
 	}
+
+	.price{
+		/*background-color: red;*/
+		display: block;
+		height: 35px;
+		line-height: 30px;
+		padding-left: 10px;
+		padding-right: 20px;
+	}
+	.price>h4{
+		font-weight: bold;
+		color: orange;
+	}
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
@@ -107,6 +120,7 @@
 {{HTML::script(URL::asset('assets/script/jquery.plugin.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
+{{HTML::script(URL::asset('assets/script/angular.js'))}}
 
 <!--
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/nanoscroller.min.js'))}}
@@ -216,14 +230,25 @@
 				<p></p>
 			</div>
 
-			<div class="col-sm-12">
+			<div class="col-sm-12" ng-app>
 
-				<ul class='task-procedure first'>
-					<li class="first col-md-3">Enrollment</li>
-					<li class="second col-md-3">Carry out</li>
-					<li class="third col-md-3">Check</li>
-					<li class="third col-md-3">Finish</li>
+				<ul class='task-procedure state' ng-controller="stateController">
+					{{-- <span ng-bind="state"></span> --}}
+					<li class="col-md-3" ng-class="{'active': state == 1}">Enrollment</li>
+					<li class="col-md-3" ng-class="{'active': state == 2}">Performing</li>
+					<li class="col-md-3" ng-class="{'active': state == 3}">Check</li>
+					<li class="col-md-3" ng-class="{'active': state == 4}">Finish</li>
 				</ul>
+
+				<script>
+					var stateController = function($scope, $http) {
+						$http.get('http://localhost:8000/api/taskState/{{$task_id}}')
+							.success(function(response) {
+								$scope.state = response;
+							});
+					}
+				</script>
+
 				
 				<div class="time">
 					距离任务结束时间：
@@ -265,7 +290,11 @@
 						Bidders
 						<span data-toggle="tooltip" data-placement="top" title="人数">({{count($task->bidder)}}</span>
 						/
-						<span data-toggle="tooltip" data-placement="top" title="交稿数">{{$commit_sum}})</span>
+						@if (isset($commit_sum))
+							<span data-toggle="tooltip" data-placement="top" title="交稿数">{{$commit_sum}})</span>
+						@elseif (isset($quote_sum))
+							<span data-toggle="tooltip" data-placement="top" title="报价数">{{$quote_sum}})</span>
+						@endif
 					</strong>
 				</h4>
 				<div class="avatar-bar">
@@ -302,7 +331,9 @@
 									</span>
 
 									{{-- bid_btn --}}
-									<a href="javascript:;" class="btn btn-danger pull-right">Bid</a>
+									@if ($task->user->id == Auth::user()->id)
+										<a href="javascript:;" class="btn btn-danger pull-right">Bid</a>
+									@endif
 
 									<div id="summary">
 										{{$commit->summary}}
@@ -317,7 +348,41 @@
 
 							@foreach ($quotes as $quote)
 								<div class="list-group-item">
-									{{$quote->user->username}} {{$quote->summary}}
+
+									{{-- no --}}
+									<span class="no"># {{$quote->id}}</span>
+
+									{{-- avatar --}}
+									<a href="/">
+										{{HTML::image(URL::asset('/avatar/' . $quote->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$quote->user->username])}}
+									</a>
+
+									{{-- date --}}
+									<span class="metadata">
+										<a href="/"><strong>{{$quote->user->username}}</strong></a>
+										quoted at 
+										{{$quote->created_at}}
+									</span>
+
+									@if ($quote->task->winning_bidder_id == $quote->user->id)
+										<span class="label label-danger">
+											<i class="fa fa-flag"></i>
+											Get
+										</span>
+									@endif
+
+									{{-- bid_btn --}}
+									@if ($task->user->id == Auth::user()->id)
+										<a href="{{$task_id}}/hosting/quote/{{$quote->id}}" class="btn btn-danger pull-right">Bid</a>
+									@endif
+
+									<div class="price pull-right" data-toggle="tooltip" data-placement="left" title="Quote Price">
+										<h4>&yen; {{$quote->price}}</h4>
+									</div>
+
+									<div id="summary">
+										{{$quote->summary}}
+									</div>
 								</div>
 							@endforeach
 
@@ -357,6 +422,8 @@
 						{{-- QUOTE AREA --}}
 						@if ($task->type == 2 && $task->user->id != Auth::user()->id)
 							{{Form::open(['url'=>"/task/$task_id/quote"])}}
+								{{Form::label('price', '')}}
+								{{Form::text('price', '', ['class'=>'form-control', 'placeholder'=>'Price'])}}
 								{{Form::label('summary', 'Commit')}}
 								<div class="form-group">
 									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Quote summary'])}}
@@ -432,7 +499,7 @@
 				<p>Joined on {{explode(' ', $task->user->created_at)[0]}}</p>
 
 				@if (strlen($task->user->tel))
-					@if (Auth::check() && $task->user->realname())
+					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
 						<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
 					@else
 						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
@@ -440,7 +507,7 @@
 				@endif
 
 				@if (strlen($task->user->qq))
-					@if (Auth::check() && $task->user->realname())
+					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
 						<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
 					@else
 						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskQQ()}}</p>
@@ -448,14 +515,14 @@
 				@endif
 
 				@if (strlen($task->user->dorm))
-					@if (Auth::check() && $task->user->realname())
+					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
 						@if ($task->user->dorm == 'no')
 							<span class="label label-warning">Non-resident</span>
 						@else
 							<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
 						@endif
 					@else
-						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-map-marker"></i> {{$task->user->asteriskDorm()}}</p>
+						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-map-marker"></i> {{$task->user->asteriskResident()}}</p>
 					@endif
 				@endif
 

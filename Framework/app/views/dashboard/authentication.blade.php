@@ -1,5 +1,7 @@
 @extends('dashboard.master')
 
+
+
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
@@ -83,17 +85,24 @@
 		<div class="form-group">
 			{{Form::label('school', 'School', ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
-{{-- 				{{Form::text('school', Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}} --}}
-				{{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+					{{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+
+
+
 			</div>
 		</div>
+
+
+
+
+
 
 
 		{{-- Enrollment Date --}}
 		<div class="form-group">
 			{{Form::label('enrollment_date', 'Enrollment Date', ['class'=>'control-label col-sm-2', ])}}
 			<div class="col-sm-4">
-				<input type="date" name='enrollment_date' value="{{Auth::user()->enrollment_date}}" placeholder="Enrollment Date" class="form-control"  {{Auth::user()->authenticated == 2 ? 'disabled' : ''}}>
+				<input id="enrollment_date" type="text" name='enrollment_date' value="{{Auth::user()->enrollment_date}}" placeholder="Enrollment Date" class="form-control"  {{Auth::user()->authenticated == 2 ? 'disabled' : ''}}>
 			</div>
 		</div>
 
@@ -120,7 +129,7 @@
 					{{Form::select('major_category', $majorCategoryList, Auth::user()->major_category, ['class'=>'form-control', 'multiple', 'size'=>8])}}
 				</div> --}}
 				<div class="col-sm-4">
-					{{Form::select('major', Academy::allMajors(), Auth::user()->major, ['class'=>'form-control', 'multiple', 'size'=>8])}}
+					{{Form::select('major', Academy::allMajors(), Auth::user()->major, ['class'=>'form-control', 'size'=>8])}}
 				</div>
 			@endif
 
@@ -166,14 +175,16 @@
 
 
 
-
-
-
-
 		<script>
-		$('input[type=file]').bootstrapFileInput();
+			$('input[type=file]').bootstrapFileInput();
+			$('select').select2();
+			$('#enrollment_date').datepicker({
+				language: 'zh-CN',
+				format: 'yyyy-mm-dd',
+				startDate: '2003-01-01',
+				startView: 2
+			});
 		</script>
-
 	{{Form::close()}}
 
 

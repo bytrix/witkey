@@ -16,15 +16,18 @@ ul.task-procedure li{
 }
 ul.first li.first,
 ul.second li.second,
-ul.third li.third{
+ul.third li.third,
+ul.state li.active{
 	color: #337ab7;
 	font-weight: bold;
 	/*background-color: #337ab7;*/
 }
+
 /*Circle*/
 ul.first li.first:after,
 ul.second li.second:after,
-ul.third li.third:after{
+ul.third li.third:after,
+ul.state li.active:after{
 	color: #fff;
 	background-color: #337ab7;
 	width: 16px;
@@ -53,7 +56,8 @@ ul.task-procedure li:after{
 /*Line*/
 ul.first li.first:before,
 ul.second li.second:before,
-ul.third li.third:before{
+ul.third li.third:before,
+ul.state li.active:before{
 	color: #fff;
 	background-color: #337ab7;
 }

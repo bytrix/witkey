@@ -13,10 +13,19 @@
     margin-left: 20px;
   }
 </style>
+{{HTML::style(URL::asset('assets/style/bootstrap-datetimepicker.min.css'))}}
 @stop
 
 
+@section('script')
+@parent
+  {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.min.js'))}}
+@stop
+
+
+
 @section('content')
+
 
     <div class="container">
 
@@ -32,6 +41,8 @@
 
 
 
+
+
       <div class="col-sm-4">
         <div class="category-block">
           Study guide
@@ -43,6 +54,8 @@
           Express delivery
         </div>
       </div>
+
+
 
       <div class="col-sm-4">
         <div class="category-block">
@@ -67,6 +80,7 @@
           Others
         </div>  
       </div>
+
 
     </div> <!-- /container -->
 

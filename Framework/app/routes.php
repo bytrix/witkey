@@ -25,18 +25,21 @@ Route::post('register'	, 'UserController@postRegister');
 
 Route::group(['before'=>'auth'], function() {
 	// GET
-	Route::get('dashboard'					, 'DashboardController@overview');
-	Route::get('dashboard/myProfile'		, 'DashboardController@myProfile');
-	Route::get('dashboard/taskOrder'		, 'DashboardController@taskOrder');
-	Route::get('dashboard/postcard'			, 'DashboardController@postcard');
-	Route::get('dashboard/favoriteTask'		, 'DashboardController@favoriteTask');
-	Route::get('dashboard/security'			, 'DashboardController@security');
-	Route::get('dashboard/authentication'	, 'DashboardController@authentication');
-	Route::get('task/create'				, 'TaskController@step_1');
-	Route::get('task/create/step-2'			, 'TaskController@step_2');
-	Route::get('task/create/step-3'			, 'TaskController@step_3');
-	Route::get('task/create/postCreate'		, 'TaskController@postCreate');
-	Route::get('task/{task_id}/edit'		, 'TaskController@edit')->where('task_id', '[0-9]+');
+	Route::get('dashboard'										, 'DashboardController@overview');
+	Route::get('dashboard/myProfile'							, 'DashboardController@myProfile');
+	Route::get('dashboard/taskOrder'							, 'DashboardController@taskOrder');
+	Route::get('dashboard/postcard'								, 'DashboardController@postcard');
+	Route::get('dashboard/favoriteTask'							, 'DashboardController@favoriteTask');
+	Route::get('dashboard/security'								, 'DashboardController@security');
+	Route::get('dashboard/authentication'						, 'DashboardController@authentication');
+	Route::get('task/create'									, 'TaskController@step_1');
+	Route::get('task/create/step-2'								, 'TaskController@step_2');
+	Route::get('task/create/step-3'								, 'TaskController@step_3');
+	Route::get('task/create/postCreate'							, 'TaskController@postCreate');
+	Route::get('task/{task_id}/edit'							, 'TaskController@edit')->where('task_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/quote/{quote_id}'		, 'TaskController@hosting')->where('task_id', '[0-9]+')->where('quote_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/quote/{quote_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('quote_id', '[0-9]+');
+
 
 	// POST
 	Route::post('dashboard/security'		, 'DashboardController@postSecurity');
@@ -59,17 +62,19 @@ Route::group(['before'=>'auth'], function() {
 	});
 });
 
-Route::get('/student_card/show/{hash}', function($hash) {
-	return View::make('admin.student_card')
-		->with('hash', $hash);
-});
 
 Route::get('admin/auth'	, 'AdminController@auth');
-Route::get('admin/getAuth', 'AdminController@getAuth');
-Route::get('admin/postAuthTobe/{user_id}', 'AdminController@postAuthTobe');
-Route::get('admin/postAuthSuccess/{user_id}', 'AdminController@postAuthSuccess');
-Route::get('admin/postAuthFail/{user_id}', 'AdminController@postAuthFail');
+Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@student_card')->where('user_id', '[0-9]+');
 
+Route::get('admin/getUsers'					, 'AdminController@getUsers');
+Route::get('admin/postAuthTobe/{user_id}'	, 'AdminController@postAuthTobe');
+Route::get('admin/postAuthSuccess/{user_id}', 'AdminController@postAuthSuccess');
+Route::get('admin/postAuthFail/{user_id}'	, 'AdminController@postAuthFail');
+
+// FOR ANGULAR API
+Route::get('api/taskState/{task_id}'			, 'TaskApiController@taskState')->where('task_id', '[0-9]+');
+
+// Academy Configuration
 Route::get('config/academy/', function() {
 	return Academy::allAcademies();
 });
@@ -82,4 +87,9 @@ Route::get('config/major/', function() {
 });
 Route::get('config/major/{major_code}', function($major_code) {
 	return Academy::getMajor($major_code);
+});
+
+
+Route::get('test', function() {
+	return View::make('test');
 });

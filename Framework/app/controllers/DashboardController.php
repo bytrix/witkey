@@ -23,8 +23,11 @@ class DashboardController extends BaseController {
 			$greeting = 'Good night';
 		}
 
+		$orders = Auth::user()->order()->paginate(10);
+
 		return View::make('dashboard.overview')
-			->with('greeting', $greeting);
+			->with('greeting', $greeting)
+			->with('orders', $orders);
 	}
 
 	public function myProfile() {

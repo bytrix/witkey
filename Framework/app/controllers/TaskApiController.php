@@ -5,31 +5,28 @@ class TaskApiController extends BaseController {
 	public function hasFavoriteTask($task_id) {
 
 		if (Auth::user()->hasFavoriteTask($task_id)) {
-
 			return 'true';
 
 		} else {
-
 			return 'false';
-
 		}
-
 	}
 
 	public function markFavoriteTask($task_id) {
 
 		if (Auth::user()->hasFavoriteTask($task_id)) {
-
 			Auth::user()->removeFavoriteTask($task_id);
 			return 'remove';
 
 		} else {
-
 			Auth::user()->markFavoriteTask($task_id);
 			return 'create';
-
 		}
+	}
 
+	public function taskState($task_id) {
+		$task = Task::where('id', $task_id)->first();
+		return $task->state;
 	}
 
 	// public function removeFavoriteTask($task_id) {

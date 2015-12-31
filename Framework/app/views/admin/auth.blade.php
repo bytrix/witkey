@@ -8,7 +8,7 @@
 @parent
 <style>
 	body{
-		font-size: 9px;
+		/*font-size: 9px;*/
 	}
 	table img{
 		max-height: 24px;
@@ -47,7 +47,6 @@
 					<th>School</th>
 					<th>Major</th>
 					<th>Enrollment Date</th>
-					<th>Registration Date</th>
 					<th>Authentication Operation</th>
 				</tr>
 			</thead>
@@ -59,84 +58,48 @@
 						<span class="label label-success" ng-show="user.authenticated==2">Authenticated</span>
 						<span class="label label-danger" ng-show="user.authenticated==3">Authenticate Fail</span>
 					</td>
-					<th ng-bind="user.id"></th>
-					<td ng-bind="user.realname"></td>
+					<td ng-bind="user.id"></td>
+					<td>
+						<span ng-show="user.realname != null">@{{user.realname}}</span>
+						<i class="fa fa-times text-danger" ng-show="user.realname == null"></i>
+					</td>
 					<td ng-bind="user.username"></td>
 					<td ng-bind="user.email"></td>
 					<td>
-						<a href="/student_card/show/@{{user.student_card}}" target="blank">
+						<a href="/admin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
 							<img src="{{URL::asset('student_card/')}}/@{{user.student_card}}" alt="">
 						</a>
+						<i class="fa fa-times text-danger" ng-show="user.student_card == null"></i>
 					</td>
 					<td>
-						@{{academies[user.school]}}
-						(@{{user.school}})
+						<span ng-show="user.school != null">
+							@{{academies[user.school]}}
+							(@{{user.school}})
+						</span>
+						<i class="fa fa-times text-danger" ng-show="user.school == null"></i>
 					</td>
 					<td>
-						@{{majors[user.major]}}
-						(@{{user.major}})
+						<span ng-show="user.major != null">
+							@{{majors[user.major]}}
+							(@{{user.major}})
+						</span>
+						<i class="fa fa-times text-danger" ng-show="user.major == null"></i>
 					</td>
-					<td ng-bind="user.enrollment_date"></td>
-					<td ng-bind="user.created_at"></td>
 					<td>
-						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-warning" ng-click="authTobe(user.id)"><i class="fa fa-circle-o"></i> TOBE-PASS</button>
-						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-success" ng-click="authSuccess(user.id)"><i class="fa fa-check"></i> PASS</button>
-						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-danger" ng-click="authFail(user.id)"><i class="fa fa-times"></i> NO PASS</button>
+						<span>@{{user.enrollment_date}}</span>
+						<i class="fa fa-times text-danger" ng-show="user.enrollment_date == null"></i>
+					</td>
+					<td>
+						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-warning" ng-click="authTobe(user.id)"><i class="fa fa-circle-o"></i> To-be pass</button>
+						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-success" ng-click="authSuccess(user.id)"><i class="fa fa-check"></i> Pass</button>
+						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-danger" ng-click="authFail(user.id)"><i class="fa fa-times"></i> No pass</button>
 					</td>
 				</tr>
 
 			</tbody>
 		</table>
 
-
-	<script>
-		var UserController = function($scope, $http) {
-
-			$scope.findUserById = function(id) {
-				// alert(id);
-				for(var userIndex in $scope.users) {
-					if ($scope.users[userIndex].id == id) {
-						return $scope.users[userIndex];
-						// alert($scope.users[userIndex].username);
-					}
-				}
-				return null;
-			}
-
-			$http.get('http://localhost:8000/admin/getAuth')
-				.success(function(response) {
-					$scope.users = response;
-				});
-			$http.get('http://localhost:8000/config/academy/')
-				.success(function(response) {
-					$scope.academies = response;
-				})
-			$http.get('http://localhost:8000/config/major/')
-				.success(function(response) {
-					$scope.majors = response;
-				})
-
-			$scope.authTobe = function(id) {
-				$http.get('http://localhost:8000/admin/postAuthTobe/' + id);
-				if ($scope.findUserById(id).authenticated != 0) {
-					$scope.findUserById(id).authenticated = 1;
-				}
-			}
-			$scope.authSuccess = function(id) {
-				$http.get('http://localhost:8000/admin/postAuthSuccess/' + id);
-				if ($scope.findUserById(id).authenticated != 0) {
-					$scope.findUserById(id).authenticated = 2;
-				}
-			}
-			$scope.authFail = function(id) {
-				$http.get('http://localhost:8000/admin/postAuthFail/' + id);
-				if ($scope.findUserById(id).authenticated != 0) {
-					$scope.findUserById(id).authenticated = 3;
-				}
-			}
-		}
-	</script>
-
+	{{HTML::script(URL::asset('assets/script/admin/auth.js'))}}
 
 </div>
 @stop

@@ -116,7 +116,7 @@
 	<div class="form-group">
 		{{Form::label('skill_tag', 'Skill Tag', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('skill_tag', Auth::user()->skill_tag, ['class'=>'form-control'])}}
+			{{Form::text('skill_tag', Auth::user()->skill_tag, ['class'=>'form-control', 'placeholder'=>'Separate with a comma'])}}
 		</div>
 	</div>
 

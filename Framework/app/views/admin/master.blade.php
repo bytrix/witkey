@@ -4,8 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Campus Witkey</title>
-	<link rel="stylesheet" href="">
-  {{HTML::style('assets/style/bootstrap.min.css')}}
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/main.css')}}
   {{HTML::style('assets/style/sticky-footer.css')}}

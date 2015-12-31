@@ -117,17 +117,14 @@ class UserController extends BaseController {
 		if($validator->passes()) {
 
 			if(Auth::attempt($userInput)) {
-
 				return Redirect::to('dashboard');
 
 			} else {
-
 				return View::make('user.login')
 					->with('message', 'email or password is incorrect!');
 			}
 
 		} else {
-
 			return Redirect::to('login')
 				->withErrors($validator);
 		}
@@ -135,10 +132,9 @@ class UserController extends BaseController {
 
 	public function postRegister() {
 
-
-		echo '<pre>';
-		var_dump(Input::all());
-		echo '</pre>';
+		// echo '<pre>';
+		// var_dump(Input::all());
+		// echo '</pre>';
 
 		$userInput = [
 			'email'                 => Input::get('email'),
