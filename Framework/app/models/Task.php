@@ -23,8 +23,15 @@ class Task extends Eloquent {
 	}
 
 	// overdue_task(n) -------------- winning_bidder(1)
-	public function winningBidder() {
-		return $this->belongsTo('User', 'winning_bidder_id');
+	// public function winningBidder() {
+	// 	return $this->belongsTo('User', 'winning_bidder_id');
+	// }
+	public function winningCommit() {
+		return $this->hasOne('CommitPivot', 'id', 'winning_commit_id');
+	}
+
+	public function winningQuote() {
+		return $this->hasOne('QuotePivot', 'id', 'winning_quote_id');
 	}
 
 	public function scopeRecent($query) {

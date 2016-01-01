@@ -97,38 +97,42 @@
 					@if ($user->active == 0)
 						<span class="label label-danger">[ Inactive ]</span>
 					@endif
+					<span>
+						{{-- <img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
+						@if ($user->gender == 'M')
+							<i class="fa fa-mars"></i>
+						@elseif($user->gender == 'F')
+							<i class="fa fa-venus"></i>
+						@endif
+					</span>
 				</h4>
 				<p>{{$user->email}}</p>
 
-				<span>
-					{{-- <img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
-					@if ($user->gender == 'M')
-						<i class="fa fa-mars"></i>
-					@elseif($user->gender == 'F')
-						<i class="fa fa-venus"></i>
+
+				<p>
+					@if ($user->authenticated == 0)
+						<span class="label label-danger">Not Authenticated</span>
 					@endif
-				</span>
+				</p>
+
 				<p>Joined on {{explode(' ', $user->created_at)[0]}}</p>
 
-
 				<p data-toggle="tooltip" title="Grade" data-placement="left">
-					{{$grade}}
+					@if ($user->enrollment_date != NULL)
+						{{$grade}}
+					@endif
 				</p>
 
 
 				<p data-toggle="tooltip" title="School" data-placement="left">
-					@if ($user->school == NULL)
-						<p class="text-danger">No School</p>
-					@else
+					@if ($user->school != NULL)
 						<i class="fa fa-map-marker"></i>
 						{{Academy::getAcademy($user->school)}}
 					@endif
 				</p>
 
 				<p data-toggle="tooltip" title="Major" data-placement="left">
-					@if ($user->major == NULL)
-						<p class="text-danger">No Major</p>
-					@else
+					@if ($user->major != NULL)
 						{{Academy::getMajor($user->major)}}
 					@endif
 				</p>

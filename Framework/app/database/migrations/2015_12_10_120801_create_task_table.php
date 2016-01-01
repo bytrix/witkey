@@ -18,7 +18,8 @@ class CreateTaskTable extends Migration {
 			$table->integer('user_id');
 			$table->string('title');
 			$table->text('detail');
-			$table->integer('winning_bidder_id');
+			$table->integer('winning_commit_id');
+			$table->integer('winning_quote_id');
 			$table->decimal('amount');
 			$table->tinyInteger('type');
 

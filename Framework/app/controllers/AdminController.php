@@ -21,22 +21,28 @@ class AdminController extends BaseController {
 
 	public function postAuthTobe($user_id) {
 		$user = User::where(['id'=>$user_id])->first();
-		$user->authenticated = 1;
-		$user->save();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 1;
+			$user->save();
+		}
 		return Redirect::back();
 	}
 
 	public function postAuthSuccess($user_id) {
 		$user = User::where(['id'=>$user_id])->first();
-		$user->authenticated = 2;
-		$user->save();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 2;
+			$user->save();
+		}
 		return Redirect::back();
 	}
 
 	public function postAuthFail($user_id) {
 		$user = User::where(['id'=>$user_id])->first();
-		$user->authenticated = 3;
-		$user->save();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 3;
+			$user->save();
+		}
 		return Redirect::back();
 	}
 

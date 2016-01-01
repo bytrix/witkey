@@ -25,20 +25,21 @@ Route::post('register'	, 'UserController@postRegister');
 
 Route::group(['before'=>'auth'], function() {
 	// GET
-	Route::get('dashboard'										, 'DashboardController@overview');
-	Route::get('dashboard/myProfile'							, 'DashboardController@myProfile');
-	Route::get('dashboard/taskOrder'							, 'DashboardController@taskOrder');
-	Route::get('dashboard/postcard'								, 'DashboardController@postcard');
-	Route::get('dashboard/favoriteTask'							, 'DashboardController@favoriteTask');
-	Route::get('dashboard/security'								, 'DashboardController@security');
-	Route::get('dashboard/authentication'						, 'DashboardController@authentication');
-	Route::get('task/create'									, 'TaskController@step_1');
-	Route::get('task/create/step-2'								, 'TaskController@step_2');
-	Route::get('task/create/step-3'								, 'TaskController@step_3');
-	Route::get('task/create/postCreate'							, 'TaskController@postCreate');
-	Route::get('task/{task_id}/edit'							, 'TaskController@edit')->where('task_id', '[0-9]+');
-	Route::get('task/{task_id}/hosting/quote/{quote_id}'		, 'TaskController@hosting')->where('task_id', '[0-9]+')->where('quote_id', '[0-9]+');
-	Route::get('task/{task_id}/hosting/quote/{quote_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('quote_id', '[0-9]+');
+	Route::get('dashboard'								, 'DashboardController@overview');
+	Route::get('dashboard/myProfile'					, 'DashboardController@myProfile');
+	Route::get('dashboard/taskOrder'					, 'DashboardController@taskOrder');
+	Route::get('dashboard/postcard'						, 'DashboardController@postcard');
+	Route::get('dashboard/favoriteTask'					, 'DashboardController@favoriteTask');
+	Route::get('dashboard/security'						, 'DashboardController@security');
+	Route::get('dashboard/authentication'				, 'DashboardController@authentication');
+	Route::get('task/create'							, 'TaskController@step_1');
+	Route::get('task/create/step-2'						, 'TaskController@step_2');
+	Route::get('task/create/step-3'						, 'TaskController@step_3');
+	Route::get('task/create/postCreate'					, 'TaskController@postCreate');
+	Route::get('task/{task_id}/edit'					, 'TaskController@edit')->where('task_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/1{bid_id}'		, 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/2{bid_id}'		, 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 
 
 	// POST

@@ -177,7 +177,7 @@
 				$('#favorite').click(function() {
 					$.ajax({
 						type: 'post',
-						url: '/api/markFavoriteTask/'+{{$task_id}},
+						url: '/api/markFavoriteTask/' + {{$task_id}},
 						success: function(state) {
 							if (state == 'remove') {
 								unfavorite();
@@ -221,17 +221,15 @@
 					<strong>Expiration:</strong>
 					<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
 					<script>
-					moment.lang('zh-cn');
-					var expiration = new Date("{{ $task->expiration }}");
-					var deltaSecond = expiration - new Date();
-					$('#expiration').html(moment().add(deltaSecond).calendar());
+						moment.lang('zh-cn');
+						var expiration = new Date("{{ $task->expiration }}");
+						var deltaSecond = expiration - new Date();
+						$('#expiration').html(moment().add(deltaSecond).calendar());
 					</script>
 				</h4>
-				<p></p>
 			</div>
 
 			<div class="col-sm-12" ng-app>
-
 				<ul class='task-procedure state' ng-controller="stateController">
 					{{-- <span ng-bind="state"></span> --}}
 					<li class="col-md-3" ng-class="{'active': state == 1}">Enrollment</li>
@@ -330,9 +328,16 @@
 										{{$commit->created_at}}
 									</span>
 
+									@if ($commit->task->winning_commit_id == $commit->id)
+										<span class="label label-danger">
+											<i class="fa fa-flag"></i>
+											Get
+										</span>
+									@endif
+
 									{{-- bid_btn --}}
 									@if ($task->user->id == Auth::user()->id)
-										<a href="javascript:;" class="btn btn-danger pull-right">Bid</a>
+										<a href="{{$task_id}}/hosting/{{$task->type . $commit->id}}" class="btn btn-danger pull-right">Bid</a>
 									@endif
 
 									<div id="summary">
@@ -364,7 +369,7 @@
 										{{$quote->created_at}}
 									</span>
 
-									@if ($quote->task->winning_bidder_id == $quote->user->id)
+									@if ($quote->task->winning_quote_id == $quote->id)
 										<span class="label label-danger">
 											<i class="fa fa-flag"></i>
 											Get
@@ -373,7 +378,7 @@
 
 									{{-- bid_btn --}}
 									@if ($task->user->id == Auth::user()->id)
-										<a href="{{$task_id}}/hosting/quote/{{$quote->id}}" class="btn btn-danger pull-right">Bid</a>
+										<a href="{{$task_id}}/hosting/{{$task->type . $quote->id}}" class="btn btn-danger pull-right">Bid</a>
 									@endif
 
 									<div class="price pull-right" data-toggle="tooltip" data-placement="left" title="Quote Price">
@@ -395,12 +400,16 @@
 
 					@if (Auth::user()->realname())
 
+						@if ($task->winningQuote != NULL && $task->winningQuote->user->id == Auth::user()->id)
+							<p class="text-success">You are the best person the demander wanted, please commit your job soon!</p>
+						@endif
+
 						{{-- COMMIT AREA --}}
-						@if ($task->type == 1 && $task->user->id != Auth::user()->id)
+						@if ( ($task->type == 1 && $task->state == 1) || ($task->type == 2 && $task->state == 2)  && $task->user->id != Auth::user()->id )
+
+
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}
-
-								{{Form::label('summary', 'Commit')}}
-
+								{{Form::label('summary', 'Summary')}}
 								{{-- <div class="form-group emoji-picker-container">
 									{{Form::textarea('summary', '', ['class'=>'form-control textarea-control textarea', 'placeholder'=>'Commit summary', 'data-emojiable'=>'true', 'rows'=>'5'])}}
 								</div> --}}
@@ -420,11 +429,12 @@
 
 
 						{{-- QUOTE AREA --}}
-						@if ($task->type == 2 && $task->user->id != Auth::user()->id)
+						@if ($task->type == 2 && $task->user->id != Auth::user()->id && $task->state == 1)
+
 							{{Form::open(['url'=>"/task/$task_id/quote"])}}
 								{{Form::label('price', '')}}
 								{{Form::text('price', '', ['class'=>'form-control', 'placeholder'=>'Price'])}}
-								{{Form::label('summary', 'Commit')}}
+								{{Form::label('summary', 'Summary')}}
 								<div class="form-group">
 									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Quote summary'])}}
 								</div>
@@ -441,7 +451,7 @@
 
 						@if ($task->user->id != Auth::user()->id)
 							{{Form::open()}}
-								{{Form::label('summary', 'Commit')}}
+								{{Form::label('summary', 'Summary')}}
 								<div class="form-group">
 									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
 								</div>
@@ -486,16 +496,20 @@
 				<div>
 					<img src="{{URL::asset('/avatar/' . $task->user->avatar )}}" class="thumbnail">
 				</div>
-				<h4><a href="/user/{{$task->user->id}}">{{$task->user->username}}</a></h4>
+				<h4>
+					<span>Publisher: </span>
+					<a data-toggle="tooltip" data-placement="top" title="View TA's profile" href="/user/{{$task->user->id}}">
+						{{$task->user->username}}
+					</a>
+					<span>
+						@if ($task->user->gender == 'M')
+							<i class="fa fa-mars"></i>
+						@elseif($task->user->gender == 'F')
+							<i class="fa fa-venus"></i>
+						@endif
+					</span>
+				</h4>
 
-				<span>
-					{{-- <img src="{{URL::asset('assets/image')}}{{$task->user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
-					@if ($task->user->gender == 'M')
-						<i class="fa fa-mars"></i>
-					@elseif($task->user->gender == 'F')
-						<i class="fa fa-venus"></i>
-					@endif
-				</span>
 				<p>Joined on {{explode(' ', $task->user->created_at)[0]}}</p>
 
 				@if (strlen($task->user->tel))

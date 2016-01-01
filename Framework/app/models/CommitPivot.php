@@ -8,4 +8,7 @@ class CommitPivot extends Eloquent {
 		return $this->belongsTo('User');
 	}
 	
+	public function task() {
+		return $this->belongsTo('Task');
+	}
 }

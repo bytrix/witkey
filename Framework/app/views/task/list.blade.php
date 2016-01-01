@@ -57,7 +57,10 @@
 								<a href="/user/{{$task->user->id}}" class="property">
 									<i class="fa fa-user"></i> {{{$task->user->username}}}
 								</a>
-								<i class="fa fa-calendar property"></i> {{explode(' ', $task->created_at)[0]}}
+								<span class="property">
+									<i class="fa fa-calendar"></i>
+									{{explode(' ', $task->created_at)[0]}}
+								</span>
 							</span>
 						</div>
 

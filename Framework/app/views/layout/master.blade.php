@@ -26,6 +26,7 @@
   {{HTML::script('assets/script/bootstrap.min.js')}}
   {{HTML::script('assets/script/bootstrap.file-input.js')}}
   {{-- // <script src="http://select2.github.io/select2/select2-3.5.2/select2.js"></script> --}}
+  {{HTML::script(URL::asset('assets/script/select2.js'))}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.js'))}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.zh-CN.js'))}}
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> --}}
