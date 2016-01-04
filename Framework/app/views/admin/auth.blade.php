@@ -29,7 +29,7 @@
 		<div class="col-md-4">
 			{{-- <h1 align="center">Authentication Board</h1> --}}
 			<div class="form-group">
-				<input ng-model="value" type="search" name="search" value="" placeholder="search" class="form-control">
+				<input ng-model="value" type="search" name="search" value="" placeholder="Search..." class="form-control">
 			</div>
 			<p ng-show="value" align="center">Search for @{{value}}</p>
 		</div>

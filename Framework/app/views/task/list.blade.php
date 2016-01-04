@@ -21,6 +21,7 @@
 
 @section('script')
 {{HTML::script(URL::asset('assets/script/moment.js'))}}
+{{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
 @stop
 
 @section('content')
@@ -59,14 +60,33 @@
 								</a>
 								<span class="property">
 									<i class="fa fa-calendar"></i>
-									{{explode(' ', $task->created_at)[0]}}
+									{{-- {{explode(' ', $task->created_at)[0]}} --}}
+									<span data-toggle="tooltip" data-placement="right" title="{{$task->created_at}}" id="created_at_{{$task->id}}"></span>
 								</span>
+								{{-- <p id="test{{$task->id}}"></p> --}}
+								<script>
+									moment.lang('zh-cn');
+									// $('#test{{$task->id}}').html('{{$task->created_at}}');
+									$('#created_at_{{$task->id}}').html(moment('{{$task->created_at}}', 'YYYY-MM-DD hh:mm:ss').fromNow());
+								</script>
 							</span>
 						</div>
 
-						<div class="item-inline pull-right metadata">
+						<div class="item-inline pull-right metadata" style="width: 200px;">
 							<h4>
-							{{count($task->bidder)}} people participated
+								@if ($task->winning_commit_id != 0 || $task->winning_quote_id != 0)
+									<span data-toggle="tooltip" data-placement="top" title="1 people win bid">1</span>
+								@else
+									<span data-toggle="tooltip" data-placement="top" title="0 people win bid">0</span>
+								@endif
+								/
+								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
+								|
+								@if ($task->state == 4)
+									<span class="text-danger">Task End</span>
+								@else
+									<span class="text-success">In the Bidding</span>
+								@endif
 							</h4>
 						</div>
 					</div>

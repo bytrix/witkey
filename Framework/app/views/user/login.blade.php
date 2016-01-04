@@ -46,7 +46,7 @@
 			<div class="form-group" ng-class="{'has-error': loginForm.email.$invalid && !loginForm.email.$pristine, 'has-success': loginForm.email.$valid}">
 			@endif
 				<div class="input-group">
-					<span class="input-group-addon" style="height: 46px;"><i class="fa fa-envelope-o fa-fw"></i></span>
+					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
 					{{-- {{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}} --}}
 					{{Form::email('email', '', ['placeholder'=>'Email', 'class'=>'form-control', 'ng-invalid-email', 'required', 'ng-model'=>'email'])}}
 				</div>
@@ -63,7 +63,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-maxlength'=>'20', 'ng-model'=>'password'])}}
+					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password'])}}
 				</div>
 {{-- 				@if ($errors->first('password'))
 					<p class="help-block">{{$errors->first('password')}}</p>
@@ -105,6 +105,7 @@
 				</div>
 			@endif
 		</div>
+
 
     </div> <!-- /container -->
 

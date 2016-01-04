@@ -29,7 +29,7 @@ body {
   z-index: 2;
 }
 .form-custom input[type="email"] {
-  margin-bottom: -1px;
+  /*margin-bottom: -1px;*/
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -38,3 +38,73 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+
+
+
+
+
+
+
+  body {
+    /*min-height: 2000px;*/
+    padding-top: 70px;
+  }
+  .panel-group{
+    margin-bottom: 40px;
+  }
+
+  .avatar-sm{
+    width: 40px;
+    margin-right: 12px;
+    margin-bottom: 4px;
+  }
+  .avatar-md{
+    width: 130px;
+    margin-right: 20px;
+  }
+  .avatar-lg{
+    margin-right: 20px;
+  }
+  .avatar-bar{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  .detail{
+    padding: 10px;
+    padding-left: 20px;
+    display: block;
+    word-break: break-all;
+  }
+  .fa-mars{
+    color: #286090;
+    font-weight: bold;
+  }
+  .fa-venus{
+    color: #d9534f;
+    font-weight: bold;
+  }
+
+  .detail-title{
+    width: 570px;
+    word-break: break-all;
+    display: inline-block;
+  }
+  .amount{
+    font-size: 24px;
+    padding-left: 6px;
+  }
+  .metadata,
+  .metadata a{
+    color: #888;
+    text-decoration: none;
+  }
+  .metadata a:hover{
+    color: #666;
+  }
+  .metadata .property{
+    margin-left: 10px;
+  }
+  .detail img{
+    max-width: 800px;
+  }

@@ -46,9 +46,9 @@ class AdminController extends BaseController {
 		return Redirect::back();
 	}
 
-	public function student_card($user_id) {
+	public function studentCardPreview($user_id) {
 		$user = User::where(['id'=>$user_id])->first();
-		return View::make('admin.student_card')
+		return View::make('admin.studentCardPreview')
 			->with('user_id', $user_id)
 			->with('user', $user);
 		return Redirect::back();

@@ -100,6 +100,7 @@ class TaskController extends BaseController {
 	public function detail($task_id) {
 
 		$task = Task::where('id', $task_id)->first();
+		Session::set('task_id_session', $task->id);
 		if ($task->user->active == 0) {
 			return View::make('task.closed');
 		}
@@ -118,6 +119,7 @@ class TaskController extends BaseController {
 					if (Auth::user()->isBidder($task_id)) {
 						$all_commits = CommitPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
 					} else {
+						// dd('a'); 
 						return View::make('task.detail')
 							->with('task_id', $task_id)
 							->with('task', $task)
@@ -134,6 +136,7 @@ class TaskController extends BaseController {
 			} else if($task->type == 2) {
 				if ($task->user_id == Auth::user()->id) {
 					$all_quotes = QuotePivot::where(['task_id'=>$task_id]);
+					// $all_quotes = $task->quotes;
 				} else {
 					if (Auth::user()->isBidder($task_id)) {
 						$all_quotes = QuotePivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
@@ -228,7 +231,16 @@ class TaskController extends BaseController {
 			$commit->task_id = $task_id;
 			$commit->user_id = Auth::user()->id;
 			$commit->summary = Input::get('summary');
+			$commit->type = Input::get('type');
+			$commit->quote_id = Input::get('quote_id');
 			$commit->save();
+			$task = Task::where('id', $task_id)->first();
+			if ($task->type == 1) {
+				$task->state = 2;
+			} else if ($task->type == 2) {
+				$task->state = 3;
+			}
+			$task->save();
 			return Redirect::to("/task/$task_id");
 		} else {
 			return Redirect::to("/task/$task_id")
@@ -260,21 +272,26 @@ class TaskController extends BaseController {
 		}
 	}
 
+	public function commitHosting($task_id, $bid_id) {
+		$task = Task::where('id', $task_id)->first();
+		if ($task->type == 1) {
+			$commit = CommitPivot::where('id', $bid_id)->first();
+			return View::make('task.commitHosting')
+				->with('task', $task)
+				->with('commit', $commit);
+		}
+	}
 
 	public function quoteHosting($task_id, $bid_id) {
 		$task = Task::where('id', $task_id)->first();
-		if ($task->type == 1) {
-			$commit = QuotePivot::where('id', $bid_id)->first();
-			return View::make('task.hosting')
-				->with('task', $task)
-				->with('commit', $commit);
-		} else if($task->type == 2) {
+		if ($task->type == 2) {
 			$quote = QuotePivot::where('id', $bid_id)->first();
-			return View::make('task.hosting')
+			return View::make('task.quoteHosting')
 				->with('task', $task)
 				->with('quote', $quote);
 		}
 	}
+
 
 	public function winBid($task_id, $bid_id) {
 		$task = Task::where('id', $task_id)->first();
@@ -287,9 +304,40 @@ class TaskController extends BaseController {
 			$task->winning_quote_id = $quote->id;
 		}
 		// $task->winning_bidder_id = $quote->user->id;
-		$task->state = 2;
+		if ($task->type == 1) {
+			$task->state = 3;
+		} else if($task->type == 2) {
+			$task->state = 2;
+		}
 		$task->save();
 		return Redirect::to('task/'.$task_id);
+	}
+
+
+	public function pay($commit_id) {
+		$task_id = Session::get('task_id_session');
+		Session::set('commit_id_session', $commit_id);
+		$commit = CommitPivot::where('id', $commit_id)->first();
+		// dd($task_id);
+		$task = Task::where('id', $task_id)->first();
+		if ($task->type == 1) {
+			$task->winning_commit_id = $commit_id;
+			$task->save();
+		}
+		return View::make('task.pay')
+			->with('task', $task)
+			->with('commit', $commit);
+	}
+
+	public function postPay() {
+		$task_id = Session::get('task_id_session');
+		$commit_id = Session::get('commit_id_session');
+		$task = Task::where('id', $task_id)->first();
+		$task->state = 4;
+		$task->save();
+		// Session::forget('task_id_session');
+		return Redirect::to("/pay/$commit_id")
+			->with('payStatus', 'ok');
 	}
 
 }

@@ -19,6 +19,8 @@ class CreateCommitPivot extends Migration {
 			$table->integer('task_id');
 			$table->integer('user_id');
 			$table->text('summary');
+			$table->integer('type');
+			$table->integer('quote_id')->nullable();
 			$table->string('file_hash');
 		});
 	}

@@ -55,9 +55,8 @@ bootstrap3-wysiwyg
 
 https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg
 
-emoji-picker
-
-https://github.com/one-signal/emoji-picker
+*emoji-picker(removed)
+https://github.com/one-signal/emoji-picker*
 
 jQuery-File-Upload
 

@@ -219,10 +219,15 @@
 				{{-- <h4><strong>Expiration:</strong> {{$task->expiration}}</h4> --}}
 				<h4>
 					<strong>Expiration:</strong>
-					<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
+					@if ($task->state == 4)
+						<span>Task End</span>
+					@else
+						<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
+					@endif
 					<script>
 						moment.lang('zh-cn');
-						var expiration = new Date("{{ $task->expiration }}");
+						var strExpiration = "{{ $task->expiration }}";
+						var expiration = new Date(strExpiration.replace(/-/g, "/"));
 						var deltaSecond = expiration - new Date();
 						$('#expiration').html(moment().add(deltaSecond).calendar());
 					</script>
@@ -232,33 +237,32 @@
 			<div class="col-sm-12" ng-app>
 				<ul class='task-procedure state' ng-controller="stateController">
 					{{-- <span ng-bind="state"></span> --}}
-					<li class="col-md-3" ng-class="{'active': state == 1}">Enrollment</li>
-					<li class="col-md-3" ng-class="{'active': state == 2}">Performing</li>
-					<li class="col-md-3" ng-class="{'active': state == 3}">Check</li>
-					<li class="col-md-3" ng-class="{'active': state == 4}">Finish</li>
+					<li class="col-md-3" ng-class="{'light': state == 1, 'active': state == 1 || state == 2 || state == 3 || state == 4}">Enrollment</li>
+					<li class="col-md-3" ng-class="{'light': state == 2, 'active': state == 2 || state == 3 || state == 4}">Performing</li>
+					<li class="col-md-3" ng-class="{'light': state == 3, 'active': state == 3 || state == 4}">Check</li>
+					<li class="col-md-3" ng-class="{'light': state == 4, 'active': state == 4}">Finish</li>
 				</ul>
 
 				<script>
 					var stateController = function($scope, $http) {
-						$http.get('http://localhost:8000/api/taskState/{{$task_id}}')
+						$http.get('/api/taskState/{{$task_id}}')
 							.success(function(response) {
 								$scope.state = response;
 							});
 					}
 				</script>
 
-				
-				<div class="time">
-					距离任务结束时间：
-					<span id="countdown">
-						countdown
-					</span>
-					<script>
-						var expiration = new Date("{{ $task->expiration }}");
-						$('#countdown').countdown({until: expiration});
-					</script>
-				</div>
-
+				@if ($task->state != 4)
+					<div class="time">
+						距离任务结束时间：
+						<span id="countdown">
+							countdown
+						</span>
+						<script>
+							$('#countdown').countdown({until: expiration});
+						</script>
+					</div>
+				@endif
 
 				<h4><strong>Task Description:</strong></h4>
 				<div class="detail" id="detail">
@@ -284,17 +288,24 @@
 				@endif
 
 				<h4>
-					<strong>
-						Bidders
-						<span data-toggle="tooltip" data-placement="top" title="人数">({{count($task->bidder)}}</span>
-						/
-						@if (isset($commit_sum))
-							<span data-toggle="tooltip" data-placement="top" title="交稿数">{{$commit_sum}})</span>
-						@elseif (isset($quote_sum))
-							<span data-toggle="tooltip" data-placement="top" title="报价数">{{$quote_sum}})</span>
-						@endif
-					</strong>
+					@if (isset($commit_sum))
+						<strong>
+							Bidders
+							<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}}人投稿">({{count($task->bidder)}}</span>
+							/
+							<span data-toggle="tooltip" data-placement="top" title="{{$commit_sum}}份投稿说明">{{$commit_sum}})</span>
+						</strong>
+					@elseif(isset($quote_sum))
+						<strong>
+							Bidders
+							<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}}人报价">({{count($task->bidder)}}</span>
+							/
+							<span data-toggle="tooltip" data-placement="top" title="{{$quote_sum}}份报价说明">{{$quote_sum}})</span>
+						</strong>
+					@endif
 				</h4>
+
+
 				<div class="avatar-bar">
 					@foreach ($task->bidder as $bidder)
 						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
@@ -305,89 +316,171 @@
 
 				@if (Auth::check())
 
+					@if ($task->winningQuote != NULL && count($task->winningQuote->latestCommit) && ($task->user->id == Auth::user()->id || $task->winningQuote->user->id == Auth::user()->id) )
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<strong>Latest Commit</strong>
+								@if ($task->state == 4)
+									<span class="label label-danger pull-right">Paid &yen;{{$task->amount}}</span>
+								@endif
+							</div>
+							<div class="panel-body">
+								<p class="metadata">
+									<a href="/user/{{$task->winningQuote->latestCommit->first()->user->id}}">
+										{{HTML::image(URL::asset('/avatar/' . $task->winningQuote->latestCommit->first()->user->avatar), '', ['class'=>'avatar-sm'])}}
+									</a>
+									from
+									<a href="/user/{{$task->winningQuote->latestCommit->first()->user->id}}">
+										<strong>{{$task->winningQuote->latestCommit->first()->user->username}}</strong>
+									</a>
+									committed at {{$task->winningQuote->latestCommit->first()->created_at}}
+								</p>
+								<div id="summary">
+									{{$task->winningQuote->latestCommit->first()->summary}}
+									@if ($task->user->id == Auth::user()->id && $task->state == 3)
+										<a href="/pay/{{$task->winningQuote->latestCommit->first()->id}}" class="btn btn-success pull-right">Pay</a>
+									@endif
+								</div>
+							</div>
+						</div>
+					@endif
 
 					<div class="list-group">
 
-						@if (isset($commits))
-							
-							@foreach ($commits as $commit)
-								<div class="list-group-item">
+						@if (isset($commit_sum) && (Auth::user()->isBidder($task->id) || Auth::user()->id == $task->user->id))
 
-									{{-- no --}}
-									<span class="no"># {{$commit->id}}</span>
+							@if (Auth::user()->isBidder($task->id))
+								@foreach ($commits as $commit)
+									<div class="list-group-item">
 
-									{{-- avatar --}}
-									<a href="/">
-										{{HTML::image(URL::asset('/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
-									</a>
+										{{-- no --}}
+										<span class="no"># {{$commit->id}}</span>
 
-									{{-- date --}}
-									<span class="metadata">
-										<a href="/"><strong>{{$commit->user->username}}</strong></a>
-										committed at 
-										{{$commit->created_at}}
-									</span>
+										{{-- avatar --}}
+										<a href="/">
+											{{HTML::image(URL::asset('/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
+										</a>
 
-									@if ($commit->task->winning_commit_id == $commit->id)
-										<span class="label label-danger">
-											<i class="fa fa-flag"></i>
-											Get
+										{{-- date --}}
+										<span class="metadata">
+											<a href="/"><strong>{{$commit->user->username}}</strong></a>
+											committed at 
+											{{$commit->created_at}}
 										</span>
-									@endif
 
-									{{-- bid_btn --}}
-									@if ($task->user->id == Auth::user()->id)
-										<a href="{{$task_id}}/hosting/{{$task->type . $commit->id}}" class="btn btn-danger pull-right">Bid</a>
-									@endif
+										@if ($task->winning_commit_id == $commit->id)
+											<span class="label label-danger">
+												<i class="fa fa-flag"></i>
+												Win
+											</span>
+										@endif
 
-									<div id="summary">
-										{{$commit->summary}}
+										{{-- bid_btn --}}
+										@if ($task->user->id == Auth::user()->id && $task->id != 4)
+											<a href="/pay/{{$commit->id}}" class="btn btn-success pull-right">Pay</a>
+										@endif
+
+										<div id="summary">
+											{{$commit->summary}}
+										</div>
 									</div>
-								</div>
-							@endforeach
+								@endforeach
+							@elseif(Auth::user()->id == $task->user->id)
+								@foreach ($task->bidder as $bidder)
+									<div class="list-group-item">
+
+										{{-- no --}}
+										<span class="no"># {{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}</span>
+
+										{{-- avatar --}}
+										<a href="/">
+											{{HTML::image(URL::asset('/avatar/' . $bidder->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$bidder->username])}}
+										</a>
+
+										{{-- date --}}
+										<span class="metadata">
+											<a href="/"><strong>{{$bidder->username}}</strong></a>
+											committed at 
+											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
+										</span>
+
+										{{-- {{var_dump($task->winning_commit_id)}} --}}
+
+										@if ($task->winning_commit_id == $bidder->findLatestCommitById($bidder->id, $task->id)->first()->id)
+											<span class="label label-danger">
+												<i class="fa fa-flag"></i>
+												Win
+											</span>
+										@endif
+
+										{{-- bid_btn --}}
+										@if ($task->user->id == Auth::user()->id && $task->state != 4)
+											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}" class="btn btn-success pull-right">Pay</a>
+										@endif
+
+										<div id="summary">
+											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->summary}}
+										</div>
+									</div>
+								@endforeach
+							@endif
 
 							{{$commits->links()}}
 
+						@elseif(isset($quote_sum))
 
-						@elseif(isset($quotes))
-
-							@foreach ($quotes as $quote)
+							@foreach ($task->bidder as $bidder)
 								<div class="list-group-item">
 
 									{{-- no --}}
-									<span class="no"># {{$quote->id}}</span>
+									{{-- <span class="no"># {{$quote->id}}</span> --}}
 
 									{{-- avatar --}}
-									<a href="/">
-										{{HTML::image(URL::asset('/avatar/' . $quote->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$quote->user->username])}}
-									</a>
+									<a href="/user/{{$bidder->id}}">{{HTML::image(URL::asset('/avatar/' . $bidder->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$bidder->username])}}</a>
 
-									{{-- date --}}
+									{{-- username & date --}}
 									<span class="metadata">
-										<a href="/"><strong>{{$quote->user->username}}</strong></a>
+										<a href="/user/{{$bidder->id}}"><strong>{{$bidder->username}}</strong></a>
 										quoted at 
-										{{$quote->created_at}}
+										{{$bidder->findLatestQuoteById($bidder->id, $task->id)->first()->created_at}}
 									</span>
 
-									@if ($quote->task->winning_quote_id == $quote->id)
+
+									@if ($task->winning_quote_id == $bidder->findLatestQuoteById($bidder->id, $task->id)->first()->id)
 										<span class="label label-danger">
 											<i class="fa fa-flag"></i>
-											Get
+											Win
 										</span>
 									@endif
 
 									{{-- bid_btn --}}
-									@if ($task->user->id == Auth::user()->id)
-										<a href="{{$task_id}}/hosting/{{$task->type . $quote->id}}" class="btn btn-danger pull-right">Bid</a>
+									@if ($task->user->id == Auth::user()->id && $task->state == 1)
+										<a href="{{$task_id}}/hosting/{{$task->type . $bidder->findLatestQuoteById($bidder->id, $task->id)->first()->id}}" class="btn btn-danger pull-right">Bid</a>
 									@endif
 
 									<div class="price pull-right" data-toggle="tooltip" data-placement="left" title="Quote Price">
-										<h4>&yen; {{$quote->price}}</h4>
+										<h4>&yen; {{$bidder->findLatestQuoteById($bidder->id, $task->id)->first()->price}}</h4>
 									</div>
 
 									<div id="summary">
-										{{$quote->summary}}
+										{{$bidder->findLatestQuoteById($bidder->id, $task->id)->first()->summary}}
+{{-- 
+										@if ($task->winningQuote != NULL && $task->winning_quote_id == $bidder->findLatestQuoteById($bidder->id, $task->id)->first()->id)
+											<div class="list-group">
+												<div class="list-group-item">
+													<p>---------------------- LATEST COMMIT ------------------------</p>
+													<p>
+														{{$task->winningQuote->latestCommit->first()->summary}}
+													</p>
+													<p>
+														committed at {{$task->winningQuote->latestCommit->first()->created_at}}
+													</p>
+												</div>
+											</div>
+										@endif
+ --}}
 									</div>
+
 								</div>
 							@endforeach
 
@@ -397,7 +490,16 @@
 
 
 
+{{-- 
+					@foreach ($task->bidder as $bidder)
+						<p>
+							{{$bidder->username}}
 
+							{{$bidder->findLatestQuoteById($bidder->id, $task->id)->first()->summary}}
+						</p>
+					@endforeach
+
+ --}}
 					@if (Auth::user()->realname())
 
 						@if ($task->winningQuote != NULL && $task->winningQuote->user->id == Auth::user()->id)
@@ -405,7 +507,7 @@
 						@endif
 
 						{{-- COMMIT AREA --}}
-						@if ( ($task->type == 1 && $task->state == 1) || ($task->type == 2 && $task->state == 2)  && $task->user->id != Auth::user()->id )
+						@if ( ($task->type == 1 && $task->state == 1) || ( ($task->state == 2 || $task->state == 3) )  && $task->user->id != Auth::user()->id )
 
 
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}
@@ -419,6 +521,12 @@
 								<div class="form-group">
 									{{Form::submit('Commit', ['class'=>'btn btn-danger'])}}
 								</div>
+								{{Form::hidden('type', $task->type)}}
+								@if ($task->winningCommit != NULL)
+									{{Form::hidden('commit_id', $task->winningCommit->id)}}
+								@elseif ($task->winningQuote != NULL)
+									{{Form::hidden('quote_id', $task->winningQuote->id)}}
+								@endif
 
 
 							{{Form::close()}}

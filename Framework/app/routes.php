@@ -40,6 +40,8 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/{task_id}/hosting/1{bid_id}'		, 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/2{bid_id}'		, 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
+	Route::get('/pay/{commit_id}'						, 'TaskController@pay')->where('commit_id', '[0-9]+');
+	Route::post('/pay'									, 'TaskController@postPay');
 
 
 	// POST
@@ -65,7 +67,7 @@ Route::group(['before'=>'auth'], function() {
 
 
 Route::get('admin/auth'	, 'AdminController@auth');
-Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@student_card')->where('user_id', '[0-9]+');
+Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
 Route::get('admin/getUsers'					, 'AdminController@getUsers');
 Route::get('admin/postAuthTobe/{user_id}'	, 'AdminController@postAuthTobe');

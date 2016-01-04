@@ -18,9 +18,9 @@ class Task extends Eloquent {
 		}
 	}
 
-	public function commit() {
-		
-	}
+	// public function quotesDistinctByUser() {
+	// 	return $this->hasMany('QuotePivot', 'id', 'quote_id')->whereIn('user_id', [1]);
+	// }
 
 	// overdue_task(n) -------------- winning_bidder(1)
 	// public function winningBidder() {

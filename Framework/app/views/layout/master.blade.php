@@ -6,9 +6,11 @@
 	<title>Campus Witkey</title>
 
   {{-- style --}}
-  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  {{HTML::style('assets/style/font-awesome.min.css')}}
+  {{-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
+  {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}}
+  {{-- {{HTML::style(URL::asset('assets/style/bootstrap.min.css.bak'))}} --}}
   {{HTML::style('assets/style/main.css')}}
+  {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/sticky-footer.css')}}
   {{HTML::style(URL::asset('assets/style/select2.css'))}}
   {{-- <link href="http://fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css" rel="stylesheet" /> --}}
@@ -42,74 +44,8 @@
 @section('script')
 @show
 
-  <style>
-  body {
-    /*min-height: 2000px;*/
-    padding-top: 70px;
-  }
-  .panel-group{
-    margin-bottom: 40px;
-  }
-
-  .avatar-sm{
-    width: 40px;
-    margin-right: 12px;
-    margin-bottom: 4px;
-  }
-  .avatar-md{
-    width: 130px;
-    margin-right: 20px;
-  }
-  .avatar-lg{
-    margin-right: 20px;
-  }
-  .avatar-bar{
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  .detail{
-    padding: 10px;
-    padding-left: 20px;
-    display: block;
-    word-break: break-all;
-  }
-  .fa-mars{
-    color: #286090;
-    font-weight: bold;
-  }
-  .fa-venus{
-    color: #d9534f;
-    font-weight: bold;
-  }
-
-  .detail-title{
-    width: 570px;
-    word-break: break-all;
-    display: inline-block;
-  }
-  .amount{
-    font-size: 24px;
-    padding-left: 6px;
-  }
-  .metadata,
-  .metadata a{
-    color: #888;
-    text-decoration: none;
-  }
-  .metadata a:hover{
-    color: #666;
-  }
-  .metadata .property{
-    margin-left: 10px;
-  }
-  .detail img{
-    max-width: 800px;
-  }
-
-  </style>
-
-  @section('style')
-  @show
+@section('style')
+@show
 
 </head>
 <body>
@@ -158,7 +94,7 @@
     <div class="container">
       <p class="text-muted">
         <span class="col-sm-4"></span>
-        <span class="col-sm-4" align="center">
+        <span class="col-sm-4">
           &copy; Campus Witkey.
           Made with <i class="fa fa-heart"></i>
         </span>

@@ -35,10 +35,49 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	// bidder(n) -------------- task(n)
 	public function task() {
 
-		return $this->belongsToMany('Task', 'QuotePivot', 'user_id', 'task_id')
+		return $this->belongsToMany('Task', 'CommitPivot', 'user_id', 'task_id')
+			->distinct()
 			->orderBy('created_at', 'desc');
-		// return $this->belongsToMany('Task', 'Task_Bidder', 'bidder_id', 'task_id');
+		// return Task::where('user_id', Auth::user()->id);
+		// return $this->hasMany('Task', 'user_id', 'id');
 	}
+
+
+	// public function quote() {
+
+	// 	return $this->belongsToMany('Task', 'QuotePivot', 'user_id', 'task_id')
+	// 		->orderBy('created_at', 'desc');
+	// }
+
+	// public function commit() {
+
+	// 	return $this->belongsToMany('Task', 'CommitPivot', 'user_id', 'task_id')
+	// 		->orderBy('created_at', 'desc');
+	// }
+
+	public function findLatestCommitById($user_id, $task_id) {
+		// return $this->belongsToMany('Task', 'CommitPivot', 'task_id', 'user_id');
+		// return $this->hasMany('CommitPivot', 'user_id', 'id');
+		return DB::table('User')
+			->leftJoin('CommitPivot', 'User.id', '=', 'CommitPivot.user_id')
+			->where(['user_id'=>$user_id, 'task_id'=>$task_id])
+			->orderBy('CommitPivot.created_at', 'desc')
+			->take(1);
+	}
+
+	public function findLatestQuoteById($user_id, $task_id) {
+		// return $this->hasMany('QuotePivot', 'user_id', 'id')->orderBy('created_at', 'desc');
+		return DB::table('User')
+			->leftJoin('QuotePivot', 'User.id', '=', 'QuotePivot.user_id')
+			->where(['user_id'=>$user_id, 'task_id'=>$task_id])
+			->orderBy('QuotePivot.created_at', 'desc')
+			->take(1);
+	}
+
+
+
+
+
 
 	public function favoriteTask (){
 

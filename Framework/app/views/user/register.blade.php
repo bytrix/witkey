@@ -3,6 +3,13 @@
 @section('script')
 @parent
 	{{HTML::script(URL::asset('assets/script/angular.js'))}}
+	<script>
+	$(function () {
+		$('input[data-toggle="popover"]').popover({
+			trigger: "focus"
+		})
+	})
+	</script>
 @stop
 
 @section('content')
@@ -21,8 +28,8 @@
 			<div class="form-group" ng-class="{'has-error': registerForm.email.$invalid && !registerForm.email.$pristine, 'has-success': registerForm.email.$valid}">
 			@endif
 				<div class="input-group">
-					<span class="input-group-addon" style="height: 46px;"><i class="fa fa-envelope-o fa-fw"></i></span>
-					{{Form::email('email', '', ['placeholder'=>'Email', 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email'])}}
+					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+					{{Form::email('email', '', ['placeholder'=>'Email', 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'A valid email address'])}}
 				</div>
 			</div>
 			@if ($errors->first('password'))
@@ -32,7 +39,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-maxlength'=>'20', 'ng-model'=>'password'])}}
+					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'Minimize 6 characters'])}}
 				</div>
 			</div>
 

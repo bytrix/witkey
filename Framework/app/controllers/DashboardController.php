@@ -55,7 +55,7 @@ class DashboardController extends BaseController {
 
 		return View::make('dashboard.authentication')
 			->with('schoolList'       , Academy::allAcademies())
-			->with('majorCategoryList', Academy::allMajors())
+			// ->with('majorCategoryList', Academy::allMajors())
 			->with('majorList'        , Academy::allMajors());
 	}
 
@@ -162,10 +162,10 @@ class DashboardController extends BaseController {
 			if (!Input::hasFile('idcard_image') && !strlen(Auth::user()->student_card)) {
 			// when the file exists in database (replace the original)
 
-				return View::make('user.dashboard.authentication')
-					->with('schoolList'       , self::$schoolList)
-					->with('majorCategoryList', self::$majorCategoryList)
-					->with('majorList'        , self::$majorList)
+				return View::make('dashboard.authentication')
+					->with('schoolList'       , Academy::allAcademies())
+					// ->with('majorCategoryList', Academy::allMajors())
+					->with('majorList'        , Academy::allMajors())
 					->with('error'            , 'File not uploaded!');
 
 			} else {
@@ -200,16 +200,16 @@ class DashboardController extends BaseController {
 
 			return Redirect::to('/dashboard/authentication')
 				->with('schoolList'       , Academy::allAcademies())
-				->with('majorCategoryList', Academy::allMajors())
-				->with('majorList'        , UserController::$majorList)
+				// ->with('majorCategoryList', Academy::allMajors())
+				->with('majorList'        , Academy::allMajors())
 				->with('message'          , 'Save successfully!');
 
 		} else {
 
 			return Redirect::to('/dashboard/authentication')
 				->with('schoolList'       , Academy::allAcademies())
-				->with('majorCategoryList', Academy::allMajors())
-				->with('majorList'        , UserController::$majorList)
+				// ->with('majorCategoryList', Academy::allMajors())
+				->with('majorList'        , Academy::allMajors())
 				->withErrors($validator);
 		}
 	}

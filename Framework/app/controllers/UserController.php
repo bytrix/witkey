@@ -2,70 +2,70 @@
 
 class UserController extends BaseController {
 
-		public static $schoolList = [
-			'福州大学至诚学院',
-		];
+		// public static $schoolList = [
+		// 	'福州大学至诚学院',
+		// ];
 
-		public static $majorCategoryList = [
-			'电气工程系',
-			'信息工程系',
-			'环境资源工程系',
-			'生物工程系',
-			'机械工程系',
-			'材料工程系',
-			'计算机工程系',
-			'化学工程系',
-			'土木工程系',
-			'建筑系',
-			'财经系',
-			'管理系',
-			'社会事务管理系',
-			'外国语系',
-			'音乐系',
-			'创意与设计系'
-		];
+		// public static $majorCategoryList = [
+		// 	'电气工程系',
+		// 	'信息工程系',
+		// 	'环境资源工程系',
+		// 	'生物工程系',
+		// 	'机械工程系',
+		// 	'材料工程系',
+		// 	'计算机工程系',
+		// 	'化学工程系',
+		// 	'土木工程系',
+		// 	'建筑系',
+		// 	'财经系',
+		// 	'管理系',
+		// 	'社会事务管理系',
+		// 	'外国语系',
+		// 	'音乐系',
+		// 	'创意与设计系'
+		// ];
 		
-		public static $majorList = [
-			'电气工程及其自动化',
-			'自动化',
-			'电子信息工程',
-			'通信工程',
-			'电子科学与技术',
-			'微电子科学与工程',
-			'计算机科学与技术',
-			'软件工程',
-			'网络工程',
-			'机械设计制造及其自动化',
-			'过程装备与控制工程',
-			'工业设计',
-			'材料成型及控制工程',
-			'材料科学与工程',
-			'环境工程',
-			'安全工程',
-			'生物工程',
-			'食品科学与工程',
-			'材料化学',
-			'应用化学',
-			'化学工程与工艺',
-			'土木工程',
-			'建筑学',
-			'包装工程',
-			'生物技术',
-			'人文地理与城乡规划',
-			'工程管理',
-			'金融工程',
-			'国际经济与贸易',
-			'财务管理',
-			'行政管理',
-			'信息管理与信息系统',
-			'物流管理',
-			'英语',
-			'日语',
-			'商务英语',
-			'汉语言文学',
-			'音乐学',
-			'产品设计',
-		];
+		// public static $majorList = [
+		// 	'电气工程及其自动化',
+		// 	'自动化',
+		// 	'电子信息工程',
+		// 	'通信工程',
+		// 	'电子科学与技术',
+		// 	'微电子科学与工程',
+		// 	'计算机科学与技术',
+		// 	'软件工程',
+		// 	'网络工程',
+		// 	'机械设计制造及其自动化',
+		// 	'过程装备与控制工程',
+		// 	'工业设计',
+		// 	'材料成型及控制工程',
+		// 	'材料科学与工程',
+		// 	'环境工程',
+		// 	'安全工程',
+		// 	'生物工程',
+		// 	'食品科学与工程',
+		// 	'材料化学',
+		// 	'应用化学',
+		// 	'化学工程与工艺',
+		// 	'土木工程',
+		// 	'建筑学',
+		// 	'包装工程',
+		// 	'生物技术',
+		// 	'人文地理与城乡规划',
+		// 	'工程管理',
+		// 	'金融工程',
+		// 	'国际经济与贸易',
+		// 	'财务管理',
+		// 	'行政管理',
+		// 	'信息管理与信息系统',
+		// 	'物流管理',
+		// 	'英语',
+		// 	'日语',
+		// 	'商务英语',
+		// 	'汉语言文学',
+		// 	'音乐学',
+		// 	'产品设计',
+		// ];
 
 
 
@@ -83,7 +83,8 @@ class UserController extends BaseController {
 	public function logout() {
 
 		Auth::logout();
-		return Redirect::to('/');
+		// return Redirect::to('/');
+		return Redirect::back();
 	}
 
 	public function profile($user_id) {
@@ -109,7 +110,7 @@ class UserController extends BaseController {
 
 		$rules = [
 			'email'    => 'required|email',
-			'password' => 'required|between:6,20'
+			'password' => 'required|min:6'
 		];
 
 		$validator = Validator::make($userInput, $rules);
@@ -144,7 +145,7 @@ class UserController extends BaseController {
 
 		$rules = [
 			'email'    => 'required|email|unique:User,email',
-			'password' => 'required|between:6,20|confirmed',
+			'password' => 'required|min:6|confirmed',
 		];
 
 		$validator = Validator::make($userInput, $rules);
@@ -163,7 +164,7 @@ class UserController extends BaseController {
 			$user->avatar = $avatar;
 
 			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
-			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 12) . '.jpg', public_path() . '/avatar/' . $avatar);
+			copy(public_path() . '/assets/image/default_avatar/' . ( rand(1, 3) * rand(1, 4) ) . '.jpg', public_path() . '/avatar/' . $avatar);
 
 
 			$user->save();

@@ -117,12 +117,6 @@
 
 				<p>Joined on {{explode(' ', $user->created_at)[0]}}</p>
 
-				<p data-toggle="tooltip" title="Grade" data-placement="left">
-					@if ($user->enrollment_date != NULL)
-						{{$grade}}
-					@endif
-				</p>
-
 
 				<p data-toggle="tooltip" title="School" data-placement="left">
 					@if ($user->school != NULL)
@@ -134,6 +128,12 @@
 				<p data-toggle="tooltip" title="Major" data-placement="left">
 					@if ($user->major != NULL)
 						{{Academy::getMajor($user->major)}}
+					@endif
+				</p>
+
+				<p data-toggle="tooltip" title="Grade" data-placement="left">
+					@if ($user->enrollment_date != NULL)
+						{{$grade}}
 					@endif
 				</p>
 
