@@ -19,9 +19,35 @@
 @section('user-panel')
 	<h1 class="page-header">Favorite Task</h1>
 
-  @foreach (Auth::user()->favoriteTask as $favoriteTask)
+
+  <table class="table">
+    <thead>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </thead>
+    <tbody>
+
+      @foreach ($favoriteTasks as $favoriteTask)
+        <tr>
+          <td>{{$favoriteTask->id}}</td>
+          <td>
+            <div class="cw-task-title">
+              <a href="/task/{{$favoriteTask->id}}">{{$favoriteTask->title}}</a>
+            </div>
+          </td>
+          <td>{{$favoriteTask->amount}}</td>
+          <td>{{$favoriteTask->expiration}}</td>
+        </tr>
+      @endforeach
+
+    </tbody>
+  </table>
+{{-- 
+  @foreach ($favoriteTasks as $favoriteTask)
     <li>{{$favoriteTask->title}}</li>
   @endforeach
-
+ --}}
 
 @stop

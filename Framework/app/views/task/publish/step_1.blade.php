@@ -24,8 +24,8 @@
 	<div class="container">
 
 		<h1 class="page-header">Publish you task</h1>
-		<ul class='task-procedure first'>
-			<li class="first col-md-4">CREATE TASK</li>
+		<ul class='task-procedure first state'>
+			<li class="first col-md-4 light">CREATE TASK</li>
 			<li class="second col-md-4">SET REWARD</li>
 			<li class="third col-md-4">PUBLISH</li>
 		</ul>

@@ -11,33 +11,33 @@ var UserController = function($scope, $http) {
 		return null;
 	}
 
-	$http.get('http://localhost:8000/admin/getUsers')
+	$http.get('/admin/getUsers')
 		.success(function(response) {
 			$scope.users = response;
 		});
-	$http.get('http://localhost:8000/config/academy/')
+	$http.get('/config/academy/')
 		.success(function(response) {
 			$scope.academies = response;
 		})
-	$http.get('http://localhost:8000/config/major/')
+	$http.get('/config/major/')
 		.success(function(response) {
 			$scope.majors = response;
 		})
 
 	$scope.authTobe = function(user_id) {
-		$http.get('http://localhost:8000/admin/postAuthTobe/' + user_id);
+		$http.get('/admin/postAuthTobe/' + user_id);
 		if ($scope.findUserById(user_id).authenticated != 0) {
 			$scope.findUserById(user_id).authenticated = 1;
 		}
 	}
 	$scope.authSuccess = function(user_id) {
-		$http.get('http://localhost:8000/admin/postAuthSuccess/' + user_id);
+		$http.get('/admin/postAuthSuccess/' + user_id);
 		if ($scope.findUserById(user_id).authenticated != 0) {
 			$scope.findUserById(user_id).authenticated = 2;
 		}
 	}
 	$scope.authFail = function(user_id) {
-		$http.get('http://localhost:8000/admin/postAuthFail/' + user_id);
+		$http.get('/admin/postAuthFail/' + user_id);
 		if ($scope.findUserById(user_id).authenticated != 0) {
 			$scope.findUserById(user_id).authenticated = 3;
 		}

@@ -6,9 +6,8 @@
 	<title>Campus Witkey</title>
 
   {{-- style --}}
-  {{-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
-  {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}}
-  {{-- {{HTML::style(URL::asset('assets/style/bootstrap.min.css.bak'))}} --}}
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  {{-- {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}} --}}
   {{HTML::style('assets/style/main.css')}}
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/sticky-footer.css')}}

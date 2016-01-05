@@ -111,7 +111,9 @@
 										<tr>
 											<th>{{$order->id}}</th>
 											<td>
-												<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
+												<div class="cw-task-title">
+													<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
+												</div>
 											</td>
 											<td align="right">&yen; {{$order->amount}}</td>
 											<td>{{$order->created_at}}</td>

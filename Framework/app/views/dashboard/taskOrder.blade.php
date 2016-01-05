@@ -19,7 +19,8 @@
 @section('user-panel')
 	<h1 class="page-header">Task Order</h1>
 	
-	@if (count(Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()))
+	{{-- @if (count(Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get())) --}}
+	@if (count($orders))
 		<table class="table table-hover table-striped">
 			<thead>
 				<tr>
@@ -30,18 +31,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $task)
+				{{-- @foreach (Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order) --}}
+				@foreach ($orders as $order)
 				<tr>
-					<th>{{$task->id}}</th>
+					<th>{{$order->id}}</th>
 					<td>
-						<a href="/task/{{$task->id}}" target="blank">{{$task->title}}</a>
+						<div class="cw-task-title">
+							<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
+						</div>
 					</td>
-					<td align="right">&yen; {{$task->amount}}</td>
-					<td>{{$task->created_at}}</td>
+					<td align="right">&yen; {{$order->amount}}</td>
+					<td>{{$order->created_at}}</td>
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
+		{{$orders->links()}}
 	@else
 		<div class="alert alert-warning">
 			No task published recently!

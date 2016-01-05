@@ -3,7 +3,7 @@
 @section('style')
 @parent
 <style>
-	.avatar-sm{
+/*	.avatar-sm{
 		cursor: pointer;
 		width: 30px;
 		margin-right: 12px;
@@ -11,7 +11,7 @@
 	}
 	.avatar-sm:hover{
 		box-shadow: 0 0 2px #337ab7;
-	}
+	}*/
 	.time{
 		color: #999;
 		display: block;
@@ -60,7 +60,7 @@
 		margin-left: -20px;
 		position: absolute;
 		color: red;
-		font-size: 12px;
+		font-size: 14px;
 		width: 60px;
 		text-align: center;
 	}
@@ -143,35 +143,29 @@
 
 		<div class="col-md-8">
 			<div class="page-header">
-				<h3>
 					@if ($task->type == 1)
-						<span class="label label-warning">REWARD</span>
+						<span class="cw-heading-tag cw-reward-heading">REWARD</span>
 					@elseif($task->type == 2)
-						<span class="label label-danger">BID</span>
+						<span class="cw-heading-tag cw-bid-heading">BID</span>
 					@endif
-					@if (strlen($task->title) > 40)
-						<span title="{{$task->title}}" class="detail-title">
-							{{str_limit($task->title, 40)}}
-						</span>
-					@else
-						{{$task->title}}
-					@endif
-					<div class="pull-right">
+
+					<div class="pull-right" style="font-size: 25px; margin-top: -10px;">
 						{{-- Edit Button --}}
 						<div class="col-sm-6">
-							@if (Auth::check())
-								@if ($task->user_id == Auth::user()->id)
-									<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-								@endif
+							@if (Auth::check() && $task->user_id == Auth::user()->id)
+								<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></i>
 							@endif
 						</div>
+						{{-- Favorite Button --}}
 						<div class="col-sm-6">
-							{{-- Favorite Button --}}
 							<i class="fa fa-heart-o favorite" id="favorite" data-toggle="tooltip" data-placement="top" title="favorite"></i>
 							<span id="tip">favorite</span>
 						</div>
 					</div>
-				</h3>
+
+					<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+						{{$task->title}}
+					</h3>
 				<script>
 
 				$('#favorite').click(function() {
@@ -220,7 +214,7 @@
 				<h4>
 					<strong>Expiration:</strong>
 					@if ($task->state == 4)
-						<span>Task End</span>
+						<span class="text-danger">Task End</span>
 					@else
 						<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
 					@endif
@@ -302,13 +296,20 @@
 							/
 							<span data-toggle="tooltip" data-placement="top" title="{{$quote_sum}}份报价说明">{{$quote_sum}})</span>
 						</strong>
+						<span class="text-danger" style="margin-left: 30px;">
+							Average Quote:
+							&yen;{{$quote_price_avg}}
+						</span>
 					@endif
 				</h4>
 
 
 				<div class="avatar-bar">
 					@foreach ($task->bidder as $bidder)
-						<img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+						{{-- <img class='avatar-sm' onclick="window.location.href='/user/{{$bidder->id}}'" src="{{URL::asset('/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top"> --}}
+						<a href="/user/{{$bidder->id}}">
+							<img class='avatar-xs' src="{{URL::asset('/avatar/' . $bidder->avatar )}}" data-toggle="tooltip" title="{{$bidder->username}}" data-placement="top">
+						</a>
 
 					@endforeach
 				</div>
@@ -338,7 +339,7 @@
 								<div id="summary">
 									{{$task->winningQuote->latestCommit->first()->summary}}
 									@if ($task->user->id == Auth::user()->id && $task->state == 3)
-										<a href="/pay/{{$task->winningQuote->latestCommit->first()->id}}" class="btn btn-success pull-right">Pay</a>
+										<a href="/pay/{{$task->winningQuote->latestCommit->first()->uuid}}" class="btn btn-success pull-right">Pay</a>
 									@endif
 								</div>
 							</div>
@@ -357,13 +358,13 @@
 										<span class="no"># {{$commit->id}}</span>
 
 										{{-- avatar --}}
-										<a href="/">
+										<a href="/user/{{$commit->user->id}}">
 											{{HTML::image(URL::asset('/avatar/' . $commit->user->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$commit->user->username])}}
 										</a>
 
 										{{-- date --}}
 										<span class="metadata">
-											<a href="/"><strong>{{$commit->user->username}}</strong></a>
+											<a href="/user/{{$commit->user->id}}"><strong>{{$commit->user->username}}</strong></a>
 											committed at 
 											{{$commit->created_at}}
 										</span>
@@ -377,7 +378,7 @@
 
 										{{-- bid_btn --}}
 										@if ($task->user->id == Auth::user()->id && $task->id != 4)
-											<a href="/pay/{{$commit->id}}" class="btn btn-success pull-right">Pay</a>
+											<a href="/pay/{{$commit->uuid}}" class="btn btn-success pull-right">Pay</a>
 										@endif
 
 										<div id="summary">
@@ -393,13 +394,13 @@
 										<span class="no"># {{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}</span>
 
 										{{-- avatar --}}
-										<a href="/">
+										<a href="/user/{{$bidder->id}}">
 											{{HTML::image(URL::asset('/avatar/' . $bidder->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$bidder->username])}}
 										</a>
 
 										{{-- date --}}
 										<span class="metadata">
-											<a href="/"><strong>{{$bidder->username}}</strong></a>
+											<a href="/user/{{$bidder->id}}"><strong>{{$bidder->username}}</strong></a>
 											committed at 
 											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
 										</span>
@@ -415,7 +416,7 @@
 
 										{{-- bid_btn --}}
 										@if ($task->user->id == Auth::user()->id && $task->state != 4)
-											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}" class="btn btn-success pull-right">Pay</a>
+											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->uuid}}" class="btn btn-success pull-right">Pay</a>
 										@endif
 
 										<div id="summary">

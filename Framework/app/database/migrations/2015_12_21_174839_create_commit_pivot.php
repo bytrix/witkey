@@ -15,6 +15,7 @@ class CreateCommitPivot extends Migration {
 		Schema::create('CommitPivot', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('uuid');
 			$table->timestamps();
 			$table->integer('task_id');
 			$table->integer('user_id');

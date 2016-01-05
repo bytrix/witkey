@@ -7,7 +7,7 @@ About myself
 ------------
 
 > Software Engineering student in school, crazy about technolygy and art
-> but not proficient. A short time ago, a little conflict happened in
+> but not much proficient. A short time ago, a little conflict happened in
 > school between someone and me so that I have to  quit school.
 > However, it's a chance for me because I can spend all my spare
 > time in programming learning. To summarize the self-study plan,
@@ -51,27 +51,14 @@ Architecture
 References
 ----------
 
-bootstrap3-wysiwyg
-
-https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg
-
-~~emoji-picker(removed)~~
-
-~~https://github.com/one-signal/emoji-picker~~
-
-jQuery-File-Upload
-
-https://github.com/blueimp/jQuery-File-Upload
-
-moment.js
-
-https://github.com/moment/moment
-
-countdown.js
-
-https://github.com/kbwood/countdown
+- [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)
+- [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
+- [moment.js](https://github.com/moment/moment)
+- [countdown.js](https://github.com/kbwood/countdown)
+- [HTMLPurifier for Laravel 4](https://github.com/mewebstudio/Purifier/tree/master-l4)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png
   [2]: https://github.com/bytrix/witkey/raw/master/Diagram/Flowchart/Flowchart.png
   [3]: https://github.com/bytrix/witkey/raw/master/Diagram/ClassDiagram/ClassDiagram.jpg
+  

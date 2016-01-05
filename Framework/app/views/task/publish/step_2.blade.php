@@ -79,9 +79,9 @@
 @section('content')
 	<div class="container">
 		<h1 class="page-header">Set your reward</h1>
-		<ul class='task-procedure second'>
-			<li class="first col-md-4">CREATE TASK</li>
-			<li class="second col-md-4">SET REWARD</li>
+		<ul class='task-procedure second state'>
+			<li class="first second col-md-4">CREATE TASK</li>
+			<li class="second col-md-4 light">SET REWARD</li>
 			<li class="third col-md-4">PUBLISH</li>
 		</ul>
 	</div>
@@ -121,9 +121,8 @@
 					<div class="input-group-addon">
 						<i class="fa fa-calendar fa-fw"></i>
 					</div>
-					{{-- <input class="form-control" type="datetime-local" name="expiration" id="expiration" value="{{date('Y-m-d\TH:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')))}}" placeholder=""> --}}
-					{{-- <input type="text" id="expiration" class="form-control"> --}}
-					{{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}}
+					{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
+					{{Form::text('expiration', '', ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
 					<script>
 					$('#expiration').datetimepicker({
 						language: 'zh-CN',

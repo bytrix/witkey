@@ -40,12 +40,12 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/{task_id}/hosting/1{bid_id}'		, 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/2{bid_id}'		, 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
-	Route::get('/pay/{commit_id}'						, 'TaskController@pay')->where('commit_id', '[0-9]+');
-	Route::post('/pay'									, 'TaskController@postPay');
-
+	Route::get('/pay/{commit_uuid}'						, 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('/pay/{commit_uuid}/success'				, 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
+	
 
 	// POST
-	Route::post('dashboard/security'		, 'DashboardController@postSecurity');
+	Route::post('dashboard/security'        , 'DashboardController@postSecurity');
 	Route::post('dashboard/myProfile'		, 'DashboardController@postMyProfile');
 	Route::post('dashboard/authentication'	, 'DashboardController@postAuthentication');
 	Route::post('task/create/step-2'		, 'TaskController@step_2');
@@ -94,5 +94,7 @@ Route::get('config/major/{major_code}', function($major_code) {
 
 
 Route::get('test', function() {
-	return View::make('test');
+	// return View::make('test');
+	// return Purifier::clean('This is my H1 title scriptalert("a")</scripst>');
+	// return 'This is my H1 title <script>alert("a")</script>';
 });

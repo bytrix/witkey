@@ -45,14 +45,14 @@
 						</div>
 
 						<div class="item-inline">
-							<h4 class="list-group-item-heading">
+							<h4 class="list-group-item-heading" style="max-width: 820px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
 								<span class="label label-success">&yen; {{$task->amount}}</span>
 								@if ($task->type == 1)
 									<span class="label label-warning">Reward</span>
 								@elseif($task->type == 2)
 									<span class="label label-danger">Bid</span>
 								@endif
-								<a href="/task/{{$task->id}}">{{{str_limit($task->title, 45)}}}</a>
+								<a href="/task/{{$task->id}}">{{{$task->title}}}</a>
 							</h4>
 							<span class="metadata">
 								<a href="/user/{{$task->user->id}}" class="property">

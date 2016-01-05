@@ -23,25 +23,27 @@ class TaskController extends BaseController {
 	public function step_2() {
 		if (Request::method() == "POST") {
 			$userInput = [
-				'title'  => Input::get('title'),
+				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				'detail' => Input::get('detail')
 			];
 		} else {
 			$userInput = [
-				'title'  => Session::get('title'),
+				'title'  => e(Session::get('title')),
 				'detail' => Session::get('detail')
 			];
 		}
+
 		$rules = [
 			'title'  => 'required',
 			'detail' => 'required'
 		];
 		$validator = Validator::make($userInput, $rules);
-		if ($validator->passes()) {
 
+		if ($validator->passes()) {
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
 			return View::make('task.publish.step_2');
+
 		} else {
 			return Redirect::to('/task/create')->withErrors($validator);
 		}
@@ -55,7 +57,7 @@ class TaskController extends BaseController {
 			} else {
 				return true;
 			}
-		},"This amount field cannot be negative");
+		},"The amount field cannot be negative");
 		// if (!Session::has('amount') || !Session::has('expiration')) {
 		// 	Session::set('amount', Input::get('amount'));
 		// 	Session::set('expiration', Input::get('expiration'));
@@ -108,6 +110,18 @@ class TaskController extends BaseController {
 			$commit_sum = count(CommitPivot::where(['task_id'=>$task_id])->get());
 		} else if($task->type == 2) {
 			$quote_sum = count(QuotePivot::where(['task_id'=>$task_id])->get());
+			$quote_price_sum = 0;
+			$quote_price_avg = 0;
+			$bidder_count = 0;
+			foreach ($task->bidder as $bidder) {
+				$bidder_count++;
+				$quote_price_sum += $bidder->findLatestQuoteById($bidder->id, $task->id)->first()->price;
+			}
+			if ($bidder_count != 0) {
+				$quote_price_avg = $quote_price_sum / $bidder_count;
+			} else {
+				$quote_price_avg = 0;
+			}
 		}
 		if (Auth::check()) {
 			if ($task->type == 1) {
@@ -144,7 +158,8 @@ class TaskController extends BaseController {
 						return View::make('task.detail')
 							->with('task_id', $task_id)
 							->with('task', $task)
-							->with('quote_sum', $quote_sum);
+							->with('quote_sum', $quote_sum)
+							->with('quote_price_avg', $quote_price_avg);
 					}
 				}
 				$quotes = $all_quotes->orderBy('created_at', 'desc')->paginate(5);
@@ -152,7 +167,8 @@ class TaskController extends BaseController {
 					->with('task_id', $task_id)
 					->with('task', $task)
 					->with('quotes', $quotes)
-					->with('quote_sum', $quote_sum);
+					->with('quote_sum', $quote_sum)
+					->with('quote_price_avg', $quote_price_avg);
 			}
 		}
 
@@ -166,7 +182,8 @@ class TaskController extends BaseController {
 			return View::make('task.detail')
 				->with('task_id', $task_id)
 				->with('task', $task)
-				->with('quote_sum', $quote_sum);
+				->with('quote_sum', $quote_sum)
+				->with('quote_price_avg', $quote_price_avg);
 		}
 	}
 
@@ -234,6 +251,10 @@ class TaskController extends BaseController {
 			$commit->type = Input::get('type');
 			$commit->quote_id = Input::get('quote_id');
 			$commit->save();
+			CommitPivot::where('task_id', '=', $task_id)
+				->update([
+						'uuid' => md5($commit->id . $commit->created_at . $commit->task_id . $commit->user_id . $commit->summary . $commit->type . $commit->quote_id . $commit->file_hash)
+					]);
 			$task = Task::where('id', $task_id)->first();
 			if ($task->type == 1) {
 				$task->state = 2;
@@ -298,7 +319,7 @@ class TaskController extends BaseController {
 		// $quote = QuotePivot::where('id', $quote_id)->first();
 		if ($task->type == 1) {
 			$commit = CommitPivot::where('id', $bid_id)->first();
-			$task->winning_commit_id = $commit->id;
+			$task->winning_commit_id = $commit->uuid;
 		} else if ($task->type == 2) {
 			$quote = QuotePivot::where('id', $bid_id)->first();
 			$task->winning_quote_id = $quote->id;
@@ -314,14 +335,14 @@ class TaskController extends BaseController {
 	}
 
 
-	public function pay($commit_id) {
+	public function pay($commit_uuid) {
 		$task_id = Session::get('task_id_session');
-		Session::set('commit_id_session', $commit_id);
-		$commit = CommitPivot::where('id', $commit_id)->first();
+		Session::set('commit_uuid_session', $commit_uuid);
+		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
 		// dd($task_id);
 		$task = Task::where('id', $task_id)->first();
 		if ($task->type == 1) {
-			$task->winning_commit_id = $commit_id;
+			$task->winning_commit_id = $commit->id;
 			$task->save();
 		}
 		return View::make('task.pay')
@@ -329,15 +350,20 @@ class TaskController extends BaseController {
 			->with('commit', $commit);
 	}
 
-	public function postPay() {
+	public function successPay($commit_uuid) {
 		$task_id = Session::get('task_id_session');
-		$commit_id = Session::get('commit_id_session');
+		$commit_uuid = Session::get('commit_uuid_session');
+		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
 		$task = Task::where('id', $task_id)->first();
 		$task->state = 4;
 		$task->save();
+		return View::make('task.successPay')
+			->with('task', $task)
+			->with('commit', $commit);
 		// Session::forget('task_id_session');
-		return Redirect::to("/pay/$commit_id")
-			->with('payStatus', 'ok');
+		// return Redirect::to("/pay/$commit_uuid")
+		// 	->with('payStatus', 'ok');
+		// return 'success';
 	}
 
 }

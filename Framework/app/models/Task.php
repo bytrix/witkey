@@ -46,11 +46,11 @@ class Task extends Eloquent {
 	}
 
 	// public function setTitleAttribute($data) {
-	// 	$this->attributes['title'] = e("$data");
+	// 	$this->attributes['title'] = Purifier::clean($data);
 	// }
 
 	// public function setDetailAttribute($data) {
-	// 	$this->attributes['detail'] = e("$data");
+	// 	$this->attributes['detail'] = Purifier::clean($data);
 	// }
 	
 }

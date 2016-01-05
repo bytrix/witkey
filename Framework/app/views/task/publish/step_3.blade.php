@@ -16,10 +16,10 @@
 @section('content')
 	<div class="container">
 		<h1 class="page-header">Success</h1>
-		<ul class='task-procedure third'>
-			<li class="first col-md-4">CREATE TASK</li>
-			<li class="second col-md-4">SET REWARD</li>
-			<li class="third col-md-4">PUBLISH</li>
+		<ul class='task-procedure third state'>
+			<li class="first third col-md-4">CREATE TASK</li>
+			<li class="second third col-md-4">SET REWARD</li>
+			<li class="third col-md-4 light">PUBLISH</li>
 		</ul>
 	</div>
 	<div class="container">
@@ -32,7 +32,7 @@
 
 			<p>
 				<strong>Task Title: </strong>
-				<h2>{{{Session::get('title')}}}</h2>
+				<h2>{{Session::get('title')}}</h2>
 			</p>
 			{{-- <p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p> --}}
 			<p>

@@ -23,7 +23,7 @@ class DashboardController extends BaseController {
 			$greeting = 'Good night';
 		}
 
-		$orders = Auth::user()->order()->paginate(10);
+		$orders = Auth::user()->order()->paginate(5);
 
 		return View::make('dashboard.overview')
 			->with('greeting', $greeting)
@@ -36,7 +36,9 @@ class DashboardController extends BaseController {
 
 
 	public function taskOrder() {
-		return View::make('dashboard.taskOrder');
+		$orders = Auth::user()->order()->paginate(10);
+		return View::make('dashboard.taskOrder')
+			->with('orders', $orders);
 	}
 
 	// public function postcard() {
@@ -45,10 +47,10 @@ class DashboardController extends BaseController {
 
 	public function favoriteTask() {
 
-		$favoriteTask = Auth::user()->favoriteTask();
+		$favoriteTasks = Auth::user()->favoriteTask;
 
 		return View::make('dashboard.favoriteTask')
-			->with('favoriteTask', $favoriteTask);
+			->with('favoriteTasks', $favoriteTasks);
 	}
 
 	public function authentication() {

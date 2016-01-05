@@ -16,10 +16,11 @@ class CreateQuotePivot extends Migration {
 		Schema::create('QuotePivot', function(Blueprint $table)
 		{
 			$table->increments('id');
+			// $table->string('uuid');
 			$table->timestamps();
 			$table->integer('task_id');
 			$table->integer('user_id');
-			$table->integer('price');
+			$table->decimal('price');
 			$table->text('summary');
 		});
 	}
