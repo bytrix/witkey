@@ -25,6 +25,7 @@ class TaskApiController extends BaseController {
 	}
 
 	public function taskState($task_id) {
+		
 		$task = Task::where('id', $task_id)->first();
 		return $task->state;
 	}

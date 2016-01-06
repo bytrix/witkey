@@ -2,6 +2,7 @@
 
 class TaskController extends BaseController {
 
+
 	public function edit($task_id) {
 		$task = Task::where([
 			'id'      => $task_id,
@@ -58,10 +59,6 @@ class TaskController extends BaseController {
 				return true;
 			}
 		},"The amount field cannot be negative");
-		// if (!Session::has('amount') || !Session::has('expiration')) {
-		// 	Session::set('amount', Input::get('amount'));
-		// 	Session::set('expiration', Input::get('expiration'));
-		// }
 		if (Request::method() == "POST") {
 			$userInput = [
 				'type'       => Input::get('type'),
@@ -102,12 +99,22 @@ class TaskController extends BaseController {
 	public function detail($task_id) {
 
 		$task = Task::where('id', $task_id)->first();
+		$prev_task = Task::where('id', $task_id + 1)->first();
+		$next_task = Task::where('id', $task_id - 1)->first();
+		View::share('task_id', $task_id);
+		View::share('task', $task);
+		View::share('prev_task', $prev_task);
+		View::share('next_task', $next_task);
 		Session::set('task_id_session', $task->id);
+
 		if ($task->user->active == 0) {
+
 			return View::make('task.closed');
 		}
+
 		if ($task->type == 1) {
 			$commit_sum = count(CommitPivot::where(['task_id'=>$task_id])->get());
+
 		} else if($task->type == 2) {
 			$quote_sum = count(QuotePivot::where(['task_id'=>$task_id])->get());
 			$quote_price_sum = 0;
@@ -117,73 +124,72 @@ class TaskController extends BaseController {
 				$bidder_count++;
 				$quote_price_sum += $bidder->findLatestQuoteById($bidder->id, $task->id)->first()->price;
 			}
+
 			if ($bidder_count != 0) {
 				$quote_price_avg = $quote_price_sum / $bidder_count;
 			} else {
 				$quote_price_avg = 0;
 			}
+
 		}
-		if (Auth::check()) {
+
+		if (Auth::guest()) {
 			if ($task->type == 1) {
-				// dd(var_dump($task->user_id == Auth::user()->id));
-				if ($task->user_id == Auth::user()->id) {
-					$all_commits = CommitPivot::where(['task_id'=>$task_id]);
-				} else {
-					// dd(var_dump(Auth::user()->isBidder($task_id)));
-					if (Auth::user()->isBidder($task_id)) {
-						$all_commits = CommitPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
-					} else {
-						// dd('a'); 
-						return View::make('task.detail')
-							->with('task_id', $task_id)
-							->with('task', $task)
-							->with('commit_sum', $commit_sum);
-					}
-				}
-				$commits = $all_commits->orderBy('created_at', 'desc')->paginate(5);
 				return View::make('task.detail')
-					->with('task_id', $task_id)
-					->with('task', $task)
-					->with('commits', $commits)
 					->with('commit_sum', $commit_sum);
 
-			} else if($task->type == 2) {
-				if ($task->user_id == Auth::user()->id) {
-					$all_quotes = QuotePivot::where(['task_id'=>$task_id]);
-					// $all_quotes = $task->quotes;
-				} else {
-					if (Auth::user()->isBidder($task_id)) {
-						$all_quotes = QuotePivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
-					} else {
-						return View::make('task.detail')
-							->with('task_id', $task_id)
-							->with('task', $task)
-							->with('quote_sum', $quote_sum)
-							->with('quote_price_avg', $quote_price_avg);
-					}
-				}
-				$quotes = $all_quotes->orderBy('created_at', 'desc')->paginate(5);
+			} else if ($task->type == 2) {
 				return View::make('task.detail')
-					->with('task_id', $task_id)
-					->with('task', $task)
-					->with('quotes', $quotes)
 					->with('quote_sum', $quote_sum)
 					->with('quote_price_avg', $quote_price_avg);
 			}
 		}
 
+		if (Auth::check()) {
+			if ($task->type == 1) {
 
-		if ($task->type == 1) {
-			return View::make('task.detail')
-				->with('task_id', $task_id)
-				->with('task', $task)
-				->with('commit_sum', $commit_sum);
-		} else if ($task->type == 2) {
-			return View::make('task.detail')
-				->with('task_id', $task_id)
-				->with('task', $task)
-				->with('quote_sum', $quote_sum)
-				->with('quote_price_avg', $quote_price_avg);
+				if ($task->user_id == Auth::user()->id) {
+					$all_commits = CommitPivot::where(['task_id'=>$task_id]);
+
+				} else {
+
+					if (Auth::user()->isBidder($task_id)) {
+						$all_commits = CommitPivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
+					} else {
+						return View::make('task.detail')
+							->with('commit_sum', $commit_sum);
+					}
+				}
+
+				$commits = $all_commits->orderBy('created_at', 'desc')->paginate(5);
+
+				return View::make('task.detail')
+					->with('commits', $commits)
+					->with('commit_sum', $commit_sum);
+
+			} else if($task->type == 2) {
+
+				if ($task->user_id == Auth::user()->id) {
+					$all_quotes = QuotePivot::where(['task_id'=>$task_id]);
+
+				} else {
+
+					if (Auth::user()->isBidder($task_id)) {
+						$all_quotes = QuotePivot::where(['task_id'=>$task_id, 'user_id'=>Auth::user()->id]);
+					} else {
+						return View::make('task.detail')
+							->with('quote_sum', $quote_sum)
+							->with('quote_price_avg', $quote_price_avg);
+					}
+				}
+
+				$quotes = $all_quotes->orderBy('created_at', 'desc')->paginate(5);
+
+				return View::make('task.detail')
+					->with('quotes', $quotes)
+					->with('quote_sum', $quote_sum)
+					->with('quote_price_avg', $quote_price_avg);
+			}
 		}
 	}
 
@@ -234,8 +240,6 @@ class TaskController extends BaseController {
 
 
 	public function postCommit($task_id) {
-		// header('content-type:charset=utf-8');
-		// dd(Input::all());
 		$userInput = [
 			'summary' => Input::get('summary'),
 		];
@@ -316,7 +320,6 @@ class TaskController extends BaseController {
 
 	public function winBid($task_id, $bid_id) {
 		$task = Task::where('id', $task_id)->first();
-		// $quote = QuotePivot::where('id', $quote_id)->first();
 		if ($task->type == 1) {
 			$commit = CommitPivot::where('id', $bid_id)->first();
 			$task->winning_commit_id = $commit->uuid;
@@ -324,7 +327,6 @@ class TaskController extends BaseController {
 			$quote = QuotePivot::where('id', $bid_id)->first();
 			$task->winning_quote_id = $quote->id;
 		}
-		// $task->winning_bidder_id = $quote->user->id;
 		if ($task->type == 1) {
 			$task->state = 3;
 		} else if($task->type == 2) {
@@ -339,7 +341,6 @@ class TaskController extends BaseController {
 		$task_id = Session::get('task_id_session');
 		Session::set('commit_uuid_session', $commit_uuid);
 		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
-		// dd($task_id);
 		$task = Task::where('id', $task_id)->first();
 		if ($task->type == 1) {
 			$task->winning_commit_id = $commit->id;
@@ -360,10 +361,6 @@ class TaskController extends BaseController {
 		return View::make('task.successPay')
 			->with('task', $task)
 			->with('commit', $commit);
-		// Session::forget('task_id_session');
-		// return Redirect::to("/pay/$commit_uuid")
-		// 	->with('payStatus', 'ok');
-		// return 'success';
 	}
 
 }

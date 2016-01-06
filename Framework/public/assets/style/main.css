@@ -4,6 +4,24 @@ body {
   background-color: #fafafa;
 }
 
+a{
+  transition: 0.2s;
+}
+
+.beta i.arrow{
+  width: 6px;
+  height: 6px;
+  background-color: #337ab7;
+  /*background-color: red;*/
+  display: inline-block;
+  position: relative;
+  float: left;
+  transform: rotate(45deg);
+  top: 10px;
+  /*left: 63px;*/
+  right: -63px;
+}
+
 .form-custom {
   max-width: 900px;
   padding: 15px;
@@ -111,7 +129,7 @@ body {
 
 .cw-heading-tag{
   background-color: #ccc;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   /*padding-left: 10px;*/
   text-indent: 20px;
@@ -133,17 +151,30 @@ body {
 }
 
 .cw-reward-heading{
-  background-color: #f0ad4e;
+  background-color: #FFB414;
   color: #fff;
+  text-shadow: 0 0 5px #FFE15D;
 }
 .cw-bid-heading{
-  background-color: #d9534f;
+  background-color: #a00;
   color: #fff;
+  text-shadow: 0 0 5px #444;
+}
+
+.cw-task-title-fixedwidth{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 750px;
 }
 
 .cw-task-title{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 750px;
+  max-width: 750px;
+}
+
+.cw-text-red{
+  color: #c00;
 }

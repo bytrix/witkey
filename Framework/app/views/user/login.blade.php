@@ -1,4 +1,4 @@
-@extends('layout.home')
+@extends('user.master')
 
 @section('script')
 @parent

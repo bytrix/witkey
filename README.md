@@ -19,19 +19,19 @@ About myself
 Let's keep on track
 -------------------
 First you need to config the database in Framework/app/config/database.php.
-And then create a database named witkey in mysql
+And then create a database named ``witkey`` in mysql:
 
     CREATE DATABASE witkey
 
-change directory to Framework and make database migration:
+change directory to ``Framework`` and make database migration:
 
     php artisan migrate
 
-then run the server
+then run the server:
 
     php artisan serve
 
-type localhost:8000 in browser and you can see the page
+type localhost:8000 in browser and then you can see the page
 
 Architecture
 ------------
@@ -62,3 +62,21 @@ References
   [2]: https://github.com/bytrix/witkey/raw/master/Diagram/Flowchart/Flowchart.png
   [3]: https://github.com/bytrix/witkey/raw/master/Diagram/ClassDiagram/ClassDiagram.jpg
   
+
+Project Fee
+-----------
+
+<table>
+	<thead>
+		<th>Fee Name</th>
+		<th>Fee Amount</th>
+		<th>Quantity</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Yunti VPN</td>
+			<td>&yen; 230.00</td>
+			<td>1</td>
+		</tr>
+	</tbody>
+</table>

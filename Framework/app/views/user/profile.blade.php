@@ -1,4 +1,4 @@
-@extends('task.master')
+@extends('user.master')
 
 @section('menu')
 	<ul class="nav navbar-nav">

@@ -67,7 +67,8 @@
 
 	.price{
 		/*background-color: red;*/
-		display: block;
+		/*display: block;*/
+		font-weight: bold;
 		height: 35px;
 		line-height: 30px;
 		padding-left: 10px;
@@ -77,6 +78,10 @@
 		font-weight: bold;
 		color: orange;
 	}
+	.container .text-muted{
+		margin: 0px;
+	}
+
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
@@ -142,6 +147,20 @@
 	<div class="container">
 
 		<div class="col-md-8">
+
+			<div class="col-md-12">
+				@if ($prev_task != NULL)
+					<a href="/task/{{$prev_task->id}}" class="text-info">previous: {{$prev_task->title}}</a>
+				@else
+					<span class="text-muted">previous: none</span>
+				@endif
+				@if ($next_task != NULL)
+					<a href="/task/{{$next_task->id}}" class="text-info pull-right">next: {{$next_task->title}}</a>
+				@else
+					<span class="pull-right text-muted">next: none</span>
+				@endif
+			</div>
+
 			<div class="page-header">
 					@if ($task->type == 1)
 						<span class="cw-heading-tag cw-reward-heading">REWARD</span>
@@ -189,30 +208,30 @@
 			</div>
 
 			<div class="col-sm-6">
-				<h4><strong>Task ID:</strong> #{{$task->id}}</h4>
+				<h4><span>Task ID:</span> #{{$task->id}}</h4>
 				@if ($task->type == 1)
 					<h4>
-						<strong>Reward:</strong>
-						<span class="amount text-success">&yen;{{$task->amount}}</span>
+						<span>Reward:</span>
+						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
 					</h4>
 				@elseif ($task->type == 2)
 					<h4>
-						<strong>Budget:</strong>
-						<span class="amount text-success">&yen;{{$task->amount}}</span>
+						<span>Budget:</span>
+						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
 					</h4>
 				@endif
 			</div>
 
 			<div class="col-sm-6">
-				<h4><strong>School location:</strong>
+				<h4><span>School location:</span>
 				@if ($task->user->school == NULL)
 					<span class="label label-danger">No School</span>
 				@else
 					{{Academy::getAcademy($task->user->school)}}</h4>
 				@endif
-				{{-- <h4><strong>Expiration:</strong> {{$task->expiration}}</h4> --}}
+				{{-- <h4><span>Expiration:</span> {{$task->expiration}}</h4> --}}
 				<h4>
-					<strong>Expiration:</strong>
+					<span>Expiration:</span>
 					@if ($task->state == 4)
 						<span class="text-danger">Task End</span>
 					@else

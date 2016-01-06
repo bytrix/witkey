@@ -1,5 +1,19 @@
 @extends('dashboard.master')
 
+@section('style')
+@parent
+	{{HTML::style(URL::asset('assets/style/bootstrap-tagsinput.css'))}}
+	<style>
+		.bootstrap-tagsinput{
+			display: block;
+		}
+	</style>
+@stop
+
+@section('script')
+	{{HTML::script(URL::asset('assets/script/bootstrap-tagsinput.js'))}}
+@stop
+
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
@@ -116,7 +130,7 @@
 	<div class="form-group">
 		{{Form::label('skill_tag', 'Skill Tag', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('skill_tag', Auth::user()->skill_tag, ['class'=>'form-control', 'placeholder'=>'Separate with a comma'])}}
+			{{Form::text('skill_tag', Auth::user()->skill_tag, ['data-role'=>'tagsinput'])}}
 		</div>
 	</div>
 

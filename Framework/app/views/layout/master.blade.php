@@ -54,7 +54,7 @@
 
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -65,7 +65,7 @@
           </button>
           <a class="navbar-brand" href="/">
             witkey
-            <small><span class="label label-primary">beta</span></small>
+            <small><span class="label label-primary beta"><i class="arrow"></i>beta</span></small>
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -74,7 +74,7 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard"><i class="fa fa-envelope"></i> <strong>{{Auth::user()->email}}</strong></a></li>
+              <li><a href="/dashboard"><i class="fa fa-envelope-o"></i> <strong>{{Auth::user()->email}}</strong></a></li>
               <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
             @else
               <li><a href="/login">Login</a></li>
@@ -92,10 +92,10 @@
   <footer class="footer">
     <div class="container">
       <p class="text-muted">
-        <span class="col-sm-4"></span>
-        <span class="col-sm-4">
+        {{-- <span class="col-sm-4"></span> --}}
+        <span class="col-sm-12" style="text-align: center">
           &copy; Campus Witkey.
-          Made with <i class="fa fa-heart"></i>
+          Made with <i class="fa fa-heart-o"></i>
         </span>
       </p>
     </div>

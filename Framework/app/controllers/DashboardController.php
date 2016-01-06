@@ -57,7 +57,6 @@ class DashboardController extends BaseController {
 
 		return View::make('dashboard.authentication')
 			->with('schoolList'       , Academy::allAcademies())
-			// ->with('majorCategoryList', Academy::allMajors())
 			->with('majorList'        , Academy::allMajors());
 	}
 
@@ -124,18 +123,12 @@ class DashboardController extends BaseController {
 	}
 
 	public function postAuthentication() {
-		// dd(var_dump(Input::all()));
-		// $major = [
-		// 	'majorCategory'=>self::$majorCategoryList[Input::get('major_category')],
-		// 	'majorName'=>self::$majorList[Input::get('major')]
-		// ];
 		// TEXT INPUT
 		$userInput = [
 			'realname'        => Input::get('realname'),
 			'school'          => Input::get('school'),
 			'idcard_image'    => Input::file('idcard_image'),
-			// 'major_category'  => Input::get('major_category'),
-			'major'      => Input::get('major'),
+			'major'           => Input::get('major'),
 			'enrollment_date' => Input::get('enrollment_date'),
 		];
 
@@ -143,8 +136,7 @@ class DashboardController extends BaseController {
 			'realname'        => 'required',
 			'school'          => 'required',
 			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp,png|max:1024',
-			// 'major_category'  => 'required',
-			'major'      => 'required',
+			'major'           => 'required',
 			'enrollment_date' => 'required',
 		];
 
@@ -166,7 +158,6 @@ class DashboardController extends BaseController {
 
 				return View::make('dashboard.authentication')
 					->with('schoolList'       , Academy::allAcademies())
-					// ->with('majorCategoryList', Academy::allMajors())
 					->with('majorList'        , Academy::allMajors())
 					->with('error'            , 'File not uploaded!');
 
@@ -192,17 +183,15 @@ class DashboardController extends BaseController {
 
 			User::where('id', Auth::user()->id)->update([
 
-				'realname'       => $userInput['realname'],
+				'realname'        => $userInput['realname'],
 				'school'          => $userInput['school'],
-				// 'major_category'  => $userInput['major_category'],
-				'major'      => $userInput['major'],
+				'major'           => $userInput['major'],
 				'enrollment_date' => $userInput['enrollment_date'],
 
 			]);
 
 			return Redirect::to('/dashboard/authentication')
 				->with('schoolList'       , Academy::allAcademies())
-				// ->with('majorCategoryList', Academy::allMajors())
 				->with('majorList'        , Academy::allMajors())
 				->with('message'          , 'Save successfully!');
 
@@ -210,7 +199,6 @@ class DashboardController extends BaseController {
 
 			return Redirect::to('/dashboard/authentication')
 				->with('schoolList'       , Academy::allAcademies())
-				// ->with('majorCategoryList', Academy::allMajors())
 				->with('majorList'        , Academy::allMajors())
 				->withErrors($validator);
 		}

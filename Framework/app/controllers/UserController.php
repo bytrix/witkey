@@ -164,7 +164,7 @@ class UserController extends BaseController {
 			$user->avatar = $avatar;
 
 			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
-			copy(public_path() . '/assets/image/default_avatar/' . ( rand(1, 3) * rand(1, 4) ) . '.jpg', public_path() . '/avatar/' . $avatar);
+			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 293) . '.jpg', public_path() . '/avatar/' . $avatar);
 
 
 			$user->save();

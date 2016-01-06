@@ -16,6 +16,15 @@
 .list-group-item-heading>a{
 	color: #000;
 }
+.cw-task-title{
+	font-size: 16px;
+	color: #111;
+	padding-left: 8px;
+}
+.cw-task-title:hover{
+	color: #666;
+	text-decoration: none;
+}
 </style>
 @stop
 
@@ -45,15 +54,15 @@
 						</div>
 
 						<div class="item-inline">
-							<h4 class="list-group-item-heading" style="max-width: 820px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+							<div class="list-group-item-heading">
 								<span class="label label-success">&yen; {{$task->amount}}</span>
 								@if ($task->type == 1)
 									<span class="label label-warning">Reward</span>
 								@elseif($task->type == 2)
 									<span class="label label-danger">Bid</span>
 								@endif
-								<a href="/task/{{$task->id}}">{{{$task->title}}}</a>
-							</h4>
+								<span><a href="/task/{{$task->id}}" class="cw-task-title">{{{$task->title}}}</a></span>
+							</div>
 							<span class="metadata">
 								<a href="/user/{{$task->user->id}}" class="property">
 									<i class="fa fa-user"></i> {{{$task->user->username}}}
@@ -72,7 +81,7 @@
 							</span>
 						</div>
 
-						<div class="item-inline pull-right metadata" style="width: 200px;">
+						<div class="item-inline pull-right metadata" style="width: 100px;">
 							<h4>
 								@if ($task->winning_commit_id != 0 || $task->winning_quote_id != 0)
 									<span data-toggle="tooltip" data-placement="top" title="1 people win bid">1</span>
@@ -81,12 +90,13 @@
 								@endif
 								/
 								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
-								|
-								@if ($task->state == 4)
-									<span class="text-danger">Task End</span>
-								@else
-									<span class="text-success">In the Bidding</span>
-								@endif
+								<span style="padding-left: 20px;">
+									@if ($task->state == 4)
+										<i class="text-danger fa fa-minus" data-toggle="tooltip" data-placement="right" title="TaskEnd"></i>
+									@else
+										<i class="text-success fa fa-clock-o" data-toggle="tooltip" data-placement="right" title="Bidding..."></i>
+									@endif
+								</span>
 							</h4>
 						</div>
 					</div>
