@@ -140,7 +140,7 @@
         <span class="col-sm-4"></span>
         <span class="col-sm-4" align="center">
           &copy; Campus Witkey.
-          Made with <i class="fa fa-heart"></i>
+          Made with <i class="fa fa-heart-o"></i>
         </span>
       </p>
     </div>

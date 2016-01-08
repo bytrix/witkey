@@ -37,29 +37,35 @@
 		overflow:scroll;
 		/*max-height:300px;*/
 	}
-	#edit{
+	a#edit, a.favorite{
 		font-size: 0.8em;
 		cursor: pointer;
 		color: #666;
+		text-decoration: none;
+	}
+	#edit{
 		margin-left: 0.6em;
 		margin-right: 0.7em;
 	}
 	#edit:hover{
-		color: #333;
+		color: #337ab7;
 	}
+	.favorite:hover{
+		color: red;
+	}
+
 	.favorite{
 		cursor: pointer;
 		font-size: 0.8em;
 		margin-top: 0.3em;
 		margin-right: 1.7em;
-		color: red;
+		color: #666;
 	}
-
 	#tip{
 		display: block;
 		margin-left: -20px;
 		position: absolute;
-		color: red;
+		color: #666;
 		font-size: 14px;
 		width: 60px;
 		text-align: center;
@@ -147,19 +153,35 @@
 	<div class="container">
 
 		<div class="col-md-8">
-
 			<div class="col-md-12">
-				@if ($prev_task != NULL)
-					<a href="/task/{{$prev_task->id}}" class="text-info">previous: {{$prev_task->title}}</a>
-				@else
-					<span class="text-muted">previous: none</span>
-				@endif
-				@if ($next_task != NULL)
-					<a href="/task/{{$next_task->id}}" class="text-info pull-right">next: {{$next_task->title}}</a>
-				@else
-					<span class="pull-right text-muted">next: none</span>
-				@endif
+				<div style="clear: both">
+					@if ($prev_task != NULL)
+						<div class="cw-pager"><a href="/task/{{$prev_task->id}}" class="text-info">
+							<i class="fa fa-angle-up"></i>
+							prev: {{$prev_task->title}}</a>
+						</div>
+					@else
+						<div class="cw-pager"><span class="text-muted">
+							<i class="fa fa-angle-up"></i>
+							prev: none</span>
+						</div>
+					@endif
+				</div>
+				<div style="clear: both">
+					@if ($next_task != NULL)
+						<div class="cw-pager"><a href="/task/{{$next_task->id}}" class="text-info">
+							<i class="fa fa-angle-down"></i>
+							next: {{$next_task->title}}
+						</a></div>
+					@else
+						<div class="cw-pager"><span class="text-muted">
+							<i class="fa fa-angle-down"></i>
+							next: none
+						</span></div>
+					@endif
+				</div>
 			</div>
+			
 
 			<div class="page-header">
 					@if ($task->type == 1)
@@ -172,17 +194,17 @@
 						{{-- Edit Button --}}
 						<div class="col-sm-6">
 							@if (Auth::check() && $task->user_id == Auth::user()->id)
-								<i class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></i>
+								<a class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
 							@endif
 						</div>
 						{{-- Favorite Button --}}
 						<div class="col-sm-6">
-							<i class="fa fa-heart-o favorite" id="favorite" data-toggle="tooltip" data-placement="top" title="favorite"></i>
+							<a class="fa fa-heart-o favorite" id="favorite" data-toggle="tooltip" data-placement="top" title="favorite"></a>
 							<span id="tip">favorite</span>
 						</div>
 					</div>
 
-					<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+					<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis" title="{{$task->title}}">
 						{{$task->title}}
 					</h3>
 				<script>
@@ -227,7 +249,7 @@
 				@if ($task->user->school == NULL)
 					<span class="label label-danger">No School</span>
 				@else
-					{{Academy::getAcademy($task->user->school)}}</h4>
+					{{Academy::get($task->user->school)->name}}</h4>
 				@endif
 				{{-- <h4><span>Expiration:</span> {{$task->expiration}}</h4> --}}
 				<h4>
@@ -374,7 +396,7 @@
 									<div class="list-group-item">
 
 										{{-- no --}}
-										<span class="no"># {{$commit->id}}</span>
+										{{-- <span class="no"># {{$commit->id}}</span> --}}
 
 										{{-- avatar --}}
 										<a href="/user/{{$commit->user->id}}">
@@ -410,7 +432,7 @@
 									<div class="list-group-item">
 
 										{{-- no --}}
-										<span class="no"># {{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}</span>
+										{{-- <span class="no"># {{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}</span> --}}
 
 										{{-- avatar --}}
 										<a href="/user/{{$bidder->id}}">
@@ -622,7 +644,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('/avatar/' . $task->user->avatar )}}" class="thumbnail">
+					<img src="{{URL::asset('/avatar/' . $task->user->avatar )}}" class="thumbnail avatar-lg">
 				</div>
 				<h4>
 					<span>Publisher: </span>

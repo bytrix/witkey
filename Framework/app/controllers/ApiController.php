@@ -1,6 +1,6 @@
 <?php
 
-class TaskApiController extends BaseController {
+class ApiController extends BaseController {
 
 	public function hasFavoriteTask($task_id) {
 
@@ -28,6 +28,10 @@ class TaskApiController extends BaseController {
 		
 		$task = Task::where('id', $task_id)->first();
 		return $task->state;
+	}
+
+	public function authUser() {
+		return Auth::user();
 	}
 
 	// public function removeFavoriteTask($task_id) {
@@ -83,4 +87,64 @@ class TaskApiController extends BaseController {
 	// 	return 'ok';
 	// }
 
+
+	public function allAcademies() {
+		return Academy::all();
+	}
+
+	public static function getAcademy($academy_id) {
+		$academy = Academy::where('id', $academy_id)->first();
+		return $academy;
+	}
+
+	public static function allMajors() {
+		return Major::all();
+	}
+
+	public static function getMajor($major_id) {
+		$major = Major::where('id', $major_id)->first();
+		return $major;
+	}
+
+
+	public function getUsers() {
+		return User::orderBy('authenticated')->get([
+				'id',
+				'authenticated',
+				'realname',
+				'username',
+				'email',
+				'student_card',
+				'school',
+				'major',
+				'enrollment_date'
+			]);
+	}
+
+	public function postAuthTobe($user_id) {
+		$user = User::where(['id'=>$user_id])->first();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 1;
+			$user->save();
+		}
+		return Redirect::back();
+	}
+
+	public function postAuthSuccess($user_id) {
+		$user = User::where(['id'=>$user_id])->first();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 2;
+			$user->save();
+		}
+		return Redirect::back();
+	}
+
+	public function postAuthFail($user_id) {
+		$user = User::where(['id'=>$user_id])->first();
+		if ($user->authenticated != 0) {
+			$user->authenticated = 3;
+			$user->save();
+		}
+		return Redirect::back();
+	}
 }

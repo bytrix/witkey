@@ -18,7 +18,8 @@ About myself
 
 Let's keep on track
 -------------------
-First you need to config the database in Framework/app/config/database.php.
+First you need to config the username/password of database in Framework/app/config/database.php.
+
 And then create a database named ``witkey`` in mysql:
 
     CREATE DATABASE witkey
@@ -31,7 +32,7 @@ then run the server:
 
     php artisan serve
 
-type localhost:8000 in browser and then you can see the page
+type localhost:8000 in browser and after that you can see the page
 
 Architecture
 ------------
@@ -56,6 +57,8 @@ References
 - [moment.js](https://github.com/moment/moment)
 - [countdown.js](https://github.com/kbwood/countdown)
 - [HTMLPurifier for Laravel 4](https://github.com/mewebstudio/Purifier/tree/master-l4)
+- [select2](https://github.com/select2/select2)
+- [select2-bootstrap-theme](https://github.com/select2/select2-bootstrap-theme)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png

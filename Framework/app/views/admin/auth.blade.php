@@ -25,7 +25,12 @@
 		<li><a href="/">Admin</a></li>
 		<li class="active">Authentication Board</li>
 	</ol>
-		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<strong>Number of users:</strong>
+			<span>
+				{{count(User::all())}}
+			</span>
+		</div>
 		<div class="col-md-4">
 			{{-- <h1 align="center">Authentication Board</h1> --}}
 			<div class="form-group">
@@ -73,14 +78,15 @@
 					</td>
 					<td>
 						<span ng-show="user.school != null">
-							@{{academies[user.school]}}
+							{{-- @{{academies[user.school].name}} --}}
+							@{{findAcademyById(user.school).name}}
 							(@{{user.school}})
 						</span>
 						<i class="fa fa-times text-danger" ng-show="user.school == null"></i>
 					</td>
 					<td>
 						<span ng-show="user.major != null">
-							@{{majors[user.major]}}
+							@{{majors[user.major].name}}
 							(@{{user.major}})
 						</span>
 						<i class="fa fa-times text-danger" ng-show="user.major == null"></i>

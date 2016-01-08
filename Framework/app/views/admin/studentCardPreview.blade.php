@@ -83,7 +83,7 @@
 		<p>
 			<strong>School:</strong>
 			@if ($user->school)
-				{{Academy::getAcademy($user->school)}}
+				{{Academy::get($user->school)->name}}
 			@else
 				<span class="glyphicon glyphicon-remove text-danger"></span>
 			@endif
@@ -91,7 +91,7 @@
 		<p>
 			<strong>Major:</strong>
 			@if ($user->major)
-				{{Academy::getMajor($user->major)}}
+				{{Major::get($user->major)->name}}
 			@else
 				<span class="glyphicon glyphicon-remove text-danger"></span>
 			@endif
@@ -119,15 +119,15 @@
 					No pass
 				</a>
 			@else
-				<a href="/admin/postAuthTobe/{{$user_id}}" class="btn btn-warning">
+				<a href="/api/postAuthTobe/{{$user_id}}" class="btn btn-warning">
 					<i class="fa fa-circle-o"></i>
 					To-be pass
 				</a>
-				<a href="/admin/postAuthSuccess/{{$user_id}}" class="btn btn-success">
+				<a href="/api/postAuthSuccess/{{$user_id}}" class="btn btn-success">
 					<i class="fa fa-check"></i>
 					Pass
 				</a>
-				<a href="/admin/postAuthFail/{{$user_id}}" class="btn btn-danger">
+				<a href="/api/postAuthFail/{{$user_id}}" class="btn btn-danger">
 					<i class="fa fa-times"></i>
 					No pass
 				</a>

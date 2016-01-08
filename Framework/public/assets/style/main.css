@@ -81,6 +81,8 @@ body {
   margin-right: 20px;
 }
 .avatar-lg{
+  width: 280px;
+  height: 280px;
   margin-right: 20px;
 }
 .avatar-bar{
@@ -177,4 +179,13 @@ body {
 
 .cw-text-red{
   color: #c00;
+}
+
+.cw-pager{
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /*background-color: red;*/
 }

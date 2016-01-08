@@ -15,7 +15,7 @@
 				&yen;{{$task->amount}}
 			</p>
 			<p>
-				<button class="btn btn-success" onclick="window.location.href='success'">Pay</button>
+				<button class="btn btn-success" onclick='window.location.href="{{$commit->uuid}}/success"'>Pay</button>
 			</p>
 
 	</div>

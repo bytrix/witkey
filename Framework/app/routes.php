@@ -25,76 +25,93 @@ Route::post('register'	, 'UserController@postRegister');
 
 Route::group(['before'=>'auth'], function() {
 	// GET
-	Route::get('dashboard'								, 'DashboardController@overview');
-	Route::get('dashboard/myProfile'					, 'DashboardController@myProfile');
-	Route::get('dashboard/taskOrder'					, 'DashboardController@taskOrder');
-	Route::get('dashboard/postcard'						, 'DashboardController@postcard');
-	Route::get('dashboard/favoriteTask'					, 'DashboardController@favoriteTask');
-	Route::get('dashboard/security'						, 'DashboardController@security');
-	Route::get('dashboard/authentication'				, 'DashboardController@authentication');
-	Route::get('task/create'							, 'TaskController@step_1');
-	Route::get('task/create/step-2'						, 'TaskController@step_2');
-	Route::get('task/create/step-3'						, 'TaskController@step_3');
-	Route::get('task/create/postCreate'					, 'TaskController@postCreate');
-	Route::get('task/{task_id}/edit'					, 'TaskController@edit')->where('task_id', '[0-9]+');
-	Route::get('task/{task_id}/hosting/1{bid_id}'		, 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
-	Route::get('task/{task_id}/hosting/2{bid_id}'		, 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
+	Route::get('dashboard'                              , 'DashboardController@overview');
+	Route::get('dashboard/myProfile'                    , 'DashboardController@myProfile');
+	Route::get('dashboard/taskOrder'                    , 'DashboardController@taskOrder');
+	Route::get('dashboard/postcard'                     , 'DashboardController@postcard');
+	Route::get('dashboard/favoriteTask'                 , 'DashboardController@favoriteTask');
+	Route::get('dashboard/security'                     , 'DashboardController@security');
+	Route::get('dashboard/authentication'               , 'DashboardController@authentication');
+	Route::get('task/create'                            , 'TaskController@step_1');
+	Route::get('task/create/step-2'                     , 'TaskController@step_2');
+	Route::get('task/create/step-3'                     , 'TaskController@step_3');
+	Route::get('task/create/postCreate'                 , 'TaskController@postCreate');
+	Route::get('task/{task_id}/edit'                    , 'TaskController@edit')->where('task_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/1{bid_id}'       , 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
+	Route::get('task/{task_id}/hosting/2{bid_id}'       , 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
-	Route::get('/pay/{commit_uuid}'						, 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
-	Route::get('/pay/{commit_uuid}/success'				, 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('/pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('/pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
 	
 
 	// POST
-	Route::post('dashboard/security'        , 'DashboardController@postSecurity');
-	Route::post('dashboard/myProfile'		, 'DashboardController@postMyProfile');
-	Route::post('dashboard/authentication'	, 'DashboardController@postAuthentication');
-	Route::post('task/create/step-2'		, 'TaskController@step_2');
-	Route::post('task/create/step-3'		, 'TaskController@step_3');
-	Route::post('task/{task_id}/edit'		, 'TaskController@postEdit')->where('task_id', '[0-9]+');
-	Route::post('task/{task_id}/postQuit'	, 'TaskController@postQuit')->where('task_id', '[0-9]+');
-
-	// POST API FOR JAVASCRIPT
-	Route::post('api/hasFavoriteTask/{task_id}'		, 'TaskApiController@hasFavoriteTask')->where('task_id', '[0-9]+');
-	Route::post('api/markFavoriteTask/{task_id}'	, 'TaskApiController@markFavoriteTask')->where('task_id', '[0-9]+');
-	Route::post('api/removeFavoriteTask/{task_id}'	, 'TaskApiController@removeFavoriteTask')->where('task_id', '[0-9]+');
+	Route::post('dashboard/security'      , 'DashboardController@postSecurity');
+	Route::post('dashboard/myProfile'     , 'DashboardController@postMyProfile');
+	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
+	Route::post('task/create/step-2'      , 'TaskController@step_2');
+	Route::post('task/create/step-3'      , 'TaskController@step_3');
+	Route::post('task/{task_id}/edit'     , 'TaskController@postEdit')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 
 	// realname Authentication
 	Route::group(['before'=>'realname'], function() {
-		Route::post('task/{task_id}/commit'	, 'TaskController@postCommit')->where('task_id', '[0-9]+');
-		Route::post('task/{task_id}/quote'	, 'TaskController@postQuote')->where('task_id', '[0-9]+');
+		Route::post('task/{task_id}/commit', 'TaskController@postCommit')->where('task_id', '[0-9]+');
+		Route::post('task/{task_id}/quote' , 'TaskController@postQuote')->where('task_id', '[0-9]+');
 	});
 });
 
 
-Route::get('admin/auth'	, 'AdminController@auth');
+Route::get('admin/auth'                               , 'AdminController@auth');
 Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
-Route::get('admin/getUsers'					, 'AdminController@getUsers');
-Route::get('admin/postAuthTobe/{user_id}'	, 'AdminController@postAuthTobe');
-Route::get('admin/postAuthSuccess/{user_id}', 'AdminController@postAuthSuccess');
-Route::get('admin/postAuthFail/{user_id}'	, 'AdminController@postAuthFail');
+Route::get('admin/academy'              , 'AdminController@academy');
+Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail');
+Route::post('admin/academy'             , 'AdminController@postAcademy');
+Route::post('admin/academy/{academy_id}', 'AdminController@postMajor');
 
-// FOR ANGULAR API
-Route::get('api/taskState/{task_id}'			, 'TaskApiController@taskState')->where('task_id', '[0-9]+');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('api/getUsers'                   , 'ApiController@getUsers');
+Route::get('api/authUser'                   , 'ApiController@authUser');
+Route::get('api/postAuthTobe/{user_id}'     , 'ApiController@postAuthTobe');
+Route::get('api/postAuthSuccess/{user_id}'  , 'ApiController@postAuthSuccess');
+Route::get('api/postAuthFail/{user_id}'     , 'ApiController@postAuthFail');
 
 // Academy Configuration
-Route::get('config/academy/', function() {
-	return Academy::allAcademies();
-});
-Route::get('config/academy/{academy_code}', function($academy_code) {
-	return Academy::getAcademy($academy_code);
-});
+// Route::get('config/academy/'                  , 'ApiController@allAcademies');
+// Route::get('config/major/'                    , 'ApiController@allMajors');
+// Route::get('config/academy/{academy_code}'    , 'ApiController@getAcademy');
+// Route::get('config/major/{major_code}'        , 'ApiController@getMajor');
 
-Route::get('config/major/', function() {
-	return Academy::allMajors();
-});
-Route::get('config/major/{major_code}', function($major_code) {
-	return Academy::getMajor($major_code);
-});
+// API
+Route::get('api/academy/getAcademies'         , 'ApiController@allAcademies');
+Route::get('api/academy/getMajors'            , 'ApiController@allMajors');
 
+// POST API FOR JAVASCRIPT
+Route::post('api/hasFavoriteTask/{task_id}'   , 'ApiController@hasFavoriteTask')->where('task_id', '[0-9]+');
+Route::post('api/markFavoriteTask/{task_id}'  , 'ApiController@markFavoriteTask')->where('task_id', '[0-9]+');
+Route::post('api/removeFavoriteTask/{task_id}', 'ApiController@removeFavoriteTask')->where('task_id', '[0-9]+');
 
-Route::get('test', function() {
-	// return View::make('test');
-	// return Purifier::clean('This is my H1 title scriptalert("a")</scripst>');
-	// return 'This is my H1 title <script>alert("a")</script>';
-});
+// FOR ANGULAR API
+Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->where('task_id', '[0-9]+');

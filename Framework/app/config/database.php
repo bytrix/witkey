@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'witkey',
 			'username'  => 'root',
-			'password'  => '330288199',
+			'password'  => 'root',
 			'charset'   => 'utf8mb4',
 			'collation' => 'utf8mb4_unicode_ci',
 			'prefix'    => '',

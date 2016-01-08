@@ -55,9 +55,19 @@ class DashboardController extends BaseController {
 
 	public function authentication() {
 
+
+		$schoolList = array();
+		$majorList = array();
+
+		// foreach (Academy::all() as $school) {
+		// 	array_push($schoolList, $school->name);
+		// }
+
+
+
 		return View::make('dashboard.authentication')
-			->with('schoolList'       , Academy::allAcademies())
-			->with('majorList'        , Academy::allMajors());
+			->with('schoolList'       , $schoolList)
+			->with('majorList'        , $majorList);
 	}
 
 	public function security() {
@@ -123,6 +133,8 @@ class DashboardController extends BaseController {
 	}
 
 	public function postAuthentication() {
+
+		// dd(Input::all());
 		// TEXT INPUT
 		$userInput = [
 			'realname'        => Input::get('realname'),
@@ -157,8 +169,8 @@ class DashboardController extends BaseController {
 			// when the file exists in database (replace the original)
 
 				return View::make('dashboard.authentication')
-					->with('schoolList'       , Academy::allAcademies())
-					->with('majorList'        , Academy::allMajors())
+					// ->with('schoolList'       , Academy::allAcademies())
+					// ->with('majorList'        , Academy::allMajors())
 					->with('error'            , 'File not uploaded!');
 
 			} else {
@@ -191,15 +203,15 @@ class DashboardController extends BaseController {
 			]);
 
 			return Redirect::to('/dashboard/authentication')
-				->with('schoolList'       , Academy::allAcademies())
-				->with('majorList'        , Academy::allMajors())
+				// ->with('schoolList'       , Academy::allAcademies())
+				// ->with('majorList'        , Academy::allMajors())
 				->with('message'          , 'Save successfully!');
 
 		} else {
 
 			return Redirect::to('/dashboard/authentication')
-				->with('schoolList'       , Academy::allAcademies())
-				->with('majorList'        , Academy::allMajors())
+				// ->with('schoolList'       , Academy::allAcademies())
+				// ->with('majorList'        , Academy::allMajors())
 				->withErrors($validator);
 		}
 	}

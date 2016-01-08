@@ -90,7 +90,7 @@
 		<div class="col-md-4">
 			<div class="profile">
 				<div>
-					<img src="{{URL::asset('/avatar/' . $user->avatar )}}" class="thumbnail">
+					<img src="{{URL::asset('/avatar/' . $user->avatar )}}" class="thumbnail avatar-lg">
 				</div>
 				<h4>
 					{{$user->username}}
@@ -121,13 +121,13 @@
 				<p data-toggle="tooltip" title="School" data-placement="left">
 					@if ($user->school != NULL)
 						<i class="fa fa-map-marker"></i>
-						{{Academy::getAcademy($user->school)}}
+						{{Academy::get($user->school)->name}}
 					@endif
 				</p>
 
 				<p data-toggle="tooltip" title="Major" data-placement="left">
 					@if ($user->major != NULL)
-						{{Academy::getMajor($user->major)}}
+						{{Major::get($user->major)->name}}
 					@endif
 				</p>
 

@@ -105,7 +105,7 @@ class TaskController extends BaseController {
 		View::share('task', $task);
 		View::share('prev_task', $prev_task);
 		View::share('next_task', $next_task);
-		Session::set('task_id_session', $task->id);
+		Session::set('task_id_session', $task_id);
 
 		if ($task->user->active == 0) {
 
@@ -255,7 +255,7 @@ class TaskController extends BaseController {
 			$commit->type = Input::get('type');
 			$commit->quote_id = Input::get('quote_id');
 			$commit->save();
-			CommitPivot::where('task_id', '=', $task_id)
+			CommitPivot::where('id', '=', $commit->id)
 				->update([
 						'uuid' => md5($commit->id . $commit->created_at . $commit->task_id . $commit->user_id . $commit->summary . $commit->type . $commit->quote_id . $commit->file_hash)
 					]);

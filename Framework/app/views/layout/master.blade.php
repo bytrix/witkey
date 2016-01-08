@@ -12,6 +12,7 @@
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/sticky-footer.css')}}
   {{HTML::style(URL::asset('assets/style/select2.css'))}}
+  {{-- <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css"> --}}
   {{-- <link href="http://fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css" rel="stylesheet" /> --}}
   {{HTML::style(URL::asset('assets/style/select2-bootstrap.css'))}}
   {{HTML::style(URL::asset('assets/style/bootstrap-datetimepicker.min.css'))}}

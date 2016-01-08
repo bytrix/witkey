@@ -18,12 +18,14 @@
 }
 .cw-task-title{
 	font-size: 16px;
-	color: #111;
 	padding-left: 8px;
 }
-.cw-task-title:hover{
-	color: #666;
+.cw-task-title a{
+	color: #111;
 	text-decoration: none;
+}
+.cw-task-title a:hover{
+	color: #666;
 }
 </style>
 @stop
@@ -55,13 +57,15 @@
 
 						<div class="item-inline">
 							<div class="list-group-item-heading">
-								<span class="label label-success">&yen; {{$task->amount}}</span>
-								@if ($task->type == 1)
-									<span class="label label-warning">Reward</span>
-								@elseif($task->type == 2)
-									<span class="label label-danger">Bid</span>
-								@endif
-								<span><a href="/task/{{$task->id}}" class="cw-task-title">{{{$task->title}}}</a></span>
+								<div style="float: left; padding-top: 2px">
+									<span class="label label-success">&yen; {{$task->amount}}</span>
+									@if ($task->type == 1)
+										<span class="label label-warning">Reward</span>
+									@elseif($task->type == 2)
+										<span class="label label-danger">Bid</span>
+									@endif
+								</div>
+								<span class="cw-task-title" style="display: inline-block; padding-top: 2px;"><a href="/task/{{$task->id}}">{{{$task->title}}}</a></span>
 							</div>
 							<span class="metadata">
 								<a href="/user/{{$task->user->id}}" class="property">
@@ -92,7 +96,7 @@
 								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
 								<span style="padding-left: 20px;">
 									@if ($task->state == 4)
-										<i class="text-danger fa fa-minus" data-toggle="tooltip" data-placement="right" title="TaskEnd"></i>
+										<i class="text-danger fa fa-clock-o" data-toggle="tooltip" data-placement="right" title="TaskEnd"></i>
 									@else
 										<i class="text-success fa fa-clock-o" data-toggle="tooltip" data-placement="right" title="Bidding..."></i>
 									@endif

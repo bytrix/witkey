@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Academy' => $baseDir . '/app/models/Academy.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
@@ -30,8 +31,10 @@ return array(
     'ClassPreloader\\Parser\\FileVisitor' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/FileVisitor.php',
     'ClassPreloader\\Parser\\NodeTraverser' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Parser/NodeTraverser.php',
     'CommitPivot' => $baseDir . '/app/models/CommitPivot.php',
+    'CreateAcademyTable' => $baseDir . '/app/database/migrations/2016_01_07_114513_create_academy_table.php',
     'CreateCommitPivot' => $baseDir . '/app/database/migrations/2015_12_21_174839_create_commit_pivot.php',
     'CreateFavoriteTaskPivot' => $baseDir . '/app/database/migrations/2015_12_18_223706_create_favorite_task_pivot.php',
+    'CreateMajorTable' => $baseDir . '/app/database/migrations/2016_01_07_144042_create_major_table.php',
     'CreateQuotePivot' => $baseDir . '/app/database/migrations/2015_12_13_222013_create_quote_pivot.php',
     'CreateTaskTable' => $baseDir . '/app/database/migrations/2015_12_10_120801_create_task_table.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2015_12_10_120718_create_user_table.php',
