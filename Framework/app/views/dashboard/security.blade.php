@@ -17,7 +17,12 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">Security</h1>
+
+	@section('header')
+	@parent
+		Security
+	@stop
+	
 	{{Form::open(['class'=>'form-horizontal'])}}
 
 		{{-- Old Password --}}

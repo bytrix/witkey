@@ -17,10 +17,10 @@
 		padding-top: 12px;
 	}
 	.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	}
 
 </style>
 @stop
@@ -38,7 +38,8 @@
 			@if ($user->student_card)
 				{{HTML::image(URL::asset('student_card/' . $user->student_card), '', ['class'=>'center-block'])}}
 			@else
-				<span class="glyphicon glyphicon-remove text-danger" style="font-size: 140px;">No Picture</span>
+				{{-- <span class="glyphicon glyphicon-remove text-danger" style="font-size: 140px;">No Picture</span> --}}
+				<i class="fa fa-times text-danger">No Picture</i>
 			@endif
 		</p>
 		<p>
@@ -73,7 +74,8 @@
 			@if ($user->realname)
 				{{$user->realname}}
 			@else
-				<span class="glyphicon glyphicon-remove text-danger"></span>
+				{{-- <span class="glyphicon glyphicon-remove text-danger"></span> --}}
+				<i class="fa fa-times text-danger"></i>
 			@endif
 		</p>
 		<p>
@@ -85,7 +87,8 @@
 			@if ($user->school)
 				{{Academy::get($user->school)->name}}
 			@else
-				<span class="glyphicon glyphicon-remove text-danger"></span>
+				{{-- <span class="glyphicon glyphicon-remove text-danger"></span> --}}
+				<i class="fa fa-times text-danger"></i>
 			@endif
 		</p>
 		<p>
@@ -93,7 +96,8 @@
 			@if ($user->major)
 				{{Major::get($user->major)->name}}
 			@else
-				<span class="glyphicon glyphicon-remove text-danger"></span>
+				{{-- <span class="glyphicon glyphicon-remove text-danger"></span> --}}
+				<i class="fa fa-times text-danger"></i>
 			@endif
 		</p>
 		<p>
@@ -101,7 +105,8 @@
 			@if ($user->enrollment_date)
 				{{$user->enrollment_date}}
 			@else
-				<span class="glyphicon glyphicon-remove text-danger"></span>
+				{{-- <span class="glyphicon glyphicon-remove text-danger"></span> --}}
+				<i class="fa fa-times text-danger"></i>
 			@endif
 		</p>
 		<p>
@@ -137,12 +142,14 @@
 			@if ($user->hasUserById($user->id - 1))
 
 				<a class="btn" href="/admin/auth/student-card/preview/{{$user->id - 1}}">
-					<i class="glyphicon glyphicon-menu-left"></i>
+					{{-- <i class="glyphicon glyphicon-menu-left"></i> --}}
+					<i class="fa fa-angle-left"></i>
 					<span>Previous</span>
 				</a>
 			@else
 				<a class="btn" disabled="disabled">
-					<i class="glyphicon glyphicon-menu-left"></i>
+					{{-- <i class="glyphicon glyphicon-menu-left"></i> --}}
+					<i class="fa fa-angle-left"></i>
 					<span>Previous</span>
 				</a>
 			@endif
@@ -150,12 +157,14 @@
 			@if ($user->hasUserById($user->id + 1))
 				<a class="btn" href="/admin/auth/student-card/preview/{{$user->id + 1}}">
 					<span>Next</span>
-					<i class="glyphicon glyphicon-menu-right"></i>
+					{{-- <i class="glyphicon glyphicon-menu-right"></i> --}}
+					<i class="fa fa-angle-right"></i>
 				</a>
 			@else
 				<a class="btn" disabled="disabled">
 					<span>Next</span>
-					<i class="glyphicon glyphicon-menu-right"></i>
+					{{-- <i class="glyphicon glyphicon-menu-right"></i> --}}
+					<i class="fa fa-angle-right"></i>
 				</a>
 			@endif
 

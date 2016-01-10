@@ -17,7 +17,11 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">Task Order</h1>
+
+	@section('header')
+	@parent
+		Task Order
+	@stop
 	
 	{{-- @if (count(Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get())) --}}
 	@if (count($orders))

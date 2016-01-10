@@ -4,11 +4,15 @@
 	<div class="container">
 		<h1 class="page-header">Bounty Hosting</h1>
 		<p>
+			{{HTML::image(URL::asset('avatar/'.$quote->user->avatar), '', ['class'=>'avatar-sm'])}}
+		</p>
+		<p>
 			<strong>Bidder Name: </strong>
 			<span>{{$quote->user->username}}</span>
 		</p>
 		<p>
-			{{HTML::image(URL::asset('avatar/'.$quote->user->avatar))}}
+			<strong>Bidder Email: </strong>
+			<span>{{$quote->user->email}}</span>
 		</p>
 		<p>
 			<strong>Price: </strong>

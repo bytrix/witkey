@@ -17,7 +17,8 @@ Route::get('logout'			, 'UserController@logout');
 Route::get('register'		, 'UserController@register');
 Route::get('user/{user_id}'	, 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'	, 'TaskController@detail')->where('task_id', '[0-9]+');
-Route::get('task/list'		, 'TaskController@listTask');
+// Route::get('task/list'		, 'TaskController@listTask');
+Route::get('school/{academy_id}', 'TaskController@listTask')->where('academy_id', '[0-9]+');
 
 // POST
 Route::post('login'		, 'UserController@postLogin');

@@ -8,7 +8,7 @@
 			<span>{{$commit->user->username}}</span>
 		</p>
 		<p>
-			{{HTML::image(URL::asset('avatar/'.$commit->user->avatar))}}
+			{{HTML::image(URL::asset('avatar/'.$commit->user->avatar), '', ['class'=>'avatar-sm'])}}
 		</p>
 
 

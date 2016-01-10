@@ -3,7 +3,7 @@
 @section('menu')
   <ul class="nav navbar-nav">
     <li><a href="/">Home</a></li>
-    <li><a href="/task/list">Task List</a></li>
+    <li><a href="/school/{{Session::get('school_id_session')}}">Task List</a></li>
     <li><a href="/task/create">Publish Task</a></li>
     <li class="dropdown">
       <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
@@ -37,9 +37,28 @@
     <div class="container-fluid" ng-app="academyApp">
       <div class="row">
 
+
         @yield('control-panel')
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">
+           {{-- Favorite Task --}}
+           @yield('header')
+
+          <small class="pull-right school-select-wrap">
+            School:
+            <div class="dropdown pull-right">
+              <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+              <ul class="dropdown-menu">
+                @foreach ($schools as $school)
+                  <li><a href="/school/{{$school->id}}">{{$school->name}}</a></li>
+                @endforeach
+              </ul>
+            </div>
+          </small>
+
+
+          </h1>
           @yield('user-panel')
         </div>
 

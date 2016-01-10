@@ -13,6 +13,19 @@ class BaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 		}
+		View::share('mySchool', $this->mySchool());
+		View::share('schools', $this->allSchools());
+	}
+
+	public function mySchool() {
+		$academy_id = Session::get('school_id_session');
+		$mySchool = Academy::where('id', $academy_id)->first();
+		return $mySchool;
+	}
+
+	public function allSchools() {
+		$academies = Academy::all();
+		return $academies;
 	}
 
 }

@@ -5,9 +5,9 @@
 	{{HTML::script(URL::asset('assets/script/angular.js'))}}
 	<script>
 	$(function () {
-		$('input[data-toggle="popover"]').popover({
-			trigger: "focus"
-		})
+		// $('input[data-toggle="popover"]').popover({
+		// 	trigger: "focus"
+		// })
 	})
 	</script>
 @stop
@@ -16,7 +16,7 @@
 
 	{{HTML::style('assets/style/signin.css')}}
 
-    <div class="container" ng-app>
+    <div class="container" ng-app="cwRegApp">
 
 		{{Form::open(['class'=>'form-signin', 'name'=>'registerForm'])}}
 
@@ -39,7 +39,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'Minimize 6 characters'])}}
+					{{Form::password('password', ['placeholder'=>'Password (More than 6 chars)', 'class'=>'form-control', 'id'=>'password', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'Minimize 6 characters'])}}
 				</div>
 			</div>
 
@@ -50,8 +50,9 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control', 'required'])}}
+					{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control', 'id'=>'password_confirmation', 'required', 'ng-model'=>'password_confirmation', 'pw-check'=>'password'])}}
 				</div>
+				{{-- <p ng-show="registerForm.password_confirmation.$error.pwmatch">Don't match!</p> --}}
 			</div>
 
 			<div class="form-group">
@@ -77,5 +78,23 @@
 		</div>
 
     </div> <!-- /container -->
+
+    <script>
+    angular.module('cwRegApp', [])
+	.directive('pwCheck', [function () {
+		return {
+			require: 'ngModel',
+			link: function (scope, elem, attrs, ctrl) {
+				var firstPassword = '#' + attrs.pwCheck;
+				elem.add(firstPassword).on('keyup', function () {
+					scope.$apply(function () {
+						// console.info(elem.val() === $(firstPassword).val());
+						ctrl.$setValidity('pwmatch', elem.val() === $(firstPassword).val());
+					});
+				});
+			}
+		}
+	}])
+    </script>
 
 @endsection

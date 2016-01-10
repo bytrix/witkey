@@ -93,9 +93,13 @@
 		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-custom'])}}
 
 
-			<div class="radio">
-				<label class="radio-inline">{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}悬赏</label>
-				<label class="radio-inline">{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}招标</label>
+			<div class="radio radio-inline">
+				{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}
+				<label for="reward">悬赏</label>
+			</div>
+			<div class="radio radio-inline">
+				{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
+				<label for="bid">招标</label>
 			</div>
 
 			<div class="form-group">
@@ -106,11 +110,9 @@
 					</div>
 					{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control', 'id'=>'amount'])}}
 				</div>
-				<div class="checkbox" id="budgetCheckboxDiv">
-					<label>
-						{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
-						No budget
-					</label>
+				<div class="checkbox checkbox-primary" id="budgetCheckboxDiv">
+					{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
+					<label for="budgetCheckbox">No budget</label>
 				</div>
 			</div>
 
@@ -133,9 +135,16 @@
 			</div>
 
 			<div class="form-group">
-				<a href="/task/create" class="btn btn-default">Previous</a>
+				<a href="/task/create" class="btn btn-default">
+					<i class="fa fa-angle-double-left"></i>
+					Previous
+				</a>
 				{{-- <a href="/task/new/bill" class="btn btn-primary">Next</a> --}}
-				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
+				{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
+				<button type="submit" class="btn btn-primary">
+					Next
+					<i class="fa fa-angle-double-right"></i>
+				</button>
 				
 			</div>
 

@@ -1,5 +1,7 @@
 @extends('task.publish.master')
 
+@section('style')
+
 <style>
 	.end-price-bar{
 		font-size: 20px;
@@ -11,7 +13,11 @@
 		font-size: 25px;
 		padding-left: 12px;
 	}
+	.cw-task-title{
+		max-width: 900px;
+	}
 </style>
+@stop
 
 @section('content')
 	<div class="container">
@@ -32,7 +38,7 @@
 
 			<p>
 				<strong>Task Title: </strong>
-				<h2>{{Session::get('title')}}</h2>
+				<h2 class="cw-task-title">{{Session::get('title')}}</h2>
 			</p>
 			{{-- <p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p> --}}
 			<p>
@@ -53,8 +59,16 @@
 				</div>
 
 			<div style="clear: both">
-				{{HTML::link('task/create/step-2', 'Previous', ['class'=>'btn btn-default'])}}
-				{{HTML::link('task/create/postCreate', 'Publish', ['class'=>'btn btn-primary'])}}
+				{{-- {{HTML::link('task/create/step-2', 'Previous', ['class'=>'btn btn-default'])}} --}}
+				{{-- {{HTML::link('task/create/postCreate', 'Publish', ['class'=>'btn btn-primary'])}} --}}
+				<a href="/task/create/step-2" class="btn btn-default">
+					<i class="fa fa-angle-double-left"></i>
+					Previous
+				</a>
+				<a href="/task/create/postCreate" class="btn btn-success">
+					Publish
+					<i class="fa fa-check"></i>
+				</a>
 			</div>
 
 		</div>

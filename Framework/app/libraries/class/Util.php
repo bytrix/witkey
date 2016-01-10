@@ -23,7 +23,7 @@ class Util {
 
 	}
 
-	public static function SecToYear($second) {
+	public static function secToYear($second) {
 
 		$minute = $second / 60;
 		$hour   = $minute / 60;

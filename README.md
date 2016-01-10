@@ -36,6 +36,7 @@ type localhost:8000 in browser and after that you can see the page
 
 Architecture
 ------------
+
 **Database E-R Diagram**
 
 ![Database E-R Diagram][1]
@@ -48,6 +49,11 @@ Architecture
 
 ![Class Diagram][3]
 
+> The 3 diagrams above are made with:
+> 
+> - [MySQL Workbench](http://dev.mysql.com/downloads/workbench/) (E-R Diagram)
+> - [yEd](http://www.yworks.com/products/yed) (Flowchart)
+> - [StarUML](http://staruml.io/) (Class Diagram)
 
 References
 ----------
@@ -59,6 +65,7 @@ References
 - [HTMLPurifier for Laravel 4](https://github.com/mewebstudio/Purifier/tree/master-l4)
 - [select2](https://github.com/select2/select2)
 - [select2-bootstrap-theme](https://github.com/select2/select2-bootstrap-theme)
+- [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png

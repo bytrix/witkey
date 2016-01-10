@@ -84,10 +84,7 @@
 		font-weight: bold;
 		color: orange;
 	}
-	.container .text-muted{
-		margin: 0px;
-	}
-
+	
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
@@ -153,35 +150,6 @@
 	<div class="container">
 
 		<div class="col-md-8">
-			<div class="col-md-12">
-				<div style="clear: both">
-					@if ($prev_task != NULL)
-						<div class="cw-pager"><a href="/task/{{$prev_task->id}}" class="text-info">
-							<i class="fa fa-angle-up"></i>
-							prev: {{$prev_task->title}}</a>
-						</div>
-					@else
-						<div class="cw-pager"><span class="text-muted">
-							<i class="fa fa-angle-up"></i>
-							prev: none</span>
-						</div>
-					@endif
-				</div>
-				<div style="clear: both">
-					@if ($next_task != NULL)
-						<div class="cw-pager"><a href="/task/{{$next_task->id}}" class="text-info">
-							<i class="fa fa-angle-down"></i>
-							next: {{$next_task->title}}
-						</a></div>
-					@else
-						<div class="cw-pager"><span class="text-muted">
-							<i class="fa fa-angle-down"></i>
-							next: none
-						</span></div>
-					@endif
-				</div>
-			</div>
-			
 
 			<div class="page-header">
 					@if ($task->type == 1)
@@ -246,10 +214,11 @@
 
 			<div class="col-sm-6">
 				<h4><span>School location:</span>
-				@if ($task->user->school == NULL)
+				@if ($task->place == NULL)
 					<span class="label label-danger">No School</span>
 				@else
-					{{Academy::get($task->user->school)->name}}</h4>
+					{{-- {{Academy::get($task->user->school)->name}}</h4> --}}
+					{{$school->name}}
 				@endif
 				{{-- <h4><span>Expiration:</span> {{$task->expiration}}</h4> --}}
 				<h4>
@@ -301,11 +270,14 @@
 
 				<h4><strong>Task Description:</strong></h4>
 				<div class="detail" id="detail">
-					{{str_limit($task->detail, 1200)}}
+					{{str_limit($task->detail, 2000)}}
 				</div>
-				@if (strlen($task->detail) > 1200)
+				@if (mb_strlen($task->detail) > 2000)
 					<div>
-						<a href="javascript:;" id="more">More</a>
+						<a href="javascript:;" id="more">
+							More
+							 ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)
+						</a>
 					</div>
 					<script>
 					$('#more').click(function() {
@@ -313,8 +285,8 @@
 						$('#detail').html("{{$task->detail}}");
 						if($(this).html() == 'Fold') {
 							// alert('fold');
-							$(this).html('More');
-							$('#detail').html("{{str_limit($task->detail, 1200)}}");
+							$(this).html("More ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)");
+							$('#detail').html("{{str_limit($task->detail, 2000)}}");
 						} else {
 							$(this).html('Fold');
 						}
@@ -337,10 +309,13 @@
 							/
 							<span data-toggle="tooltip" data-placement="top" title="{{$quote_sum}}份报价说明">{{$quote_sum}})</span>
 						</strong>
-						<span class="text-danger" style="margin-left: 30px;">
-							Average Quote:
-							&yen;{{$quote_price_avg}}
-						</span>
+
+						@if (count($task->bidder) > 1)
+							<span class="text-danger" style="margin-left: 30px;">
+								Average Quote:
+								&yen;{{$quote_price_avg}}
+							</span>
+						@endif
 					@endif
 				</h4>
 
@@ -599,7 +574,7 @@
 					@else
 
 
-						@if ($task->user->id != Auth::user()->id)
+						@if ($task->user->id != Auth::user()->id && $task->state != 4)
 							{{Form::open()}}
 								{{Form::label('summary', 'Summary')}}
 								<div class="form-group">
@@ -617,15 +592,17 @@
 
 				@else
 
-					{{Form::open()}}
-						{{Form::label('summary', 'Commit')}}
-						<div class="form-group">
-							{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not logined in', 'disabled'])}}
-						</div>
-						<div class="form-group">
-							{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
-						</div>
-					{{Form::close()}}
+					@if ($task->state != 4)
+						{{Form::open()}}
+							{{Form::label('summary', 'Commit')}}
+							<div class="form-group">
+								{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not logined in', 'disabled'])}}
+							</div>
+							<div class="form-group">
+								{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
+							</div>
+						{{Form::close()}}
+					@endif
 
 				@endif
 
@@ -694,6 +671,38 @@
 
 			</div>
 		</div>
+
+
+
+			<div class="col-md-12">
+				<div style="clear: both">
+					@if ($prev_task != NULL)
+						<div class="cw-pager"><a href="/task/{{$prev_task->id}}" class="text-info">
+							<i class="fa fa-angle-up"></i>
+							prev: {{$prev_task->title}}</a>
+						</div>
+					@else
+						<div class="cw-pager"><span class="text-muted">
+							<i class="fa fa-angle-up"></i>
+							prev: none</span>
+						</div>
+					@endif
+				</div>
+				<div style="clear: both">
+					@if ($next_task != NULL)
+						<div class="cw-pager"><a href="/task/{{$next_task->id}}" class="text-info">
+							<i class="fa fa-angle-down"></i>
+							next: {{$next_task->title}}
+						</a></div>
+					@else
+						<div class="cw-pager"><span class="text-muted">
+							<i class="fa fa-angle-down"></i>
+							next: none
+						</span></div>
+					@endif
+				</div>
+			</div>
+			
 
 
 

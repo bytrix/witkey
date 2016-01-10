@@ -6,8 +6,8 @@
   <title>Campus Witkey</title>
 
   {{-- style --}}
-  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  {{-- {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}} --}}
+  {{-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
+  {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}}
   {{HTML::style('assets/style/main.css')}}
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style('assets/style/sticky-footer.css')}}
@@ -26,8 +26,11 @@
     text-align: center;
     background-color: #fafafa;
   }
-  .school-select{
+  .school-select-list{
     width: 300px;
+  }
+  .school-select-list a{
+    font-size: 18px;
   }
   .enter:hover{
     text-indent: 6px;
@@ -80,7 +83,9 @@
           </button>
           <a class="navbar-brand" href="/">
             witkey
-            <small><span class="label label-primary beta"><i class="arrow"></i>beta</span></small>
+            <small class="beta">
+              <span class="label label-primary">beta</span>
+            </small>
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -110,13 +115,17 @@
       <h1>Campus Witkey</h1>
       <p>Enjoy campus life!</p>
 
-      <div class="list-group school-select center-block">
-        <a href="/task/list" class="list-group-item btn-lg enter">
-          福州大学至诚学院校区
-          {{-- <span class="glyphicon glyphicon-menu-right" style="color: #777"></span> --}}
-          <i class="fa fa-angle-right"></i>
-        </a>
-        <a class="list-group-item disabled btn-lg" data-toggle="tooltip" data-placement="bottom" title="暂无校区">其他校区</a>
+      <div class="list-group school-select-list center-block">
+
+        @foreach ($academies as $academy)
+          <a href="/school/{{$academy->id}}" class="list-group-item enter">
+              {{$academy->name}}校区
+            <i class="fa fa-angle-right"></i>
+          </a>
+        @endforeach
+
+
+        <a class="list-group-item disabled" data-toggle="tooltip" data-placement="bottom" title="暂无校区">其他校区</a>
       </div>
 
     </div>

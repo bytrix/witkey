@@ -17,8 +17,11 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">Postcard</h1>
 
+  @section('header')
+  @parent
+    Postcard
+  @stop
 
 
 

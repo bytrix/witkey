@@ -84,6 +84,7 @@ class UserController extends BaseController {
 
 		Auth::logout();
 		// return Redirect::to('/');
+		Session::flush();
 		return Redirect::back();
 	}
 
@@ -91,7 +92,7 @@ class UserController extends BaseController {
 
 		$user = User::where('id', $user_id)->first();
 
-		$schoolAge = Util::SecToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
+		$schoolAge = Util::secToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
 		$grade = Util::getGrade($user, $schoolAge);
 
 		return View::make('user.profile')
@@ -118,7 +119,9 @@ class UserController extends BaseController {
 		if($validator->passes()) {
 
 			if(Auth::attempt($userInput)) {
-				return Redirect::to('dashboard');
+				// return Redirect::to('dashboard');
+				return Redirect::intended('/');
+				// return Redirect::back();
 
 			} else {
 				return View::make('user.login')

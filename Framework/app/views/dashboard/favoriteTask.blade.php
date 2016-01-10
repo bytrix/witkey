@@ -17,8 +17,11 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">Favorite Task</h1>
 
+  @section('header')
+  @parent
+    Favorite Task
+  @stop
 
   <table class="table">
     <thead>

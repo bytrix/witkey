@@ -31,7 +31,11 @@
 @stop
 
 @section('user-panel')
-<h1 class="page-header">My Profile</h1>
+
+@section('header')
+@parent
+	My Profile
+@stop
 
 @if (Session::has('message'))
 	<div class="alert alert-success">{{Session::get('message')}}</div>
@@ -50,12 +54,22 @@
 	<div class="form-group">
 		{{Form::label('gender', 'Gender', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
+{{-- 
 			<label class="radio-inline">
 				{{Form::radio('gender', 'M', Auth::user()->gender == 'M' ? true : false)}}Male
 			</label>
 			<label class="radio-inline">
 				{{Form::radio('gender', 'F', Auth::user()->gender == 'F' ? true : false)}}Female
 			</label>
+--}}
+			<div class="radio radio-primary radio-inline">
+				{{Form::radio('gender', 'M', Auth::user()->gender == 'M' ? true : false, ['id'=>'male'])}}
+				<label for="male">Male</label>
+			</div>
+			<div class="radio radio-primary radio-inline">
+				{{Form::radio('gender', 'F', Auth::user()->gender == 'F' ? true : false, ['id'=>'female'])}}
+				<label for="female">Female</label>
+			</div>
 		</div>
 	</div>
 
@@ -97,11 +111,9 @@
 			{{Form::hidden('dorm_state', '', ['id'=>'dorm_state'])}}
 		</div>
 		<div class="col-sm-4">
-			<div class="checkbox">
-				<label>
-					{{Form::checkbox('resident', 1, Auth::user()->dorm=='no', ['id'=>'residentCheckbox'])}}
-					Non-resident
-				</label>
+			<div class="checkbox checkbox-primary">
+				{{Form::checkbox('resident', 1, Auth::user()->dorm=='no', ['id'=>'residentCheckbox'])}}
+				<label for="residentCheckbox">Non-resident</label>
 			</div>
 			<script>
 			$(function() {

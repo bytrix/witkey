@@ -17,7 +17,6 @@ class Academy extends Eloquent {
 	// 	return Academy::all();
 	// }
 
-
 	public static function get($academy_id) {
 		$academy = Academy::where('id', $academy_id)->first();
 		return $academy;

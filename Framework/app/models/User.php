@@ -159,9 +159,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 
 
-
-
-
 	// POST API PART
 	// if Auth user favorite some task, return true, else return false
 	public function hasFavoriteTask($task_id) {
@@ -201,6 +198,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			return false;
 		}
 	}
+
 
 
 }

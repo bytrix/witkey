@@ -24,8 +24,11 @@
 @stop
 
 @section('user-panel')
-	<h1 class="page-header">Authentication</h1>
 
+	@section('header')
+	@parent
+		Authentication
+	@stop
 
 	@if ( ! ( Session::has('message') || isset($error) || count($errors->all()) ) )
 		<div class="row clearfix">
@@ -100,7 +103,7 @@
 						<i class="fa fa-check"></i>
 					</p>
 					<select class="form-control" ng-model="academy" ng-options="academy.name for academy in academyList">
-						<option value="">Select Major</option>
+						<option value="">Select School</option>
 					</select>
 					<input type="hidden" name="school" value="@{{academy.id}}">
 					{{-- <span ng-bind="academy.id"></span> --}}

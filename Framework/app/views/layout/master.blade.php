@@ -6,10 +6,11 @@
 	<title>Campus Witkey</title>
 
   {{-- style --}}
-  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  {{-- {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}} --}}
+  {{-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
+  {{HTML::style(URL::asset('assets/style/bootstrap.min.css'))}}
   {{HTML::style('assets/style/main.css')}}
   {{HTML::style('assets/style/font-awesome.min.css')}}
+  {{HTML::style(URL::asset('assets/style/awesome-bootstrap-checkbox.css'))}}
   {{HTML::style('assets/style/sticky-footer.css')}}
   {{HTML::style(URL::asset('assets/style/select2.css'))}}
   {{-- <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css"> --}}

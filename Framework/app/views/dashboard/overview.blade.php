@@ -25,7 +25,11 @@
 @section('user-panel')
 
 	<div class="row clearfix panel-group">
-		<h1 class="page-header">Overview</h1>
+
+	@section('header')
+	@parent
+		Overview
+	@stop
 
 
 

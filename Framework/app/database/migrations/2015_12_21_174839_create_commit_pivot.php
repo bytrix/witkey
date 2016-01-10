@@ -23,6 +23,7 @@ class CreateCommitPivot extends Migration {
 			$table->integer('type');
 			$table->integer('quote_id')->nullable();
 			$table->string('file_hash');
+			$table->datetime('pay_at');
 		});
 	}
 

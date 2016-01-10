@@ -17,7 +17,16 @@ class HomeController extends BaseController {
 
 	public function index() {
 
-		return View::make('layout.index');
+		$academies = Academy::all();
+
+		$academy_id = Session::get('school_id_session');
+
+		if ($academy_id) {
+			return Redirect::to("/school/$academy_id");
+		}
+
+		return View::make('layout.index')
+			->with('academies', $academies);
 
 	}
 

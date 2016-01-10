@@ -23,7 +23,22 @@
 @section('content')
 	<div class="container">
 
-		<h1 class="page-header">Publish you task</h1>
+		<h1 class="page-header">
+			Publish you task
+			
+          <small class="pull-right school-select-wrap">
+            School:
+            <div class="dropdown pull-right">
+              <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+              <ul class="dropdown-menu">
+                @foreach ($schools as $school)
+                  <li><a href="/school/{{$school->id}}">{{$school->name}}</a></li>
+                @endforeach
+              </ul>
+            </div>
+          </small>
+
+		</h1>
 		<ul class='task-procedure first state'>
 			<li class="first col-md-4 light">CREATE TASK</li>
 			<li class="second col-md-4">SET REWARD</li>
@@ -51,16 +66,21 @@
 					</div>
 					<div class="col-md-2">
 						<span class="btn btn-primary fileinput-button" style="margin-top: 10px;">
-							<i class="glyphicon glyphicon-open-file"></i>
+							{{-- <i class="glyphicon glyphicon-open-file"></i> --}}
+							<i class="fa fa-plus"></i>
 							<input type="file" id="uploader">
-							Upload File
+							Attach File
 						</span>
 					</div>
 				</div>
 			</div>
 
 			<div class="form-group">
-				{{Form::submit('Next', ['class'=>'btn btn-primary'])}}
+				{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
+				<button type="submit" class="btn btn-primary">
+					Next
+					<i class="fa fa-angle-double-right"></i>
+				</button>
 			</div>
 
 		<script>

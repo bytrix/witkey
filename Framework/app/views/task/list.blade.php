@@ -27,6 +27,13 @@
 .cw-task-title a:hover{
 	color: #666;
 }
+
+.list-group-item{
+	transition: 0.1s;
+}
+.list-group-item:hover{
+	background-color: #fdfdfd;
+}
 </style>
 @stop
 
@@ -37,9 +44,20 @@
 
 @section('content')
 	<div class="container">
-		<h2>
+		<h2 class="page-header">
 			<i class="fa fa-list"></i>
 			Task List
+			<small class="pull-right school-select-wrap">
+				School:
+				<div class="dropdown pull-right">
+					<a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+					<ul class="dropdown-menu">
+						@foreach ($schools as $school)
+							<li><a href="/school/{{$school->id}}">{{$school->name}}</a></li>
+						@endforeach
+					</ul>
+				</div>
+			</small>
 		</h2>
 		@if (count($tasks))
 			<div class="list-group list-group-lg">

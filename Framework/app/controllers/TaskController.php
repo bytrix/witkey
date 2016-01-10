@@ -59,10 +59,19 @@ class TaskController extends BaseController {
 				return true;
 			}
 		},"The amount field cannot be negative");
+		Validator::extend('future', function($attribute, $value, $parameters) {
+			$expiration = strtotime($value);
+			$now = strtotime("now");
+			if ($expiration > $now) {
+				return true;
+			} else {
+				return false;
+			}
+		}, "Expiration is out of date!");
 		if (Request::method() == "POST") {
 			$userInput = [
 				'type'       => Input::get('type'),
-				'amount'     => Input::get('amount', 0),
+				'amount'     => Input::get('amount'),
 				'expiration' => Input::get('expiration')
 			];
 		} else {
@@ -75,7 +84,7 @@ class TaskController extends BaseController {
 		$rules = [
 			'type'       => 'required',
 			'amount'     => 'required|numeric|positive',
-			'expiration' => 'required|date'
+			'expiration' => 'required|date|future'
 		];
 		$validator = Validator::make($userInput, $rules);
 		// dd($userInput);
@@ -89,11 +98,20 @@ class TaskController extends BaseController {
 		}
 	}
 
-	public function listTask() {
-		$tasks = Task::orderBy('created_at', 'desc')
+	public function listTask($academy_id) {
+
+		Session::set('school_id_session', $academy_id);
+		$myAcademy = Academy::where('id', $academy_id)->first();
+		$academies = Academy::all();
+
+		$tasks = Task::where('place', $academy_id)
+			->orderBy('created_at', 'desc')
 			->paginate(10);
+
 		return View::make('task.list')
-			->with('tasks', $tasks);
+			->with('tasks', $tasks)
+			->with('mySchool', $myAcademy)
+			->with('schools', $academies);
 	}
 
 	public function detail($task_id) {
@@ -101,10 +119,12 @@ class TaskController extends BaseController {
 		$task = Task::where('id', $task_id)->first();
 		$prev_task = Task::where('id', $task_id + 1)->first();
 		$next_task = Task::where('id', $task_id - 1)->first();
+		$school = Academy::where('id', $task->place)->first();
 		View::share('task_id', $task_id);
 		View::share('task', $task);
 		View::share('prev_task', $prev_task);
 		View::share('next_task', $next_task);
+		View::share('school', $school);
 		Session::set('task_id_session', $task_id);
 
 		if ($task->user->active == 0) {
@@ -216,6 +236,7 @@ class TaskController extends BaseController {
 	}
 
 	public function postCreate() {
+		$academy_id = Session::get('school_id_session');
 		$task             = new Task;
 		$task->user_id    = Auth::user()->id;
 		$task->type       = Session::get('type');
@@ -224,6 +245,7 @@ class TaskController extends BaseController {
 		$task->amount     = Session::get('amount');
 		$task->expiration = Session::get('expiration');
 		$task->state      = 1;
+		$task->place = $academy_id;
 		$task->save();
 		$credit = Auth::user()->credit;
 
@@ -235,7 +257,8 @@ class TaskController extends BaseController {
 		Session::forget('amount');
 		Session::forget('expiration');
 
-		return Redirect::to('task/list');
+		// return Redirect::to('task/list');
+		return Redirect::to("/school/$academy_id");
 	}
 
 
