@@ -11,4 +11,8 @@ class CommitPivot extends Eloquent {
 	public function task() {
 		return $this->belongsTo('Task');
 	}
+
+	public function comment() {
+		return $this->hasOne('Comment', 'id', 'comment_id');
+	}
 }

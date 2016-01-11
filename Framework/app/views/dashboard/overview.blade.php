@@ -119,7 +119,7 @@
 													<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
 												</div>
 											</td>
-											<td align="right">&yen; {{$order->amount}}</td>
+											<td>&yen; {{$order->amount}}</td>
 											<td>{{$order->created_at}}</td>
 										</tr>
 										@endforeach

@@ -25,6 +25,7 @@ class CreateCommitPivot extends Migration {
 			$table->string('file_hash');
 			$table->datetime('pay_at');
 			$table->boolean('win')->default(false);
+			$table->integer('comment_id');
 		});
 	}
 

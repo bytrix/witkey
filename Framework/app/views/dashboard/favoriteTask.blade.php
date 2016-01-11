@@ -23,6 +23,7 @@
     Favorite Task
   @stop
 
+@if (count($favoriteTasks))
   <table class="table">
     <thead>
       <th>ID</th>
@@ -47,6 +48,10 @@
 
     </tbody>
   </table>
+@else
+  <p class="alert alert-danger">No favorite tasks</p>
+@endif
+
 {{-- 
   @foreach ($favoriteTasks as $favoriteTask)
     <li>{{$favoriteTask->title}}</li>

@@ -57,6 +57,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return false;
 	}
 
+	// commenter->comments_from()
+	public function comments_from() {
+		return $this->hasMany('CommitPivot', 'from_whom_id', 'id');
+	}
+
+	// byCommenter->comments_to()
+	public function comments_to() {
+		return $this->hasMany('CommitPivot', 'user_id', 'id');
+	}
+
 	// public function quote() {
 
 	// 	return $this->belongsToMany('Task', 'QuotePivot', 'user_id', 'task_id')

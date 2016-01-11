@@ -1,6 +1,25 @@
 @extends('user.master')
 
-
+@section('style')
+@parent
+	<style>
+		.rating{
+			margin-right: 20px;
+			float: right;
+			margin-top: 12px;
+		}
+		.avatar{
+			width: 40px;
+			display: block;
+			float: left;
+			margin-right: 20px;
+		}
+		.content{
+			display: inline-block;
+			margin-top: 10px;
+		}
+	</style>
+@stop
 
 @section('content')
 	<div class="container">
@@ -63,9 +82,36 @@
  							 --}}
 							</div>
 							<div class="tab-pane" id="panel-486166">
-								<p>
-									List the comments for his task
-								</p>
+								@if (count($comments))
+									<div class="list-group">
+										@foreach ($comments as $comment)
+											<div class="list-group-item">
+
+												<span class="rating">
+													@for ($i = 0; $i < $comment->star; $i++)
+														<i class="fa fa-star-o light"></i>
+													@endfor
+													@for ($i = 0; $i < (5 - $comment->star); $i++)
+														<i class="fa fa-star-o"></i>
+													@endfor
+												</span>
+
+												<a href="/" class="avatar">
+													{{-- {{HTML::image("/avatar/" . User::where('id', $comment->from_whom_id)->first()->avatar, '', ['class'=>'avatar-sm'])}} --}}
+													{{HTML::image("/avatar/" . $comment->commenter->avatar, '', ['class'=>'avatar-sm'])}}
+													{{-- {{User::where('id', $comment->from_whom_id)->first()->username}} --}}
+													{{$comment->commenter->username}}
+												</a>
+												<div class="content">
+													{{$comment->content}}
+												</div>
+												<p class="metadata" style="padding-top: 10px;">
+													<span class="property">{{$comment->created_at}}</span>
+												</p>
+											</div>
+										@endforeach
+									</div>
+								@endif
 							</div>
 						</div>
 

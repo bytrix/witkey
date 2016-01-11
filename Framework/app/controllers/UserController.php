@@ -93,6 +93,7 @@ class UserController extends BaseController {
 		$user = User::where('id', $user_id)->first();
 		// $tasks = $user->task()->paginate(10);
 		$commits = CommitPivot::where('user_id', $user_id)->get();
+		$comments = Comment::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
 
 		$schoolAge = Util::secToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
 		$grade = Util::getGrade($user, $schoolAge);
@@ -101,7 +102,8 @@ class UserController extends BaseController {
 			->with('user', $user)
 			->with('grade', $grade)
 			// ->with('tasks', $tasks);
-			->with('commits', $commits);
+			->with('commits', $commits)
+			->with('comments', $comments);
 	}
 
 
@@ -176,7 +178,7 @@ class UserController extends BaseController {
 
 			$user->save();
 			Auth::login($user);
-			return Redirect::to('dashboard');
+			return Redirect::to('/');
 
 		} else {
 			

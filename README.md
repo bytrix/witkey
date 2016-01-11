@@ -76,7 +76,7 @@ References
 - [select2](https://github.com/select2/select2)
 - [select2-bootstrap-theme](https://github.com/select2/select2-bootstrap-theme)
 - [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
-- [particles.jp](https://github.com/VincentGarreau/particles.js)
+- [particles.js](https://github.com/VincentGarreau/particles.js)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png

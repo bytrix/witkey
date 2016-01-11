@@ -66,7 +66,7 @@
 				{{Form::radio('gender', 'M', Auth::user()->gender == 'M' ? true : false, ['id'=>'male'])}}
 				<label for="male">Male</label>
 			</div>
-			<div class="radio radio-primary radio-inline">
+			<div class="radio radio-danger radio-inline">
 				{{Form::radio('gender', 'F', Auth::user()->gender == 'F' ? true : false, ['id'=>'female'])}}
 				<label for="female">Female</label>
 			</div>

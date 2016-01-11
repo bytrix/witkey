@@ -79,7 +79,7 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard"><i class="fa fa-envelope-o"></i> <strong>{{Auth::user()->email}}</strong></a></li>
+              <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li>
               <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
             @else
               <li><a href="/login">Login</a></li>

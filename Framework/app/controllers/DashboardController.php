@@ -216,4 +216,45 @@ class DashboardController extends BaseController {
 		}
 	}
 
+	public function rate($task_id) {
+
+		$task = Task::where('id', $task_id)->first();
+
+		$winningCommit = CommitPivot::where('id', $task->winning_commit_id)->first();
+
+		$winner = User::where('id', $winningCommit->user->id)->first();
+
+		return View::make('dashboard.rate')
+			->with('task', $task)
+			->with('winner', $winner);
+	}
+
+	public function postRate($task_id) {
+		$task = Task::where('id', $task_id)->first();
+		$comment = new Comment;
+		$userInput = [
+			'user_id' => Input::get('user_id'),
+			'star' => Input::get('star'),
+			'content' => Input::get('content'),
+			'from_whom_id' => $task->user->id
+		];
+		$rules = [
+			'content' => 'required'
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			$comment->from_whom_id = $userInput['from_whom_id'];
+			$comment->user_id = $userInput['user_id'];
+			$comment->star = $userInput['star'];
+			$comment->content = $userInput['content'];
+			$comment->save();
+			CommitPivot::where('id', $task->winning_commit_id)->update(['comment_id'=>$comment->id]);
+			return Redirect::to('dashboard/taskOrder');
+		} else {
+			return Redirect::to("/dashboard/rate/$task_id")
+				->withErrors($validator);
+		}
+
+	}
+
 }

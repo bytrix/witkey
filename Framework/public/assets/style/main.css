@@ -313,3 +313,16 @@ body {
   height: 25px;
 }
 
+.rating i{
+  margin-top: 4px;
+  float: left;
+  /*cursor: pointer;*/
+  color: #aaa;
+}
+.rating i.light{
+  color: orange;
+  text-shadow: 0 0 4px yellow;
+}
+.content{
+  resize: none;
+}

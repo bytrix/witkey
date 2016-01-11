@@ -30,6 +30,8 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('dashboard'                              , 'DashboardController@overview');
 	Route::get('dashboard/myProfile'                    , 'DashboardController@myProfile');
 	Route::get('dashboard/taskOrder'                    , 'DashboardController@taskOrder');
+	Route::get('dashboard/rate/{task_id}'               , 'DashboardController@rate');
+	Route::post('dashboard/rate/{task_id}'               , 'DashboardController@postRate');
 	Route::get('dashboard/postcard'                     , 'DashboardController@postcard');
 	Route::get('dashboard/favoriteTask'                 , 'DashboardController@favoriteTask');
 	Route::get('dashboard/security'                     , 'DashboardController@security');

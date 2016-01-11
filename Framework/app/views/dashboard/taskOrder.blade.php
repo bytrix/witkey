@@ -32,6 +32,7 @@
 					<th>Title</th>
 					<th>Amount</th>
 					<th>Date</th>
+					<th>Rating</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,8 +45,19 @@
 							<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
 						</div>
 					</td>
-					<td align="right">&yen; {{$order->amount}}</td>
+					<td>&yen; {{$order->amount}}</td>
 					<td>{{$order->created_at}}</td>
+					<td>
+						@if ($order->state == 4 && $order->winningCommit->comment['id'] == NULL)
+							<a href="/dashboard/rate/{{$order->id}}" class="btn btn-success btn-xs">
+								<i class="fa fa-star-o"></i>
+								Rate
+							</a>
+						@endif
+						@if ($order->winningCommit->comment['id'] != NULL)
+							<span class="text-muted">Evaluated</span>
+						@endif
+					</td>
 				</tr>
 				@endforeach
 			</tbody>
