@@ -42,6 +42,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		// return $this->hasMany('Task', 'user_id', 'id');
 	}
 
+	public function hasWinTask($task_id) {
+		// return $this->username;
+		$task = Task::where('id', $task_id)->first();
+		$winning_commit = CommitPivot::where('id', $task->winning_commit_id)->first();
+		// return $task->winning_commit->user->id;
+		// return $this->id;
+		// return !$task->winning_commit_id;
+		if ($task->winning_commit_id != 0) {
+			if ($winning_commit->user->id == $this->id) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	// public function quote() {
 

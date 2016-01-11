@@ -24,9 +24,11 @@
 
   .jumbotron{
     text-align: center;
-    background-color: #fafafa;
+    /*background-color: #fafafa;*/
+    background-color: rgba(0, 0, 0, 0.0);
   }
   .school-select-list{
+    margin-top: 40px;
     width: 300px;
   }
   .school-select-list a{
@@ -35,7 +37,10 @@
   .enter:hover{
     text-indent: 6px;
   }
-
+  .navbar-default,
+  footer.footer{
+    background-color: rgba(248, 248, 248, 0.7);
+  }
 
   </style>
 
@@ -52,6 +57,7 @@
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.js'))}}
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script> --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.zh-CN.js'))}}
+  {{HTML::script(URL::asset('assets/script/particles.js'))}}
 
   <script>
   $(function () {
@@ -113,7 +119,7 @@
 
     <div class="jumbotron">
       <h1>Campus Witkey</h1>
-      <p>Enjoy campus life!</p>
+      <p>Share your witness with others</p>
 
       <div class="list-group school-select-list center-block">
 
@@ -133,6 +139,15 @@
 
 
 </div>
+
+  <div id="particles-js"></div>
+  <script>
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load('particles-js', '/assets/particles.json', function() {
+    console.log('callback - particles.js config loaded');
+  });
+  </script>
+
 
   <footer class="footer">
     <div class="container">

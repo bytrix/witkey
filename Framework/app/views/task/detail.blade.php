@@ -524,7 +524,7 @@
 						@endif
 
 						{{-- COMMIT AREA --}}
-						@if ( ($task->type == 1 && $task->state == 1) || ( ($task->state == 2 || $task->state == 3) )  && $task->user->id != Auth::user()->id )
+						@if (( ($task->type == 1 && $task->state == 1) || ($task->state == 2 || $task->state == 3) )  && $task->user->id != Auth::user()->id )
 
 
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}

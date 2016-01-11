@@ -16,54 +16,62 @@
 
 
 
-		<div class="row clearfix">
-			<div class="col-md-12 column">
-				<div class="tabbable" id="tabs-752296">
-					<ul class="nav nav-tabs">
-						<li class="active">
-							 <a href="#panel-822933" data-toggle="tab">His Task</a>
-						</li>
-						<li>
-							 <a href="#panel-486166" data-toggle="tab">Comments</a>
-						</li>
-					</ul>
-					
-					<div class="tab-content">
-						<div class="tab-pane active" id="panel-822933">
-{{-- 
-							@if (count(Task::where('user_id', $user->id)->get()))
-								@foreach (Task::where('user_id', $user->id)->get() as $task)
-									<li>{{$task->title}}</li>
-								@endforeach
-							@else
-								<p>No task published</p>
-							@endif
-							 --}}
-							 <?php $tasks = $user->task()->paginate(10) ?>
-							 @if (count($tasks))
-								 @foreach ($tasks as $task)
-								 	<li>{{$task->title}}</li>
-								 @endforeach
-							 @else
-							 	<p class="alert alert-danger">No task done.</p>
-							 @endif
-							{{-- Paginator --}}
-							{{$tasks->links()}}
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div class="tabbable" id="tabs-752296">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								 <a href="#panel-822933" data-toggle="tab">His Task</a>
+							</li>
+							<li>
+								 <a href="#panel-486166" data-toggle="tab">Comments</a>
+							</li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active task-chain" id="panel-822933">
 
+								 @if (count($commits))
+									 @foreach ($commits as $commit)
+									 	{{-- {{$commit->user->username}} --}}
+										 	@if ($commit->win)
+										 		<li>
+											 		<span class="created_at">{{explode(' ', $commit->created_at)[0]}}</span>
+											 		won the task
+												 	<a href="/task/{{$commit->id}}">{{$commit->task->title}}</a>
+												 	<i class="fa fa-flag text-danger" data-toggle="tooltip" data-placement="right" title="contrib+1"></i>
+										 		</li>
+											 @else
+											 	<li>
+											 		<span class="created_at">{{explode(' ', $commit->created_at)[0]}}</span>
+											 		take part in the task
+												 	<a href="/task/{{$commit->id}}">{{$commit->task->title}}</a>
+											 	</li>
+										 	@endif
+									 @endforeach
+								 @else
+								 	<p class="alert alert-danger">No task done.</p>
+								 @endif
+								{{-- {{$commits->links()}} --}}
+
+{{-- 
+ 							@foreach ($commits as $commit)
+ 								<li>
+ 									{{$commit->task->title}}
+ 								</li>
+ 							@endforeach
+ 							 --}}
+							</div>
+							<div class="tab-pane" id="panel-486166">
+								<p>
+									List the comments for his task
+								</p>
+							</div>
 						</div>
-						<div class="tab-pane" id="panel-486166">
-							<p>
-								List the comments for his task
-							</p>
-						</div>
+
 					</div>
 				</div>
 			</div>
-		</div>
-
-
-
-
 
 
 

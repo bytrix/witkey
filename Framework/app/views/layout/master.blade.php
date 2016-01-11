@@ -40,8 +40,11 @@
   <script>
   $(function () {
    $('[data-toggle="tooltip"]').tooltip()
+
   })
   </script>
+
+
 @section('script')
 @show
 
@@ -90,6 +93,8 @@
   @yield('procedure')
 
 	@yield('content')
+
+
 
   <footer class="footer">
     <div class="container">

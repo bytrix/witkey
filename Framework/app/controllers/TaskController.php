@@ -364,6 +364,8 @@ class TaskController extends BaseController {
 		$task_id = Session::get('task_id_session');
 		Session::set('commit_uuid_session', $commit_uuid);
 		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
+		$commit->win = true;
+		$commit->save();
 		$task = Task::where('id', $task_id)->first();
 		if ($task->type == 1) {
 			$task->winning_commit_id = $commit->id;

@@ -91,13 +91,17 @@ class UserController extends BaseController {
 	public function profile($user_id) {
 
 		$user = User::where('id', $user_id)->first();
+		// $tasks = $user->task()->paginate(10);
+		$commits = CommitPivot::where('user_id', $user_id)->get();
 
 		$schoolAge = Util::secToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));
 		$grade = Util::getGrade($user, $schoolAge);
 
 		return View::make('user.profile')
 			->with('user', $user)
-			->with('grade', $grade);
+			->with('grade', $grade)
+			// ->with('tasks', $tasks);
+			->with('commits', $commits);
 	}
 
 

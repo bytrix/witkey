@@ -31,9 +31,14 @@
             <div class="dropdown pull-right">
               <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
               <ul class="dropdown-menu">
-                @foreach ($schools as $school)
-                  <li><a href="/school/{{$school->id}}">{{$school->name}}</a></li>
-                @endforeach
+				@foreach ($schools as $school)
+					<li><a href="/school/{{$school->id}}">
+						{{$school->name}}
+						@if ($mySchool->id == $school->id)
+							<i class="fa fa-check text-success"></i>
+						@endif
+					</a></li>
+				@endforeach
               </ul>
             </div>
           </small>

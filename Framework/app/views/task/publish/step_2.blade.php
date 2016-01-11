@@ -78,7 +78,26 @@
 
 @section('content')
 	<div class="container">
-		<h1 class="page-header">Set your reward</h1>
+		<h1 class="page-header">
+			Set your reward
+			
+	          <small class="pull-right school-select-wrap">
+	            School:
+	            <div class="dropdown pull-right">
+	              <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+	              <ul class="dropdown-menu">
+					@foreach ($schools as $school)
+						<li><a href="/school/{{$school->id}}">
+							{{$school->name}}
+							@if ($mySchool->id == $school->id)
+								<i class="fa fa-check text-success"></i>
+							@endif
+						</a></li>
+					@endforeach
+	              </ul>
+	            </div>
+	          </small>
+		</h1>
 		<ul class='task-procedure second state'>
 			<li class="first second col-md-4">CREATE TASK</li>
 			<li class="second col-md-4 light">SET REWARD</li>

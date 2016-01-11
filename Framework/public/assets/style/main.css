@@ -4,6 +4,22 @@ body {
   background-color: #fafafa;
 }
 
+#particles-js{
+  width: 100%;
+  height: 100%;
+  /*background-color: #000;*/
+  display: block;
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+}
+
+.navbar-default,
+footer.footer{
+  background-color: rgba(248, 248, 248, 0.95);
+}
+
+
 a{
   transition: 0.2s;
   text-decoration: none;
@@ -224,11 +240,11 @@ body {
 
 
 .school-select-wrap{
-  font-size: 18px;
+  font-size: 20px;
   margin-right: 40px;
 }
 .school-select{
-  margin-left: 10px;
+  margin-left: 12px;
   color: #777;
   text-decoration: none;
 }
@@ -236,5 +252,64 @@ body {
 .school-select:focus{
   text-decoration: none;
   color: #555;
+}
+
+.task-chain{
+  margin-top: 20px;
+  left: 20px;
+  /*position: relative;*/
+}
+.task-chain li,
+.task-chain li:before{
+  transition: 0.2s;
+}
+.task-chain li{
+  list-style-type: none;
+  height: 50px;
+  line-height: 50px;
+  color: #999;
+  /*background-color: red;*/
+}
+
+.task-chain li:hover:before,
+.task-chain li:hover{
+  border-color: #999;
+  color: #888;
+}
+
+.task-chain li:before{
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  margin-right: 10px;
+  display: inline-block;
+  background-color: #fafafa;
+  border: 4px solid #ccc;
+}
+
+.task-chain li:after{
+  content: '';
+  width: 4px;
+  height: 50px;
+  background-color: #ccc;
+  display: inline-block;
+  position: absolute;
+  left: 21px;
+  z-index: -1;
+}
+
+.task-chain .created_at{
+  margin-right: 8px;
+}
+
+
+.task-chain li:first-child:after{
+  height: 25px;
+  top: 90px;
+}
+
+.task-chain li:last-child:after{
+  height: 25px;
 }
 

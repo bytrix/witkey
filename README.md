@@ -3,6 +3,8 @@ Campus Witkey
 
 This is my little web project made with Laravel 4.2 which aims to encourage students who has special talent to help someone in need.
 
+Inspired by [PHPHub](https://phphub.org/), [ZhiHu](http://www.zhihu.com/), [ele.me](https://www.ele.me/)
+
 About myself
 ------------
 
@@ -55,6 +57,14 @@ Architecture
 > - [yEd](http://www.yworks.com/products/yed) (Flowchart)
 > - [StarUML](http://staruml.io/) (Class Diagram)
 
+Core
+----
+
+- Laravel 4.2
+- Bootstrap 3.3.5
+- AngularJS 1.2.10
+
+
 References
 ----------
 
@@ -66,6 +76,7 @@ References
 - [select2](https://github.com/select2/select2)
 - [select2-bootstrap-theme](https://github.com/select2/select2-bootstrap-theme)
 - [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
+- [particles.jp](https://github.com/VincentGarreau/particles.js)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png
