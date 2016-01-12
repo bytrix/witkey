@@ -84,7 +84,6 @@
 		font-weight: bold;
 		color: orange;
 	}
-	
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
@@ -225,6 +224,45 @@
 					<span>Expiration:</span>
 					@if ($task->state == 4)
 						<span class="text-danger">Task End</span>
+					@elseif($task->state == 5)
+						<span class="text-muted" data-toggle="tooltip" data-placement="bottom" title="{{$task->expiration}}">Expired</span>
+						@if (Auth::check() && $task->user->id == Auth::user()->id)
+							<a href="javascript:;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Delay</a>
+
+							<!-- Modal -->
+							<div class="modal fade" data-backdrop="static" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog modal-sm" role="document">
+							    <div class="modal-content">
+
+
+							      	{{Form::open(['url'=>"/task/$task_id/delay"])}}
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">Set datetime</h4>
+								      </div>
+								      <div class="modal-body">
+											{{Form::text('expiration', '', ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00:00'])}}
+											<script>
+											$('#expiration').datetimepicker({
+												language: 'zh-CN',
+												startDate: '2010-01-01'
+											});
+											</script>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
+								        {{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+								      </div>
+							      	{{Form::close()}}
+
+
+
+							    </div>
+							  </div>
+							</div>
+
+						@endif
 					@else
 						<span data-toggle="tooltip" data-placement="bottom" title="{{ $task->expiration }}" id="expiration"></span>
 					@endif
@@ -236,6 +274,10 @@
 						$('#expiration').html(moment().add(deltaSecond).calendar());
 					</script>
 				</h4>
+
+
+
+
 			</div>
 
 			<div class="col-sm-12" ng-app>

@@ -20,7 +20,7 @@ About myself
 
 Let's keep on track
 -------------------
-First you need to config the username/password of database in Framework/app/config/database.php.
+First you need to config the username/password of database in ``Framework/app/config/database.php``.
 
 And then create a database named ``witkey`` in mysql:
 
@@ -35,6 +35,32 @@ then run the server:
     php artisan serve
 
 type localhost:8000 in browser and after that you can see the page
+
+Development Progress
+--------------------
+
+- [x] 用户登录/注册/退出
+- [x] 忘记密码
+- [ ] OAuth开放认证
+- [x] 任务发布/编辑
+- [x] 校区选择
+- [x] 实名身份认证
+- [ ] 头像上传
+- [x] 报价
+- [x] 交稿
+- [ ] 支付
+- [x] 任务延期设置
+- [x] 任务收藏
+- [x] 任务评价
+- [ ] 任务搜索
+- [ ] 任务分类
+- [ ] 任务附件上传
+- [ ] 日程安排
+- [ ] 添加好友
+- [ ] 雇佣某人
+- [ ] 站内信
+- [ ] 邮箱验证
+- [ ] 短信验证
 
 Architecture
 ------------

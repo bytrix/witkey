@@ -17,6 +17,54 @@
 
 @stop
 
+@section('style')
+	{{HTML::style('assets/style/task-procedure.css')}}
+@stop
+{{-- 
 @section('procedure-style')
 	{{HTML::style('assets/style/task-procedure.css')}}
+@stop
+ --}}
+
+@section('content')
+	<div class="container">
+		<h1 class="page-header">
+			@yield('header')
+
+            @if ($mySchool != NULL)
+              <small class="pull-right school-select-wrap">
+                School:
+                <div class="dropdown pull-right">
+                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+                  <ul class="dropdown-menu">
+                    @foreach ($schools as $school)
+                      <li><a href="/school/{{$school->id}}">
+                        {{$school->name}}
+                        @if ($mySchool->id == $school->id)
+                          <i class="fa fa-check text-success"></i>
+                        @endif
+                      </a></li>
+                    @endforeach
+                  </ul>
+                </div>
+              </small>
+            @else
+              <small class="pull-right school-select-wrap">
+                School:
+                <div class="dropdown pull-right">
+                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">Select School</a>
+                  <ul class="dropdown-menu">
+                    @foreach ($schools as $school)
+                      <li><a href="/school/{{$school->id}}">
+                        {{$school->name}}
+                      </a></li>
+                    @endforeach
+                  </ul>
+                </div>
+              </small>
+            @endif
+
+		</h1>
+		@yield('task-procedure')
+	</div>
 @stop

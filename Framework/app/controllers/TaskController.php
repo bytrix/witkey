@@ -388,4 +388,22 @@ class TaskController extends BaseController {
 			->with('commit', $commit);
 	}
 
+
+	public function postDelay($task_id) {
+		$userInput = [
+			'expiration' => Input::get('expiration')
+		];
+		$rules = [
+			'expiration' => 'required'
+		];
+		$validator = Validator::make($userInput, $rules);
+		if ($validator->passes()) {
+			$task = Task::where('id', $task_id)->first();
+			$task->expiration = $userInput['expiration'];
+			$task->state = 1;
+			$task->save();
+		}
+		return Redirect::back();
+	}
+
 }

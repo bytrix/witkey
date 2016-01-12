@@ -1,7 +1,7 @@
 @extends('task.publish.master')
 
 @section('style')
-
+@parent
 <style>
 	#editor {
 		overflow:scroll;
@@ -21,7 +21,8 @@
 @stop
 
 @section('content')
-	<div class="container">
+@parent
+{{-- 	<div class="container">
 
 		<h1 class="page-header">
 			Publish you task
@@ -49,7 +50,19 @@
 			<li class="second col-md-4">SET REWARD</li>
 			<li class="third col-md-4">PUBLISH</li>
 		</ul>
-	</div>
+	</div> --}}
+	@section('header')
+		Publish your task
+	@stop
+	
+	@section('task-procedure')
+		<ul class='task-procedure first state'>
+			<li class="first col-md-4 light">CREATE TASK</li>
+			<li class="second col-md-4">SET REWARD</li>
+			<li class="third col-md-4">PUBLISH</li>
+		</ul>
+	@stop
+
 	<div class="container">
 		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom'])}}
 			<div class="form-group">

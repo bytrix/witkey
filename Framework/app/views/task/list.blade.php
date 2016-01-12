@@ -34,6 +34,10 @@
 .list-group-item:hover{
 	background-color: #fdfdfd;
 }
+.task-state{
+	font-size: 12px;
+	margin-left: 4px;
+}
 </style>
 @stop
 
@@ -112,7 +116,7 @@
 							</span>
 						</div>
 
-						<div class="item-inline pull-right metadata" style="width: 100px;">
+						<div class="item-inline pull-right metadata" style="width: 140px;">
 							<h4>
 								@if ($task->winning_commit_id != 0 || $task->winning_quote_id != 0)
 									<span data-toggle="tooltip" data-placement="top" title="1 people win bid">1</span>
@@ -123,9 +127,14 @@
 								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
 								<span style="padding-left: 20px;">
 									@if ($task->state == 4)
-										<i class="text-danger fa fa-clock-o" data-toggle="tooltip" data-placement="right" title="TaskEnd"></i>
-									@else
-										<i class="text-success fa fa-clock-o" data-toggle="tooltip" data-placement="right" title="Bidding..."></i>
+										<i class="text-danger fa fa-clock-o" data-placement="right" title="TaskEnd"></i>
+										<span class="text-danger task-state">Task End</span>
+									@elseif($task->state == 1)
+										<i class="text-success fa fa-clock-o" data-placement="right" title="Bidding..."></i>
+										<span class="text-success task-state">Bidding...</span>
+									@elseif($task->state ==5)
+										<i class="fa fa-clock-o" data-placement="right" title="Expired"></i>
+										<span class="task-state">Expired</span>
 									@endif
 								</span>
 							</h4>

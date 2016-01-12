@@ -119,7 +119,7 @@
 
     <div class="jumbotron">
       <h1>Campus Witkey</h1>
-      <p>Share your witness with others</p>
+      <p>Share your witness with school mates</p>
 
       <div class="list-group school-select-list center-block">
 

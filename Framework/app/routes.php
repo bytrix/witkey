@@ -30,8 +30,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('dashboard'                              , 'DashboardController@overview');
 	Route::get('dashboard/myProfile'                    , 'DashboardController@myProfile');
 	Route::get('dashboard/taskOrder'                    , 'DashboardController@taskOrder');
-	Route::get('dashboard/rate/{task_id}'               , 'DashboardController@rate');
-	Route::post('dashboard/rate/{task_id}'               , 'DashboardController@postRate');
+	Route::get('dashboard/rate/{task_id}'               , 'DashboardController@rate')->where('task_id', '[0-9]+');
 	Route::get('dashboard/postcard'                     , 'DashboardController@postcard');
 	Route::get('dashboard/favoriteTask'                 , 'DashboardController@favoriteTask');
 	Route::get('dashboard/security'                     , 'DashboardController@security');
@@ -51,11 +50,13 @@ Route::group(['before'=>'auth'], function() {
 	// POST
 	Route::post('dashboard/security'      , 'DashboardController@postSecurity');
 	Route::post('dashboard/myProfile'     , 'DashboardController@postMyProfile');
+	Route::post('dashboard/rate/{task_id}', 'DashboardController@postRate')->where('task_id', '[0-9]+');
 	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
 	Route::post('task/create/step-2'      , 'TaskController@step_2');
 	Route::post('task/create/step-3'      , 'TaskController@step_3');
 	Route::post('task/{task_id}/edit'     , 'TaskController@postEdit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/delay'    , 'TaskController@postDelay')->where('task_id', '[0-9]+');
 
 	// realname Authentication
 	Route::group(['before'=>'realname'], function() {
@@ -69,9 +70,9 @@ Route::get('admin/auth'                               , 'AdminController@auth');
 Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
 Route::get('admin/academy'              , 'AdminController@academy');
-Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail');
+Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
 Route::post('admin/academy'             , 'AdminController@postAcademy');
-Route::post('admin/academy/{academy_id}', 'AdminController@postMajor');
+Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
 
 
 
@@ -119,3 +120,5 @@ Route::post('api/removeFavoriteTask/{task_id}', 'ApiController@removeFavoriteTas
 
 // FOR ANGULAR API
 Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->where('task_id', '[0-9]+');
+
+Route::controller('password', 'RemindersController');

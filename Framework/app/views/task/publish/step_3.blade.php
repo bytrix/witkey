@@ -1,7 +1,7 @@
 @extends('task.publish.master')
 
 @section('style')
-
+@parent
 <style>
 	.end-price-bar{
 		font-size: 20px;
@@ -20,7 +20,8 @@
 @stop
 
 @section('content')
-	<div class="container">
+@parent
+{{-- 	<div class="container">
 		<h1 class="page-header">
 			Success
 
@@ -47,7 +48,18 @@
 			<li class="second third col-md-4">SET REWARD</li>
 			<li class="third col-md-4 light">PUBLISH</li>
 		</ul>
-	</div>
+	</div> --}}
+	@section('header')
+		Success
+	@stop
+
+	@section('task-procedure')
+		<ul class='task-procedure third state'>
+			<li class="first third col-md-4">CREATE TASK</li>
+			<li class="second third col-md-4">SET REWARD</li>
+			<li class="third col-md-4 light">PUBLISH</li>
+		</ul>
+	@stop
 	<div class="container">
 {{-- 
 <pre>

@@ -1,5 +1,9 @@
 @extends('task.publish.master')
 
+@section('style')
+@parent
+@stop
+
 @section('script')
 <script>
 	$(function() {
@@ -77,7 +81,8 @@
 @stop
 
 @section('content')
-	<div class="container">
+@parent
+{{-- 	<div class="container">
 		<h1 class="page-header">
 			Set your reward
 			
@@ -103,14 +108,21 @@
 			<li class="second col-md-4 light">SET REWARD</li>
 			<li class="third col-md-4">PUBLISH</li>
 		</ul>
-	</div>
+	</div> --}}
+	@section('header')
+		Set your reward
+	@stop
+
+	@section('task-procedure')
+		<ul class='task-procedure second state'>
+			<li class="first second col-md-4">CREATE TASK</li>
+			<li class="second col-md-4 light">SET REWARD</li>
+			<li class="third col-md-4">PUBLISH</li>
+		</ul>
+	@stop
 	<div class="container">
 
-
-
-
 		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-custom'])}}
-
 
 			<div class="radio radio-inline">
 				{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}

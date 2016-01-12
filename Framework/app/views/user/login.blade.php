@@ -77,7 +77,7 @@
 						Remember me
 					</label>
 				</div>
-				<a href="/" class="pull-right">Forget password</a>
+				<a href="/password/remind" class="pull-right">Forget password</a>
 			</div>
 			
 			<div class="form-group">
