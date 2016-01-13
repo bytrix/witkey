@@ -10,16 +10,18 @@
 |
 */
 //GET
-Route::get('/'				, 'HomeController@index');
-Route::get('about'			, 'HomeController@about');
-Route::get('login'			, 'UserController@login');
-Route::get('logout'			, 'UserController@logout');
-Route::get('register'		, 'UserController@register');
-Route::get('user/{user_id}'	, 'UserController@profile')->where('user_id', '[0-9]+');
-Route::get('task/{task_id}'	, 'TaskController@detail')->where('task_id', '[0-9]+');
-// Route::get('task/list'		, 'TaskController@listTask');
-Route::get('school/{academy_id}', 'TaskController@listTask')->where('academy_id', '[0-9]+');
-Route::get('school', function() { return Redirect::to('/'); });
+Route::get('/'                                         , 'HomeController@index');
+Route::get('about'                                     , 'HomeController@about');
+Route::get('login'                                     , 'UserController@login');
+Route::get('logout'                                    , 'UserController@logout');
+Route::get('register'                                  , 'UserController@register');
+Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
+Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
+// Route::get('task/list'                              , 'TaskController@listTask');
+Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');
+Route::get('school/{academy_id}/category/{category_id}', 'TaskController@subCategory')->where('academy_id', '[0-9]+')->where('category_id', '[0-9]+');
+Route::get('school/{academy_id}/search/{keyword}', 'TaskController@search');
+Route::get('school'                                    , function() { return Redirect::to('/'); });
 
 // POST
 Route::post('login'		, 'UserController@postLogin');
@@ -33,6 +35,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('dashboard/rate/{task_id}'               , 'DashboardController@rate')->where('task_id', '[0-9]+');
 	Route::get('dashboard/postcard'                     , 'DashboardController@postcard');
 	Route::get('dashboard/favoriteTask'                 , 'DashboardController@favoriteTask');
+	Route::get('dashboard/myFriends'                 , 'DashboardController@myFriends');
 	Route::get('dashboard/security'                     , 'DashboardController@security');
 	Route::get('dashboard/authentication'               , 'DashboardController@authentication');
 	Route::get('task/create'                            , 'TaskController@step_1');
@@ -86,9 +89,9 @@ Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('a
 
 
 
-
-
-
+Route::get('api/follow/{follower_id}', 'ApiController@follow')->where('follower_id', '[0-9]+');
+Route::get('api/unfollow/{follower_id}', 'ApiController@unfollow')->where('follower_id', '[0-9]+');
+Route::get('api/hasFollower/{follower_id}', 'ApiController@hasFollower')->where('follower_id', '[0-9]+');
 
 
 
@@ -122,3 +125,8 @@ Route::post('api/removeFavoriteTask/{task_id}', 'ApiController@removeFavoriteTas
 Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->where('task_id', '[0-9]+');
 
 Route::controller('password', 'RemindersController');
+
+
+Route::get('/a', function() {
+	return 'aa';
+});

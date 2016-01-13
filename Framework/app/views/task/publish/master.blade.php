@@ -2,7 +2,7 @@
 
 @section('menu')
 	<ul class="nav navbar-nav">
-		<li><a href="/">Home</a></li>
+		{{-- <li><a href="/">Home</a></li> --}}
 		<li><a href="/school/{{Session::get('school_id_session')}}">Task List</a></li>
 		<li class="active"><a href="/task/create">Publish Task</a></li>
 		<li class="dropdown">

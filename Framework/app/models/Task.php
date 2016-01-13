@@ -45,6 +45,10 @@ class Task extends Eloquent {
 		return 'active';
 	}
 
+	public function category() {
+		return $this->belongsTo('Category');
+	}
+
 	// public function setTitleAttribute($data) {
 	// 	$this->attributes['title'] = Purifier::clean($data);
 	// }

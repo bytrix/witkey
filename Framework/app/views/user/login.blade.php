@@ -71,11 +71,9 @@
 			</div>
 			
 			<div class="form-group form-inline">
-				<div class="checkbox">
-					<label>
-						{{Form::checkbox('check', 'remember-me', false)}}
-						Remember me
-					</label>
+				<div class="checkbox checkbox-primary">
+					{{Form::checkbox('check', 'remember-me', false, ['id'=>"remember"])}}
+					<label for="remember">Remember me</label>
 				</div>
 				<a href="/password/remind" class="pull-right">Forget password</a>
 			</div>

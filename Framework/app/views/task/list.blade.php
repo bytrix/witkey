@@ -38,22 +38,127 @@
 	font-size: 12px;
 	margin-left: 4px;
 }
+.category-area{
+	margin-bottom: 20px;
+}
+.category-area .nav>li>a{
+	padding: 4px 16px;
+}
+.category-area .category-name{
+	height: 28px;
+	line-height: 28px;
+	color: #888;
+}
+h1{
+	margin: 0px;
+}
+.btn{
+	text-shadow: none;
+}
+.text-color-888{
+	color: #888;
+}
 </style>
 @stop
 
 @section('script')
 {{HTML::script(URL::asset('assets/script/moment.js'))}}
 {{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
+{{HTML::script(URL::asset('assets/script/angular.js'))}}
+<script>
+	$(function() {
 
+		function goSearch() {
+			var kw = $('#search').val();
+			if (kw != "") {
+				window.location.href = "/school/{{$mySchool->id}}/search/" + kw;
+			}
+		}
 
+		$('#search-btn').click(function() {
+			goSearch();
+		});
+
+		$('#search').keydown(function() {
+			if (event.keyCode == 13) {
+				goSearch();
+			};
+		});
+
+	});
+</script>
 @stop
 
 @section('content')
 	<div class="container">
-		<h2 class="page-header">
-			<i class="fa fa-list"></i>
-			Task List
-			<small class="pull-right school-select-wrap">
+
+
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-3">
+				<h1>
+					<i class="fa fa-list"></i>
+					Task List
+				</h1>
+			</div>
+			<div class="col-md-3"></div>
+			<div class="col-md-3">
+				<div class="input-group">
+					<input type="search" name="search" value="" id="search" placeholder="Search" class="form-control">
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-default" id="search-btn">
+							<i class="fa fa-search text-color-888"></i>
+						</button>
+					</span>
+				</div>
+
+
+			</div>
+			<div class="col-md-3">
+
+            @if ($mySchool != NULL)
+              <small class="pull-right school-select-wrap">
+                School:
+                <div class="dropdown pull-right">
+                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+                  <ul class="dropdown-menu">
+                    @foreach ($schools as $school)
+                      <li><a href="/school/{{$school->id}}">
+                        {{$school->name}}
+                        @if ($mySchool->id == $school->id)
+                          <i class="fa fa-check text-success"></i>
+                        @endif
+                      </a></li>
+                    @endforeach
+                  </ul>
+                </div>
+              </small>
+            @else
+              <small class="pull-right school-select-wrap">
+                School:
+                <div class="dropdown pull-right">
+                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">Select School</a>
+                  <ul class="dropdown-menu">
+                    @foreach ($schools as $school)
+                      <li><a href="/school/{{$school->id}}">
+                        {{$school->name}}
+                      </a></li>
+                    @endforeach
+                  </ul>
+                </div>
+              </small>
+            @endif
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+{{-- 			<small class="school-select-wrap">
 				School:
 				<div class="dropdown pull-right">
 					<a href="javascript:;" class="link school-select" data-toggle="dropdown">
@@ -71,7 +176,34 @@
 					</ul>
 				</div>
 			</small>
-		</h2>
+			<span>
+				{{Form::open(['method'=>'get'])}}
+					{{Form::text('keyword', '', ['placeholder'=>'Search'])}}
+				{{Form::close()}}
+			</span>
+
+ --}}
+		</div>
+
+
+	</div>
+
+	<div class="container category-area" ng-app>
+		<div class="col-md-1">
+			<span class="category-name">Category:</span>
+		</div>
+		<div class="col-md-11">
+			<ul class="nav nav-pills">
+				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/">All</a></li>
+				@foreach ($categories as $category)
+					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name}}</a></li>
+				@endforeach
+			</ul>
+		</div>
+	</div>
+
+	<div class="container">
+		
 		@if (count($tasks))
 			<div class="list-group list-group-lg">
 				@foreach ($tasks as $task)
@@ -152,6 +284,7 @@
 		@else
 			<div class="alert alert-danger">No task published ever!</div>
 		@endif
+
 	</div>
 
 @stop

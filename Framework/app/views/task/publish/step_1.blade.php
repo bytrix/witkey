@@ -3,9 +3,14 @@
 @section('style')
 @parent
 <style>
-	#editor {
+/*	#editor {
 		overflow:scroll;
-		/*max-height:300px;*/
+	}*/
+	.wysihtml5-toolbar a{
+		text-shadow: none;
+	}
+	.my-container button{
+		text-shadow: none;
 	}
 	</style>
 	{{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}}
@@ -18,6 +23,7 @@
 	{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
 	{{HTML::script(URL::asset('assets/script/vendor/jquery.ui.widget.js'))}}
 	{{HTML::script(URL::asset('assets/script/jquery.fileupload.js'))}}
+	{{HTML::script(URL::asset('assets/script/bootstrap-form-buttonset.js'))}}
 @stop
 
 @section('content')
@@ -68,6 +74,18 @@
 			<div class="form-group">
 				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
 				{{Form::text('title', Session::get('title'), ['placeholder'=>'Title', 'class'=>'form-control'])}}
+			</div>
+			<div class="form-group">
+				<div class="my-container">
+					@foreach ($categories as $category)
+						{{-- <input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->name}}"> --}}
+						{{Form::radio('category_id', $category->id, Session::get('category_id')==$category->id, ['id'=>$category->name])}}
+						<label for="{{$category->name}}">{{$category->name}}</label>
+					@endforeach
+				</div>
+				<script>
+				$('.my-container').bsFormButtonset('attach');
+				</script>
 			</div>
 			<div class="form-group">
 				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}

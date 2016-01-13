@@ -35,6 +35,7 @@ class CreateTaskTable extends Migration {
 			$table->tinyInteger('state');
 			$table->datetime('expiration');
 			$table->string('place');
+			$table->integer('category_id');
 			$table->timestamps();
 		});
 	}

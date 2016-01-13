@@ -17,32 +17,39 @@ class TaskController extends BaseController {
 
 	// 1. CREATE A DEMAND WITH TITLE AND DETAIL
 	public function step_1() {
-		return View::make('task.publish.step_1');
+		$categories = Category::all();
+		return View::make('task.publish.step_1')
+			->with('categories', $categories);
 	}
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function step_2() {
+		// dd(Input::all());
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
-				'detail' => Input::get('detail')
+				'detail' => Input::get('detail'),
+				'category_id' => Input::get('category_id')
 			];
 		} else {
 			$userInput = [
 				'title'  => e(Session::get('title')),
-				'detail' => Session::get('detail')
+				'detail' => Session::get('detail'),
+				'category_id' => Session::get('category_id')
 			];
 		}
 
 		$rules = [
 			'title'  => 'required',
-			'detail' => 'required'
+			'detail' => 'required',
+			'category_id' => 'required|numeric'
 		];
 		$validator = Validator::make($userInput, $rules);
 
 		if ($validator->passes()) {
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
+			Session::set('category_id', $userInput['category_id']);
 			return View::make('task.publish.step_2');
 
 		} else {
@@ -99,10 +106,10 @@ class TaskController extends BaseController {
 	}
 
 	public function listTask($academy_id) {
-
 		Session::set('school_id_session', $academy_id);
 		$myAcademy = Academy::where('id', $academy_id)->first();
 		$academies = Academy::all();
+		$categories = Category::all();
 
 		$tasks = Task::where('place', $academy_id)
 			->orderBy('created_at', 'desc')
@@ -111,7 +118,38 @@ class TaskController extends BaseController {
 		return View::make('task.list')
 			->with('tasks', $tasks)
 			->with('mySchool', $myAcademy)
-			->with('schools', $academies);
+			->with('schools', $academies)
+			->with('category_id', 0)
+			->with('categories', $categories);
+	}
+
+
+	public function subCategory($academy_id, $category_id) {
+		Session::set('school_id_session', $academy_id);
+		$myAcademy = Academy::where('id', $academy_id)->first();
+		$academies = Academy::all();
+		$categories = Category::all();
+
+		$tasks = Task::where(['place'=>$academy_id, 'category_id'=>$category_id])
+			->orderBy('created_at', 'desc')
+			->paginate(10);
+
+		return View::make('task.list')
+			->with('tasks', $tasks)
+			->with('mySchool', $myAcademy)
+			->with('schools', $academies)
+			->with('category_id', $category_id)
+			->with('categories', $categories);
+	}
+
+	public function search($academy_id, $keyword) {
+		$categories = Category::all();
+		$tasks = Task::where('title', 'like', '%' . $keyword . '%')->paginate(10);
+		// dd($tasks);
+		return View::make('task.list')
+			->with('tasks', $tasks)
+			->with('category_id', 0)
+			->with('categories', $categories);
 	}
 
 	public function detail($task_id) {
@@ -242,12 +280,15 @@ class TaskController extends BaseController {
 		$task->type       = Session::get('type');
 		$task->title      = Session::get('title');
 		$task->detail     = Session::get('detail');
+		$task->category_id   = Session::get('category_id');
 		$task->amount     = Session::get('amount');
 		$task->expiration = Session::get('expiration');
 		$task->state      = 1;
 		$task->place = $academy_id;
 		$task->save();
 		$credit = Auth::user()->credit;
+
+		// dd($task->category_id);
 
 		User::where('id', Auth::user()->id)
 			->update(['credit' => ($credit - 50)]);
@@ -405,5 +446,6 @@ class TaskController extends BaseController {
 		}
 		return Redirect::back();
 	}
+
 
 }

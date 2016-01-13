@@ -223,6 +223,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
+	public function hasFriend($user_id) {
+		$friend = FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->get();
+		if (count($friend)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	public function friend() {
+		return $this->belongsToMany('User', 'FriendPivot', 'user_id', 'friend_id');
+	}
 
 }

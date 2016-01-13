@@ -21,8 +21,12 @@
 	</style>
 @stop
 
+@section('script')
+	{{HTML::script(URL::asset('assets/script/angular.js'))}}
+@stop
+
 @section('content')
-	<div class="container">
+	<div class="container" ng-app="cw-app">
 
 
 		<div class="col-md-8">
@@ -132,6 +136,7 @@
 				</div>
 				<h4>
 					{{$user->username}}
+
 					@if ($user->active == 0)
 						<span class="label label-danger">[ Inactive ]</span>
 					@endif
@@ -144,6 +149,33 @@
 						@endif
 					</span>
 				</h4>
+				<p ng-controller="followController">
+				{{-- 
+					@{{follower}}
+					@if (Auth::user()->hasFollower($user->id))
+						<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()">
+							<i class="fa fa-minus"></i>
+							Unfollow
+						</a>
+					@else
+						<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()">
+							<i class="fa fa-plus"></i>
+							Follow
+						</a>
+					@endif
+ --}}
+
+					<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()" ng-show="follower">
+						<i class="fa fa-minus"></i>
+						Unfollow
+					</a>
+					<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()" ng-show="!follower">
+						<i class="fa fa-plus"></i>
+						Follow
+					</a>
+
+
+				</p>
 				<p>{{$user->email}}</p>
 
 
@@ -187,7 +219,35 @@
 			</div>
 		</div>
 
+		<script>
+			/**
+			* cw-app Module
+			*
+			* Description
+			*/
+			angular.module('cw-app', []).
 
+			controller('followController', ['$scope', '$http', function($scope, $http){
+				$http.get("/api/hasFollower/{{$user->id}}")
+				.success(function(response) {
+					if (response.length == 1) {
+						$scope.follower = true;
+					} else {
+						$scope.follower = false;
+					}
+				})
+				$scope.follow = function() {
+					// alert('follow');
+					$http.get("/api/follow/{{$user->id}}");
+					$scope.follower = true;
+				};
+				$scope.unfollow = function() {
+					// alert('unfollow');
+					$http.get("/api/unfollow/{{$user->id}}")
+					$scope.follower = false;
+				};
+			}]);
+		</script>
 
 	</div>
 @stop

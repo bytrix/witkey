@@ -147,4 +147,24 @@ class ApiController extends BaseController {
 		}
 		return Redirect::back();
 	}
+
+
+
+	public function follow($user_id) {
+		if (count(FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->get()) == 0) {
+			$friend = new FriendPivot;
+			$friend->user_id = Auth::user()->id;
+			$friend->friend_id = $user_id;
+			$friend->save();
+		}
+	}
+
+	public function hasFollower($user_id) {
+		$friend = FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->get();
+		return $friend;
+	}
+
+	public function unfollow($user_id) {
+		FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->delete();
+	}
 }

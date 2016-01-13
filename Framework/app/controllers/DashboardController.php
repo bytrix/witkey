@@ -53,6 +53,14 @@ class DashboardController extends BaseController {
 			->with('favoriteTasks', $favoriteTasks);
 	}
 
+	public function myFriends() {
+
+		$friends = Auth::user()->friend;
+		
+		return View::make('dashboard.myFriends')
+			->with('friends', $friends);
+	}
+
 	public function authentication() {
 
 
