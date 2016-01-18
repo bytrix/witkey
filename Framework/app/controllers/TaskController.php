@@ -149,7 +149,8 @@ class TaskController extends BaseController {
 		return View::make('task.list')
 			->with('tasks', $tasks)
 			->with('category_id', 0)
-			->with('categories', $categories);
+			->with('categories', $categories)
+			->with('keyword', $keyword);
 	}
 
 	public function detail($task_id) {

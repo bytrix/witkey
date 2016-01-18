@@ -68,6 +68,15 @@ class UserController extends BaseController {
 		// ];
 
 
+	// public function unreadMessages() {
+	// 	$unreadMessages = Message::where('read', false)->get();
+	// 	return $unreadMessages;
+	// }
+
+	// public function messages() {
+	// 	$messages = Message::all();
+	// 	return $messages;
+	// }
 
 	
 	// GET
@@ -187,6 +196,54 @@ class UserController extends BaseController {
 
 		return View::make('user.register');
 
+	}
+
+	public function message() {
+		return View::make('message.index');
+	}
+
+	public function sendMessage() {
+		$friends = Auth::user()->friend()->get();
+		return View::make('message.send')
+			->with('friends', $friends);
+	}
+
+	// handle with POST method
+	public function postMessage() {
+		// dd(var_dump(Input::all()));
+		$userInput = [
+			'to_user_id' => Input::get('friend_id'),
+			'message' => Input::get('message')
+		];
+		// dd(var_dump($userInput));
+		$rules = [
+			'to_user_id' => 'required',
+			'message' => 'required'
+		];
+		$validator = Validator::make($userInput, $rules);
+		// dd(var_dump($validator->passes()));
+		if ($validator->passes()) {
+			$message = new Message;
+			$message->from_user_id = Auth::user()->id;
+			$message->to_user_id = $userInput['to_user_id'];
+			$message->message = $userInput['message'];
+			$message->read = false;
+			$message->save();
+			return Redirect::to('/message')
+				->with('success', 'Message is sent successfully!');
+		}
+	}
+
+	public function detailMessage($message_id) {
+		$message = Message::where('id', $message_id)->first();
+		$message->read = true;
+		$message->save();
+		return View::make('message.detail')
+			->with('message', $message);
+	}
+
+	public function allMessages() {
+		return View::make('message.all');
 	}
 
 

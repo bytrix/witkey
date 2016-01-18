@@ -48,6 +48,12 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('/pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
 	Route::get('/pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
+
+	Route::get('message', 'UserController@message');
+	Route::get('message/{message_id}', 'UserController@detailMessage')->where('message_id', '[0-9]+');
+	Route::get('message/all', 'UserController@allMessages');
+	Route::get('message/send', 'UserController@sendMessage');
+	Route::post('message/send', 'UserController@postMessage');
 	
 
 	// POST

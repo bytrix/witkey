@@ -61,6 +61,7 @@ Development Progress
 - [ ] 站内信
 - [ ] 邮箱验证
 - [ ] 短信验证
+- [ ] 用户举报
 
 Architecture
 ------------

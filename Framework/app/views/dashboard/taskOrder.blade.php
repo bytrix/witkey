@@ -55,7 +55,7 @@
 								Rate
 							</a>
 						@endif
-						@if ($order->winningCommit->comment['id'] != NULL)
+						@if ($order->winningCommit != NULL && $order->winningCommit->comment['id'] != NULL)
 							<span class="text-muted">Evaluated</span>
 						@endif
 					</td>

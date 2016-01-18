@@ -15,6 +15,10 @@ class BaseController extends Controller {
 		}
 		View::share('mySchool', $this->mySchool());
 		View::share('schools', $this->allSchools());
+		if (Auth::check()) {
+			View::share('unreadMessages', $this->unreadMessages());
+			View::share('messages', $this->messages());
+		}
 	}
 
 	public function mySchool() {
@@ -28,4 +32,13 @@ class BaseController extends Controller {
 		return $academies;
 	}
 
+	public function unreadMessages() {
+		$unreadMessages = Message::where(['to_user_id'=>Auth::user()->id, 'read'=>false])->orderBy('created_at', 'desc')->get();
+		return $unreadMessages;
+	}
+
+	public function messages() {
+		$messages = Message::where('to_user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+		return $messages;
+	}
 }

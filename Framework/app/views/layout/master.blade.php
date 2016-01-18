@@ -12,10 +12,11 @@
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style(URL::asset('assets/style/awesome-bootstrap-checkbox.css'))}}
   {{HTML::style('assets/style/sticky-footer.css')}}
-  {{HTML::style(URL::asset('assets/style/select2.css'))}}
-  {{-- <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css"> --}}
+  {{-- {{HTML::style(URL::asset('assets/style/select2.css'))}} --}}
+  <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css">
   {{-- <link href="http://fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css" rel="stylesheet" /> --}}
-  {{HTML::style(URL::asset('assets/style/select2-bootstrap.css'))}}
+  <link rel="stylesheet" href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css">
+  {{-- {{HTML::style(URL::asset('assets/style/select2-bootstrap.css'))}} --}}
   {{HTML::style(URL::asset('assets/style/bootstrap-datetimepicker.min.css'))}}
   {{-- <link rel="stylesheet" href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css"> --}}
   {{HTML::style(URL::asset('assets/style/datepicker3.css'))}}
@@ -29,7 +30,9 @@
   {{HTML::script('assets/script/bootstrap.min.js')}}
   {{HTML::script('assets/script/bootstrap.file-input.js')}}
   {{-- // <script src="http://select2.github.io/select2/select2-3.5.2/select2.js"></script> --}}
-  {{HTML::script(URL::asset('assets/script/select2.js'))}}
+  {{-- // <script src="http://select2.github.io/dist/js/select2.full.js"></script> --}}
+  <script src="https://select2.github.io/dist/js/select2.min.js"></script>
+  {{-- {{HTML::script(URL::asset('assets/script/select2.js'))}} --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.js'))}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.zh-CN.js'))}}
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> --}}
@@ -39,8 +42,8 @@
 
   <script>
   $(function () {
-   $('[data-toggle="tooltip"]').tooltip()
-
+   $('[data-toggle="tooltip"]').tooltip();
+   $('[data-toggle="dropdown"]').dropdown();
   })
   </script>
 
@@ -79,8 +82,56 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li>
-              <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+              {{-- <div class="dropdown"> --}}
+                <li class="dropdown">
+                  
+                  <a href="javascript:;" data-toggle="dropdown" style="padding: 12px;">
+                    @if (count($unreadMessages))
+                      <span class="unread-circle"></span>
+                    @endif
+                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0px;'])}}
+{{--                     <i class="fa fa-user"></i>
+                    {{Auth::user()->username}} --}}
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="/dashboard">{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    @if (count($unreadMessages))
+                      <li>
+                        <a href="/message">
+                          <span class="badge badge-danger pull-right">{{count($unreadMessages)}}</span>
+                          Message
+                        </a>
+                      </li>
+                    @else
+                      <li><a href="/message">Message</a></li>
+                    @endif
+                    <li><a href="/logout">Logout</a></li>
+                  </ul>
+                </li>
+{{-- 
+                <li class="dropdown">
+
+                  <a href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-gear"></i>
+                    Settings
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/dashboard/myProfile">Profile</a></li>
+                    <li><a href="/dashboard/taskOrder">Task Order</a></li>
+                    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
+                    <li><a href="/dashboard/myFriends">My Friends</a></li>
+                    <li><a href="/dashboard/authentication">Realname Authentication</a></li>
+                    <li><a href="/dashboard/security">Security</a></li>
+                  </ul>
+
+                </li>
+                 --}}
+              {{-- </div> --}}
+              {{-- <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li> --}}
+              {{-- <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li> --}}
             @else
               <li><a href="/login">Login</a></li>
               <li><a href="/register">Register</a></li>

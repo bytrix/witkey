@@ -156,6 +156,11 @@ class ApiController extends BaseController {
 			$friend->user_id = Auth::user()->id;
 			$friend->friend_id = $user_id;
 			$friend->save();
+			
+			$friend = new FriendPivot;
+			$friend->user_id = $user_id;
+			$friend->friend_id = Auth::user()->id;
+			$friend->save();
 		}
 	}
 
@@ -166,5 +171,6 @@ class ApiController extends BaseController {
 
 	public function unfollow($user_id) {
 		FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->delete();
+		FriendPivot::where(['user_id'=>$user_id, 'friend_id'=>Auth::user()->id])->delete();
 	}
 }

@@ -326,3 +326,22 @@ body {
 .content{
   resize: none;
 }
+
+.unread-circle{
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  background-color: #d9534f;
+  border-radius: 4px;
+  position: absolute;
+  /*border: 1px solid #ccc;*/
+  top: 9px;
+  right: 9px;
+}
+.cw-xs-img-rounded{
+  border-radius: 3px;
+}
+
+.badge-danger{
+  background-color: #d9534f;
+}

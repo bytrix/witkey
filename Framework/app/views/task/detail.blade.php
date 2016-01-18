@@ -16,7 +16,7 @@
 		color: #999;
 		display: block;
 		text-align: center;
-	}
+	} 
 	.item-inline{
 		display: inline-block;
 	}
@@ -83,6 +83,9 @@
 	.price>h4{
 		font-weight: bold;
 		color: orange;
+	}
+	.breadcrumb{
+		background-color: rgba(0, 0, 0, 0.0);
 	}
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
@@ -195,6 +198,15 @@
 				});
 				</script>
 			</div>
+
+
+			<ol class="breadcrumb">
+				<li><a href="/">Task List</a></li>
+				<li>
+					<a href="/school/{{$task->place}}/category/{{$task->category->id}}">{{$task->category->name}}</a>
+				</li>
+			</ol>
+			
 
 			<div class="col-sm-6">
 				<h4><span>Task ID:</span> #{{$task->id}}</h4>

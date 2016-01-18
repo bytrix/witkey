@@ -29,10 +29,10 @@
 }
 
 .list-group-item{
-	transition: 0.1s;
+	transition: 0.15s;
 }
 .list-group-item:hover{
-	background-color: #fdfdfd;
+	background-color: #fcfcfc;
 }
 .task-state{
 	font-size: 12px;
@@ -202,6 +202,7 @@ h1{
 		</div>
 	</div>
 
+
 	<div class="container">
 		
 		@if (count($tasks))
@@ -282,7 +283,13 @@ h1{
 			{{-- Paginator --}}
 			{{$tasks->links()}}
 		@else
-			<div class="alert alert-danger">No task published ever!</div>
+			@if (isset($keyword))
+				<p class="text-muted">
+					Search for <span class="text-danger">{{$keyword}}</span>, {{count($tasks)}} task(s) matched.
+				</p>
+			@else
+				<div class="alert alert-danger">No task published ever!</div>
+			@endif
 		@endif
 
 	</div>

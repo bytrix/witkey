@@ -1,5 +1,24 @@
 @extends('dashboard.master')
 
+@section('style')
+@parent
+<style>
+  .avatar-90{
+    width: 90px;
+    height: 90px;
+  }
+  .friend-group-item{
+    border: 2px solid rgba(0, 0, 0, 0.0);
+    padding: 10px;
+    transition: 0.2s;
+  }
+  .friend-group-item:hover{
+    /*border: 2px solid rgba(0, 0, 0, 0.05);*/
+    background-color: rgba(200, 200, 200, 0.1);
+  }
+</style>
+@stop
+
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
@@ -24,12 +43,30 @@
     My Friends
   @stop
 
-  {{-- {{var_dump($friends)}} --}}
-
-  <ul>
     @foreach ($friends as $friend)
-      <li>{{$friend->username}}</li>
+      {{-- <li>{{$friend->username}}</li> --}}
+      <div class="col-md-6 friend-group-item">
+          <div style="float: left" >
+          <p>
+            <a href="/user/{{$friend->id}}" target="blank">
+              {{HTML::image("avatar/$friend->avatar", '', ['class'=>'avatar-90', 'style'=>'float: left; margin-right: 20px; margin-bottom: 12px;'])}}
+            </a>
+          </p>
+          <p>
+            <a href="javascript:;" class="btn btn-danger btn-xs">Send Message</a>
+          </p>
+        </div>
+
+        <p>
+          <a href="/user/{{$friend->id}}" target="blank" data-toggle="tooltip" data-placement="right" title="View TA's profile">{{$friend->username}}</a>
+        </p>
+        <p>
+          {{Academy::get($friend->school)['name']}}
+        </p>
+        <p>
+          {{Major::get($friend->major)['name']}}
+        </p>
+      </div>
     @endforeach
-  </ul>
 
 @stop

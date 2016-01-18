@@ -100,8 +100,56 @@
           
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-              <li><a href="/dashboard"><i class="fa fa-envelope-o"></i> <strong>{{Auth::user()->email}}</strong></a></li>
-              <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+              {{-- <div class="dropdown"> --}}
+                <li class="dropdown">
+                  
+                  <a href="javascript:;" data-toggle="dropdown" style="padding: 12px;">
+                    @if (count($unreadMessages))
+                      <span class="unread-circle"></span>
+                    @endif
+                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0px;'])}}
+{{--                     <i class="fa fa-user"></i>
+                    {{Auth::user()->username}} --}}
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="/dashboard">{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    @if (count($unreadMessages))
+                      <li>
+                        <a href="/message">
+                          <span class="badge badge-danger pull-right">{{count($unreadMessages)}}</span>
+                          Message
+                        </a>
+                      </li>
+                    @else
+                      <li><a href="/message">Message</a></li>
+                    @endif
+                    <li><a href="/logout">Logout</a></li>
+                  </ul>
+                </li>
+{{-- 
+                <li class="dropdown">
+
+                  <a href="javascript:;" data-toggle="dropdown">
+                    <i class="fa fa-gear"></i>
+                    Settings
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/dashboard/myProfile">Profile</a></li>
+                    <li><a href="/dashboard/taskOrder">Task Order</a></li>
+                    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
+                    <li><a href="/dashboard/myFriends">My Friends</a></li>
+                    <li><a href="/dashboard/authentication">Realname Authentication</a></li>
+                    <li><a href="/dashboard/security">Security</a></li>
+                  </ul>
+
+                </li>
+                 --}}
+              {{-- </div> --}}
+              {{-- <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li> --}}
+              {{-- <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li> --}}
             @else
               <li><a href="/login">Login</a></li>
               <li><a href="/register">Register</a></li>
