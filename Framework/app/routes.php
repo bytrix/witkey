@@ -57,6 +57,7 @@ Route::group(['before'=>'auth'], function() {
 	
 
 	// POST
+	Route::post('dashboard/set-username', 'DashboardController@setUsername');
 	Route::post('dashboard/security'      , 'DashboardController@postSecurity');
 	Route::post('dashboard/myProfile'     , 'DashboardController@postMyProfile');
 	Route::post('dashboard/rate/{task_id}', 'DashboardController@postRate')->where('task_id', '[0-9]+');

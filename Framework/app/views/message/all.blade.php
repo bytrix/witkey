@@ -17,7 +17,7 @@
 		</li>
 	</ul>
 
-	<a href="/message/send" class="btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
 @stop
 
 @section('message-board')
@@ -27,16 +27,27 @@
 		</div>
 		@if (count($messages) == 0)
 			<div class="panel-body">
-				You have no unread messages
+				You have no messages
 			</div>
 		@endif
 		<div class="list-group">
 			@foreach ($messages as $message)
 				@if ($message->read)
-					<a href="/message/{{$message->id}}" class="list-group-item">{{$message->message}}</a>
+					<a href="/message/{{$message->id}}" class="list-group-item">
+						{{HTML::image('/avatar/' . $message->from_user()->avatar, '', ['class'=>'avatar-xs', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$message->from_user()->username])}}
+						{{$message->message}}
+						<span class="pull-right" id="created_at_{{$message->id}}" data-toggle="tooltip" data-placement="right" title="{{$message->created_at}}"></span>
+					</a>
 				@else
-					<a href="/message/{{$message->id}}" class="list-group-item unread">{{$message->message}}</a>
+					<a href="/message/{{$message->id}}" class="list-group-item unread">
+						{{HTML::image('/avatar/' . $message->from_user()->avatar, '', ['class'=>'avatar-xs', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$message->from_user()->username])}}
+						{{$message->message}}
+						<span class="pull-right" id="created_at_{{$message->id}}" data-toggle="tooltip" data-placement="right" title="{{$message->created_at}}"></span>
+					</a>
 				@endif
+				<script>
+					$('#created_at_{{$message->id}}').html(moment('{{$message->created_at}}', 'YYYY-MM-DD HH:mm:ss').fromNow());
+				</script>
 			@endforeach
 		</div>
 	</div>

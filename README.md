@@ -3,7 +3,7 @@ Campus Witkey
 
 This is my little web project made with Laravel 4.2 which aims to encourage students who has special talent to help someone in need.
 
-Inspired by [PHPHub](https://phphub.org/), [ZhiHu](http://www.zhihu.com/), [ele.me](https://www.ele.me/)
+Inspired by [PHPHub](https://phphub.org/), [GitHub](https://github.com/), [ZhiHu](http://www.zhihu.com/), [ele.me](https://www.ele.me/)
 
 About myself
 ------------
@@ -58,7 +58,7 @@ Development Progress
 - [ ] 日程安排
 - [x] 添加好友
 - [ ] 雇佣某人
-- [ ] 站内信
+- [x] 站内信
 - [ ] 邮箱验证
 - [ ] 短信验证
 - [ ] 用户举报

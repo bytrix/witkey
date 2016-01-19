@@ -2,6 +2,26 @@
 
 class DashboardController extends BaseController {
 
+	public function setUsername() {
+		$userInput = [
+			'username' => Input::get('username')
+		];
+		$rule = [
+			'username' => 'required'
+		];
+		$validator = Validator::make($userInput, $rule);
+		if ($validator->passes()) {
+			$user = User::where('id', Auth::user()->id)->first();
+			$user->username = $userInput['username'];
+			$user->random_name = false;
+			$user->save();
+			return Redirect::to('/dashboard');
+		} else {
+			return Redirect::to('/dashboard')
+				->withErrors($validator);
+		}
+	}
+
 	public function overview() {
 
 		$h = date('H');
@@ -63,15 +83,12 @@ class DashboardController extends BaseController {
 
 	public function authentication() {
 
-
 		$schoolList = array();
 		$majorList = array();
 
 		// foreach (Academy::all() as $school) {
 		// 	array_push($schoolList, $school->name);
 		// }
-
-
 
 		return View::make('dashboard.authentication')
 			->with('schoolList'       , $schoolList)

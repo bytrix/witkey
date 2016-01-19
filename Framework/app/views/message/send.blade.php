@@ -21,7 +21,7 @@
 		</li>
 	</ul>
 
-	<a href="/message/send" class="btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
 @stop
 
 @section('message-board')
@@ -40,9 +40,15 @@
 					<div class="col-md-12 form-group">
 						<select name="friend_id" id="" class="form-control">
 							<option></option>
-							@foreach ($friends as $friend)
-								<option value="{{$friend->id}}" avatar="{{$friend->avatar}}">{{$friend->username}} ({{$friend->email}})</option>
-							@endforeach
+							@if (count($friends))
+								@foreach ($friends as $friend)
+									@if ($friend->id == $_GET['friend_id'])
+										<option value="{{$friend->id}}" avatar="{{$friend->avatar}}" selected>{{$friend->username}} ({{$friend->email}})</option>
+									@else
+										<option value="{{$friend->id}}" avatar="{{$friend->avatar}}">{{$friend->username}} ({{$friend->email}})</option>
+									@endif
+								@endforeach
+							@endif
 						</select>
 					</div>
 				</div>

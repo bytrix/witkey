@@ -114,9 +114,10 @@ body {
 }
 
 .avatar-xs{
-  width: 25px;
+  width: 22px;
   margin-right: 12px;
   margin-bottom: 4px;
+  vertical-align: middle;
 }
 .avatar-sm{
   width: 40px;

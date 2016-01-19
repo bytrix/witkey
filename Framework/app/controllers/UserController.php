@@ -173,6 +173,7 @@ class UserController extends BaseController {
 			$user           = new User;
 			$user->username = rand();
 			$user->password = Hash::make($userInput['password']);
+			$user->random_name  = true;
 			$user->email    = $userInput['email'];
 			$user->ip       = Request::ip();
 			$user->city     = Util::getCity();

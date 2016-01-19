@@ -2,7 +2,44 @@
 
 @section('control-panel')
 
+@if (Auth::user()->random_name && !Session::has('visited'))
+	{{Session::set('visited', true)}}
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
 
+			{{Form::open(['url'=>'/dashboard/set-username'])}}
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Think out a username</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						{{Form::text('username', '', ['class'=>'form-control', 'placeholder'=>'Username'])}}
+					</div>
+					@if (count($errors))
+						<p class="text-danger">{{$errors->first('username')}}</p>
+					@endif
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Not now</button>
+				{{-- <button type="button" class="btn btn-primary">Save</button> --}}
+				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+				</div>
+			{{Form::close()}}
+
+	    </div>
+	  </div>
+	</div>
+	<script>
+		$(function() {
+			$('#myModal').modal({
+				backdrop: "static"
+			});
+		});
+	</script>
+@endif
 
 
 <div class="col-sm-3 col-md-2 sidebar">

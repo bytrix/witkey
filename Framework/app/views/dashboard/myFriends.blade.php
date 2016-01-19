@@ -53,12 +53,14 @@
             </a>
           </p>
           <p>
-            <a href="javascript:;" class="btn btn-danger btn-xs">Send Message</a>
+            <a href="/message/send?friend_id={{$friend->id}}" class="btn btn-danger btn-xs">Send Message</a>
           </p>
         </div>
 
         <p>
-          <a href="/user/{{$friend->id}}" target="blank" data-toggle="tooltip" data-placement="right" title="View TA's profile">{{$friend->username}}</a>
+          <a href="/user/{{$friend->id}}" target="blank" data-toggle="tooltip" data-placement="right" title="View TA's profile">
+            <h4>{{$friend->username}}</h4>
+          </a>
         </p>
         <p>
           {{Academy::get($friend->school)['name']}}

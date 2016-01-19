@@ -52,6 +52,14 @@
 @show
 
 @section('style')
+  <style>
+    .header-username{
+      height: 22px;
+      line-height: 22px;
+      display: inline-block;
+      
+    }
+  </style>
 @show
 
 </head>
@@ -89,7 +97,9 @@
                     @if (count($unreadMessages))
                       <span class="unread-circle"></span>
                     @endif
-                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0px;'])}}
+                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0 8px 0 0'])}}
+                    <span class="header-username">{{Auth::user()->username}}</span>
+                    <span class="caret"></span>
 {{--                     <i class="fa fa-user"></i>
                     {{Auth::user()->username}} --}}
                   </a>

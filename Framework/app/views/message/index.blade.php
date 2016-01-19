@@ -17,7 +17,7 @@
 		</li>
 	</ul>
 
-	<a href="/message/send" class="btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
 @stop
 
 @section('message-board')
@@ -38,7 +38,14 @@
 		@endif
 		<div class="list-group">
 			@foreach ($unreadMessages as $message)
-				<a href="/message/{{$message->id}}" class="list-group-item unread">{{$message->message}}</a>
+				<a href="/message/{{$message->id}}" class="list-group-item unread">
+					{{HTML::image('/avatar/' . $message->from_user()->avatar, '', ['class'=>'avatar-xs', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$message->from_user()->username])}}
+					{{$message->message}}
+					<span class="pull-right" id="created_at_{{$message->id}}" data-toggle="tooltip" data-placement="right" title="{{$message->created_at}}"></span>
+				</a>
+				<script>
+					$('#created_at_{{$message->id}}').html(moment('{{$message->created_at}}', 'YYYY-MM-DD HH:mm:ss').fromNow());
+				</script>
 			@endforeach
 		</div>
 	</div>

@@ -23,7 +23,26 @@
     .unread{
       font-weight: bold;
     }
+    .send{
+      margin-top: 40px;
+    }
+    .from_user{
+      width: 80px;
+      display: inline-block;
+    }
+    .tooltip{
+      white-space: nowrap;
+    }
   </style>
+@stop
+
+@section('script')
+{{-- @parent --}}
+  {{HTML::script(URL::asset('assets/script/moment.js'))}}
+  {{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
+  <script>
+  moment.lang('zh-cn');
+  </script>
 @stop
 
 @section('content')

@@ -207,7 +207,9 @@
 
 			$(function() {
 				$('input[type=file]').bootstrapFileInput();
-				$('select').select2();
+				$('select').select2({
+					theme: "bootstrap"
+				});
 				$('#enrollment_date').datepicker({
 					language: 'zh-CN',
 					format: 'yyyy-mm-dd',
