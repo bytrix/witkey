@@ -2,6 +2,21 @@
 
 @section('style')
 @parent
+	<style>
+		.hired_user{
+			background-color: red;
+		}
+		.avatar-60{
+			width: 60px;
+		}
+		#hired_user:hover{
+			background-color: #fafafa;
+			border-color: #c0c0c0;
+		}
+		#hired_user .close{
+			transition: 0.3s;
+		}
+	</style>
 @stop
 
 @section('script')
@@ -76,6 +91,7 @@
 				$('#budgetCheckbox').attr('checked', 'checked');
 			}
 		});
+
 	});
 </script>
 @stop
@@ -122,61 +138,130 @@
 	@stop
 	<div class="container">
 
-		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-custom'])}}
-
-			<div class="radio radio-inline">
-				{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}
-				<label for="reward">悬赏</label>
-			</div>
-			<div class="radio radio-inline">
-				{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
-				<label for="bid">招标</label>
-			</div>
+		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-horizontal'])}}
 
 			<div class="form-group">
-				{{Form::label('amount', '', ['class'=>'control-label', 'id'=>'moneyType'])}}
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-yen fa-fw"></i>
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					<div class="radio radio-inline">
+						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}
+						<label for="reward">悬赏</label>
 					</div>
-					{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control', 'id'=>'amount'])}}
-				</div>
-				<div class="checkbox checkbox-primary" id="budgetCheckboxDiv">
-					{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
-					<label for="budgetCheckbox">No budget</label>
-				</div>
-			</div>
-
-			<div class="form-group">
-				{{Form::label('expiration', 'Expiration Date:', ['class'=>'control-label'])}}
-
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-calendar fa-fw"></i>
+					<div class="radio radio-inline">
+						{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
+						<label for="bid">招标</label>
 					</div>
-					{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
-					{{Form::text('expiration', '', ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
-					<script>
-					$('#expiration').datetimepicker({
-						language: 'zh-CN',
-						startDate: '2010-01-01'
-					});
-					</script>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				{{Form::label('category', '', ['class'=>'control-label col-md-2'])}}
+				<div class="col-md-4">
+					<select name="category_id" id="" class="form-control">
+						<option></option>
+						@foreach ($categories as $category)
+							@if ($category->id == Session::get('category_id'))
+								<option value="{{$category->id}}" selected="selected">{{$category->name}}</option>
+							@else
+								<option value="{{$category->id}}">{{$category->name}}</option>
+							@endif
+						@endforeach
+					</select>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<a href="/task/create" class="btn btn-default">
-					<i class="fa fa-angle-double-left"></i>
-					Previous
-				</a>
-				{{-- <a href="/task/new/bill" class="btn btn-primary">Next</a> --}}
-				{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
-				<button type="submit" class="btn btn-primary">
-					Next
-					<i class="fa fa-angle-double-right"></i>
-				</button>
-				
+				{{Form::label('amount', '', ['class'=>'control-label col-md-2', 'id'=>'moneyType'])}}
+				<div class="col-md-4">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-yen fa-fw"></i>
+						</div>
+						{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control', 'id'=>'amount'])}}
+					</div>
+					<div class="checkbox checkbox-primary" id="budgetCheckboxDiv">
+						{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
+						<label for="budgetCheckbox">No budget</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{Form::label('expiration', 'Expiration Date:', ['class'=>'control-label col-md-2'])}}
+				<div class="col-md-4">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar fa-fw"></i>
+						</div>
+						{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
+						{{Form::text('expiration', Session::get('expiration'), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
+						<script>
+						$('#expiration').datetimepicker({
+							language: 'zh-CN',
+							startDate: '2010-01-01'
+						});
+						</script>
+					</div>
+				</div>
+			</div>
+
+			@if ($hired_user != NULL || Session::has('hire'))
+				{{Form::hidden('hire', $hired_user->id)}}
+				<div class="form-group" id="hired-user-group">
+					{{Form::label('hire', '', ['class'=>'control-label col-md-2'])}}
+					<div class="col-md-4">
+						<a href="javascript:;" id="hired_user" class="btn btn-default center-block" style="text-align: left; white-space: normal;">
+							<span class="close" data-toggle="tooltip" data-placement="top" title="Not hire">&times;</span>
+							<div style="float: left; margin-top: 13px;">
+								{{HTML::image('/avatar/' . $hired_user->avatar, '', ['class'=>'avatar-60 img-rounded'])}}
+							</div>
+							<div style="padding-left: 18px; display: inline-block; width: 270px;">
+								<p>
+									{{$hired_user->username}}
+									@if ($hired_user->biography)
+										<span style="color: #777">, {{$hired_user->biography}}</span>
+									@endif
+								</p>
+								<p>
+									@foreach ($hired_user->tag() as $tag)
+										<span class="label label-primary">{{$tag}}</span>
+									@endforeach
+								</p>
+							</div>
+						</a>
+						<script>
+							$('.close').click(function() {
+								$('#hired-user-group').fadeOut();
+							})
+						</script>
+					</div>
+				</div>
+			@endif
+
+
+
+			<div class="form-group">
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					@if ($hired_user == NULL || !Session::has('hire'))
+						<a href="/task/create" class="btn btn-default">
+							<i class="fa fa-angle-double-left"></i>
+							Previous
+						</a>
+					@else
+						<a href="/task/create?hire={{$hired_user->id}}" class="btn btn-default">
+							<i class="fa fa-angle-double-left"></i>
+							Previous
+						</a>
+					@endif
+					{{-- <a href="/task/new/bill" class="btn btn-primary">Next</a> --}}
+					{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
+					<button type="submit" class="btn btn-primary">
+						Next
+						<i class="fa fa-angle-double-right"></i>
+					</button>
+				</div>
 			</div>
 
 		{{Form::close()}}
@@ -188,6 +273,15 @@
 				@endforeach
 			</div>
 		@endif
+
+		<script>
+			$(function() {
+				$('select').select2({
+					theme: "bootstrap",
+					placeholder: "Choose category"
+				});
+			})
+		</script>
 
 	</div>
 @stop

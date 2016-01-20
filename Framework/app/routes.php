@@ -53,7 +53,8 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('message/{message_id}', 'UserController@detailMessage')->where('message_id', '[0-9]+');
 	Route::get('message/all', 'UserController@allMessages');
 	Route::get('message/send', 'UserController@sendMessage');
-	Route::post('message/send', 'UserController@postMessage');
+	Route::get('message/read-all', 'UserController@readAllMessages');
+	Route::get('message/sent', 'UserController@sentMessage');
 	
 
 	// POST
@@ -67,6 +68,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('task/{task_id}/edit'     , 'TaskController@postEdit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delay'    , 'TaskController@postDelay')->where('task_id', '[0-9]+');
+	Route::post('message/send', 'UserController@postMessage');
 
 	// realname Authentication
 	Route::group(['before'=>'realname'], function() {

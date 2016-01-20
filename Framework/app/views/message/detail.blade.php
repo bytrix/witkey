@@ -1,17 +1,28 @@
 @extends('message.master')
 
+@section('style')
+@parent
+	<style>
+		.message-task-title{
+			margin: 2px 4px;
+			border-bottom: 1px dashed #aaa;
+			padding-bottom: 1px;
+		}
+	</style>
+@stop
+
 @section('nav')
 	{{-- nav --}}
 	<ul class="nav nav-pills nav-stacked">
 		<li>
 			<a href="/message">
-				<span class="count">{{count($unreadMessages)}}</span>
+				<span class="count">{{$unreadMessages->getTotal()}}</span>
 				Unread
 			</a>
 		</li>
 		<li>
 			<a href="/message/all">
-				<span class="count">{{count($messages)}}</span>
+				<span class="count">{{$messages->getTotal()}}</span>
 				All Messages
 			</a>
 		</li>

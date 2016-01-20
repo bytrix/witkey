@@ -57,7 +57,6 @@
       height: 22px;
       line-height: 22px;
       display: inline-block;
-      
     }
   </style>
 @show

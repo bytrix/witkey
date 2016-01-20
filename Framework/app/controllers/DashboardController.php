@@ -108,6 +108,7 @@ class DashboardController extends BaseController {
 			'tel'       => Input::get('tel'),
 			'qq'        => Input::get('qq'),
 			'dorm'      => Input::get('dorm_state') == 'no' ? 'no' : Input::get('dorm'),
+			'biography' => Input::get('biography'),
 			'skill_tag' => Input::get('skill_tag'),
 		];
 

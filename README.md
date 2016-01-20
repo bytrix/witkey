@@ -30,6 +30,10 @@ change directory to ``Framework`` and make database migration:
 
     php artisan migrate
 
+make database seed:
+
+    php artisan db:seed
+
 then run the server:
 
     php artisan serve
@@ -57,7 +61,7 @@ Development Progress
 - [ ] 任务附件上传
 - [ ] 日程安排
 - [x] 添加好友
-- [ ] 雇佣某人
+- [x] 雇佣某人
 - [x] 站内信
 - [ ] 邮箱验证
 - [ ] 短信验证
@@ -102,6 +106,8 @@ References
 - [HTMLPurifier for Laravel 4](https://github.com/mewebstudio/Purifier/tree/master-l4)
 - [select2](https://github.com/select2/select2)
 - [select2-bootstrap-theme](https://github.com/select2/select2-bootstrap-theme)
+- [bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker)
+- [bootstrap-datetimepicker](https://github.com/smalot/bootstrap-datetimepicker)
 - [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
 - [particles.js](https://github.com/VincentGarreau/particles.js)
 

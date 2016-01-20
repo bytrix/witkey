@@ -236,4 +236,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('User', 'FriendPivot', 'user_id', 'friend_id');
 	}
 
+	public function tag() {
+		$tag = explode(',', Auth::user()->skill_tag);
+		return $tag;
+	}
+
 }

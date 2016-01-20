@@ -81,7 +81,7 @@ a:hover{
 .form-custom .checkbox {
   font-weight: normal;
 }
-.form-custom .form-control {
+/*.form-custom .form-control {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
@@ -89,7 +89,7 @@ a:hover{
           box-sizing: border-box;
   padding: 10px;
   font-size: 16px;
-}
+}*/
 .form-custom .form-control:focus {
   z-index: 2;
 }
@@ -336,8 +336,9 @@ body {
   border-radius: 4px;
   position: absolute;
   /*border: 1px solid #ccc;*/
-  top: 9px;
-  right: 9px;
+  top: 8px;
+  /*right: 9px;*/
+  left: 32px;
 }
 .cw-xs-img-rounded{
   border-radius: 3px;

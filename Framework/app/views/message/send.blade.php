@@ -25,6 +25,12 @@
 @stop
 
 @section('message-board')
+	@if (count($errors))
+		<p class="alert alert-danger">
+			{{$errors->first()}}
+		</p>
+	@endif
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Post Message</h3>
@@ -42,7 +48,7 @@
 							<option></option>
 							@if (count($friends))
 								@foreach ($friends as $friend)
-									@if ($friend->id == $_GET['friend_id'])
+									@if ($_GET && $friend->id == $_GET['friend_id'])
 										<option value="{{$friend->id}}" avatar="{{$friend->avatar}}" selected>{{$friend->username}} ({{$friend->email}})</option>
 									@else
 										<option value="{{$friend->id}}" avatar="{{$friend->avatar}}">{{$friend->username}} ({{$friend->email}})</option>

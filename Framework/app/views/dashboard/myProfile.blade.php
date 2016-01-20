@@ -139,11 +139,26 @@
 		</div>
 	</div>
 
+	{{-- Biography --}}
+	<div class="form-group">
+		{{Form::label('biography', '', ['class'=>'control-label col-md-2'])}}
+		<div class="col-md-4">
+			{{Form::text('biography', '', ['class'=>'form-control', 'placeholder'=>'e.g. Gamer/Cartoonist/Singer'])}}
+		</div>
+	</div>
+
 	{{-- Skill Tag --}}
 	<div class="form-group">
 		{{Form::label('skill_tag', 'Skill Tag', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
-			{{Form::text('skill_tag', Auth::user()->skill_tag, ['data-role'=>'tagsinput'])}}
+			{{Form::text('skill_tag', Auth::user()->skill_tag, ['data-role'=>'tagsinput', 'id'=>'skill-tag'])}}
+		</div>
+		<div class="col-md-4">
+			<p class="text-success">
+				Fill with comma,
+				<br>
+				e.g designing,photographing,writing
+			</p>
 		</div>
 	</div>
 

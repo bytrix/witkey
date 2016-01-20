@@ -232,6 +232,9 @@ class UserController extends BaseController {
 			$message->save();
 			return Redirect::to('/message')
 				->with('success', 'Message is sent successfully!');
+		} else {
+			return Redirect::to('/message/send')
+				->withErrors($validator);
 		}
 	}
 
@@ -245,6 +248,15 @@ class UserController extends BaseController {
 
 	public function allMessages() {
 		return View::make('message.all');
+	}
+
+	public function sentMessage() {
+		return View::make('message.sent');
+	}
+
+	public function readAllMessages() {
+		$messages = Message::where('to_user_id', Auth::user()->id)->update(['read'=>true]);
+		return Redirect::to('/message');
 	}
 
 

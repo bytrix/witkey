@@ -18,6 +18,7 @@ class BaseController extends Controller {
 		if (Auth::check()) {
 			View::share('unreadMessages', $this->unreadMessages());
 			View::share('messages', $this->messages());
+			View::share('sentMessages', $this->sentMessages());
 		}
 	}
 
@@ -33,12 +34,17 @@ class BaseController extends Controller {
 	}
 
 	public function unreadMessages() {
-		$unreadMessages = Message::where(['to_user_id'=>Auth::user()->id, 'read'=>false])->orderBy('created_at', 'desc')->get();
+		$unreadMessages = Message::where(['to_user_id'=>Auth::user()->id, 'read'=>false])->orderBy('created_at', 'desc')->paginate(8);
 		return $unreadMessages;
 	}
 
 	public function messages() {
-		$messages = Message::where('to_user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+		$messages = Message::where('to_user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(8);
 		return $messages;
+	}
+
+	public function sentMessages() {
+		$sentMessages = Message::where('from_user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(8);
+		return $sentMessages;
 	}
 }

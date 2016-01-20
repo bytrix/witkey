@@ -135,6 +135,9 @@
 					<img src="{{URL::asset('/avatar/' . $user->avatar )}}" class="thumbnail avatar-lg">
 				</div>
 				<h4>
+					@if ($user->authenticated == 2)
+						<i class="fa fa-credit-card text-primary" data-toggle="tooltip" data-placement="left" title="Authenticated User"></i>
+					@endif
 					{{$user->username}}
 
 					@if ($user->active == 0)
@@ -149,6 +152,37 @@
 						@endif
 					</span>
 				</h4>
+				<p>{{$user->email}}</p>
+
+
+				<p>
+					@if ($user->authenticated == 0)
+						<span class="label label-danger">Not Authenticated</span>
+					@endif
+				</p>
+
+				{{-- <p>Joined on {{explode(' ', $user->created_at)[0]}}</p> --}}
+
+
+				<p data-toggle="tooltip" title="School" data-placement="left">
+					@if ($user->school != NULL)
+						<i class="fa fa-map-marker"></i>
+						{{Academy::get($user->school)->name}}
+					@endif
+				</p>
+
+				<p data-toggle="tooltip" title="Major" data-placement="left">
+					@if ($user->major != NULL)
+						{{Major::get($user->major)->name}}
+					@endif
+				</p>
+
+				<p data-toggle="tooltip" title="Grade" data-placement="left">
+					@if ($user->enrollment_date != NULL)
+						{{$grade}}
+					@endif
+				</p>
+
 				<p ng-controller="followController">
 				{{-- 
 					@{{follower}}
@@ -176,34 +210,12 @@
 
 
 				</p>
-				<p>{{$user->email}}</p>
-
-
 				<p>
-					@if ($user->authenticated == 0)
-						<span class="label label-danger">Not Authenticated</span>
-					@endif
-				</p>
-
-				<p>Joined on {{explode(' ', $user->created_at)[0]}}</p>
-
-
-				<p data-toggle="tooltip" title="School" data-placement="left">
-					@if ($user->school != NULL)
-						<i class="fa fa-map-marker"></i>
-						{{Academy::get($user->school)->name}}
-					@endif
-				</p>
-
-				<p data-toggle="tooltip" title="Major" data-placement="left">
-					@if ($user->major != NULL)
-						{{Major::get($user->major)->name}}
-					@endif
-				</p>
-
-				<p data-toggle="tooltip" title="Grade" data-placement="left">
-					@if ($user->enrollment_date != NULL)
-						{{$grade}}
+					@if ($user->authenticated == 2 && $user->id != 1)
+						<a href="/task/create?hire={{$user->id}}" class="btn btn-success btn-xs">
+							<i class="fa fa-hand-o-right"></i>
+							Hire TA
+						</a>
 					@endif
 				</p>
 

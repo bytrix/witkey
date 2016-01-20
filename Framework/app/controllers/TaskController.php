@@ -17,40 +17,63 @@ class TaskController extends BaseController {
 
 	// 1. CREATE A DEMAND WITH TITLE AND DETAIL
 	public function step_1() {
-		$categories = Category::all();
+		$friends = Auth::user()->friend()->get();
+		if (isset($_GET['hire']) && $_GET['hire'] != Auth::user()->id && $_GET['hire'] != 1) {
+			$hired_user = User::where('id', $_GET['hire'])->first();
+			if ($hired_user->authenticated != 2) {
+				$hired_user = NULL;
+			}
+		} else {
+			$hired_user = NULL;
+			Session::forget('hire');
+		}
 		return View::make('task.publish.step_1')
-			->with('categories', $categories);
+			->with('friends', $friends)
+			->with('hired_user', $hired_user);
 	}
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function step_2() {
 		// dd(Input::all());
+		if (isset($_POST['hire'])) {
+			$hired_user = User::where('id', $_POST['hire'])->first();
+		} else if (Session::has('hire')) {
+			$hired_user = User::where('id', Session::get('hire'))->first();
+		} else {
+			$hired_user = NULL;
+		}
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				'detail' => Input::get('detail'),
-				'category_id' => Input::get('category_id')
+				'hire'   => Input::get('hire')
+				// 'category_id' => Input::get('category_id')
 			];
 		} else {
 			$userInput = [
 				'title'  => e(Session::get('title')),
 				'detail' => Session::get('detail'),
-				'category_id' => Session::get('category_id')
+				'hire'   => Session::get('hire')
+				// 'category_id' => Session::get('category_id')
 			];
 		}
 
 		$rules = [
 			'title'  => 'required',
 			'detail' => 'required',
-			'category_id' => 'required|numeric'
+			// 'category_id' => 'required|numeric'
 		];
 		$validator = Validator::make($userInput, $rules);
 
 		if ($validator->passes()) {
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
-			Session::set('category_id', $userInput['category_id']);
-			return View::make('task.publish.step_2');
+			Session::set('hire', $userInput['hire']);
+			// Session::set('category_id', $userInput['category_id']);
+			$categories = Category::all();
+			return View::make('task.publish.step_2')
+				->with('categories', $categories)
+				->with('hired_user', $hired_user);
 
 		} else {
 			return Redirect::to('/task/create')->withErrors($validator);
@@ -59,6 +82,7 @@ class TaskController extends BaseController {
 
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function step_3() {
+		// dd(var_dump(Input::all()));
 		Validator::extend('positive', function($attribute, $value, $parameters) {
 			if ($value < 0) {
 				return false;
@@ -79,19 +103,22 @@ class TaskController extends BaseController {
 			$userInput = [
 				'type'       => Input::get('type'),
 				'amount'     => Input::get('amount'),
-				'expiration' => Input::get('expiration')
+				'expiration' => Input::get('expiration'),
+				'category_id'=> Input::get('category_id')
 			];
 		} else {
 			$userInput = [
 				'type'       => Session::get('type'),
 				'amount'     => Session::get('amount'),
-				'expiration' => Session::get('expiration')
+				'expiration' => Session::get('expiration'),
+				'category_id'=> Input::get('category_id')
 			];
 		}
 		$rules = [
 			'type'       => 'required',
 			'amount'     => 'required|numeric|positive',
-			'expiration' => 'required|date|future'
+			'expiration' => 'required|date|future',
+			'category_id'=> 'required'
 		];
 		$validator = Validator::make($userInput, $rules);
 		// dd($userInput);
@@ -99,6 +126,7 @@ class TaskController extends BaseController {
 			Session::set('type'      , $userInput['type']);
 			Session::set('amount'    , $userInput['amount']);
 			Session::set('expiration', $userInput['expiration']);
+			Session::set('category_id', $userInput['category_id']);
 			return View::make('task.publish.step_3');
 		} else {
 			return Redirect::back()->withErrors($validator);
@@ -294,10 +322,20 @@ class TaskController extends BaseController {
 		User::where('id', Auth::user()->id)
 			->update(['credit' => ($credit - 50)]);
 
+		if (Session::get('hire') != NULL) {
+			$hired_user = User::where('id', Session::get('hire'))->first();
+			$message = new Message;
+			$message->from_user_id = Auth::user()->id;
+			$message->to_user_id = $hired_user->id;
+			$message->message = "Can you help me do this task " . "<a class='message-task-title' target='blank' href=\"/task/$task->id\">$task->title</a> ?";
+			$message->save();
+		}
+
 		Session::forget('title');
 		Session::forget('detail');
 		Session::forget('amount');
 		Session::forget('expiration');
+		Session::forget('hire');
 
 		// return Redirect::to('task/list');
 		return Redirect::to("/school/$academy_id");

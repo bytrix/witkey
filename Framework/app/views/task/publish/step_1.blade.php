@@ -24,6 +24,26 @@
 	{{HTML::script(URL::asset('assets/script/vendor/jquery.ui.widget.js'))}}
 	{{HTML::script(URL::asset('assets/script/jquery.fileupload.js'))}}
 	{{HTML::script(URL::asset('assets/script/bootstrap-form-buttonset.js'))}}
+
+	@if ($hired_user != NULL)
+		<script>
+		$(function() {
+			$('#postcard').popover({
+				placement: 'top',
+				content: '<img src="/avatar/{{$hired_user->avatar}}" class="avatar-md"><h4>{{$hired_user->username}}</h4><p>{{$hired_user->email}}</p>',
+				html: true,
+			})
+			.on("mouseenter", function() {
+				// console.log('mouse enter');
+				$(this).popover("show");
+			})
+			.on("mouseleave", function() {
+				// console.log('mouse leave');
+				$(this).popover("hide");
+			})
+		});
+		</script>
+	@endif
 @stop
 
 @section('content')
@@ -71,14 +91,22 @@
 
 	<div class="container">
 		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom'])}}
+			@if ($hired_user != NULL)
+				{{Form::hidden('hire', $hired_user->id)}}
+				<p class="alert alert-success">
+					<a href="/task/create/" class="close" data-toggle="tooltip" data-placement="top" title="Not hire">&times;</a>
+					You are hiring <a href="javascript:;" class="alert-link" id="postcard">{{$hired_user->username}}</a>, please complete your task description
+				</p>
+			@endif
 			<div class="form-group">
 				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
 				{{Form::text('title', Session::get('title'), ['placeholder'=>'Title', 'class'=>'form-control'])}}
 			</div>
-			<div class="form-group">
-				<div class="my-container">
+
+			<div class="form-group row">
+
+{{-- 				<div class="my-container">
 					@foreach ($categories as $category)
-						{{-- <input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->name}}"> --}}
 						{{Form::radio('category_id', $category->id, Session::get('category_id')==$category->id, ['id'=>$category->name])}}
 						<label for="{{$category->name}}">{{$category->name}}</label>
 					@endforeach
@@ -86,7 +114,25 @@
 				<script>
 				$('.my-container').bsFormButtonset('attach');
 				</script>
+ --}}
+{{--  				<div class="col-md-6">
+					<select name="category" id="" class="form-control">
+						<option></option>
+						@foreach ($categories as $category)
+							<option value="">{{$category->name}}</option>
+						@endforeach
+					</select>
+ 				</div>
+ 				<div class="col-md-6">
+					<select name="hire" id="" class="form-control">
+						<option></option>
+						@foreach ($friends as $friend)
+							<option value="">{{$friend->username}}</option>
+						@endforeach
+					</select>
+ 				</div> --}}
 			</div>
+
 			<div class="form-group">
 				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
 				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
@@ -121,6 +167,9 @@
 
 		<script>
 		$(function() {
+			$('select').select2({
+				theme: "bootstrap"
+			});
 			$('.textarea').wysihtml5({
 				toolbar: {
 					fa: true,
