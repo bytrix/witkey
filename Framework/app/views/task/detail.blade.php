@@ -155,9 +155,25 @@
 
 			<div class="page-header">
 					@if ($task->type == 1)
-						<span class="cw-heading-tag cw-reward-heading">REWARD</span>
+						<span class="cw-heading-tag cw-reward-heading">
+							REWARD
+							|
+							@if ($task->amount == NULL)
+								unpaid
+							@else
+								paid
+							@endif
+						</span>
 					@elseif($task->type == 2)
-						<span class="cw-heading-tag cw-bid-heading">BID</span>
+						<span class="cw-heading-tag cw-bid-heading">
+							BID
+							|
+							@if ($task->amount == NULL)
+								unpaid
+							@else
+								paid
+							@endif
+						</span>
 					@endif
 
 					<div class="pull-right" style="font-size: 25px; margin-top: -10px;">
@@ -218,7 +234,7 @@
 				@elseif ($task->type == 2)
 					<h4>
 						<span>Budget:</span>
-						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
+						<span class="amount cw-text-red price">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
 					</h4>
 				@endif
 			</div>
@@ -328,9 +344,9 @@
 						<p>
 							Attachment: 
 							@if ($attachment->file_ext == "")
-								<a href="/file/{{$attachment->file_hash}}">{{$attachment->file_name}}</a>
+								<a href="/file/{{Auth::user()->id}}/{{$attachment->file_hash}}">{{$attachment->file_name}}</a>
 							@else
-								<a href="/file/{{$attachment->file_hash}}.{{$attachment->file_ext}}">{{$attachment->file_name}}</a>
+								<a href="/file/{{Auth::user()->id}}/{{$attachment->file_hash}}.{{$attachment->file_ext}}">{{$attachment->file_name}}</a>
 							@endif
 						</p>
 					@endif

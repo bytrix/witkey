@@ -183,33 +183,19 @@
 					@endif
 				</p>
 
-				<p ng-controller="followController">
-				{{-- 
-					@{{follower}}
-					@if (Auth::user()->hasFollower($user->id))
-						<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()">
+				@if ($user->id != Auth::user()->id)
+					<p ng-controller="followController">
+						<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()" ng-show="follower">
 							<i class="fa fa-minus"></i>
 							Unfollow
 						</a>
-					@else
-						<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()">
+						<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()" ng-show="!follower">
 							<i class="fa fa-plus"></i>
 							Follow
 						</a>
-					@endif
- --}}
+					</p>
+				@endif
 
-					<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()" ng-show="follower">
-						<i class="fa fa-minus"></i>
-						Unfollow
-					</a>
-					<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()" ng-show="!follower">
-						<i class="fa fa-plus"></i>
-						Follow
-					</a>
-
-
-				</p>
 				<p>
 					@if ($user->authenticated == 2 && $user->id != 1)
 						<a href="/task/create?hire={{$user->id}}" class="btn btn-success btn-xs">

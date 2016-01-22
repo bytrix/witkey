@@ -1,12 +1,36 @@
 @extends('dashboard.master')
 
+@section('style')
+@parent
+	<style>
+		.changeAvatar::before{
+			content: '';
+			color: #fff;
+			text-align: center;
+			line-height: 130px;
+			width: 130px;
+			height: 130px;
+			display: block;
+			position: absolute;
+			background-color: rgba(0, 0, 0, 0);
+			transition: 0.2s;
+			text-shadow: 0 0 10px #000;
+			border-radius: 4px;
+		}
+		.changeAvatar:hover::before{
+			content: 'Change Avatar';
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+	</style>
+@stop
+
 @section('control-panel')
 
 @if (Auth::user()->random_name && !Session::has('visited'))
 	{{Session::set('visited', true)}}
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-sm" role="document">
 	    <div class="modal-content">
 
 			{{Form::open(['url'=>'/dashboard/set-username'])}}
@@ -83,7 +107,9 @@
 
 
 		<div class="col-md-8">
-			<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('/avatar/' . Auth::user()->avatar )}}">
+			<a href="/dashboard/myProfile" class="changeAvatar">
+				<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('/avatar/' . Auth::user()->avatar )}}">
+			</a>
 
 
 

@@ -59,7 +59,6 @@ Development Progress
 - [x] 任务搜索
 - [x] 任务分类
 - [x] 任务附件上传
-- [ ] 七牛云存储
 - [ ] 日程安排
 - [x] 添加好友
 - [x] 雇佣某人
@@ -100,7 +99,7 @@ References
 ----------
 
 - [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)
-- [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
+- [laravel-jquery-file-upload](https://github.com/zimt28/laravel-jquery-file-upload)
 - [moment.js](https://github.com/moment/moment)
 - [countdown.js](https://github.com/kbwood/countdown)
 - [HTMLPurifier for Laravel 4](https://github.com/mewebstudio/Purifier/tree/master-l4)
@@ -110,6 +109,7 @@ References
 - [bootstrap-datetimepicker](https://github.com/smalot/bootstrap-datetimepicker)
 - [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
 - [particles.js](https://github.com/VincentGarreau/particles.js)
+- [cropper](https://github.com/fengyuanchen/cropper)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png

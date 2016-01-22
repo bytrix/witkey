@@ -16,6 +16,9 @@
 			float: left;
 			overflow: hidden;
 		}
+		.img-container{
+			margin-bottom: 12px;
+		}
 	</style>
 @stop
 
@@ -24,6 +27,7 @@
 	{{HTML::script('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.js')}}
 	<script>
 	$(function() {
+		$('input[type=file]').bootstrapFileInput();
 		var URL = window.URL || window.webkitURL;
 		var blobURL;
 		var file;
@@ -126,10 +130,10 @@
 	<div class="form-group">
 		{{Form::label('avatar', '', ['class'=>'control-label col-md-2'])}}
 		<div class="col-md-4">
-			<input type="file" id="inputImage">
 			<div class="img-container">
 				<img id="image" src="/avatar/{{Auth::user()->avatar}}">
 			</div>
+			<input type="file" id="inputImage" class="btn btn-primary pull-right">
 		</div>
 		<div class="col-md-4">
 			<div class="img-preview preview-lg" style="border: 1px solid #ccc; margin: 10px; width: 200px; height: 200px;"></div>

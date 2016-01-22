@@ -86,13 +86,13 @@ class TaskController extends BaseController {
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function step_3() {
 		// dd(var_dump(Input::all()));
-		Validator::extend('positive', function($attribute, $value, $parameters) {
-			if ($value < 0) {
-				return false;
-			} else {
-				return true;
-			}
-		},"The amount field cannot be negative");
+		// Validator::extend('positive', function($attribute, $value, $parameters) {
+		// 	if ($value < 0) {
+		// 		return false;
+		// 	} else {
+		// 		return true;
+		// 	}
+		// },"The amount field cannot be negative");
 		Validator::extend('future', function($attribute, $value, $parameters) {
 			$expiration = strtotime($value);
 			$now = strtotime("now");
@@ -102,32 +102,83 @@ class TaskController extends BaseController {
 				return false;
 			}
 		}, "Expiration is out of date!");
+
+
+
 		if (Request::method() == "POST") {
-			$userInput = [
-				'type'       => Input::get('type'),
-				'amount'     => Input::get('amount'),
-				'expiration' => Input::get('expiration'),
-				'category_id'=> Input::get('category_id')
-			];
+			if (Input::get('type') == 1) {
+				$userInput = [
+					'type'       => Input::get('type'),
+					'amount'     => Input::get('amount'),
+					'expiration' => Input::get('expiration'),
+					'category_id'=> Input::get('category_id')
+				];
+			} else if (Input::get('type') == 2) {
+				$userInput = [
+					'type'       => Input::get('type'),
+					'amountStart'     => Input::get('amountStart'),
+					'amountEnd'     => Input::get('amountEnd'),
+					'expiration' => Input::get('expiration'),
+					'category_id'=> Input::get('category_id')
+				];
+			}
 		} else {
-			$userInput = [
-				'type'       => Session::get('type'),
-				'amount'     => Session::get('amount'),
-				'expiration' => Session::get('expiration'),
-				'category_id'=> Input::get('category_id')
+			if (Input::get('type') == 1) {
+				$userInput = [
+					'type'       => Session::get('type'),
+					'amount'     => Session::get('amount'),
+					'expiration' => Session::get('expiration'),
+					'category_id'=> Input::get('category_id')
+				];
+			} else if (Input::get('type') == 2) {
+				$userInput = [
+					'type'       => Session::get('type'),
+					'amountStart'     => Session::get('amountStart'),
+					'amountEnd'     => Session::get('amountEnd'),
+					'expiration' => Session::get('expiration'),
+					'category_id'=> Input::get('category_id')
+				];
+			}
+		}
+
+
+
+		if ($userInput['type'] == 1) {
+			$rules = [
+				'type'       => 'required',
+				'amount'     => 'required|numeric|between:0.1,5000',
+				'expiration' => 'required|date|future',
+				'category_id'=> 'required'
+			];
+		} else  if ($userInput['type'] == 2) {
+			$rules = [
+				'type'       => 'required',
+				'amountStart'     => 'required|numeric|between:0.1,5000',
+				'amountEnd'     => 'required|numeric|between:0.1,5000',
+				'expiration' => 'required|date|future',
+				'category_id'=> 'required'
 			];
 		}
-		$rules = [
-			'type'       => 'required',
-			'amount'     => 'required|numeric|positive',
-			'expiration' => 'required|date|future',
-			'category_id'=> 'required'
-		];
+
+
+		// $rules = [
+		// 	'type'       => 'required',
+		// 	'amount'     => 'required|numeric|between:0.1,5000',
+		// 	'expiration' => 'required|date|future',
+		// 	'category_id'=> 'required'
+		// ];
 		$validator = Validator::make($userInput, $rules);
 		// dd($userInput);
 		if ($validator->passes()) {
 			Session::set('type'      , $userInput['type']);
-			Session::set('amount'    , $userInput['amount']);
+
+			if (Session::get('type') == 1) {
+				Session::set('amount'    , $userInput['amount']);
+			} else if (Session::get('type') == 2) {
+				Session::set('amountStart'    , $userInput['amountStart']);
+				Session::set('amountEnd'    , $userInput['amountEnd']);
+			}
+
 			Session::set('expiration', $userInput['expiration']);
 			Session::set('category_id', $userInput['category_id']);
 
@@ -316,6 +367,14 @@ class TaskController extends BaseController {
 		$task->title      = Session::get('title');
 		$task->detail     = Session::get('detail');
 		$task->category_id   = Session::get('category_id');
+
+		if (Session::get('type') == 1) {
+			$task->amount     = Session::get('amount');
+		} else if (Session::get('type') == 2) {
+			$task->amountStart     = Session::get('amountStart');
+			$task->amountEnd     = Session::get('amountEnd');
+		}
+
 		$task->amount     = Session::get('amount');
 		$task->expiration = Session::get('expiration');
 		$task->state      = 1;
@@ -338,7 +397,7 @@ class TaskController extends BaseController {
 		}
 
 		if (Session::has('file_name') && Session::get('file_name') != "") {
-			dd(Session::get('file_name'));
+			// dd(Session::get('file_name'));
 			$attachment = new Attachment;
 			$attachment->file_name = Session::get('file_name');
 			$attachment->task_id = $task->id;
@@ -347,10 +406,13 @@ class TaskController extends BaseController {
 			$attachment->file_ext = Util::getExtension($attachment->file_name);
 			$attachment->save();
 			// Session::set('file_hash', $attachment->file_hash);
+			if (!file_exists(public_path() . '/file/' . Auth::user()->id . '/')) {
+				mkdir(public_path() . '/file/' . Auth::user()->id . '/');
+			}
 			if ($attachment->file_ext == "") {
-				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . $attachment->file_hash . '.s');
+				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.s');
 			} else {
-				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . $attachment->file_hash . '.' . $attachment->file_ext);
+				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.' . $attachment->file_ext);
 			}
 		}
 

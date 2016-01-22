@@ -20,7 +20,9 @@ class CreateTaskTable extends Migration {
 			$table->text('detail');
 			$table->integer('winning_commit_id');
 			$table->integer('winning_quote_id');
-			$table->decimal('amount');
+			$table->decimal('amount')->nullable();
+			$table->decimal('amountStart')->nullable();
+			$table->decimal('amountEnd')->nullable();
 			$table->tinyInteger('type');
 
 			/**

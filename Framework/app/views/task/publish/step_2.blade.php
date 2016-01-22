@@ -20,6 +20,7 @@
 @stop
 
 @section('script')
+{{HTML::script(URL::asset('/assets/script/angular.js'))}}
 <script>
 	$(function() {
 		var hasBudget = true;
@@ -39,16 +40,22 @@
 
 		function changeToReward() {
 			$('#moneyType').html('Reward:');
-			$('#amount').attr('placeholder', 'Reward');
+			// $('#amount').attr('placeholder', 'Reward');
 			$('#budgetCheckboxDiv').hide();
+			$('#inputReward').show();
+			$('#inputBid').hide();
+			$('#profitWarning').show();
 			enableAmount();
 		}
 
 		function changeToBid() {
 			budgetCheckboxToggle();
 			$('#moneyType').html('Budget:');
-			$('#amount').attr('placeholder', 'Budget');
+			// $('#amount').attr('placeholder', 'Budget');
 			$('#budgetCheckboxDiv').show();
+			$('#inputBid').show();
+			$('#inputReward').hide();
+			$('#profitWarning').hide();
 			// alert(hasBudget);
 			if (hasBudget) {
 				enableAmount();
@@ -58,13 +65,17 @@
 		}
 
 		function enableAmount() {
-			$('#amount').attr('enabled', true);
-			$('#amount').removeAttr('disabled');
+			// $('#amount').attr('enabled', true);
+			// $('#amount').removeAttr('disabled');
+			$('#inputBid input').attr('enabled', true);
+			$('#inputBid input').removeAttr('disabled');
 		}
 
 		function disableAmount() {
-			$('#amount').attr('disabled', true);
-			$('#amount').removeAttr('enabled');
+			// $('#amount').attr('disabled', true);
+			// $('#amount').removeAttr('enabled');
+			$('#inputBid input').attr('disabled', true);
+			$('#inputBid input').removeAttr('enabled');
 		}
 
 		if ($('#reward').attr('checked') == 'checked') {
@@ -136,9 +147,9 @@
 			<li class="third col-md-4">PUBLISH</li>
 		</ul>
 	@stop
-	<div class="container">
+	<div class="container" ng-app>
 
-		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-horizontal'])}}
+		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-horizontal', 'ng-controller'=>'profitController', 'autocomplete'=>'off'])}}
 
 			<div class="form-group">
 				<div class="col-md-2"></div>
@@ -154,6 +165,25 @@
 				</div>
 			</div>
 
+
+			<div class="form-group">
+				{{Form::label('expiration', 'Expiration Date:', ['class'=>'control-label col-md-2'])}}
+				<div class="col-md-4">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar fa-fw"></i>
+						</div>
+						{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
+						{{Form::text('expiration', Session::get('expiration'), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
+						<script>
+						$('#expiration').datetimepicker({
+							language: 'zh-CN',
+							startDate: '2010-01-01'
+						});
+						</script>
+					</div>
+				</div>
+			</div>
 
 			<div class="form-group">
 				{{Form::label('category', '', ['class'=>'control-label col-md-2'])}}
@@ -174,11 +204,18 @@
 			<div class="form-group">
 				{{Form::label('amount', '', ['class'=>'control-label col-md-2', 'id'=>'moneyType'])}}
 				<div class="col-md-4">
-					<div class="input-group">
+					<div class="input-group" id="inputReward">
 						<div class="input-group-addon">
 							<i class="fa fa-yen fa-fw"></i>
 						</div>
-						{{Form::text('amount', Session::get('amount'), ['placeholder'=>'Amount', 'class'=>'form-control', 'id'=>'amount'])}}
+						{{Form::text('amount', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount', 'ng-model'=>'amount'])}}
+					</div>
+					<div class="input-group" id="inputBid">
+						{{Form::text('amountStart', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
+						<div class="input-group-addon">
+							to
+						</div>
+						{{Form::text('amountEnd', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
 					</div>
 					<div class="checkbox checkbox-primary" id="budgetCheckboxDiv">
 						{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
@@ -187,22 +224,13 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				{{Form::label('expiration', 'Expiration Date:', ['class'=>'control-label col-md-2'])}}
+			<div class="form-group" id="profitWarning">
+				<span class="col-md-2"></span>
 				<div class="col-md-4">
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="fa fa-calendar fa-fw"></i>
-						</div>
-						{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
-						{{Form::text('expiration', Session::get('expiration'), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
-						<script>
-						$('#expiration').datetimepicker({
-							language: 'zh-CN',
-							startDate: '2010-01-01'
-						});
-						</script>
-					</div>
+					<p class="alert alert-danger">
+						<i class="fa fa-warning"></i>
+						Website charges a @{{profitPercent}}% (&yen; @{{(amount * profitPercent / 100).toFixed(2)}}) profit.
+					</p>
 				</div>
 			</div>
 
@@ -266,21 +294,33 @@
 
 		{{Form::close()}}
 
+
 		@if (count($errors->all()))
-			<div class="alert alert-danger">
-				@foreach ($errors->all() as $error)
-					<p>{{$error}}</p>
-				@endforeach
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4">
+				
+				<div class="alert alert-danger">
+					@foreach ($errors->all() as $error)
+						<p>{{$error}}</p>
+					@endforeach
+				</div>
+
 			</div>
 		@endif
-
+		</div>
 		<script>
 			$(function() {
 				$('select').select2({
 					theme: "bootstrap",
 					placeholder: "Choose category"
 				});
-			})
+			});
+
+
+			var profitController = function($scope) {
+				$scope.profitPercent = 0;
+			}
 		</script>
 
 	</div>

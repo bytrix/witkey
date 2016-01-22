@@ -221,13 +221,20 @@ h1{
 							</a>
 						</div>
 
+
 						<div class="item-inline">
 							<div class="list-group-item-heading">
 								<div style="float: left; padding-top: 2px">
-									<span class="label label-success">&yen; {{$task->amount}}</span>
+									@if ($task->amount == NULL)
+										<i class="fa fa-circle cw-circle-unpaid" data-toggle="tooltip" data-placement="top" title="unpaid"></i>
+									@else
+										<i class="fa fa-circle cw-circle-paid" data-toggle="tooltip" data-placement="top" title="paid"></i>
+									@endif
 									@if ($task->type == 1)
+										<span class="label label-success">&yen; {{$task->amount}}</span>
 										<span class="label label-warning">Reward</span>
 									@elseif($task->type == 2)
+										<span class="label label-success">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
 										<span class="label label-danger">Bid</span>
 									@endif
 								</div>

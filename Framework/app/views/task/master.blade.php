@@ -19,6 +19,19 @@
 
 @section('style')
 @parent
+	<style>
+		.cw-circle-paid,
+		.cw-circle-unpaid{
+			margin-right: 6px;
+			margin-top: 3px;
+		}
+		.cw-circle-paid{
+			color: rgb(255, 224, 9);
+		}
+		.cw-circle-unpaid{
+			color: #ddd;
+		}
+	</style>
 @stop
 
 @section('procedure-style')
