@@ -154,13 +154,13 @@
 				</h4>
 				<p>{{$user->email}}</p>
 
-
+{{-- 
 				<p>
 					@if ($user->authenticated == 0)
 						<span class="label label-danger">Not Authenticated</span>
 					@endif
 				</p>
-
+ --}}
 				{{-- <p>Joined on {{explode(' ', $user->created_at)[0]}}</p> --}}
 
 
@@ -218,16 +218,18 @@
 						</a>
 					@endif
 				</p>
-
-				<div>
-					<strong>Skill Tag</strong>
+				@if ($user->skill_tag != "")
+					
 					<div>
-						@foreach (explode(',', $user->skill_tag) as $tag)
-							<span class="label label-info">{{$tag}}</span>
-						@endforeach
+						<strong>Skill Tag</strong>
+						<div>
+							@foreach (explode(',', $user->skill_tag) as $tag)
+								<span class="label label-info">{{$tag}}</span>
+							@endforeach
+						</div>
 					</div>
-				</div>
 
+				@endif
 			</div>
 		</div>
 

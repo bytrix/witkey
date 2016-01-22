@@ -324,6 +324,16 @@
 
 				<h4><strong>Task Description:</strong></h4>
 				<div class="detail" id="detail">
+					@if ($attachment != NULL)
+						<p>
+							Attachment: 
+							@if ($attachment->file_ext == "")
+								<a href="/file/{{$attachment->file_hash}}">{{$attachment->file_name}}</a>
+							@else
+								<a href="/file/{{$attachment->file_hash}}.{{$attachment->file_ext}}">{{$attachment->file_name}}</a>
+							@endif
+						</p>
+					@endif
 					{{str_limit($task->detail, 2000)}}
 				</div>
 				@if (mb_strlen($task->detail) > 2000)

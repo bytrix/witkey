@@ -1,4 +1,5 @@
 Diagram/DataModel/*.bak
 Framework/public/avatar/*
-Framework/public/upload/*
+Framework/public/upload/cache/*
 Framework/public/student_card/*
+Framework/public/file/*

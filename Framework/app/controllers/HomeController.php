@@ -20,6 +20,7 @@ class HomeController extends BaseController {
 		$academies = Academy::all();
 
 		$academy_id = Session::get('school_id_session');
+		// dd($academy_id);
 
 		if ($academy_id) {
 			return Redirect::to("/school/$academy_id");

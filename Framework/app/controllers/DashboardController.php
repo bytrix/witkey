@@ -101,6 +101,20 @@ class DashboardController extends BaseController {
 
 
 	public function postMyProfile() {
+		if (isset($_POST["croppedCanvas"])) {
+			// $category = new Category;
+			// $category->name = $_POST["croppedCanvas"];
+			// $category->save();
+			$croppedCanvas = $_POST["croppedCanvas"];
+
+
+			 $croppedCanvas = str_replace('data:image/png;base64,', '', $croppedCanvas);
+			 $croppedCanvas = str_replace(' ', '+', $croppedCanvas);
+			 $data = base64_decode($croppedCanvas);
+
+
+			file_put_contents(public_path() . '/avatar/' . Auth::user()->avatar, $data);
+		}
 		// dd(Input::all());
 		$userModify = [
 			'username'  => Input::get('username'),

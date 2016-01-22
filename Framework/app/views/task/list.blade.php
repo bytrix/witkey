@@ -120,7 +120,9 @@ h1{
               <small class="pull-right school-select-wrap">
                 School:
                 <div class="dropdown pull-right">
-                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">{{$mySchool->name}}</a>
+                  <a href="javascript:;" class="link school-select" data-toggle="dropdown">
+                  	{{$mySchool->name}}
+                  </a>
                   <ul class="dropdown-menu">
                     @foreach ($schools as $school)
                       <li><a href="/school/{{$school->id}}">

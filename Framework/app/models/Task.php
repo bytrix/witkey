@@ -49,6 +49,10 @@ class Task extends Eloquent {
 		return $this->belongsTo('Category');
 	}
 
+	public function attachment() {
+		return $this->hasOne('Attachment', 'task_id');
+	}
+
 	// public function setTitleAttribute($data) {
 	// 	$this->attributes['title'] = Purifier::clean($data);
 	// }

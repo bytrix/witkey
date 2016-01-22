@@ -153,6 +153,7 @@
 							<input type="file" id="uploader">
 							Attach File
 						</span>
+						{{Form::hidden('file_name', '', ['id'=>'file_name'])}}
 					</div>
 				</div>
 			</div>
@@ -186,7 +187,8 @@
 				done: function(e, data) {
 					console.log('done');
 					console.log(data);
-					$('#filedata').text(data.files[0].name + " uploaded!");
+					$('#filedata').html("<a href='/upload/cache/" + data.files[0].name + "'>" + data.files[0].name + "</a>" + " uploaded!");
+					$('#file_name').attr('value', data.files[0].name);
 				}
 			});
 		})

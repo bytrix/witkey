@@ -71,4 +71,15 @@ class Util {
 				break;
 		}
 	}
+
+
+	public static function getExtension($filename) {
+		$arr = array();
+		$arr = explode('.', $filename);
+		if (count($arr) == 1) {
+			return '';
+		} else {
+			return end($arr);
+		}
+	}
 }

@@ -34,7 +34,6 @@ class TaskController extends BaseController {
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function step_2() {
-		// dd(Input::all());
 		if (isset($_POST['hire'])) {
 			$hired_user = User::where('id', $_POST['hire'])->first();
 		} else if (Session::has('hire')) {
@@ -42,18 +41,21 @@ class TaskController extends BaseController {
 		} else {
 			$hired_user = NULL;
 		}
+		// dd(Input::all());
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				'detail' => Input::get('detail'),
-				'hire'   => Input::get('hire')
+				'hire'   => Input::get('hire'),
+				'file_name' => Input::get('file_name')
 				// 'category_id' => Input::get('category_id')
 			];
 		} else {
 			$userInput = [
 				'title'  => e(Session::get('title')),
 				'detail' => Session::get('detail'),
-				'hire'   => Session::get('hire')
+				'hire'   => Session::get('hire'),
+				'file_name' => Session::get('file_name')
 				// 'category_id' => Session::get('category_id')
 			];
 		}
@@ -69,6 +71,7 @@ class TaskController extends BaseController {
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
 			Session::set('hire', $userInput['hire']);
+			Session::set('file_name', $userInput['file_name']);
 			// Session::set('category_id', $userInput['category_id']);
 			$categories = Category::all();
 			return View::make('task.publish.step_2')
@@ -127,6 +130,7 @@ class TaskController extends BaseController {
 			Session::set('amount'    , $userInput['amount']);
 			Session::set('expiration', $userInput['expiration']);
 			Session::set('category_id', $userInput['category_id']);
+
 			return View::make('task.publish.step_3');
 		} else {
 			return Redirect::back()->withErrors($validator);
@@ -184,6 +188,7 @@ class TaskController extends BaseController {
 	public function detail($task_id) {
 
 		$task = Task::where('id', $task_id)->first();
+		// dd($task->attachment);
 		$prev_task = Task::where('id', $task_id + 1)->first();
 		$next_task = Task::where('id', $task_id - 1)->first();
 		$school = Academy::where('id', $task->place)->first();
@@ -192,6 +197,7 @@ class TaskController extends BaseController {
 		View::share('prev_task', $prev_task);
 		View::share('next_task', $next_task);
 		View::share('school', $school);
+		View::share('attachment', $task->attachment);
 		Session::set('task_id_session', $task_id);
 
 		if ($task->user->active == 0) {
@@ -331,14 +337,33 @@ class TaskController extends BaseController {
 			$message->save();
 		}
 
+		if (Session::has('file_name') && Session::get('file_name') != "") {
+			dd(Session::get('file_name'));
+			$attachment = new Attachment;
+			$attachment->file_name = Session::get('file_name');
+			$attachment->task_id = $task->id;
+			$attachment->save();
+			$attachment->file_hash = md5($attachment->id . $attachment->created_at . $attachment->file_name . $attachment->task_id);
+			$attachment->file_ext = Util::getExtension($attachment->file_name);
+			$attachment->save();
+			// Session::set('file_hash', $attachment->file_hash);
+			if ($attachment->file_ext == "") {
+				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . $attachment->file_hash . '.s');
+			} else {
+				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . $attachment->file_hash . '.' . $attachment->file_ext);
+			}
+		}
+
 		Session::forget('title');
 		Session::forget('detail');
 		Session::forget('amount');
 		Session::forget('expiration');
 		Session::forget('hire');
+		Session::forget('file_name');
 
 		// return Redirect::to('task/list');
 		return Redirect::to("/school/$academy_id");
+		// return Redirect::to('/');
 	}
 
 

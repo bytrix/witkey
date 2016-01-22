@@ -37,6 +37,8 @@ return array(
     'Comment' => $baseDir . '/app/models/Comment.php',
     'CommitPivot' => $baseDir . '/app/models/CommitPivot.php',
     'CreateAcademyTable' => $baseDir . '/app/database/migrations/2016_01_07_114513_create_academy_table.php',
+    'CreateAttachmentCacheTable' => $baseDir . '/app/database/migrations/2016_01_21_142108_create_attachment_cache_table.php',
+    'CreateAttachmentTable' => $baseDir . '/app/database/migrations/2016_01_21_142032_create_attachment_table.php',
     'CreateCategoryTable' => $baseDir . '/app/database/migrations/2016_01_12_225946_create_category_table.php',
     'CreateCommentTable' => $baseDir . '/app/database/migrations/2016_01_11_130703_create_comment_table.php',
     'CreateCommitPivot' => $baseDir . '/app/database/migrations/2015_12_21_174839_create_commit_pivot.php',
