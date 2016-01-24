@@ -24,12 +24,7 @@ Let's keep on track
 **Initialize**
 
     python init.py
-
 This will create the directories ignored by .gitignore
-|-- avatar
-|-- file
-|-- student_card
-|-- upload/cache
 
 **Configure**
 
