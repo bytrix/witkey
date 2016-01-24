@@ -15,7 +15,7 @@ class BaseController extends Controller {
 		}
 		View::share('mySchool', $this->mySchool());
 		View::share('schools', $this->allSchools());
-		if (Auth::check()) {
+		if (Auth::check() && Auth::user()->active == true) {
 			View::share('unreadMessages', $this->unreadMessages());
 			View::share('messages', $this->messages());
 			View::share('sentMessages', $this->sentMessages());

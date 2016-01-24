@@ -33,34 +33,63 @@
 		display: inline-block;
 		width: 40px;
 	}
+
 	#editor {
 		overflow:scroll;
 		/*max-height:300px;*/
 	}
-	a#edit, a.favorite{
-		font-size: 0.8em;
+
+	#edit,#admin{
+		padding-left: 3px;
+		padding-top: 1px;
+	}
+	#favorite{
+		padding-left: 1px;
+		padding-top: 1px;
+	}
+	#edit:hover{
+		background-color: #337ab7;
+	}
+	#admin:hover, .open #admin{
+		background-color: #5cb85c;
+	}
+	#favorite:hover{
+		background-color: #c00;
+	}
+
+	.favorited, .favorited i{
+		color: #fff;
+		background-color: #c00;
+	}
+
+	.widget{
+		font-size: 0.7em;
 		cursor: pointer;
 		color: #666;
 		text-decoration: none;
+		/*background-color: #aaa;*/
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+		text-align: center;
+		line-height: 30px;
+		border-radius: 50%;
+		overflow: hidden;
 	}
-	#edit{
-		margin-left: 0.6em;
-		margin-right: 0.7em;
+	.widget:hover{
+		background-color: #ccc;
 	}
-	#edit:hover{
-		color: #337ab7;
+	.widget-body{
+		position: relative;
+		top: 0px;
+		transition: 0.3s;
 	}
-	.favorite:hover{
-		color: red;
+	.widget:hover.widget .widget-body, .open .widget-body{
+		color: #fff;
+		top: -30px;
 	}
 
-	.favorite{
-		cursor: pointer;
-		font-size: 0.8em;
-		margin-top: 0.3em;
-		margin-right: 1.7em;
-		color: #666;
-	}
+/*
 	#tip{
 		display: block;
 		margin-left: -20px;
@@ -70,6 +99,8 @@
 		width: 60px;
 		text-align: center;
 	}
+*/
+
 
 	.price{
 		/*background-color: red;*/
@@ -97,24 +128,24 @@
 @section('script')
 <script>
 	function favorite() {
-		$('#favorite').addClass('fa-heart');
-		$('#favorite').removeClass('fa-heart-o');
+		$('#favorite').addClass('favorited');
+		// $('#favorite').removeClass('fa-heart-o');
 		$('#favorite').attr('data-original-title', 'Uncollect');
-		$('#tip').html('Collected');
+		// $('#tip').html('Collected');
 	}
 	function unfavorite() {
-		$('#favorite').removeClass('fa-heart');
-		$('#favorite').addClass('fa-heart-o');
+		$('#favorite').removeClass('favorited');
+		// $('#favorite').addClass('fa-heart-o');
 		$('#favorite').attr('data-original-title', 'Collect');
-		$('#tip').html('Collect');
+		// $('#tip').html('Collect');
 	}
 	$(function() {
-		$('#edit').click(function() {
-			window.location.href = "/task/{{$task->id}}/edit";
-		});
+		// $('#edit').click(function() {
+		// 	window.location.href = "/task/{{$task->id}}/edit";
+		// });
 		$.ajax({
 			type: 'post',
-			url: '/hasFavoriteTask/'+{{$task_id}},
+			url: '/api/hasFavoriteTask/'+{{$task_id}},
 			success: function(state) {
 				if (state == 'true') {
 					favorite();
@@ -123,6 +154,11 @@
 				}
 			}
 		});
+
+		$('select').select2({
+			theme: "bootstrap"
+		});
+
 	});
 </script>
 {{HTML::script(URL::asset('assets/script/moment.js'))}}
@@ -151,6 +187,66 @@
 
 	<div class="container">
 
+		{{-- Modify Category Dialog --}}
+		<div class="modal fade" id="categoryDialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					{{Form::open(['url'=>"/task/$task->id/changeCategory/"])}}
+
+					<div class="modal-header">
+						<h4 class="modal-title">Move to another category</h4>
+					</div>
+					<div class="modal-body">
+						{{-- {{Form::select('category', $categories, false, ['class'=>'form-control'])}} --}}
+						@foreach ($categories as $category)
+							<div class="radio">
+								@if ($category->id == $task->category->id)
+									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}" checked>
+								@else
+									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}">
+								@endif
+								<label for="{{$category->id}}">{{$category->name}}</label>
+							</div>
+						@endforeach
+					</div>
+					<div class="modal-footer">
+						<a href="javascript:;" class="btn btn-default" data-dismiss="modal">Close</a>
+						{{Form::hidden('task_id', $task->id)}}
+						{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+					</div>
+
+					{{Form::close()}}
+
+				</div>
+			</div>
+		</div>
+
+		{{-- Delete Task Dialog --}}
+		<div class="modal fade" id="deleteDialog">
+			<div class="modal-dialog modal-sm">
+
+				{{Form::open(['url'=>"/task/$task->id/delete"])}}
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Reason for deleting</h4>
+					</div>
+					<div class="modal-body">
+						{{Form::textarea('reason', '', ['class'=>'form-control'])}}
+					</div>
+					<div class="modal-footer">
+						<a href="javascript:;" data-dismiss="modal" class="btn btn-default">Close</a>
+						{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+					</div>
+				</div>
+
+				{{Form::close()}}
+
+			</div>
+		</div>
+
+
 		<div class="col-md-8">
 
 			<div class="page-header">
@@ -177,22 +273,61 @@
 					@endif
 
 					<div class="pull-right" style="font-size: 25px; margin-top: -10px;">
-						{{-- Edit Button --}}
-						<div class="col-sm-6">
+						{{-- Admin Area --}}
+						<div class="col-sm-4">
 							@if (Auth::check() && $task->user_id == Auth::user()->id)
-								<a class="fa fa-edit" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+
+								<div class="dropdown">
+									
+									<a class="widget" id="admin" data-toggle="dropdown" data-placement="top" title="Admin">
+										<span class="widget-body">
+											<i class="fa fa-folder-open-o"></i>
+											<i class="fa fa-folder-open-o"></i>
+										</span>
+									</a>
+
+									<ul class="dropdown-menu">
+										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#categoryDialog">Move to another category</a></li>
+										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#deleteDialog">Delete this task</a></li>
+										<li><a target="blank" href="/reportUser/{{$task->user->id}}">Report this user</a></li>
+									</ul>
+
+								</div>
+
+
+
+
+							@endif
+						</div>
+
+						{{-- Edit Button --}}
+						<div class="col-sm-4">
+							@if (Auth::check() && $task->user_id == Auth::user()->id)
+								<a class="widget" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit">
+									<span class="widget-body">
+										<i class="fa fa-edit"></i>
+										<i class="fa fa-edit"></i>
+									</span>
+								</a>
 							@endif
 						</div>
 						{{-- Favorite Button --}}
-						<div class="col-sm-6">
-							<a class="fa fa-heart-o favorite" id="favorite" data-toggle="tooltip" data-placement="top" title="favorite"></a>
-							<span id="tip">favorite</span>
+						<div class="col-sm-4">
+							<a class="widget" id="favorite" data-toggle="tooltip" data-placement="top" title="Favorite">
+								<span class="widget-body">
+									<i class="fa fa-heart-o"></i>
+									<i class="fa fa-heart-o"></i>
+								</span>
+							</a>
+							{{-- <span id="tip">favorite</span> --}}
 						</div>
 					</div>
-
-					<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis" title="{{$task->title}}">
-						{{$task->title}}
-					</h3>
+					<div></div>
+					<span>
+						<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block" title="{{$task->title}}">
+							{{$task->title}}
+						</h3>
+					</span>
 				<script>
 
 				$('#favorite').click(function() {

@@ -17,6 +17,8 @@ Route::get('logout'                                    , 'UserController@logout'
 Route::get('register'                                  , 'UserController@register');
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
+Route::get('reportUser/{user_id}', 'UserController@report');
+
 // Route::get('task/list'                              , 'TaskController@listTask');
 Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');
 Route::get('school/{academy_id}/category/{category_id}', 'TaskController@subCategory')->where('academy_id', '[0-9]+')->where('category_id', '[0-9]+');
@@ -26,11 +28,13 @@ Route::get('school'                                    , function() { return Red
 // POST
 Route::post('login'		, 'UserController@postLogin');
 Route::post('register'	, 'UserController@postRegister');
+Route::post('reportUser/{user_id}', 'UserController@postReport');
 
 Route::group(['before'=>'auth'], function() {
 	// GET
 	Route::get('dashboard'                              , 'DashboardController@overview');
 	Route::get('dashboard/myProfile'                    , 'DashboardController@myProfile');
+	Route::get('dashboard/changeAvatar'                    , 'DashboardController@changeAvatar');
 	Route::get('dashboard/taskOrder'                    , 'DashboardController@taskOrder');
 	Route::get('dashboard/rate/{task_id}'               , 'DashboardController@rate')->where('task_id', '[0-9]+');
 	Route::get('dashboard/postcard'                     , 'DashboardController@postcard');
@@ -46,8 +50,8 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/{task_id}/hosting/1{bid_id}'       , 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/2{bid_id}'       , 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
-	Route::get('/pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
-	Route::get('/pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
 
 	Route::get('message', 'UserController@message');
 	Route::get('message/{message_id}', 'UserController@detailMessage')->where('message_id', '[0-9]+');
@@ -61,6 +65,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('dashboard/set-username', 'DashboardController@setUsername');
 	Route::post('dashboard/security'      , 'DashboardController@postSecurity');
 	Route::post('dashboard/myProfile'     , 'DashboardController@postMyProfile');
+	Route::post('dashboard/changeAvatar', 'DashboardController@postAvatar');
 	Route::post('dashboard/rate/{task_id}', 'DashboardController@postRate')->where('task_id', '[0-9]+');
 	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
 	Route::post('task/create/step-2'      , 'TaskController@step_2');
@@ -68,6 +73,8 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('task/{task_id}/edit'     , 'TaskController@postEdit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delay'    , 'TaskController@postDelay')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/changeCategory', 'TaskController@changeCategory')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/delete', 'TaskController@deleteTask')->where('task_id', '[0-9]+');
 	Route::post('message/send', 'UserController@postMessage');
 
 	// realname Authentication
@@ -85,13 +92,6 @@ Route::get('admin/academy'              , 'AdminController@academy');
 Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
 Route::post('admin/academy'             , 'AdminController@postAcademy');
 Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
-
-
-
-
-
-
-
 
 
 

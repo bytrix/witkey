@@ -13,7 +13,6 @@
 		    {{-- <li><a href="/contact">Contact</a></li> --}}
 		  </ul>
 		</li>
-
 	</ul>
 @stop
 

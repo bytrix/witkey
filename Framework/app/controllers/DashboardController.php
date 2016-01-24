@@ -54,6 +54,10 @@ class DashboardController extends BaseController {
 		return View::make('dashboard.myProfile');
 	}
 
+	public function changeAvatar() {
+		return View::make('dashboard.changeAvatar');
+	}
+
 
 	public function taskOrder() {
 		$orders = Auth::user()->order()->paginate(10);
@@ -130,6 +134,40 @@ class DashboardController extends BaseController {
 			->update($userModify);
 
 		return Redirect::to('dashboard/myProfile')
+			->with('message', 'Data has been saved successfully!');
+	}
+
+	public function postAvatar() {
+			// dd('ss');
+		if (isset($_POST["croppedCanvas"])) {
+			// $category = new Category;
+			// $category->name = $_POST["croppedCanvas"];
+			// $category->save();
+			$croppedCanvas = $_POST["croppedCanvas"];
+
+
+			 $croppedCanvas = str_replace('data:image/png;base64,', '', $croppedCanvas);
+			 $croppedCanvas = str_replace(' ', '+', $croppedCanvas);
+			 $data = base64_decode($croppedCanvas);
+
+
+			file_put_contents(public_path() . '/avatar/' . Auth::user()->avatar, $data);
+		}
+		// dd(Input::all());
+		// $userModify = [
+		// 	'username'  => Input::get('username'),
+		// 	'gender'    => Input::get('gender'),
+		// 	'tel'       => Input::get('tel'),
+		// 	'qq'        => Input::get('qq'),
+		// 	'dorm'      => Input::get('dorm_state') == 'no' ? 'no' : Input::get('dorm'),
+		// 	'biography' => Input::get('biography'),
+		// 	'skill_tag' => Input::get('skill_tag'),
+		// ];
+
+		// User::where('id', Auth::user()->id)
+		// 	->update($userModify);
+
+		return Redirect::to('dashboard/changeAvatar')
 			->with('message', 'Data has been saved successfully!');
 	}
 

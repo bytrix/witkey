@@ -4,8 +4,9 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
-    <li class="active"><a href="/dashboard/taskOrder">Task Order</a></li>
+    <li><a href="/dashboard/myProfile">My Profile</a></li>
+    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
+    <li class="active"><a href="/dashboard/taskOrder">Task Order<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
   	<li><a href="/dashboard/myFriends">My Friends</a></li>
   </ul>
@@ -46,7 +47,13 @@
 							<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
 						</div>
 					</td>
-					<td>&yen; {{$order->amount}}</td>
+					<td>
+						@if ($order->amount == NULL)
+							&yen; {{$order->amountStart}} ~ {{$order->amountEnd}}
+						@else
+							&yen; {{$order->amount}}
+						@endif
+					</td>
 					<td>{{$order->created_at}}</td>
 					<td>
 						@if ($order->state == 4 && $order->winningCommit->comment['id'] == NULL)

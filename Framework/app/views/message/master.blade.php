@@ -33,6 +33,13 @@
     .tooltip{
       white-space: nowrap;
     }
+    .messageTitle{
+      max-width: 580px;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   </style>
 @stop
 

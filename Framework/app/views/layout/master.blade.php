@@ -60,7 +60,7 @@
     }
   </style>
 @show
-
+   
 </head>
 <body>
 
@@ -86,7 +86,7 @@
         <div id="navbar" class="navbar-collapse collapse">
 
           @yield('menu')
-          
+
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
               {{-- <div class="dropdown"> --}}

@@ -41,6 +41,10 @@ a:hover{
   margin: 0 auto;
   /*background-color: red;*/
 }
+
+textarea{
+  resize: none;
+}
 /*
   .beta{
     display: inline-block;

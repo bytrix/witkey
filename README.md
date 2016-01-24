@@ -8,18 +8,31 @@ Inspired by [PHPHub](https://phphub.org/), [GitHub](https://github.com/), [ZhiHu
 About myself
 ------------
 
-> Software Engineering student in school, crazy about technolygy and art
+> Software Engineering student in school, crazy about technology and art
 > but not much proficient. A short time ago, a little conflict happened in
-> school between someone and me so that I have to  quit school.
-> However, it's a chance for me because I can spend all my spare
+> school between someone and me so that I have to quit school.
+> However, it's a chance for me because I am able to spend all my spare
 > time in programming learning. To summarize the self-study plan,
 > acturally I did learn something new that I didn't know before like
 > linux, git and web framework.Previously, I did almost work in windows
-> and now I change to linux environment so that I could learn more about
+> and now I change to linux environment so that I am able to learn more about
 > programming with so much open source code.
 
 Let's keep on track
 -------------------
+
+**Initialize**
+
+    python init.py
+
+This will create the directories ignored by .gitignore
+|-- avatar
+|-- file
+|-- student_card
+|-- upload/cache
+
+**Configure**
+
 First you need to config the username/password of database in ``Framework/app/config/database.php``.
 
 And then create a database named ``witkey`` in mysql:

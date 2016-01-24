@@ -4,9 +4,10 @@
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
     <li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/myProfile">My Profile</a></li>
+    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li class="active"><a href="/dashboard/favoriteTask">Favorite Task</a></li>
+    <li class="active"><a href="/dashboard/favoriteTask">Favorite Task<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/myFriends">My Friends</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">

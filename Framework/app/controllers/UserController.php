@@ -135,7 +135,13 @@ class UserController extends BaseController {
 
 			if(Auth::attempt($userInput)) {
 				// return Redirect::to('dashboard');
-				return Redirect::intended('/');
+				if (Auth::user()->active == true) {
+					return Redirect::intended('/');
+				} else {
+					Auth::logout();
+					return View::make('user.login')
+						->with('message', 'Your account has been locked, please email administrator for help: <a class="alert-link" href="/">admin@campuswitkey.com</a>');
+				}
 				// return Redirect::back();
 
 			} else {
@@ -176,7 +182,7 @@ class UserController extends BaseController {
 			$user->random_name  = true;
 			$user->email    = $userInput['email'];
 			$user->ip       = Request::ip();
-			$user->city     = Util::getCity();
+			// $user->city     = Util::getCity();
 			$user->save();
 
 			$avatar = md5('avatar' . $user->id . $user->created_at);
@@ -260,6 +266,24 @@ class UserController extends BaseController {
 	}
 
 
+	public function report($user_id) {
+		$user = User::where('id', $user_id)->first();
+		return View::make('user.report')
+			->with('user', $user);
+	}
+
+	public function postReport($user_id) {
+		$reasonForReporting = new ReasonForReporting;
+		$reasonForReporting->user_id = $user_id;
+		$reasonForReporting->reason = Input::get('reason');
+		$reasonForReporting->reporter_id = Auth::user()->id;
+		$reasonForReporting->save();
+
+		$user = User::where('id', $user_id)->first();
+		$user->active = false;
+		$user->save();
+		return Redirect::to("/reportUser/$user_id");
+	}
 
 		// if (strlen(Auth::user()->fingerprint) && !Input::hasFile('idcard_image')) {
 		// 	return View::make('user.dashboard.authentication')->with('error', 'No file selected!');

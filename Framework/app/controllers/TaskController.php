@@ -195,6 +195,7 @@ class TaskController extends BaseController {
 		$categories = Category::all();
 
 		$tasks = Task::where('place', $academy_id)
+			->where('state', '!=', 0)
 			->orderBy('created_at', 'desc')
 			->paginate(10);
 
@@ -240,6 +241,10 @@ class TaskController extends BaseController {
 
 		$task = Task::where('id', $task_id)->first();
 		// dd($task->attachment);
+		if ($task->user->active == false || $task->state == 0) {
+
+			return View::make('task.closed');
+		}
 		$prev_task = Task::where('id', $task_id + 1)->first();
 		$next_task = Task::where('id', $task_id - 1)->first();
 		$school = Academy::where('id', $task->place)->first();
@@ -249,12 +254,8 @@ class TaskController extends BaseController {
 		View::share('next_task', $next_task);
 		View::share('school', $school);
 		View::share('attachment', $task->attachment);
+		View::share('categories', Category::all());
 		Session::set('task_id_session', $task_id);
-
-		if ($task->user->active == 0) {
-
-			return View::make('task.closed');
-		}
 
 		if ($task->type == 1) {
 			$commit_sum = count(CommitPivot::where(['task_id'=>$task_id])->get());
@@ -335,6 +336,36 @@ class TaskController extends BaseController {
 					->with('quote_price_avg', $quote_price_avg);
 			}
 		}
+	}
+
+	public function changeCategory($task_id) {
+		// dd(Input::all());
+		$task = Task::where('id', $task_id)->first();
+		$task->category_id = Input::get('category_id');
+		$task->save();
+		$message = new Message;
+		$message->from_user_id = Auth::user()->id;
+		$message->to_user_id = $task->user->id;
+		$message->message = "Your task has been transferred to category " . $task->category['name'] . " by campus witkey manager";
+		$message->save();
+		return Redirect::to("/task/$task_id");
+	}
+
+	public function deleteTask($task_id) {
+		// dd(Input::all());
+		$task = Task::where('id', $task_id)->first();
+		$task->state = 0;
+		$task->save();
+		$reasonForDeleting = new ReasonForDeleting;
+		$reasonForDeleting->task_id = $task_id;
+		$reasonForDeleting->reason = Input::get('reason');
+		$reasonForDeleting->save();
+		$message = new Message;
+		$message->from_user_id = Auth::user()->id;
+		$message->to_user_id = $task->user->id;
+		$message->message = "Your task has been closed by campus witkey manager with following reason:<br>----------------------------------------<br>" . Input::get('reason');
+		$message->save();
+		return Redirect::to("/task/$task_id");
 	}
 
 	public function postEdit($task_id) {

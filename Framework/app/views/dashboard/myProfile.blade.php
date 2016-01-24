@@ -3,7 +3,7 @@
 @section('style')
 @parent
 	{{HTML::style(URL::asset('assets/style/bootstrap-tagsinput.css'))}}
-	{{HTML::style('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.css')}}
+	{{-- {{HTML::style('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.css')}} --}}
 	<style>
 		.bootstrap-tagsinput{
 			display: block;
@@ -24,29 +24,29 @@
 
 @section('script')
 	{{HTML::script(URL::asset('assets/script/bootstrap-tagsinput.js'))}}
-	{{HTML::script('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.js')}}
+	{{-- {{HTML::script('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.js')}} --}}
 	<script>
 	$(function() {
 		$('input[type=file]').bootstrapFileInput();
-		var URL = window.URL || window.webkitURL;
-		var blobURL;
-		var file;
-		var croppedCanvas;
-		var croppedImg;
-		$('#image').cropper({
-			aspectRatio: 1 / 1,
-			preview: '.img-preview',
-			crop: function(e) {
-				// Output the result data for cropping image.
-				// console.log(e.x);
-				// console.log(e.y);
-				// console.log(e.width);
-				// console.log(e.height);
-				// console.log(e.rotate);
-				// console.log(e.scaleX);
-				// console.log(e.scaleY);
-			}
-		});
+		// var URL = window.URL || window.webkitURL;
+		// var blobURL;
+		// var file;
+		// var croppedCanvas;
+		// var croppedImg;
+		// $('#image').cropper({
+		// 	aspectRatio: 1 / 1,
+		// 	preview: '.img-preview',
+		// 	crop: function(e) {
+		// 		// Output the result data for cropping image.
+		// 		// console.log(e.x);
+		// 		// console.log(e.y);
+		// 		// console.log(e.width);
+		// 		// console.log(e.height);
+		// 		// console.log(e.rotate);
+		// 		// console.log(e.scaleX);
+		// 		// console.log(e.scaleY);
+		// 	}
+		// });
 
 		// $('#crop').click(function() {
 		// 	// alert('22');
@@ -61,12 +61,12 @@
 		// 	console.log(blob);
 		// });
 
-		$('#inputImage').change(function() {
-			// console.log('changed');
-			file = this.files[0];
-			blobURL = URL.createObjectURL(file);
-			$('#image').cropper('replace', blobURL);
-		});
+		// $('#inputImage').change(function() {
+		// 	// console.log('changed');
+		// 	file = this.files[0];
+		// 	blobURL = URL.createObjectURL(file);
+		// 	$('#image').cropper('replace', blobURL);
+		// });
 
 		// function convertCanvasToImage(canvas) {
 		// 	var image = new Image();
@@ -75,22 +75,22 @@
 		// 	// return 'sss';
 		// }
 
-		$('#form').submit(function() {
-			// alert('sub');
-			var formData = new FormData();
-			var xhr = new XMLHttpRequest();
+		// $('#form').submit(function() {
+		// 	// alert('sub');
+		// 	var formData = new FormData();
+		// 	var xhr = new XMLHttpRequest();
 
-			croppedCanvas = $('#image').cropper('getCroppedCanvas');
-			formData.append("croppedCanvas", croppedCanvas.toDataURL("image/png"));
-			xhr.open("POST", "/dashboard/myProfile");
-			xhr.send(formData);
-			// alert('s');
-			// croppedCanvas = $('#image').cropper('getCroppedCanvas');
-			// croppedImg = convertCanvasToImage(croppedCanvas);
-			// $('#crop-box').html();
-			// console.log(croppedImg);
-			// return false;
-		});
+		// 	croppedCanvas = $('#image').cropper('getCroppedCanvas');
+		// 	formData.append("croppedCanvas", croppedCanvas.toDataURL("image/png"));
+		// 	xhr.open("POST", "/dashboard/myProfile");
+		// 	xhr.send(formData);
+		// 	// alert('s');
+		// 	// croppedCanvas = $('#image').cropper('getCroppedCanvas');
+		// 	// croppedImg = convertCanvasToImage(croppedCanvas);
+		// 	// $('#crop-box').html();
+		// 	// console.log(croppedImg);
+		// 	// return false;
+		// });
 	});
 	</script>
 @stop
@@ -100,6 +100,7 @@
   <ul class="nav nav-sidebar nav-list">
   	<li><a href="/dashboard">Overview</a></li>
     <li class="active"><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
   	<li><a href="/dashboard/myFriends">My Friends</a></li>
@@ -127,7 +128,7 @@
 {{Form::token()}}
 
 	{{-- Avatar --}}
-	<div class="form-group">
+{{-- 	<div class="form-group">
 		{{Form::label('avatar', '', ['class'=>'control-label col-md-2'])}}
 		<div class="col-md-4">
 			<div class="img-container">
@@ -140,7 +141,7 @@
 			<div class="img-preview preview-md" style="border: 1px solid #ccc; margin: 10px; width: 40px; height: 40px;"></div>
 			<div class="img-preview preview-sm" style="border: 1px solid #ccc; margin: 10px; width: 22px; height: 22px;"></div>
 		</div>
-	</div>
+	</div> --}}
 
 
 	{{-- Username --}}

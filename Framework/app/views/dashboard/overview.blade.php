@@ -68,8 +68,9 @@
 
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li class="active"><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
+  	<li class="active"><a href="/dashboard">Overview<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/myProfile">My Profile</a></li>
+    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
     <li><a href="/dashboard/taskOrder">Task Order</a></li>
     <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
   	<li><a href="/dashboard/myFriends">My Friends</a></li>
@@ -107,7 +108,7 @@
 
 
 		<div class="col-md-8">
-			<a href="/dashboard/myProfile" class="changeAvatar">
+			<a href="/dashboard/changeAvatar" class="changeAvatar">
 				<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('/avatar/' . Auth::user()->avatar )}}">
 			</a>
 
@@ -124,7 +125,7 @@
 					@endif
 				</span>
 				<p>Joined on {{explode(' ', Auth::user()->created_at)[0]}}</p>
-				<p>Living in {{Auth::user()->city}}</p>
+				{{-- <p>Living in {{Auth::user()->city}}</p> --}}
 			</div>
 		</div>
 		<div class="col-md-4">

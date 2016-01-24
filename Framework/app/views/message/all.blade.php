@@ -41,13 +41,13 @@
 				@if ($message->read)
 					<a href="/message/{{$message->id}}" class="list-group-item">
 						{{HTML::image('/avatar/' . $message->from_user()->avatar, '', ['class'=>'avatar-xs', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$message->from_user()->username])}}
-						{{Purifier::clean($message->message, 'messageTitle')}}
+						<span class="messageTitle">{{Purifier::clean($message->message, 'messageTitle')}}</span>
 						<span class="pull-right" id="created_at_{{$message->id}}" data-toggle="tooltip" data-placement="right" title="{{$message->created_at}}"></span>
 					</a>
 				@else
 					<a href="/message/{{$message->id}}" class="list-group-item unread">
 						{{HTML::image('/avatar/' . $message->from_user()->avatar, '', ['class'=>'avatar-xs', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$message->from_user()->username])}}
-						{{Purifier::clean($message->message, 'messageTitle')}}
+						<span class="messageTitle">{{Purifier::clean($message->message, 'messageTitle')}}</span>
 						<span class="pull-right" id="created_at_{{$message->id}}" data-toggle="tooltip" data-placement="right" title="{{$message->created_at}}"></span>
 					</a>
 				@endif
