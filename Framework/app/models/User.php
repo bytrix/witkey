@@ -58,12 +58,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	// commenter->comments_from()
-	public function comments_from() {
+	public function commentsFrom() {
 		return $this->hasMany('CommitPivot', 'from_whom_id', 'id');
 	}
 
 	// byCommenter->comments_to()
-	public function comments_to() {
+	public function commentsTo() {
 		return $this->hasMany('CommitPivot', 'user_id', 'id');
 	}
 

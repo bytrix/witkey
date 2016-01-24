@@ -183,7 +183,7 @@
 					@endif
 				</p>
 
-				@if ($user->id != Auth::user()->id)
+				@if (Auth::check() && $user->id != Auth::user()->id)
 					<p ng-controller="followController">
 						<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()" ng-show="follower">
 							<i class="fa fa-minus"></i>
