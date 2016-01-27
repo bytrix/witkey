@@ -26,7 +26,8 @@ Let's keep on track
     python init.py
 
 This will create the directories ignored by .gitignore
-Make sure the permission of the directories above and ``/Framework/app/storage`` is 777
+
+> Make sure the permission of the directories created above and ``/Framework/app/storage`` is 777
 
 **Configure**
 
@@ -67,6 +68,9 @@ Development Progress
 
 - [x] 用户登录/注册/退出
 - [x] 忘记密码
+- [ ] 用户积分
+- [ ] 用户等级
+- [ ] 用户角色控制
 - [ ] OAuth开放认证
 - [x] 任务发布/编辑
 - [x] 校区选择
@@ -81,7 +85,7 @@ Development Progress
 - [x] 任务搜索
 - [x] 任务分类
 - [x] 任务附件上传
-- [ ] 日程安排
+- [ ] 日程安排?
 - [x] 添加好友
 - [x] 雇佣某人
 - [x] 站内信
