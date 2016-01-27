@@ -297,7 +297,7 @@ h1{
 					Search for <span class="text-danger">{{$keyword}}</span>, {{count($tasks)}} task(s) matched.
 				</p>
 			@else
-				<div class="alert alert-danger">No task published ever!</div>
+				<div class="alert alert-danger">{{Lang::get('task.no-task-published-ever')}}</div>
 			@endif
 		@endif
 

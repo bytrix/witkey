@@ -51,7 +51,7 @@
     </tbody>
   </table>
 @else
-  <p class="alert alert-danger">No favorite tasks</p>
+  <p class="alert alert-danger">{{Lang::get('dashboard.no-favorite-tasks')}}</p>
 @endif
 
 {{-- 

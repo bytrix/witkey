@@ -45,6 +45,9 @@
   $(function () {
    $('[data-toggle="tooltip"]').tooltip();
    $('[data-toggle="dropdown"]').dropdown();
+   $('.disabled-dropdown-item').add('.divider').click(function(event) {
+    return false;
+   })
   })
   </script>
 
@@ -55,8 +58,8 @@
 @section('style')
   <style>
     .header-username{
-      height: 22px;
-      line-height: 22px;
+      /*height: 22px;*/
+      /*line-height: 22px;*/
       display: inline-block;
     }
   </style>
@@ -91,13 +94,13 @@
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
               {{-- <div class="dropdown"> --}}
-                <li class="dropdown">
+                <li class="dropdown avatar">
                   
                   <a href="javascript:;" data-toggle="dropdown" style="padding: 12px;">
                     @if (count($unreadMessages))
                       <span class="unread-circle"></span>
                     @endif
-                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0 8px 0 0'])}}
+                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin-bottom: 0px;'])}}
                     <span class="header-username">{{Auth::user()->username}}</span>
                     <span class="caret"></span>
 {{--                     <i class="fa fa-user"></i>
@@ -105,7 +108,8 @@
                   </a>
 
                   <ul class="dropdown-menu">
-                    <li><a>{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    <li><a class="disabled-dropdown-item">{{Auth::user()->email}}</a></li>
+                    <li class="divider"></li>
                     <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
                     @if (count($unreadMessages))
                       <li>

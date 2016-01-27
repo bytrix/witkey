@@ -118,7 +118,7 @@ body {
 }
 
 .avatar-xs{
-  width: 22px;
+  width: 26px;
   margin-right: 12px;
   margin-bottom: 4px;
   vertical-align: middle;
@@ -350,4 +350,17 @@ body {
 
 .badge-danger{
   background-color: #d9534f;
+}
+
+
+.navbar-default .navbar-nav>.avatar.open>a,
+.navbar-default .navbar-nav>.avatar.open>a:focus,
+.navbar-default .navbar-nav>.avatar.open>a:hover{
+  background-color: rgba(0, 0, 0, 0.0);
+}
+.dropdown-menu>li>a.disabled-dropdown-item{
+  color: rgba(0, 0, 0, 0.5);
+}
+.dropdown-menu>li>a.disabled-dropdown-item:hover{
+  background-color: rgba(0, 0, 0, 0.0);
 }

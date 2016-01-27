@@ -60,14 +60,17 @@
 	{{Form::close()}}
 
 	@if (isset($error))
-		<div class="alert alert-danger">{{$error}}</div>
+		<div class="col-md-2"></div>
+		<div class="alert alert-danger col-md-4">{{$error}}</div>
 	@endif
 	@if (isset($message))
-		<div class="alert alert-success">{{$message}}</div>
+		<div class="col-md-2"></div>
+		<div class="alert alert-success col-md-4">{{$message}}</div>
 	@endif
 
 	@if (count($errors->all()))
-		<div class="alert alert-danger">
+		<div class="col-md-2"></div>
+		<div class="alert alert-danger col-md-4">
 			@foreach ($errors->all() as $error)
 				<p>{{$error}}</p>
 			@endforeach

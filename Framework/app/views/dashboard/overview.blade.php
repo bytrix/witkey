@@ -115,7 +115,7 @@
 
 
 			<div class="greeting">
-				<h1>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">{{Auth::user()->username}}</a>!</h1>
+				<h3>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">{{Auth::user()->username}}</a>!</h3>
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if (Auth::user()->gender == 'M')
@@ -130,10 +130,10 @@
 		</div>
 		<div class="col-md-4">
 			<p>
-				<h2>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h2>
+				<h3>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h3>
 			</p>
 			<p>
-				<h2>{{Lang::get('dashboard.balance')}}: &yen; {{Auth::user()->balance}}</h2>
+				<h3>{{Lang::get('dashboard.balance')}}: &yen; {{Auth::user()->balance}}</h3>
 			</p>
 		</div>
 	</div>
@@ -194,9 +194,9 @@
 								{{$orders->links()}}
 							@else
 								<div class="alert alert-warning">
-									No order published recently!
+									{{Lang::get('dashboard.no-order-published')}}
 									<br>
-									<a href="task/create" class="alert-link">Publish Now?</a>
+									<a href="task/create" class="alert-link">{{Lang::get('dashboard.publish-now')}}</a>
 								</div>
 							@endif
 						</div>
@@ -228,9 +228,9 @@
 								</table>
 							@else
 								<div class="alert alert-warning">
-									No task done or doing recently!
+									{{Lang::get('dashboard.no-task-done')}}
 									<br>
-									<a href="task/list" class="alert-link">Do Now?</a>
+									<a href="task/list" class="alert-link">{{Lang::get('dashboard.do-now')}}</a>
 								</div>
 							@endif
 						</div>

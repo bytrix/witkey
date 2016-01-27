@@ -73,9 +73,9 @@
 		{{$orders->links()}}
 	@else
 		<div class="alert alert-warning">
-			No task published recently!
+			{{Lang::get('dashboard.no-order-published')}}
 			<br>
-			<a href="/task/create" class="alert-link">Publish Now?</a>
+			<a href="/task/create" class="alert-link">{{Lang::get('dashboard.publish-now')}}</a>
 		</div>
 	@endif
 

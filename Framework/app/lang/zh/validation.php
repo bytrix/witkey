@@ -24,7 +24,7 @@ return array(
 	"between"              => array(
 		"numeric" => ":attribute 字段介于 :min 和 :max 之间",
 		"file"    => "The :attribute must be between :min and :max kilobytes.",
-		"string"  => "The :attribute must be between :min and :max characters.",
+		"string"  => ":attribute 字段必须介于 :min 位字符和 :max 位字符之间",
 		"array"   => "The :attribute must have between :min and :max items.",
 	),
 	"boolean"              => "The :attribute field must be true or false.",

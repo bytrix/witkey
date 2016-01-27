@@ -50,4 +50,6 @@ return array(
 	'bounty-hosted' => '赏金已托管',
 	'bounty-unhosted' => '赏金未托管',
 
+	'no-task-published-ever' => '没有任务'
+
 );

@@ -25,22 +25,22 @@ class DashboardController extends BaseController {
 	public function overview() {
 
 		$h = date('H');
-		$greeting = 'Welcome';
+		$greeting = '你好';
 
 		if ($h>=0 && $h<5) {
-			$greeting = 'Welcome';
+			$greeting = $greeting;
 
 		} else if($h>=5 && $h<11) {
-			$greeting = 'Morning';
+			$greeting = '早上好';
 
 		} else if($h>=11 && $h<13) {
-			$greeting = 'Good afternoon';
+			$greeting = '中午好';
 
 		} else if($h>=13 && $h<18) {
-			$greeting = 'Good afternoon';
+			$greeting = '下午好';
 
 		} else if($h>=18 && $h<24) {
-			$greeting = 'Good night';
+			$greeting = '晚上好';
 		}
 
 		$orders = Auth::user()->order()->paginate(5);
@@ -134,7 +134,7 @@ class DashboardController extends BaseController {
 			->update($userModify);
 
 		return Redirect::to('dashboard/myProfile')
-			->with('message', 'Data has been saved successfully!');
+			->with('message', Lang::get('message.data-has-been-saved-successfully'));
 	}
 
 	public function postAvatar() {
@@ -204,7 +204,7 @@ class DashboardController extends BaseController {
 		} else {
 
 			return View::make('dashboard.security')
-				->with('error', 'The password is incorrect!');
+				->with('error', Lang::get('message.password-incorrect'));
 		}
 
 		return View::make('dashboard.security');

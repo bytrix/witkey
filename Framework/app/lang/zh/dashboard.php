@@ -31,6 +31,14 @@ return array(
 
 	'old-password' => '旧密码',
 	'new-password' => '新密码',
-	'confirm-new-password' => '确认新密码'
+	'confirm-new-password' => '确认新密码',
+
+	'no-order-published' => '还未发布任务订单',
+	'publish-now' => '立即发布',
+	'no-task-done' => '还未完成任何任务',
+	'do-now' => '马上去做任务',
+
+	'no-favorite-tasks' => '没有收藏任务',
+
 
 );

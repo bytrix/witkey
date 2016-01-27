@@ -242,7 +242,7 @@
 	<div class="form-group">
 		{{Form::label('biography', Lang::get('user.biography'), ['class'=>'control-label col-md-2'])}}
 		<div class="col-md-4">
-			{{Form::text('biography', '', ['class'=>'form-control', 'placeholder'=>'e.g. Gamer/Cartoonist/Singer'])}}
+			{{Form::text('biography', '', ['class'=>'form-control', 'placeholder'=>'如：LOL玩家/漫画迷/业余歌手'])}}
 		</div>
 	</div>
 
@@ -254,9 +254,7 @@
 		</div>
 		<div class="col-md-4">
 			<p class="text-success">
-				Fill with comma,
-				<br>
-				e.g designing,photographing,writing
+				英文逗号分隔，如：设计,摄影,写诗
 			</p>
 		</div>
 	</div>

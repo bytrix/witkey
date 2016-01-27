@@ -18,6 +18,7 @@ return array(
 	'password' => '密码',
 	'confirm-password' => '确认密码',
 	'min-password' => '不能少于 :min 位字符',
+	'password-incorrect' => '密码错误',
 	'edit' => '编辑',
 	'collect' => '收藏',
 	'uncollect' => '取消收藏',
@@ -41,5 +42,7 @@ return array(
 
 	'you-have-no-unread-messages' => '您没有未读消息',
 	'you-have-no-messages' => '您没有消息',
-	'you-have-no-sent-messages' => '您未发送任务消息'
+	'you-have-no-sent-messages' => '您未发送任务消息',
+
+	'data-has-been-saved-successfully' => '数据保存成功',
 );
