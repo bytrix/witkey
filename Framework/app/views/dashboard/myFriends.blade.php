@@ -22,17 +22,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-    <li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-    <li class="active"><a href="/dashboard/myFriends">My Friends<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+    <li class="active"><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}<span class="sr-only">(current)</span></a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 @stop
@@ -41,7 +41,7 @@
 
   @section('header')
   @parent
-    My Friends
+    {{Lang::get('dashboard.my-friend')}}
   @stop
 
     @foreach ($friends as $friend)

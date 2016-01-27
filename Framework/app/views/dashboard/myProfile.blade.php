@@ -98,17 +98,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li><a href="/dashboard">Overview</a></li>
-    <li class="active"><a href="/dashboard/myProfile">My Profile<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-  	<li><a href="/dashboard/myFriends">My Friends</a></li>
+  	<li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li class="active"><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+  	<li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 @stop
@@ -117,7 +117,7 @@
 
 @section('header')
 @parent
-	My Profile
+	{{Lang::get('dashboard.my-profile')}}
 @stop
 
 @if (Session::has('message'))
@@ -146,13 +146,13 @@
 
 	{{-- Username --}}
 	<div class="form-group">
-		{{Form::label('username', 'Username', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('username', Lang::get('user.username'), ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">{{Form::text('username', Auth::user()->username, ['class'=>'form-control'])}}</div>
 	</div>
 
 	{{-- Gender --}}
 	<div class="form-group">
-		{{Form::label('gender', 'Gender', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('gender', Lang::get('user.gender'), ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
 {{-- 
 			<label class="radio-inline">
@@ -164,21 +164,21 @@
 --}}
 			<div class="radio radio-primary radio-inline">
 				{{Form::radio('gender', 'M', Auth::user()->gender == 'M' ? true : false, ['id'=>'male'])}}
-				<label for="male">Male</label>
+				<label for="male">{{Lang::get('user.male')}}</label>
 			</div>
 			<div class="radio radio-danger radio-inline">
 				{{Form::radio('gender', 'F', Auth::user()->gender == 'F' ? true : false, ['id'=>'female'])}}
-				<label for="female">Female</label>
+				<label for="female">{{Lang::get('user.female')}}</label>
 			</div>
 		</div>
 	</div>
 
 	{{-- Tel --}}
 	<div class="form-group">
-		{{Form::label('tel', 'Tel', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('tel', Lang::get('user.tel'), ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+				<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
 				{{Form::text('tel', Auth::user()->tel, ['class'=>'form-control'])}}
 			</div>
 		</div>
@@ -189,7 +189,7 @@
 		{{Form::label('qq', 'QQ', ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
 			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-qq"></i></span>
+				<span class="input-group-addon"><i class="fa fa-qq fa-fw"></i></span>
 				{{Form::text('qq', Auth::user()->qq, ['class'=>'form-control'])}}
 			</div>
 		</div>
@@ -197,11 +197,11 @@
 
 	{{-- Dorm --}}
 	<div class="form-group">
-		{{Form::label('dorm', 'Dorm', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('dorm', Lang::get('user.dorm'), ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
 			{{Form::text(
 				'dorm',
-				Auth::user()->dorm=='no' ? 'Non-resident' : Auth::user()->dorm,
+				Auth::user()->dorm=='no' ? Lang::get('user.non-resident') : Auth::user()->dorm,
 					[
 						'class'=>'form-control',
 						'id'=>'dorm',
@@ -213,7 +213,7 @@
 		<div class="col-sm-4">
 			<div class="checkbox checkbox-primary">
 				{{Form::checkbox('resident', 1, Auth::user()->dorm=='no', ['id'=>'residentCheckbox'])}}
-				<label for="residentCheckbox">Non-resident</label>
+				<label for="residentCheckbox">{{Lang::get('user.non-resident')}}</label>
 			</div>
 			<script>
 			$(function() {
@@ -223,7 +223,7 @@
 						// Non-resident
 						$('#dorm').removeAttr('enabled', 'enabled');
 						$('#dorm').attr('disabled', 'disabled');
-						$('#dorm').val('Non-resident');
+						$('#dorm').val("{{Lang::get('user.non-resident')}}");
 						$('#dorm_state').val('no');
 					} else {
 						// Resident
@@ -240,7 +240,7 @@
 
 	{{-- Biography --}}
 	<div class="form-group">
-		{{Form::label('biography', '', ['class'=>'control-label col-md-2'])}}
+		{{Form::label('biography', Lang::get('user.biography'), ['class'=>'control-label col-md-2'])}}
 		<div class="col-md-4">
 			{{Form::text('biography', '', ['class'=>'form-control', 'placeholder'=>'e.g. Gamer/Cartoonist/Singer'])}}
 		</div>
@@ -248,7 +248,7 @@
 
 	{{-- Skill Tag --}}
 	<div class="form-group">
-		{{Form::label('skill_tag', 'Skill Tag', ['class'=>'control-label col-sm-2'])}}
+		{{Form::label('skill_tag', Lang::get('user.skill'), ['class'=>'control-label col-sm-2'])}}
 		<div class="col-sm-4">
 			{{Form::text('skill_tag', Auth::user()->skill_tag, ['data-role'=>'tagsinput', 'id'=>'skill-tag'])}}
 		</div>
@@ -263,7 +263,7 @@
 
 	<div class="form-group">
 		<span class="col-sm-2"></span>
-		<div class="col-sm-4">{{Form::submit('Save', ['class'=>'btn btn-primary'])}}</div>
+		<div class="col-sm-4">{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}</div>
 	</div>
 
 

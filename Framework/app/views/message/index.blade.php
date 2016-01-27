@@ -6,24 +6,24 @@
 		<li class="active">
 			<a href="/message">
 				<span class="count">{{$unreadMessages->getTotal()}}</span>
-				Unread
+				{{Lang::get('message.unread-message')}}
 			</a>
 		</li>
 		<li>
 			<a href="/message/all">
 				<span class="count">{{$messages->getTotal()}}</span>
-				All Messages
+				{{Lang::get('message.all-message')}}
 			</a>
 		</li>
 		<li>
 			<a href="/message/sent">
 				<span class="count">{{$sentMessages->getTotal()}}</span>
-				Sent Messages
+				{{Lang::get('message.sent-message')}}
 			</a>
 		</li>
 	</ul>
 
-	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">{{Lang::get('message.post-message')}}</a>
 @stop
 
 
@@ -36,14 +36,14 @@
 	@endif
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Unread Messages</h3>
+			<h3 class="panel-title">{{Lang::get('message.unread-message')}}</h3>
 			@if (count($unreadMessages))
 				<a href="/message/read-all" style="position: absolute; top: 10px; right: 30px;">Mark all as read</a>
 			@endif
 		</div>
 		@if (count($unreadMessages) == 0)
 			<div class="panel-body">
-				You have no unread messages
+				{{Lang::get('message.you-have-no-unread-messages')}}
 			</div>
 		@endif
 		<div class="list-group">

@@ -38,7 +38,7 @@
  --}}
 		{{Form::open(['class'=>'form-signin', 'name'=>'loginForm'])}}
 		{{Form::token()}}
-			<h2 class="form-signin-heading">Please sign in</h2>
+			<h2 class="form-signin-heading">{{Lang::get('message.login')}}</h2>
 
 			@if (isset($message) || $errors->get('email'))
 			<div class="form-group has-error">
@@ -48,7 +48,7 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
 					{{-- {{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}} --}}
-					{{Form::email('email', '', ['placeholder'=>'Email', 'class'=>'form-control', 'ng-invalid-email', 'required', 'ng-model'=>'email'])}}
+					{{Form::email('email', '', ['placeholder'=>Lang::get('message.email'), 'class'=>'form-control', 'ng-invalid-email', 'required', 'ng-model'=>'email'])}}
 				</div>
 {{-- 				@if ($errors->first('email'))
 					<p class="help-block">{{$errors->first('email')}}</p>
@@ -63,7 +63,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password', ['placeholder'=>'Password', 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password'])}}
+					{{Form::password('password', ['placeholder'=>Lang::get('message.password'), 'class'=>'form-control', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password'])}}
 				</div>
 {{-- 				@if ($errors->first('password'))
 					<p class="help-block">{{$errors->first('password')}}</p>
@@ -73,17 +73,17 @@
 			<div class="form-group form-inline">
 				<div class="checkbox checkbox-primary">
 					{{Form::checkbox('check', 'remember-me', false, ['id'=>"remember"])}}
-					<label for="remember">Remember me</label>
+					<label for="remember">{{Lang::get('message.remember-me')}}</label>
 				</div>
-				<a href="/password/remind" class="pull-right">Forget password</a>
+				<a href="/password/remind" class="pull-right">{{Lang::get('message.forget-password')}}</a>
 			</div>
 			
 			<div class="form-group">
-				{{Form::submit('Sign in', ['class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'loginForm.$invalid'])}}
+				{{Form::submit(Lang::get('message.login'), ['class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'loginForm.$invalid'])}}
 			</div>
 
 			<div class="form-group">
-				<a href="register">Register for new account</a>
+				<a href="register">{{Lang::get('message.register-for-new-account')}}</a>
 			</div>
 		{{Form::close()}}
 

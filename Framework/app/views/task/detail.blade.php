@@ -130,13 +130,13 @@
 	function favorite() {
 		$('#favorite').addClass('favorited');
 		// $('#favorite').removeClass('fa-heart-o');
-		$('#favorite').attr('data-original-title', 'Uncollect');
+		$('#favorite').attr('data-original-title', "{{Lang::get('message.uncollect')}}");
 		// $('#tip').html('Collected');
 	}
 	function unfavorite() {
 		$('#favorite').removeClass('favorited');
 		// $('#favorite').addClass('fa-heart-o');
-		$('#favorite').attr('data-original-title', 'Collect');
+		$('#favorite').attr('data-original-title', "{{Lang::get('message.collect')}}");
 		// $('#tip').html('Collect');
 	}
 	$(function() {
@@ -252,27 +252,27 @@
 			<div class="page-header">
 					@if ($task->type == 1)
 						<span class="cw-heading-tag cw-reward-heading">
-							REWARD
+							{{Lang::get('task.reward')}}
 							|
 							@if ($task->amount == NULL)
-								unpaid
+								{{Lang::get('task.bounty-unhosted')}}
 							@else
-								paid
+								{{Lang::get('task.bounty-hosted')}}
 							@endif
 						</span>
 					@elseif($task->type == 2)
 						<span class="cw-heading-tag cw-bid-heading">
-							BID
+							{{Lang::get('task.bid')}}
 							|
 							@if ($task->amount == NULL)
-								unpaid
+								{{Lang::get('task.bounty-unhosted')}}
 							@else
-								paid
+								{{Lang::get('task.bounty-hosted')}}
 							@endif
 						</span>
 					@endif
 
-					<div class="pull-right" style="font-size: 25px; margin-top: -10px;">
+					<div class="pull-right" style="font-size: 25px; margin-top: -10px; width: 190px;">
 						{{-- Admin Area --}}
 						<div class="col-sm-4">
 							@if (Auth::check() && $task->user_id == Auth::user()->id)
@@ -303,7 +303,7 @@
 						{{-- Edit Button --}}
 						<div class="col-sm-4">
 							@if (Auth::check() && $task->user_id == Auth::user()->id)
-								<a class="widget" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit">
+								<a class="widget" id="edit" href="/task/{{$task->id}}/edit" data-toggle="tooltip" data-placement="top" title="{{Lang::get('message.edit')}}">
 									<span class="widget-body">
 										<i class="fa fa-edit"></i>
 										<i class="fa fa-edit"></i>
@@ -313,7 +313,7 @@
 						</div>
 						{{-- Favorite Button --}}
 						<div class="col-sm-4">
-							<a class="widget" id="favorite" data-toggle="tooltip" data-placement="top" title="Favorite">
+							<a class="widget" id="favorite" data-toggle="tooltip" data-placement="top" title="{{Lang::get('message.collect')}}">
 								<span class="widget-body">
 									<i class="fa fa-heart-o"></i>
 									<i class="fa fa-heart-o"></i>
@@ -352,7 +352,7 @@
 
 
 			<ol class="breadcrumb">
-				<li><a href="/">Task List</a></li>
+				<li><a href="/">{{Lang::get('task.list')}}</a></li>
 				<li>
 					<a href="/school/{{$task->place}}/category/{{$task->category->id}}">{{$task->category->name}}</a>
 				</li>
@@ -360,22 +360,22 @@
 			
 
 			<div class="col-sm-6">
-				<h4><span>Task ID:</span> #{{$task->id}}</h4>
+				<h4><span>{{Lang::get('task.task-id')}}:</span> #{{$task->id}}</h4>
 				@if ($task->type == 1)
 					<h4>
-						<span>Reward:</span>
+						<span>{{Lang::get('task.amount-reward')}}:</span>
 						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
 					</h4>
 				@elseif ($task->type == 2)
 					<h4>
-						<span>Budget:</span>
+						<span>{{Lang::get('task.amount-budget')}}:</span>
 						<span class="amount cw-text-red price">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
 					</h4>
 				@endif
 			</div>
 
 			<div class="col-sm-6">
-				<h4><span>School location:</span>
+				<h4><span>{{Lang::get('message.school')}}:</span>
 				@if ($task->place == NULL)
 					<span class="label label-danger">No School</span>
 				@else
@@ -384,7 +384,7 @@
 				@endif
 				{{-- <h4><span>Expiration:</span> {{$task->expiration}}</h4> --}}
 				<h4>
-					<span>Expiration:</span>
+					<span>{{Lang::get('task.expiration')}}:</span>
 					@if ($task->state == 4)
 						<span class="text-danger">Task End</span>
 					@elseif($task->state == 5)
@@ -446,10 +446,10 @@
 			<div class="col-sm-12" ng-app>
 				<ul class='task-procedure state' ng-controller="stateController">
 					{{-- <span ng-bind="state"></span> --}}
-					<li class="col-md-3" ng-class="{'light': state == 1, 'active': state == 1 || state == 2 || state == 3 || state == 4}">Enrollment</li>
-					<li class="col-md-3" ng-class="{'light': state == 2, 'active': state == 2 || state == 3 || state == 4}">Performing</li>
-					<li class="col-md-3" ng-class="{'light': state == 3, 'active': state == 3 || state == 4}">Check</li>
-					<li class="col-md-3" ng-class="{'light': state == 4, 'active': state == 4}">Finish</li>
+					<li class="col-md-3" ng-class="{'light': state == 1, 'active': state == 1 || state == 2 || state == 3 || state == 4}">{{Lang::get('task.enrollment')}}</li>
+					<li class="col-md-3" ng-class="{'light': state == 2, 'active': state == 2 || state == 3 || state == 4}">{{Lang::get('task.performing')}}</li>
+					<li class="col-md-3" ng-class="{'light': state == 3, 'active': state == 3 || state == 4}">{{Lang::get('task.check')}}</li>
+					<li class="col-md-3" ng-class="{'light': state == 4, 'active': state == 4}">{{Lang::get('task.finish')}}</li>
 				</ul>
 
 				<script>
@@ -473,7 +473,7 @@
 					</div>
 				@endif
 
-				<h4><strong>Task Description:</strong></h4>
+				<h4><strong>{{Lang::get('task.description')}}:</strong></h4>
 				<div class="detail" id="detail">
 					@if ($attachment != NULL)
 						<p>
@@ -512,14 +512,14 @@
 				<h4>
 					@if (isset($commit_sum))
 						<strong>
-							Bidders
+							{{Lang::get('task.bidder')}}
 							<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}}人投稿">({{count($task->bidder)}}</span>
 							/
 							<span data-toggle="tooltip" data-placement="top" title="{{$commit_sum}}份投稿说明">{{$commit_sum}})</span>
 						</strong>
 					@elseif(isset($quote_sum))
 						<strong>
-							Bidders
+							{{Lang::get('task.bidder')}}
 							<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}}人报价">({{count($task->bidder)}}</span>
 							/
 							<span data-toggle="tooltip" data-placement="top" title="{{$quote_sum}}份报价说明">{{$quote_sum}})</span>
@@ -527,7 +527,7 @@
 
 						@if (count($task->bidder) > 1)
 							<span class="text-danger" style="margin-left: 30px;">
-								Average Quote:
+								{{Lang::get('average-quote')}}:
 								&yen;{{$quote_price_avg}}
 							</span>
 						@endif
@@ -772,14 +772,14 @@
 						@if ($task->type == 2 && $task->user->id != Auth::user()->id && $task->state == 1)
 
 							{{Form::open(['url'=>"/task/$task_id/quote"])}}
-								{{Form::label('price', '')}}
-								{{Form::text('price', '', ['class'=>'form-control', 'placeholder'=>'Price'])}}
-								{{Form::label('summary', 'Summary')}}
+								{{Form::label('price', Lang::get('task.price'))}}
+								{{Form::text('price', '', ['class'=>'form-control', 'placeholder'=>Lang::get('task.price')])}}
+								{{Form::label('summary', Lang::get('task.quote-summary'))}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'Quote summary'])}}
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>Lang::get('task.quote-summary')])}}
 								</div>
 								<div class="form-group">
-									{{Form::submit('Quote', ['class'=>'btn btn-danger'])}}
+									{{Form::submit(Lang::get('task.quote'), ['class'=>'btn btn-danger'])}}
 								</div>
 							{{Form::close()}}
 						@endif
@@ -839,8 +839,8 @@
 					<img src="{{URL::asset('/avatar/' . $task->user->avatar )}}" class="thumbnail avatar-lg">
 				</div>
 				<h4>
-					<span>Publisher: </span>
-					<a data-toggle="tooltip" data-placement="top" title="View TA's profile" href="/user/{{$task->user->id}}">
+					<span>{{Lang::get('message.publisher')}}: </span>
+					<a data-toggle="tooltip" data-placement="top" title="{{Lang::get('message.view-tas-profile')}}" href="/user/{{$task->user->id}}">
 						{{$task->user->username}}
 					</a>
 					<span>
@@ -894,12 +894,12 @@
 					@if ($prev_task != NULL)
 						<div class="cw-pager"><a href="/task/{{$prev_task->id}}" class="text-info">
 							<i class="fa fa-angle-up"></i>
-							prev: {{$prev_task->title}}</a>
+							{{Lang::get('task.task-prev')}}: {{$prev_task->title}}</a>
 						</div>
 					@else
 						<div class="cw-pager"><span class="text-muted">
 							<i class="fa fa-angle-up"></i>
-							prev: none</span>
+							{{Lang::get('task.task-prev')}}: {{Lang::get('message.none')}}</span>
 						</div>
 					@endif
 				</div>
@@ -907,12 +907,12 @@
 					@if ($next_task != NULL)
 						<div class="cw-pager"><a href="/task/{{$next_task->id}}" class="text-info">
 							<i class="fa fa-angle-down"></i>
-							next: {{$next_task->title}}
+							{{Lang::get('task.task-next')}}: {{$next_task->title}}
 						</a></div>
 					@else
 						<div class="cw-pager"><span class="text-muted">
 							<i class="fa fa-angle-down"></i>
-							next: none
+							{{Lang::get('task.task-next')}}: {{Lang::get('message.none')}}
 						</span></div>
 					@endif
 				</div>

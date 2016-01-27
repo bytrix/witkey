@@ -18,7 +18,7 @@
 			border-radius: 4px;
 		}
 		.changeAvatar:hover::before{
-			content: 'Change Avatar';
+			content: "{{Lang::get('dashboard.change-avatar');}}";
 			background-color: rgba(0, 0, 0, 0.4);
 		}
 	</style>
@@ -68,17 +68,17 @@
 
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li class="active"><a href="/dashboard">Overview<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-  	<li><a href="/dashboard/myFriends">My Friends</a></li>
+  	<li class="active"><a href="/dashboard">{{Lang::get('dashboard.overview')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+  	<li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 
@@ -91,7 +91,7 @@
 
 	@section('header')
 	@parent
-		Overview
+		{{Lang::get('dashboard.overview')}}
 	@stop
 
 
@@ -115,7 +115,7 @@
 
 
 			<div class="greeting">
-				<h1>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="Change Username">{{Auth::user()->username}}</a>!</h1>
+				<h1>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">{{Auth::user()->username}}</a>!</h1>
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if (Auth::user()->gender == 'M')
@@ -130,10 +130,10 @@
 		</div>
 		<div class="col-md-4">
 			<p>
-				<h2>Credit: {{Auth::user()->credit}}</h2>
+				<h2>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h2>
 			</p>
 			<p>
-				<h2>Balance: &yen; {{Auth::user()->balance}}</h2>
+				<h2>{{Lang::get('dashboard.balance')}}: &yen; {{Auth::user()->balance}}</h2>
 			</p>
 		</div>
 	</div>
@@ -144,10 +144,10 @@
 				<div class="tabbable" id="tabs-613887">
 					<ul class="nav nav-tabs">
 						<li class="active">
-							 <a href="#panel-463291" data-toggle="tab">My Orders</a>
+							 <a href="#panel-463291" data-toggle="tab">{{Lang::get('dashboard.my-orders')}}</a>
 						</li>
 						<li>
-							 <a href="#panel-239884" data-toggle="tab">Tasks done/doing</a>
+							 <a href="#panel-239884" data-toggle="tab">{{Lang::get('dashboard.task-done')}}</a>
 						</li>
 					</ul>
 
@@ -168,10 +168,10 @@
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
-											<th>ID</th>
-											<th>Title</th>
-											<th>Amount</th>
-											<th>Date</th>
+											<th>{{Lang::get('task.task-id')}}</th>
+											<th>{{Lang::get('task.title')}}</th>
+											<th>{{Lang::get('task.amount')}}</th>
+											<th>{{Lang::get('task.date-published')}}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -209,10 +209,10 @@
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
-											<th>ID</th>
-											<th>Title</th>
-											<th>Amount</th>
-											<th>Date</th>
+											<th>{{Lang::get('task.task-id')}}</th>
+											<th>{{Lang::get('task.title')}}</th>
+											<th>{{Lang::get('task.amount')}}</th>
+											<th>{{Lang::get('task.date-published')}}</th>
 										</tr>
 									</thead>
 									<tbody>

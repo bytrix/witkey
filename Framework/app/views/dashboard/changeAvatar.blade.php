@@ -13,7 +13,7 @@
 			height: 330px;
 		}
 		.img-preview{
-			float: left;
+			/*float: left;*/
 			overflow: hidden;
 		}
 		.img-container{
@@ -99,17 +99,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li class="active"><a href="/dashboard/changeAvatar">Change Avatar<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-  	<li><a href="/dashboard/myFriends">My Friends</a></li>
+  	<li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li class="active"><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+  	<li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 @stop
@@ -118,7 +118,7 @@
 
 @section('header')
 @parent
-	Change Avatar
+	{{Lang::get('dashboard.change-avatar')}}
 @stop
 
 @if (Session::has('message'))
@@ -138,9 +138,11 @@
 			<input type="file" id="inputImage" class="btn btn-primary pull-right">
 		</div>
 		<div class="col-md-4">
-			<div class="img-preview preview-lg" style="border: 1px solid #ccc; margin: 10px; width: 200px; height: 200px;"></div>
-			<div class="img-preview preview-md" style="border: 1px solid #ccc; margin: 10px; width: 40px; height: 40px;"></div>
-			<div class="img-preview preview-sm" style="border: 1px solid #ccc; margin: 10px; width: 22px; height: 22px;"></div>
+			<div class="img-preview preview-lg" style="float: left; border: 1px solid #ccc; margin: 10px; width: 200px; height: 200px;"></div>
+			<div>
+				<div class="img-preview preview-md" style="border: 1px solid #ccc; margin: 10px; width: 40px; height: 40px;"></div>
+				<div class="img-preview preview-sm" style="border: 1px solid #ccc; margin: 10px; width: 22px; height: 22px;"></div>
+			</div>
 		</div>
 	</div>
 
@@ -148,7 +150,7 @@
 
 	<div class="form-group">
 		<span class="col-sm-2"></span>
-		<div class="col-sm-4">{{Form::submit('Save', ['class'=>'btn btn-primary'])}}</div>
+		<div class="col-sm-4">{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}</div>
 	</div>
 
 

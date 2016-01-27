@@ -20,7 +20,7 @@
 
 		{{Form::open(['class'=>'form-signin', 'name'=>'registerForm'])}}
 
-			<h2 class="form-signin-heading">Registration</h2>
+			<h2 class="form-signin-heading">{{Lang::get('message.register')}}</h2>
 
 			@if ($errors->first('email'))
 			<div class="form-group has-error">
@@ -29,7 +29,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-					{{Form::email('email', '', ['placeholder'=>'Email', 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'A valid email address'])}}
+					{{Form::email('email', '', ['placeholder'=>Lang::get('message.email'), 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'A valid email address'])}}
 				</div>
 			</div>
 			@if ($errors->first('password'))
@@ -39,7 +39,7 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password', ['placeholder'=>'Password (More than 6 chars)', 'class'=>'form-control', 'id'=>'password', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'Minimize 6 characters'])}}
+					{{Form::password('password', ['placeholder'=>Lang::get('message.password') . ' (' . Lang::get('message.min-password', array('min'=>6)) . ')', 'class'=>'form-control', 'id'=>'password', 'required', 'ng-minlength'=>'6', 'ng-model'=>'password', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'Minimize 6 characters'])}}
 				</div>
 			</div>
 
@@ -50,17 +50,17 @@
 			@endif
 				<div class="input-group">
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-					{{Form::password('password_confirmation', ['placeholder'=>'Confirm Password', 'class'=>'form-control', 'id'=>'password_confirmation', 'required', 'ng-model'=>'password_confirmation', 'pw-check'=>'password'])}}
+					{{Form::password('password_confirmation', ['placeholder'=>Lang::get('message.confirm-password'), 'class'=>'form-control', 'id'=>'password_confirmation', 'required', 'ng-model'=>'password_confirmation', 'pw-check'=>'password'])}}
 				</div>
 				{{-- <p ng-show="registerForm.password_confirmation.$error.pwmatch">Don't match!</p> --}}
 			</div>
 
 			<div class="form-group">
-				{{Form::submit('Register', ['class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'registerForm.$invalid'])}}
+				{{Form::submit(Lang::get('message.register'), ['class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'registerForm.$invalid'])}}
 			</div>
 
 			<div class="form-group">
-				<a href="login">Register already?</a>
+				<a href="login">{{Lang::get('message.register-already')}}?</a>
 			</div>
 		{{Form::close()}}
 

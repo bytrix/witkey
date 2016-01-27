@@ -5,17 +5,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-    <li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-    <li><a href="/dashboard/myFriends">My Friends</a></li>
+    <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+    <li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li class="active"><a href="/dashboard/authentication">Real-name Authentication<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li class="active"><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 @stop
@@ -29,7 +29,7 @@
 
 	@section('header')
 	@parent
-		Authentication
+		{{Lang::get('dashboard.realname-authentication')}}
 	@stop
 
 	@if ( ! ( Session::has('message') || isset($error) || count($errors->all()) ) )
@@ -67,16 +67,16 @@
 	{{Form::open(['class'=>'form-horizontal', 'enctype'=>'multipart/form-data', 'ng-controller'=>'academyController'])}}
 		{{-- Authenticated --}}
 		<div class="form-group">
-			{{Form::label('authenticated', 'Authenticated', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('authenticated', Lang::get('dashboard.authentication-state'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				@if (Auth::user()->authenticated == 2)
-					<div class="label label-success">Authenticated</div>
+					<div class="label label-success">{{Lang::get('authentication.authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 1)
-					<div class="label label-warning">To-be-authenticated</div>
+					<div class="label label-warning">{{Lang::get('authentication.to-be-authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 0)
-					<div class="label label-default">Non-authenticated</div>
+					<div class="label label-default">{{Lang::get('authentication.non-authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 3)
-					<div class="label label-danger">Authenticated failure</div>
+					<div class="label label-danger">{{Lang::get('authentication.authentication-failure')}}</div>
 				@endif
 				{{-- {{Form::text('authenticated', Auth::user()->authenticated, ['class'=>'form-control'])}} --}}
 			</div>
@@ -84,7 +84,7 @@
 
 		{{-- Real name --}}
 		<div class="form-group">
-			{{Form::label('realname', 'Real Name', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('realname', Lang::get('dashboard.realname'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{Form::text('realname', Auth::user()->realname, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
 			</div>
@@ -92,7 +92,7 @@
 
 		{{-- School --}}
 		<div class="form-group">
-			{{Form::label('school', 'School', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('school', Lang::get('dashboard.school'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{-- {{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}} --}}
 				{{-- {{Form::select('school', $schoolList, Auth::user()->school, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}} --}}
@@ -105,7 +105,7 @@
 						<i class="fa fa-check"></i>
 					</p>
 					<select class="form-control" ng-model="academy" ng-options="academy.name for academy in academyList">
-						<option value="">Select School</option>
+						<option value="">{{Lang::get('dashboard.select-school')}}</option>
 					</select>
 					<input type="hidden" name="school" value="@{{academy.id}}">
 					{{-- <span ng-bind="academy.id"></span> --}}
@@ -123,16 +123,16 @@
 
 		{{-- Enrollment Date --}}
 		<div class="form-group">
-			{{Form::label('enrollment_date', 'Enrollment Date', ['class'=>'control-label col-sm-2', ])}}
+			{{Form::label('enrollment_date', Lang::get('dashboard.enrollment-date'), ['class'=>'control-label col-sm-2', ])}}
 			<div class="col-sm-4">
-				<input id="enrollment_date" type="text" name='enrollment_date' value="{{Auth::user()->enrollment_date}}" placeholder="Enrollment Date" class="form-control"  {{Auth::user()->authenticated == 2 ? 'disabled' : ''}}>
+				<input id="enrollment_date" type="text" name='enrollment_date' value="{{Auth::user()->enrollment_date}}" placeholder="0000-00-00" class="form-control"  {{Auth::user()->authenticated == 2 ? 'disabled' : ''}}>
 			</div>
 		</div>
 
 
 		{{-- Major --}}
 		<div class="form-group">
-			{{Form::label('major', 'Major', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('major', Lang::get('dashboard.major'), ['class'=>'control-label col-sm-2'])}}
 
 			@if (Auth::user()->authenticated == 2)
 				@if (Auth::user()->major == NULL)
@@ -155,7 +155,7 @@
 						<i class="fa fa-check"></i>
 					</p>
 					<select name="major" ng-model="major" ng-options="major.name for major in majorList | academyFilter: academy.id" class="form-control">
-						<option value="">Select Major</option>
+						<option value="">{{Lang::get('dashboard.select-major')}}</option>
 					</select>
 					<input type="hidden" name="major" value="@{{major.id}}">
 					{{-- <span ng-bind="major.name"></span> --}}
@@ -173,7 +173,7 @@
 
 			{{-- Browse Button --}}
 			<div class="form-group">
-				{{Form::label('identify_card', 'Identify Card Image', ['class'=>'control-label col-sm-2'])}}
+				{{Form::label('identify_card', Lang::get('dashboard.student-card'), ['class'=>'control-label col-sm-2'])}}
 				<div class="col-sm-4">
 					{{Form::file('idcard_image', ['class'=>'btn btn-primary'])}}
 				</div>
@@ -195,7 +195,7 @@
 			<div class="form-group">
 				<span class="col-sm-2"></span>
 				<div class="col-sm-4">
-					{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+					{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
 				</div>
 			</div>
 

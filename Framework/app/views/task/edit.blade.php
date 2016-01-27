@@ -28,15 +28,18 @@
 		</ul>
 	</div> --}}
 	<div class="container">
-		<h1 class="page-header">Edit task <small>Task ID #{{$task->id}}</small></h1>
+		<h1 class="page-header">
+			{{Lang::get('task.edit-task')}}
+			{{-- <small>Task ID #{{$task->id}}</small> --}}
+		</h1>
 		{{Form::open(['class'=>'form-custom'])}}
 			<div class="form-group">
-				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
-				{{Form::text('title', $task->title, ['placeholder'=>'Title', 'class'=>'form-control'])}}
+				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
+				{{Form::text('title', $task->title, ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
 			</div>
 			<div class="form-group">
-				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
-				{{Form::textarea('detail', $task->detail, ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
+				{{Form::label('detail', Lang::get('task.detail'), ['class'=>'control-label'])}}
+				{{Form::textarea('detail', $task->detail, ['placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14'])}}
 
 
 {{-- 
@@ -45,8 +48,8 @@
 
 			</div>
 			<div class="form-group">
-				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
-				{{HTML::link("task/$task->id", 'Cancel', ['class'=>'btn btn-default'])}}
+				{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
+				{{HTML::link("task/$task->id", Lang::get('message.cancel'), ['class'=>'btn btn-default'])}}
 			</div>
 
 

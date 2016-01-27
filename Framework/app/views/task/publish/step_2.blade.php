@@ -39,7 +39,7 @@
 
 
 		function changeToReward() {
-			$('#moneyType').html('Reward:');
+			$('#moneyType').html("{{Lang::get('task.amount-reward')}}");
 			// $('#amount').attr('placeholder', 'Reward');
 			$('#budgetCheckboxDiv').hide();
 			$('#inputReward').show();
@@ -50,7 +50,7 @@
 
 		function changeToBid() {
 			budgetCheckboxToggle();
-			$('#moneyType').html('Budget:');
+			$('#moneyType').html("{{Lang::get('task.amount-budget')}}");
 			// $('#amount').attr('placeholder', 'Budget');
 			$('#budgetCheckboxDiv').show();
 			$('#inputBid').show();
@@ -137,14 +137,14 @@
 		</ul>
 	</div> --}}
 	@section('header')
-		Set your reward
+		{{Lang::get('task.set-reward')}}
 	@stop
 
 	@section('task-procedure')
 		<ul class='task-procedure second state'>
-			<li class="first second col-md-4">CREATE TASK</li>
-			<li class="second col-md-4 light">SET REWARD</li>
-			<li class="third col-md-4">PUBLISH</li>
+			<li class="first second col-md-4">{{Lang::get('task.create-task')}}</li>
+			<li class="second col-md-4 light">{{Lang::get('task.set-reward')}}</li>
+			<li class="third col-md-4">{{Lang::get('task.task-publish')}}</li>
 		</ul>
 	@stop
 	<div class="container" ng-app>
@@ -156,18 +156,18 @@
 				<div class="col-md-4">
 					<div class="radio radio-inline">
 						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked'])}}
-						<label for="reward">悬赏</label>
+						<label for="reward">{{Lang::get('task.reward')}}</label>
 					</div>
 					<div class="radio radio-inline">
 						{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
-						<label for="bid">招标</label>
+						<label for="bid">{{Lang::get('task.bid')}}</label>
 					</div>
 				</div>
 			</div>
 
 
 			<div class="form-group">
-				{{Form::label('expiration', 'Expiration Date:', ['class'=>'control-label col-md-2'])}}
+				{{Form::label('expiration', Lang::get('task.when-you-wish-to-finish-task'), ['class'=>'control-label col-md-2'])}}
 				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -186,15 +186,15 @@
 			</div>
 
 			<div class="form-group">
-				{{Form::label('category', '', ['class'=>'control-label col-md-2'])}}
+				{{Form::label('category', Lang::get('category.category'), ['class'=>'control-label col-md-2'])}}
 				<div class="col-md-4">
 					<select name="category_id" id="" class="form-control">
 						<option></option>
 						@foreach ($categories as $category)
 							@if ($category->id == Session::get('category_id'))
-								<option value="{{$category->id}}" selected="selected">{{$category->name}}</option>
+								<option value="{{$category->id}}" selected="selected">{{$category->name_inside}}</option>
 							@else
-								<option value="{{$category->id}}">{{$category->name}}</option>
+								<option value="{{$category->id}}">{{$category->name_inside}}</option>
 							@endif
 						@endforeach
 					</select>
@@ -213,13 +213,13 @@
 					<div class="input-group" id="inputBid">
 						{{Form::text('amountStart', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
 						<div class="input-group-addon">
-							to
+							{{Lang::get('message.to')}}
 						</div>
 						{{Form::text('amountEnd', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
 					</div>
 					<div class="checkbox checkbox-primary" id="budgetCheckboxDiv">
 						{{Form::checkbox('hasBudget', '0', false, ['id'=>'budgetCheckbox'])}}
-						<label for="budgetCheckbox">No budget</label>
+						<label for="budgetCheckbox">{{Lang::get('task.no-budget')}}</label>
 					</div>
 				</div>
 			</div>
@@ -275,18 +275,18 @@
 					@if ($hired_user == NULL || !Session::has('hire'))
 						<a href="/task/create" class="btn btn-default">
 							<i class="fa fa-angle-double-left"></i>
-							Previous
+							{{Lang::get('task.previous')}}
 						</a>
 					@else
 						<a href="/task/create?hire={{$hired_user->id}}" class="btn btn-default">
 							<i class="fa fa-angle-double-left"></i>
-							Previous
+							{{Lang::get('task.previous')}}
 						</a>
 					@endif
 					{{-- <a href="/task/new/bill" class="btn btn-primary">Next</a> --}}
 					{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
 					<button type="submit" class="btn btn-primary">
-						Next
+						{{Lang::get('task.next')}}
 						<i class="fa fa-angle-double-right"></i>
 					</button>
 				</div>
@@ -313,7 +313,7 @@
 			$(function() {
 				$('select').select2({
 					theme: "bootstrap",
-					placeholder: "Choose category"
+					placeholder: "{{Lang::get('category.select')}}"
 				});
 			});
 

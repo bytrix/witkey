@@ -10,18 +10,24 @@
 		<li>
 			<a href="/message">
 				<span class="count">{{count($unreadMessages)}}</span>
-				Unread
+				{{Lang::get('message.unread-message')}}
 			</a>
 		</li>
 		<li>
 			<a href="/message/all">
 				<span class="count">{{count($messages)}}</span>
-				All Messages
+				{{Lang::get('message.all-message')}}
+			</a>
+		</li>
+		<li>
+			<a href="/message/sent">
+				<span class="count">{{$sentMessages->getTotal()}}</span>
+				{{Lang::get('message.sent-message')}}
 			</a>
 		</li>
 	</ul>
 
-	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">{{Lang::get('message.post-message')}}</a>
 @stop
 
 @section('message-board')
@@ -33,7 +39,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Post Message</h3>
+			<h3 class="panel-title">{{Lang::get('message.post-message')}}</h3>
 		</div>
 		<div class="panel-body">
 			{{Form::open()}}
@@ -61,10 +67,10 @@
 
 
 				<div class="form-group">
-					{{Form::textarea('message', '', ['class'=>'form-control', 'placeholder'=>'Message'])}}
+					{{Form::textarea('message', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.message')])}}
 				</div>
 				<div class="form-group">
-					{{Form::submit('Send', ['class'=>'btn btn-primary'])}}
+					{{Form::submit(Lang::get('message.send'), ['class'=>'btn btn-primary'])}}
 				</div>
 			{{Form::close()}}
 		</div>
@@ -84,7 +90,7 @@
 			$('select').select2({
 				theme: "bootstrap",
 				templateResult: formatFriend,
-				placeholder: "Send To"
+				placeholder: "{{Lang::get('message.send-to-whom')}}"
 			});
 		});
 	</script>

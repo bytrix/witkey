@@ -12,11 +12,11 @@
   {{HTML::style('assets/style/font-awesome.min.css')}}
   {{HTML::style(URL::asset('assets/style/awesome-bootstrap-checkbox.css'))}}
   {{HTML::style('assets/style/sticky-footer.css')}}
-  {{-- {{HTML::style(URL::asset('assets/style/select2.css'))}} --}}
-  <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css">
+  {{HTML::style(URL::asset('assets/style/select2.min.css'))}}
+  {{-- <link rel="stylesheet" href="https://select2.github.io/dist/css/select2.min.css"> --}}
   {{-- <link href="http://fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css" rel="stylesheet" /> --}}
-  <link rel="stylesheet" href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css">
-  {{-- {{HTML::style(URL::asset('assets/style/select2-bootstrap.css'))}} --}}
+  {{-- <link rel="stylesheet" href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css"> --}}
+  {{HTML::style(URL::asset('assets/style/select2-bootstrap.css'))}}
   {{HTML::style(URL::asset('assets/style/bootstrap-datetimepicker.min.css'))}}
   {{-- <link rel="stylesheet" href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css"> --}}
   {{HTML::style(URL::asset('assets/style/datepicker3.css'))}}
@@ -30,8 +30,9 @@
   {{HTML::script('assets/script/bootstrap.min.js')}}
   {{HTML::script('assets/script/bootstrap.file-input.js')}}
   {{-- // <script src="http://select2.github.io/select2/select2-3.5.2/select2.js"></script> --}}
+  {{HTML::script(URL::asset('assets/script/select2.full.js'))}}
   {{-- // <script src="http://select2.github.io/dist/js/select2.full.js"></script> --}}
-  <script src="https://select2.github.io/dist/js/select2.min.js"></script>
+  {{-- // <script src="https://select2.github.io/dist/js/select2.min.js"></script> --}}
   {{-- {{HTML::script(URL::asset('assets/script/select2.js'))}} --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.js'))}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datetimepicker.zh-CN.js'))}}
@@ -104,18 +105,19 @@
                   </a>
 
                   <ul class="dropdown-menu">
-                    <li><a href="/dashboard">{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    <li><a>{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
                     @if (count($unreadMessages))
                       <li>
                         <a href="/message">
                           <span class="badge badge-danger pull-right">{{count($unreadMessages)}}</span>
-                          Message
+                          {{Lang::get('message.message')}}
                         </a>
                       </li>
                     @else
-                      <li><a href="/message">Message</a></li>
+                      <li><a href="/message">{{Lang::get('message.message')}}</a></li>
                     @endif
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/logout">{{Lang::get('message.logout')}}</a></li>
                   </ul>
                 </li>
 {{-- 
@@ -142,8 +144,8 @@
               {{-- <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li> --}}
               {{-- <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li> --}}
             @else
-              <li><a href="/login">Login</a></li>
-              <li><a href="/register">Register</a></li>
+              <li><a href="/login">{{Lang::get('message.login')}}</a></li>
+              <li><a href="/register">{{Lang::get('message.register')}}</a></li>
             @endif
           </ul>
         </div><!--/.nav-collapse -->

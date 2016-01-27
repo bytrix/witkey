@@ -47,16 +47,16 @@ class TaskController extends BaseController {
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				'detail' => Input::get('detail'),
 				'hire'   => Input::get('hire'),
-				'file_name' => Input::get('file_name')
-				// 'category_id' => Input::get('category_id')
+				'file_name' => Input::get('file_name'),
+				'category_id' => Input::get('category_id')
 			];
 		} else {
 			$userInput = [
 				'title'  => e(Session::get('title')),
 				'detail' => Session::get('detail'),
 				'hire'   => Session::get('hire'),
-				'file_name' => Session::get('file_name')
-				// 'category_id' => Session::get('category_id')
+				'file_name' => Session::get('file_name'),
+				'category_id' => Session::get('category_id')
 			];
 		}
 
@@ -70,9 +70,10 @@ class TaskController extends BaseController {
 		if ($validator->passes()) {
 			Session::set('title' , $userInput['title']);
 			Session::set('detail', $userInput['detail']);
+			// Session::set('type', $userInput['type']);
 			Session::set('hire', $userInput['hire']);
 			Session::set('file_name', $userInput['file_name']);
-			// Session::set('category_id', $userInput['category_id']);
+			Session::set('category_id', $userInput['category_id']);
 			$categories = Category::all();
 			return View::make('task.publish.step_2')
 				->with('categories', $categories)
@@ -85,6 +86,7 @@ class TaskController extends BaseController {
 
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function step_3() {
+		// dd(Session::all());
 		// dd(var_dump(Input::all()));
 		// Validator::extend('positive', function($attribute, $value, $parameters) {
 		// 	if ($value < 0) {
@@ -106,6 +108,7 @@ class TaskController extends BaseController {
 
 
 		if (Request::method() == "POST") {
+			// dd(Input::all());
 			if (Input::get('type') == 1) {
 				$userInput = [
 					'type'       => Input::get('type'),
@@ -122,35 +125,36 @@ class TaskController extends BaseController {
 					'category_id'=> Input::get('category_id')
 				];
 			}
+			Session::set('type', Input::get('type'));
 		} else {
-			if (Input::get('type') == 1) {
+			if (Session::get('type') == 1) {
 				$userInput = [
 					'type'       => Session::get('type'),
 					'amount'     => Session::get('amount'),
 					'expiration' => Session::get('expiration'),
-					'category_id'=> Input::get('category_id')
+					'category_id'=> Session::get('category_id')
 				];
-			} else if (Input::get('type') == 2) {
+			} else if (Session::get('type') == 2) {
 				$userInput = [
 					'type'       => Session::get('type'),
 					'amountStart'     => Session::get('amountStart'),
 					'amountEnd'     => Session::get('amountEnd'),
 					'expiration' => Session::get('expiration'),
-					'category_id'=> Input::get('category_id')
+					'category_id'=> Session::get('category_id')
 				];
 			}
 		}
 
 
 
-		if ($userInput['type'] == 1) {
+		if (Input::get('type') == 1) {
 			$rules = [
 				'type'       => 'required',
 				'amount'     => 'required|numeric|between:0.1,5000',
 				'expiration' => 'required|date|future',
 				'category_id'=> 'required'
 			];
-		} else  if ($userInput['type'] == 2) {
+		} else  if (Input::get('type') == 2) {
 			$rules = [
 				'type'       => 'required',
 				'amountStart'     => 'required|numeric|between:0.1,5000',
@@ -184,7 +188,9 @@ class TaskController extends BaseController {
 
 			return View::make('task.publish.step_3');
 		} else {
-			return Redirect::back()->withErrors($validator);
+			// return Redirect::back()->withErrors($validator);
+			return Redirect::to('/task/create/step-2')
+				->withErrors($validator);
 		}
 	}
 

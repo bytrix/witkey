@@ -153,8 +153,8 @@
               {{-- <li><a href="/dashboard"><i class="fa fa-user"></i> <strong>{{Auth::user()->username}}</strong></a></li> --}}
               {{-- <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li> --}}
             @else
-              <li><a href="/login">Login</a></li>
-              <li><a href="/register">Register</a></li>
+              <li><a href="/login">{{Lang::get('message.login')}}</a></li>
+              <li><a href="/register">{{Lang::get('message.register')}}</a></li>
             @endif
           </ul>
         </div><!--/.nav-collapse -->

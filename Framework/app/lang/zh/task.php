@@ -1,0 +1,53 @@
+<?php
+
+return array(
+
+	'list' => '任务列表',
+	'task-publish' => '发布任务',
+	'task-id' => '任务编号',
+	'expiration' => '截止日期',
+	'description' => '任务描述',
+	'bidder' => '参与者',
+	'reward' => '悬赏',
+	'bid' => '招标',
+	'amount-reward' => '悬赏金额',
+	'amount-budget' => '预算金额',
+	'no-budget' => '暂无预算',
+	'task-end' => '任务结束',
+	'bidding' => '竞标中',
+
+	'create-task' => '创建任务',
+	'set-reward' => '设置赏金',
+	'edit-task' => '编辑任务',
+
+
+	'title' => '任务标题',
+	'detail' => '任务描述',
+	'amount' => '金额',
+	'date-published' => '发布日期',
+	'rating' => '评价',
+
+	'previous' => '返回',
+	'next' => '继续',
+	'attach-file' => '添加附件',
+	'publish' => '发布',
+
+	'task-prev' => '上一条任务',
+	'task-next' => '下一条任务',
+
+	'enrollment' => '威客报名',
+	'performing' => '执行任务',
+	'check' => '任务验收',
+	'finish' => '任务结束',
+
+	'quote' => '报价',
+	'price' => '价钱',
+	'quote-summary' => '报价说明',
+	'average-quote' => '平均报价',
+
+	'when-you-wish-to-finish-task' => '您希望何时完成任务',
+
+	'bounty-hosted' => '赏金已托管',
+	'bounty-unhosted' => '赏金未托管',
+
+);

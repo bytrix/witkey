@@ -98,13 +98,13 @@ h1{
 			<div class="col-md-3">
 				<h1>
 					<i class="fa fa-list"></i>
-					Task List
+					{{Lang::get('task.list')}}
 				</h1>
 			</div>
 			<div class="col-md-3"></div>
 			<div class="col-md-3">
 				<div class="input-group">
-					<input type="search" name="search" value="" id="search" placeholder="Search" class="form-control">
+					<input type="search" name="search" value="" id="search" placeholder="{{Lang::get('message.search')}}" class="form-control">
 					<span class="input-group-btn">
 						<button type="submit" class="btn btn-default" id="search-btn">
 							<i class="fa fa-search text-color-888"></i>
@@ -118,7 +118,7 @@ h1{
 
             @if ($mySchool != NULL)
               <small class="pull-right school-select-wrap">
-                School:
+                {{Lang::get('message.school')}}:
                 <div class="dropdown pull-right">
                   <a href="javascript:;" class="link school-select" data-toggle="dropdown">
                   	{{$mySchool->name}}
@@ -192,13 +192,13 @@ h1{
 
 	<div class="container category-area" ng-app>
 		<div class="col-md-1">
-			<span class="category-name">Category:</span>
+			<span class="category-name">{{Lang::get('category.category')}}:</span>
 		</div>
 		<div class="col-md-11">
 			<ul class="nav nav-pills">
-				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/">All</a></li>
+				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/">{{Lang::get('category.all')}}</a></li>
 				@foreach ($categories as $category)
-					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name}}</a></li>
+					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name_outside}}</a></li>
 				@endforeach
 			</ul>
 		</div>
@@ -226,16 +226,16 @@ h1{
 							<div class="list-group-item-heading">
 								<div style="float: left; padding-top: 2px">
 									@if ($task->amount == NULL)
-										<i class="fa fa-circle cw-circle-unpaid" data-toggle="tooltip" data-placement="top" title="unpaid"></i>
+										<i class="fa fa-circle cw-circle-unpaid" data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.bounty-unhosted')}}"></i>
 									@else
-										<i class="fa fa-circle cw-circle-paid" data-toggle="tooltip" data-placement="top" title="paid"></i>
+										<i class="fa fa-circle cw-circle-paid" data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.bounty-hosted')}}"></i>
 									@endif
 									@if ($task->type == 1)
 										<span class="label label-success">&yen; {{$task->amount}}</span>
-										<span class="label label-warning">Reward</span>
+										<span class="label label-warning">{{Lang::get('task.reward')}}</span>
 									@elseif($task->type == 2)
 										<span class="label label-success">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
-										<span class="label label-danger">Bid</span>
+										<span class="label label-danger">{{Lang::get('task.bid')}}</span>
 									@endif
 								</div>
 								<span class="cw-task-title" style="display: inline-block; padding-top: 2px;"><a href="/task/{{$task->id}}">{{{$task->title}}}</a></span>
@@ -269,13 +269,13 @@ h1{
 								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
 								<span style="padding-left: 20px;">
 									@if ($task->state == 4)
-										<i class="text-danger fa fa-clock-o" data-placement="right" title="TaskEnd"></i>
-										<span class="text-danger task-state">Task End</span>
+										<i class="text-danger fa fa-clock-o"></i>
+										<span class="text-danger task-state">{{Lang::get('task.task-end')}}</span>
 									@elseif($task->state == 1)
-										<i class="text-success fa fa-clock-o" data-placement="right" title="Bidding..."></i>
-										<span class="text-success task-state">Bidding...</span>
+										<i class="text-success fa fa-clock-o"></i>
+										<span class="text-success task-state">{{Lang::get('task.bidding')}}...</span>
 									@elseif($task->state ==5)
-										<i class="fa fa-clock-o" data-placement="right" title="Expired"></i>
+										<i class="fa fa-clock-o"></i>
 										<span class="task-state">Expired</span>
 									@endif
 								</span>

@@ -6,35 +6,35 @@
 		<li>
 			<a href="/message">
 				<span class="count">{{$unreadMessages->getTotal()}}</span>
-				Unread
+				{{Lang::get('message.unread-message')}}
 			</a>
 		</li>
 		<li>
 			<a href="/message/all">
 				<span class="count">{{$messages->getTotal()}}</span>
-				All Messages
+				{{Lang::get('message.all-message')}}
 			</a>
 		</li>
 		<li class="active">
 			<a href="/message/sent">
 				<span class="count">{{$sentMessages->getTotal()}}</span>
-				Sent Messages
+				{{Lang::get('message.sent-message')}}
 			</a>
 		</li>
 	</ul>
 
-	<a href="/message/send" class="send btn btn-success center-block">Post Message</a>
+	<a href="/message/send" class="send btn btn-success center-block">{{Lang::get('message.post-message')}}</a>
 @stop
 
 
 @section('message-board')
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Sent Messages</h3>
+			<h3 class="panel-title">{{Lang::get('message.sent-message')}}</h3>
 		</div>
 		@if (count($sentMessages) == 0)
 			<div class="panel-body">
-				You have no sent messages
+				{{Lang::get('message.you-have-no-sent-messages')}}
 			</div>
 		@endif
 		<div class="list-group">

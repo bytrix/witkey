@@ -3,17 +3,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-    <li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li><a href="/dashboard/taskOrder">Task Order</a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-    <li><a href="/dashboard/myFriends">My Friends</a></li>
+    <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}</a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+    <li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">Real-name Authentication</a></li>
-    <li class="active"><a href="/dashboard/security">Security<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li class="active"><a href="/dashboard/security">{{Lang::get('dashboard.security')}}<span class="sr-only">(current)</span></a></li>
   </ul>
 </div>
 @stop
@@ -22,14 +22,14 @@
 
 	@section('header')
 	@parent
-		Security
+		{{Lang::get('dashboard.security')}}
 	@stop
 	
 	{{Form::open(['class'=>'form-horizontal'])}}
 
 		{{-- Old Password --}}
 		<div class="form-group">
-			{{Form::label('old_password', 'Old Password', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('old_password', Lang::get('dashboard.old-password'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{Form::password('old_password', ['class'=>'form-control'])}}
 			</div>
@@ -37,7 +37,7 @@
 
 		{{-- New Password --}}
 		<div class="form-group">
-			{{Form::label('password', 'New Password', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('password', Lang::get('dashboard.new-password'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{Form::password('password', ['class'=>'form-control'])}}
 			</div>
@@ -45,7 +45,7 @@
 
 		{{-- Confirm New Password --}}
 		<div class="form-group">
-			{{Form::label('password_confirmation', 'Confirm New Password', ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('password_confirmation', Lang::get('dashboard.confirm-new-password'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
 				{{Form::password('password_confirmation', ['class'=>'form-control'])}}
 			</div>
@@ -54,7 +54,7 @@
 		<div class="form-group">
 			<span class="col-sm-2"></span>
 			<div class="col-sm-4">
-				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+				{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
 			</div>
 		</div>
 	{{Form::close()}}

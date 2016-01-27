@@ -78,14 +78,14 @@
 		</ul>
 	</div> --}}
 	@section('header')
-		Publish your task
+		{{Lang::get('task.create-task')}}
 	@stop
 	
 	@section('task-procedure')
 		<ul class='task-procedure first state'>
-			<li class="first col-md-4 light">CREATE TASK</li>
-			<li class="second col-md-4">SET REWARD</li>
-			<li class="third col-md-4">PUBLISH</li>
+			<li class="first col-md-4 light">{{Lang::get('task.create-task')}}</li>
+			<li class="second col-md-4">{{Lang::get('task.set-reward')}}</li>
+			<li class="third col-md-4">{{Lang::get('task.task-publish')}}</li>
 		</ul>
 	@stop
 
@@ -99,8 +99,8 @@
 				</p>
 			@endif
 			<div class="form-group">
-				{{Form::label('title', 'Title', ['class'=>'control-label'])}}
-				{{Form::text('title', Session::get('title'), ['placeholder'=>'Title', 'class'=>'form-control'])}}
+				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
+				{{Form::text('title', Session::get('title'), ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
 			</div>
 
 			<div class="form-group row">
@@ -134,8 +134,8 @@
 			</div>
 
 			<div class="form-group">
-				{{Form::label('detail', 'Detail', ['class'=>'control-label'])}}
-				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>'Detail', 'class'=>'form-control textarea', 'rows'=>'14'])}}
+				{{Form::label('detail', Lang::get('task.detail'), ['class'=>'control-label'])}}
+				{{Form::textarea('detail', Session::get('detail'), ['placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14'])}}
 			</div>
 
 			<div class="form-group">
@@ -151,7 +151,7 @@
 							{{-- <i class="glyphicon glyphicon-open-file"></i> --}}
 							<i class="fa fa-plus"></i>
 							<input type="file" id="uploader">
-							Attach File
+							{{Lang::get('task.attach-file')}}
 						</span>
 						{{Form::hidden('file_name', '', ['id'=>'file_name'])}}
 					</div>
@@ -161,7 +161,7 @@
 			<div class="form-group">
 				{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
 				<button type="submit" class="btn btn-primary">
-					Next
+					{{Lang::get('task.next')}}
 					<i class="fa fa-angle-double-right"></i>
 				</button>
 			</div>
