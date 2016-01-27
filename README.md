@@ -24,11 +24,25 @@ Let's keep on track
 **Initialize**
 
     python init.py
+
 This will create the directories ignored by .gitignore
+Make sure the permission of the directories above and ``/Framework/app/storage`` is 777
 
 **Configure**
 
 First you need to config the username/password of database in ``Framework/app/config/database.php``.
+
+
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'witkey',
+			'username'  => 'your_database_username',
+			'password'  => 'your_database_password',
+			'charset'   => 'utf8mb4',
+			'collation' => 'utf8mb4_unicode_ci',
+			'prefix'    => '',
+		),
 
 And then create a database named ``witkey`` in mysql:
 

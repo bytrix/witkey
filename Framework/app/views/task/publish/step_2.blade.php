@@ -155,7 +155,7 @@
 				<div class="col-md-2"></div>
 				<div class="col-md-4">
 					<div class="radio radio-inline">
-						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward'])}}
+						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked'])}}
 						<label for="reward">悬赏</label>
 					</div>
 					<div class="radio radio-inline">
