@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"mews/purifier": "dev-master-l4"
+		"mews/purifier": "dev-master-l4",
+		"frozennode/administrator": "4.*"
 	},
 	"autoload": {
 		"classmap": [

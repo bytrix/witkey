@@ -50,6 +50,13 @@ return array(
 	'bounty-hosted' => '赏金已托管',
 	'bounty-unhosted' => '赏金未托管',
 
-	'no-task-published-ever' => '没有任务'
+	'no-task-published-ever' => '没有任务',
+
+	'wait-for-task-end' => '等待任务结束后评价',
+
+	'people-win-bid' => ':number 人中标',
+	'people-participate' => ':number 人参与',
+
+	'no-comment' => '没有评价',
 
 );

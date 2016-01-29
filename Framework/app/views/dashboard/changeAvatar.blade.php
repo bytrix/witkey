@@ -130,7 +130,8 @@
 
 	{{-- Avatar --}}
 	<div class="form-group">
-		{{Form::label('avatar', '', ['class'=>'control-label col-md-2'])}}
+		<span class="col-md-2"></span>
+
 		<div class="col-md-4">
 			<div class="img-container">
 				<img id="image" src="/avatar/{{Auth::user()->avatar}}">

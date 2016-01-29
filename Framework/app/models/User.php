@@ -241,4 +241,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $tag;
 	}
 
+	public function school() {
+		return $this->belongsTo('Academy', 'id');
+	}
+
 }

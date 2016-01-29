@@ -1,13 +1,5 @@
 @extends('user.master')
 
-@section('style')
-	<style>
-		.control-text{
-			padding-top: 7px;
-		}
-	</style>
-@stop
-
 @section('content')
 	<div class="container">
 		<div class="page-header">

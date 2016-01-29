@@ -7,12 +7,15 @@
 			margin-right: 20px;
 			float: right;
 			margin-top: 12px;
-		}
+		}/*
 		.avatar{
 			width: 40px;
 			display: block;
 			float: left;
 			margin-right: 20px;
+		}*/
+		.thumbnail{
+			margin-bottom: 35px;
 		}
 		.content{
 			display: inline-block;
@@ -31,7 +34,7 @@
 
 		<div class="col-md-8">
 			<div class="page-header">
-				<h1>User info</h1>
+				<h1>{{Lang::get('user.profile')}}</h1>
 			</div>
 
 
@@ -44,10 +47,10 @@
 					<div class="tabbable" id="tabs-752296">
 						<ul class="nav nav-tabs">
 							<li class="active">
-								 <a href="#panel-822933" data-toggle="tab">His Task</a>
+								 <a href="#panel-822933" data-toggle="tab">{{Lang::get('user.tas-task')}}</a>
 							</li>
 							<li>
-								 <a href="#panel-486166" data-toggle="tab">Comments</a>
+								 <a href="#panel-486166" data-toggle="tab">{{Lang::get('user.tas-comment')}}</a>
 							</li>
 						</ul>
 						
@@ -73,7 +76,7 @@
 										 	@endif
 									 @endforeach
 								 @else
-								 	<p class="alert alert-danger">No task done.</p>
+								 	<p class="alert alert-danger">{{Lang::get('dashboard.no-task-done')}}</p>
 								 @endif
 								{{-- {{$commits->links()}} --}}
 
@@ -86,6 +89,7 @@
  							 --}}
 							</div>
 							<div class="tab-pane" id="panel-486166">
+							
 								@if (count($comments))
 									<div class="list-group">
 										@foreach ($comments as $comment)
@@ -115,6 +119,8 @@
 											</div>
 										@endforeach
 									</div>
+								@else
+									<p class="alert alert-danger">{{Lang::get('task.no-comment')}}</p>
 								@endif
 							</div>
 						</div>
@@ -136,7 +142,7 @@
 				</div>
 				<h4>
 					@if ($user->authenticated == 2)
-						<i class="fa fa-credit-card text-primary" data-toggle="tooltip" data-placement="left" title="Authenticated User"></i>
+						<i class="fa fa-credit-card text-primary" data-toggle="tooltip" data-placement="left" title="{{Lang::get('user.authenticated-users')}}"></i>
 					@endif
 					{{$user->username}}
 
@@ -164,20 +170,20 @@
 				{{-- <p>Joined on {{explode(' ', $user->created_at)[0]}}</p> --}}
 
 
-				<p data-toggle="tooltip" title="School" data-placement="left">
+				<p data-toggle="tooltip" title="{{Lang::get('user.school')}}" data-placement="left">
 					@if ($user->school != NULL)
 						<i class="fa fa-map-marker"></i>
 						{{Academy::get($user->school)->name}}
 					@endif
 				</p>
 
-				<p data-toggle="tooltip" title="Major" data-placement="left">
+				<p data-toggle="tooltip" title="{{Lang::get('user.major')}}" data-placement="left">
 					@if ($user->major != NULL)
 						{{Major::get($user->major)->name}}
 					@endif
 				</p>
 
-				<p data-toggle="tooltip" title="Grade" data-placement="left">
+				<p data-toggle="tooltip" title="{{Lang::get('user.grade')}}" data-placement="left">
 					@if ($user->enrollment_date != NULL)
 						{{$grade}}
 					@endif

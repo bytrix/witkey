@@ -192,9 +192,9 @@
 						<option></option>
 						@foreach ($categories as $category)
 							@if ($category->id == Session::get('category_id'))
-								<option value="{{$category->id}}" selected="selected">{{$category->name_inside}}</option>
+								<option value="{{$category->id}}" selected="selected">{{$category->name}}</option>
 							@else
-								<option value="{{$category->id}}">{{$category->name_inside}}</option>
+								<option value="{{$category->id}}">{{$category->name}}</option>
 							@endif
 						@endforeach
 					</select>

@@ -90,7 +90,7 @@
 			$('select').select2({
 				theme: "bootstrap",
 				templateResult: formatFriend,
-				placeholder: "{{Lang::get('message.send-to-whom')}}"
+				placeholder: "{{Lang::get('message.send-to-friend')}}"
 			});
 		});
 	</script>

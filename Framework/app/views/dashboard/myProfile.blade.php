@@ -253,7 +253,7 @@
 			{{Form::text('skill_tag', Auth::user()->skill_tag, ['data-role'=>'tagsinput', 'id'=>'skill-tag'])}}
 		</div>
 		<div class="col-md-4">
-			<p class="text-success">
+			<p class="text-success control-text">
 				英文逗号分隔，如：设计,摄影,写诗
 			</p>
 		</div>

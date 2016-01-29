@@ -40,16 +40,7 @@
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.js'))}}
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script> --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.zh-CN.js'))}}
-
-  <script>
-  $(function () {
-   $('[data-toggle="tooltip"]').tooltip();
-   $('[data-toggle="dropdown"]').dropdown();
-   $('.disabled-dropdown-item').add('.divider').click(function(event) {
-    return false;
-   })
-  })
-  </script>
+  {{HTML::script(URL::asset('assets/script/main.js'))}}
 
 
 @section('script')

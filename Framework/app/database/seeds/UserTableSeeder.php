@@ -7,11 +7,12 @@ class UserTableSeeder extends Seeder {
 		User::create([
 			'username'        => 'Campus Witkey',
 			'password'        => '$2y$10$7y9LVEC9WPrs3KrV/BVA5.41Ktxc/LLqjrhKxP0UqO00FtaD2sf4e',	// admin1234
+			'role'            => '3',																// admin
 			'email'           => 'admin@campuswitkey.com',
 			'qq'              => '121782537',
 			'school'          => 1,
 			'dorm'            => 'no',
-			'realname'        => '杰',
+			'truename'        => '杰',
 			'enrollment_date' => '2013-09-10',
 			'major'           => 14,
 			'authenticated'   => 2,

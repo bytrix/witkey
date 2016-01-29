@@ -105,20 +105,20 @@ class DashboardController extends BaseController {
 
 
 	public function postMyProfile() {
-		if (isset($_POST["croppedCanvas"])) {
-			// $category = new Category;
-			// $category->name = $_POST["croppedCanvas"];
-			// $category->save();
-			$croppedCanvas = $_POST["croppedCanvas"];
+		// if (isset($_POST["croppedCanvas"])) {
+		// 	// $category = new Category;
+		// 	// $category->name = $_POST["croppedCanvas"];
+		// 	// $category->save();
+		// 	$croppedCanvas = $_POST["croppedCanvas"];
 
 
-			 $croppedCanvas = str_replace('data:image/png;base64,', '', $croppedCanvas);
-			 $croppedCanvas = str_replace(' ', '+', $croppedCanvas);
-			 $data = base64_decode($croppedCanvas);
+		// 	 $croppedCanvas = str_replace('data:image/png;base64,', '', $croppedCanvas);
+		// 	 $croppedCanvas = str_replace(' ', '+', $croppedCanvas);
+		// 	 $data = base64_decode($croppedCanvas);
 
 
-			file_put_contents(public_path() . '/avatar/' . Auth::user()->avatar, $data);
-		}
+		// 	file_put_contents(public_path() . '/avatar/' . Auth::user()->avatar, $data);
+		// }
 		// dd(Input::all());
 		$userModify = [
 			'username'  => Input::get('username'),
@@ -129,6 +129,10 @@ class DashboardController extends BaseController {
 			'biography' => Input::get('biography'),
 			'skill_tag' => Input::get('skill_tag'),
 		];
+		if ($userModify['username'] != Auth::user()->username) {
+			User::where('id', Auth::user()->id)
+				->update(['random_name'=>false]);
+		}
 
 		User::where('id', Auth::user()->id)
 			->update($userModify);
@@ -215,7 +219,7 @@ class DashboardController extends BaseController {
 		// dd(Input::all());
 		// TEXT INPUT
 		$userInput = [
-			'realname'        => Input::get('realname'),
+			'truename'        => Input::get('truename'),
 			'school'          => Input::get('school'),
 			'idcard_image'    => Input::file('idcard_image'),
 			'major'           => Input::get('major'),
@@ -223,7 +227,7 @@ class DashboardController extends BaseController {
 		];
 
 		$rules = [
-			'realname'        => 'required',
+			'truename'        => 'required',
 			'school'          => 'required',
 			'idcard_image'    => 'mimes:jpeg,jpg,gif,bmp,png|max:1024',
 			'major'           => 'required',
@@ -273,7 +277,7 @@ class DashboardController extends BaseController {
 
 			User::where('id', Auth::user()->id)->update([
 
-				'realname'        => $userInput['realname'],
+				'truename'        => $userInput['truename'],
 				'school'          => $userInput['school'],
 				'major'           => $userInput['major'],
 				'enrollment_date' => $userInput['enrollment_date'],

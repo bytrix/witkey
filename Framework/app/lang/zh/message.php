@@ -2,6 +2,9 @@
 
 return array(
 
+	'campus-witkey' => '校园威客',
+	
+
 	'search' => '搜索',
 	'school' => '校区',
 	'select-school' => '选择校区',
@@ -27,7 +30,10 @@ return array(
 	'none' => ' 没有了',
 	'save' => '保存',
 	'cancel' => '取消',
+	'not-now' => '现在不要',
 	'view-tas-profile' => '查看TA的资料',
+
+	'think-out-a-username' => '想一个好听的用户名',
 
 
 
@@ -36,7 +42,7 @@ return array(
 	'sent-message' => '已发消息',
 	'post-message' => '发消息',
 
-	'send-to-whom' => '发给谁',
+	'send-to-friend' => '发给好友',
 	'send' => '发送',
 
 
@@ -45,4 +51,10 @@ return array(
 	'you-have-no-sent-messages' => '您未发送任务消息',
 
 	'data-has-been-saved-successfully' => '数据保存成功',
+
+	'you-have-no-selected-school' => '您还未选择校区',
+
+	'search-for' => '搜索',
+	'found' => '找到',
+	'task(s)' => '条任务',
 );

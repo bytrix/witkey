@@ -12,6 +12,9 @@
 	.avatar-sm:hover{
 		box-shadow: 0 0 2px #337ab7;
 	}*/
+	.thumbnail{
+		margin-bottom: 35px;
+	}
 	.time{
 		color: #999;
 		display: block;
@@ -206,7 +209,7 @@
 								@else
 									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}">
 								@endif
-								<label for="{{$category->id}}">{{$category->name}}</label>
+								<label for="{{$category->id}}">{{$category->name_outside}}</label>
 							</div>
 						@endforeach
 					</div>
@@ -275,7 +278,7 @@
 					<div class="pull-right" style="font-size: 25px; margin-top: -10px; width: 190px;">
 						{{-- Admin Area --}}
 						<div class="col-sm-4">
-							@if (Auth::check() && $task->user_id == Auth::user()->id)
+							@if (Auth::check() && Auth::user()->role >= 2)
 
 								<div class="dropdown">
 									
@@ -293,9 +296,6 @@
 									</ul>
 
 								</div>
-
-
-
 
 							@endif
 						</div>
@@ -354,7 +354,7 @@
 			<ol class="breadcrumb">
 				<li><a href="/">{{Lang::get('task.list')}}</a></li>
 				<li>
-					<a href="/school/{{$task->place}}/category/{{$task->category->id}}">{{$task->category->name}}</a>
+					<a href="/school/{{$task->place}}/category/{{$task->category->id}}">{{$task->category->name_outside}}</a>
 				</li>
 			</ol>
 			

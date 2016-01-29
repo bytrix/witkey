@@ -14,7 +14,7 @@
   </ul>
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li class="active"><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}<span class="sr-only">(current)</span></a></li>
+    <li class="active"><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}<span class="sr-only">(current)</span></a></li>
     <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
@@ -29,7 +29,7 @@
 
 	@section('header')
 	@parent
-		{{Lang::get('dashboard.realname-authentication')}}
+		{{Lang::get('dashboard.truename-authentication')}}
 	@stop
 
 	@if ( ! ( Session::has('message') || isset($error) || count($errors->all()) ) )
@@ -68,7 +68,7 @@
 		{{-- Authenticated --}}
 		<div class="form-group">
 			{{Form::label('authenticated', Lang::get('dashboard.authentication-state'), ['class'=>'control-label col-sm-2'])}}
-			<div class="col-sm-4">
+			<div class="col-sm-4 control-text">
 				@if (Auth::user()->authenticated == 2)
 					<div class="label label-success">{{Lang::get('authentication.authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 1)
@@ -84,9 +84,9 @@
 
 		{{-- Real name --}}
 		<div class="form-group">
-			{{Form::label('realname', Lang::get('dashboard.realname'), ['class'=>'control-label col-sm-2'])}}
+			{{Form::label('truename', Lang::get('dashboard.truename'), ['class'=>'control-label col-sm-2'])}}
 			<div class="col-sm-4">
-				{{Form::text('realname', Auth::user()->realname, ['class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
+				{{Form::text('truename', Auth::user()->truename, ['placeholder'=>Lang::get('authentication.should-be-the-same-name-as-in-student-card'), 'class'=>'form-control', Auth::user()->authenticated == 2 ? 'disabled' : ''])}}
 			</div>
 		</div>
 

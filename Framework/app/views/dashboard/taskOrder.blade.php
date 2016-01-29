@@ -3,7 +3,7 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li><a href="/dashboard">{{Lang::get('dashboard.task-order')}}</a></li>
+  	<li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
     <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
     <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
     <li class="active"><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}<span class="sr-only">(current)</span></a></li>
@@ -61,6 +61,9 @@
 								<i class="fa fa-star-o"></i>
 								Rate
 							</a>
+						@endif
+						@if ($order->state != 4)
+							<span class="text-muted">{{Lang::get('task.wait-for-task-end')}}</span>
 						@endif
 						@if ($order->winningCommit != NULL && $order->winningCommit->comment['id'] != NULL)
 							<span class="text-muted">Evaluated</span>

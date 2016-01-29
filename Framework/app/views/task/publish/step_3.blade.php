@@ -19,8 +19,55 @@
 </style>
 @stop
 
+@section('script')
+@parent
+	{{HTML::script(URL::asset('/assets/script/angular.js'))}}
+	<script>
+		$(function() {
+			$('#no-school-dialog').modal({
+				backdrop: 'static'
+			});
+			$('select').select2({
+				theme: "bootstrap",
+				placeholder: "{{Lang::get('message.select-school')}}",
+			});
+		})
+	</script>
+@stop
+
 @section('content')
 @parent
+
+@if (!Session::has('school_id_session'))
+	
+<div class="modal fade" id="no-school-dialog" ng-app>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+
+			{{Form::open(['name'=>'selectSchoolForm'])}}
+			<div class="modal-header">
+				<a href="javscript:;" class="close" data-dismiss="modal">&times;</a>
+				<h4 class="modal-title">{{Lang::get('message.you-have-no-selected-school')}}</h4>
+			</div>
+			<div class="modal-body">
+				<select name="academy_id" required ng-model="academy_id">
+					<option></option>
+					@foreach ($schools as $school)
+						<option value="{{$school->id}}">{{$school->name}}</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-default" data-dismiss="modal">{{Lang::get('message.cancel')}}</a>
+				{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary', 'ng-disabled'=>'selectSchoolForm.$invalid'])}}
+			</div>
+			{{Form::close()}}
+
+		</div>
+	</div>
+</div>
+
+@endif
 {{-- 	<div class="container">
 		<h1 class="page-header">
 			Success

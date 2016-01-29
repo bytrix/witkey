@@ -10,7 +10,7 @@ return array(
 	'task-order' => '任务订单',
 	'favorite-task' => '收藏任务',
 	'my-friend' => '我的好友',
-	'realname-authentication' => '实名认证',
+	'truename-authentication' => '实名认证',
 	'security' => '安全设置',
 
 	'credit' => '积分',
@@ -20,7 +20,7 @@ return array(
 	'task-done' => '我完成的任务',
 
 	'authentication-state' => '认证状态',
-	'realname' => '真实姓名',
+	'truename' => '真实姓名',
 	'school' => '学校',
 	'select-school' => '选择学校',
 	'enrollment-date' => '入学日期',

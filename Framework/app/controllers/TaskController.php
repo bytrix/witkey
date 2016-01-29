@@ -109,6 +109,11 @@ class TaskController extends BaseController {
 
 		if (Request::method() == "POST") {
 			// dd(Input::all());
+			if (Input::has('academy_id') && !Session::has('school_id_session')) {
+				$academy_id = Input::get('academy_id');
+				Session::set('school_id_session', $academy_id);
+				return Redirect::to('/task/create/step-3');
+			}
 			if (Input::get('type') == 1) {
 				$userInput = [
 					'type'       => Input::get('type'),
@@ -147,14 +152,37 @@ class TaskController extends BaseController {
 
 
 
-		if (Input::get('type') == 1) {
+
+		// if (Input::get('type') == 1 || Session::get('type') == 1) {
+		// 	$userInput = [
+		// 		'type'       => Input::get('type'),
+		// 		'amount'     => Input::get('amount'),
+		// 		'expiration' => Input::get('expiration'),
+		// 		'category_id'=> Input::get('category_id')
+		// 	];
+		// } else if (Input::get('type') == 2 || Session::get('type') == 2) {
+		// 	$userInput = [
+		// 		'type'       => Input::get('type'),
+		// 		'amountStart'     => Input::get('amountStart'),
+		// 		'amountEnd'     => Input::get('amountEnd'),
+		// 		'expiration' => Input::get('expiration'),
+		// 		'category_id'=> Input::get('category_id')
+		// 	];
+		// }
+		// if (Request::method() == "POST") {
+		// 	Session::set('type', Input::get('type'));
+		// }
+
+
+
+		if (Input::get('type') == 1 || Session::get('type') == 1) {
 			$rules = [
 				'type'       => 'required',
 				'amount'     => 'required|numeric|between:0.1,5000',
 				'expiration' => 'required|date|future',
 				'category_id'=> 'required'
 			];
-		} else  if (Input::get('type') == 2) {
+		} else  if (Input::get('type') == 2 || Session::get('type') == 2) {
 			$rules = [
 				'type'       => 'required',
 				'amountStart'     => 'required|numeric|between:0.1,5000',
@@ -171,27 +199,33 @@ class TaskController extends BaseController {
 		// 	'expiration' => 'required|date|future',
 		// 	'category_id'=> 'required'
 		// ];
-		$validator = Validator::make($userInput, $rules);
-		// dd($userInput);
-		if ($validator->passes()) {
-			Session::set('type'      , $userInput['type']);
+		if (isset($userInput) && isset($rules)) {
+			$validator = Validator::make($userInput, $rules);
+			// dd($userInput);
+			if ($validator->passes()) {
+				Session::set('type'      , $userInput['type']);
 
-			if (Session::get('type') == 1) {
-				Session::set('amount'    , $userInput['amount']);
-			} else if (Session::get('type') == 2) {
-				Session::set('amountStart'    , $userInput['amountStart']);
-				Session::set('amountEnd'    , $userInput['amountEnd']);
+				if (Session::get('type') == 1) {
+					Session::set('amount'    , $userInput['amount']);
+				} else if (Session::get('type') == 2) {
+					Session::set('amountStart'    , $userInput['amountStart']);
+					Session::set('amountEnd'    , $userInput['amountEnd']);
+				}
+
+				Session::set('expiration', $userInput['expiration']);
+				Session::set('category_id', $userInput['category_id']);
+
+				return View::make('task.publish.step_3');
+			} else {
+				// return Redirect::back()->withErrors($validator);
+				return Redirect::to('/task/create/step-2')
+					->withErrors($validator);
 			}
-
-			Session::set('expiration', $userInput['expiration']);
-			Session::set('category_id', $userInput['category_id']);
-
-			return View::make('task.publish.step_3');
 		} else {
-			// return Redirect::back()->withErrors($validator);
-			return Redirect::to('/task/create/step-2')
-				->withErrors($validator);
+			return Redirect::to('/task/create/step-2');
 		}
+
+
 	}
 
 	public function listTask($academy_id) {
@@ -398,6 +432,10 @@ class TaskController extends BaseController {
 
 	public function postCreate() {
 		$academy_id = Session::get('school_id_session');
+		if ($academy_id == NULL) {
+			return Redirect::to('/task/create/step-3')
+				->with('message', 'no-school');
+		}
 		$task             = new Task;
 		$task->user_id    = Auth::user()->id;
 		$task->type       = Session::get('type');

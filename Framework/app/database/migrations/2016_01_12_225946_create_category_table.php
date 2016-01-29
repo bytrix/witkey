@@ -16,8 +16,8 @@ class CreateCategoryTable extends Migration {
 		{
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('name_inside');
-			$table->string('name_outside');
+			$table->string('name');
+			$table->string('name2');
 		});
 	}
 

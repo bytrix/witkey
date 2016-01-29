@@ -85,13 +85,13 @@ Route::group(['before'=>'auth'], function() {
 });
 
 
-Route::get('admin/auth'                               , 'AdminController@auth');
-Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
+// Route::get('admin/auth'                               , 'AdminController@auth');
+// Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
-Route::get('admin/academy'              , 'AdminController@academy');
-Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
-Route::post('admin/academy'             , 'AdminController@postAcademy');
-Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
+// Route::get('admin/academy'              , 'AdminController@academy');
+// Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
+// Route::post('admin/academy'             , 'AdminController@postAcademy');
+// Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
 
 
 
@@ -136,6 +136,10 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 Route::controller('password', 'RemindersController');
 
 
-Route::get('/a', function() {
-	return 'aa';
+Route::get('/test', function() {
+	return View::make('test');
+});
+
+Route::post('/test', function() {
+	return var_dump(Input::all());
 });

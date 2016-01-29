@@ -46,7 +46,11 @@ class Task extends Eloquent {
 	}
 
 	public function category() {
-		return $this->belongsTo('Category');
+		return $this->belongsTo('Category', 'id');
+	}
+
+	public function place() {
+		return $this->belongsTo('Academy', 'id');
 	}
 
 	public function attachment() {
@@ -60,5 +64,6 @@ class Task extends Eloquent {
 	// public function setDetailAttribute($data) {
 	// 	$this->attributes['detail'] = Purifier::clean($data);
 	// }
+
 	
 }

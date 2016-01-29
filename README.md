@@ -33,18 +33,18 @@ This will create the directories ignored by .gitignore
 
 First you need to config the username/password of database in ``Framework/app/config/database.php``.
 
-
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'witkey',
-			'username'  => 'your_database_username',
-			'password'  => 'your_database_password',
-			'charset'   => 'utf8mb4',
-			'collation' => 'utf8mb4_unicode_ci',
-			'prefix'    => '',
-		),
-
+```php
+'mysql' => array(
+	'driver'    => 'mysql',
+	'host'      => 'localhost',
+	'database'  => 'witkey',
+	'username'  => 'your_database_username',
+	'password'  => 'your_database_password',
+	'charset'   => 'utf8mb4',
+	'collation' => 'utf8mb4_unicode_ci',
+	'prefix'    => '',
+),
+```
 And then create a database named ``witkey`` in mysql:
 
     CREATE DATABASE witkey
@@ -71,6 +71,7 @@ Development Progress
 - [ ] 用户积分
 - [ ] 用户等级
 - [ ] 用户角色控制
+- [ ] 校园负责人
 - [ ] OAuth开放认证
 - [x] 任务发布/编辑
 - [x] 校区选择

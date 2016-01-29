@@ -26,8 +26,9 @@
 
 @section('control-panel')
 
-@if (Auth::user()->random_name && !Session::has('visited'))
-	{{Session::set('visited', true)}}
+@if (Auth::user()->random_name == true && Session::get('user_id') != Auth::user()->id)
+{{-- @if (true) --}}
+	{{Session::set('user_id', Auth::user()->id)}}
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog modal-sm" role="document">
@@ -35,21 +36,21 @@
 
 			{{Form::open(['url'=>'/dashboard/set-username'])}}
 				<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Think out a username</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">{{Lang::get('message.think-out-a-username')}}</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						{{Form::text('username', '', ['class'=>'form-control', 'placeholder'=>'Username'])}}
+						{{Form::text('username', '', ['class'=>'form-control', 'placeholder'=>Lang::get('user.username')])}}
 					</div>
 					@if (count($errors))
 						<p class="text-danger">{{$errors->first('username')}}</p>
 					@endif
 				</div>
 				<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Not now</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{Lang::get('message.not-now')}}</button>
 				{{-- <button type="button" class="btn btn-primary">Save</button> --}}
-				{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+				{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
 				</div>
 			{{Form::close()}}
 
@@ -109,7 +110,11 @@
 
 		<div class="col-md-8">
 			<a href="/dashboard/changeAvatar" class="changeAvatar">
-				<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('/avatar/' . Auth::user()->avatar )}}">
+				@if (Auth::user()->avatar != "")
+					<img style="float: left;" class="avatar-md thumbnail img-rounded" src="{{URL::asset('/avatar/' . Auth::user()->avatar )}}">
+				@else
+					<img style="float: left;" class="avatar-md thumbnail img-rounded" src="http://ico.ooopic.com/ajax/iconpng/?id=319012.png">
+				@endif
 			</a>
 
 

@@ -58,12 +58,7 @@
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script> --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.zh-CN.js'))}}
   {{HTML::script(URL::asset('assets/script/particles.js'))}}
-
-  <script>
-  $(function () {
-   $('[data-toggle="tooltip"]').tooltip()
-  })
-  </script>
+  {{HTML::script(URL::asset('assets/script/main.js'))}}
 @section('script')
 @show
 
@@ -101,13 +96,13 @@
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
               {{-- <div class="dropdown"> --}}
-                <li class="dropdown">
+                <li class="dropdown avatar">
                   
                   <a href="javascript:;" data-toggle="dropdown" style="padding: 12px;">
                     @if (count($unreadMessages))
                       <span class="unread-circle"></span>
                     @endif
-                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin: 0 8px 0 0'])}}
+                    {{HTML::image(URL::asset('avatar/' . Auth::user()->avatar), '', ['class'=>'avatar-xs cw-xs-img-rounded', 'style'=>'margin-bottom: 0px;'])}}
                     <span class="header-username">{{Auth::user()->username}}</span>
                     <span class="caret"></span>
 {{--                     <i class="fa fa-user"></i>
@@ -115,18 +110,20 @@
                   </a>
 
                   <ul class="dropdown-menu">
-                    <li><a href="/dashboard">{{Auth::user()->username}} ({{Auth::user()->email}})</a></li>
+                    <li><a class="disabled-dropdown-item">{{Auth::user()->email}}</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
                     @if (count($unreadMessages))
                       <li>
                         <a href="/message">
                           <span class="badge badge-danger pull-right">{{count($unreadMessages)}}</span>
-                          Message
+                          {{Lang::get('message.message')}}
                         </a>
                       </li>
                     @else
-                      <li><a href="/message">Message</a></li>
+                      <li><a href="/message">{{Lang::get('message.message')}}</a></li>
                     @endif
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/logout">{{Lang::get('message.logout')}}</a></li>
                   </ul>
                 </li>
 {{-- 
@@ -168,7 +165,8 @@
 
 
     <div class="jumbotron">
-      <h1>Campus Witkey</h1>
+      {{-- <h1>Campus Witkey</h1> --}}
+      <h1>{{Lang::get('message.campus-witkey')}}</h1>
       <p>Share your witness with school mates</p>
 
       <div class="list-group school-select-list center-block">

@@ -247,10 +247,10 @@ body {
 .school-select-wrap{
   font-size: 18px;
   margin-right: 40px;
+  color: #777;
 }
 .school-select{
   margin-left: 12px;
-  color: #777;
   text-decoration: none;
 }
 .school-select:hover,
@@ -260,7 +260,7 @@ body {
 }
 
 .task-chain{
-  margin-top: 20px;
+  /*margin-top: 20px;*/
   left: 20px;
   /*position: relative;*/
 }
@@ -363,4 +363,9 @@ body {
 }
 .dropdown-menu>li>a.disabled-dropdown-item:hover{
   background-color: rgba(0, 0, 0, 0.0);
+}
+
+
+.control-text{
+  padding-top: 7px;
 }

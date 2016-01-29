@@ -35,14 +35,14 @@
 	background-color: #fcfcfc;
 }
 .task-state{
-	font-size: 12px;
+	font-size: 14px;
 	margin-left: 4px;
 }
 .category-area{
 	margin-bottom: 20px;
 }
 .category-area .nav>li>a{
-	padding: 4px 16px;
+	padding: 4px 22px;
 }
 .category-area .category-name{
 	height: 28px;
@@ -104,7 +104,11 @@ h1{
 			<div class="col-md-3"></div>
 			<div class="col-md-3">
 				<div class="input-group">
-					<input type="search" name="search" value="" id="search" placeholder="{{Lang::get('message.search')}}" class="form-control">
+					@if (isset($keyword))
+						<input type="search" name="search" value="{{$keyword}}" id="search" placeholder="{{Lang::get('message.search')}}" class="form-control">
+					@else
+						<input type="search" name="search" value="" id="search" placeholder="{{Lang::get('message.search')}}" class="form-control">
+					@endif
 					<span class="input-group-btn">
 						<button type="submit" class="btn btn-default" id="search-btn">
 							<i class="fa fa-search text-color-888"></i>
@@ -190,6 +194,9 @@ h1{
 
 	</div>
 
+
+
+
 	<div class="container category-area" ng-app>
 		<div class="col-md-1">
 			<span class="category-name">{{Lang::get('category.category')}}:</span>
@@ -198,15 +205,28 @@ h1{
 			<ul class="nav nav-pills">
 				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/">{{Lang::get('category.all')}}</a></li>
 				@foreach ($categories as $category)
-					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name_outside}}</a></li>
+					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name2}}</a></li>
 				@endforeach
 			</ul>
 		</div>
 	</div>
 
 
+
 	<div class="container">
-		
+	
+		@if (isset($keyword))
+			<p class="text-muted">
+				{{-- Search for <span class="text-danger">{{$keyword}}</span>, {{count($tasks)}} task(s) matched. --}}
+				{{Lang::get('message.search-for')}}
+				<span class="text-danger">{{$keyword}}</span>，
+				{{Lang::get('message.found')}}
+				<span class="text-danger">{{count($tasks)}}</span>
+				{{Lang::get('message.task(s)')}}
+			</p>
+		@else
+		@endif
+
 		@if (count($tasks))
 			<div class="list-group list-group-lg">
 				@foreach ($tasks as $task)
@@ -261,12 +281,12 @@ h1{
 						<div class="item-inline pull-right metadata" style="width: 140px;">
 							<h4>
 								@if ($task->winning_commit_id != 0 || $task->winning_quote_id != 0)
-									<span data-toggle="tooltip" data-placement="top" title="1 people win bid">1</span>
+									<span data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.people-win-bid', array('number'=>1))}}">1</span>
 								@else
-									<span data-toggle="tooltip" data-placement="top" title="0 people win bid">0</span>
+									<span data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.people-win-bid', array('number'=>0))}}">0</span>
 								@endif
 								/
-								<span data-toggle="tooltip" data-placement="top" title="{{count($task->bidder)}} people participate">{{count($task->bidder)}}</span>
+								<span data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.people-participate', array('number'=>count($task->bidder)))}}">{{count($task->bidder)}}</span>
 								<span style="padding-left: 20px;">
 									@if ($task->state == 4)
 										<i class="text-danger fa fa-clock-o"></i>
@@ -292,11 +312,7 @@ h1{
 			{{-- Paginator --}}
 			{{$tasks->links()}}
 		@else
-			@if (isset($keyword))
-				<p class="text-muted">
-					Search for <span class="text-danger">{{$keyword}}</span>, {{count($tasks)}} task(s) matched.
-				</p>
-			@else
+			@if (!isset($keyword))
 				<div class="alert alert-danger">{{Lang::get('task.no-task-published-ever')}}</div>
 			@endif
 		@endif
