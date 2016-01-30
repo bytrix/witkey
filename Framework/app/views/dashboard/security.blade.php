@@ -12,7 +12,7 @@
   </ul>
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}</a></li>
     <li class="active"><a href="/dashboard/security">{{Lang::get('dashboard.security')}}<span class="sr-only">(current)</span></a></li>
   </ul>
 </div>

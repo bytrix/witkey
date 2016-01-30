@@ -12,8 +12,8 @@
     	@if (Session::has('login_alert'))
 			<div class="alert alert-danger login-alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4>Permission Deny</h4>
-				<strong>Warning!</strong>
+			{{-- <a href="javascript:;" class="close" data-dismiss="alert">&times;</a> --}}
+				<h4>权限拒绝</h4>
 				{{Session::get('login_alert')}}
 			</div>
     	@endif

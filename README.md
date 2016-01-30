@@ -159,5 +159,21 @@ Project Fee
 			<td>&yen; 230.00</td>
 			<td>1</td>
 		</tr>
+		<tr>
+			<td>Aliyun ECS server</td>
+			<td>&yen; 58.24</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>Domain Name</td>
+			<td>&yen; 39.00</td>
+			<td>1</td>
+		</tr>
+
+		<tr>
+			<td>Total</td>
+			<td>&yen; 327.24</td>
+			<td>1</td>
+		</tr>
 	</tbody>
 </table>

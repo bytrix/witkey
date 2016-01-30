@@ -108,7 +108,7 @@
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
-    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.realname-authentication')}}</a></li>
+    <li><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}</a></li>
     <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
@@ -141,8 +141,8 @@
 		<div class="col-md-4">
 			<div class="img-preview preview-lg" style="float: left; border: 1px solid #ccc; margin: 10px; width: 200px; height: 200px;"></div>
 			<div>
-				<div class="img-preview preview-md" style="border: 1px solid #ccc; margin: 10px; width: 40px; height: 40px;"></div>
-				<div class="img-preview preview-sm" style="border: 1px solid #ccc; margin: 10px; width: 22px; height: 22px;"></div>
+				<div class="img-preview preview-md" style="border: 1px solid #ccc; margin: 10px; width: 52px; height: 52px;"></div>
+				<div class="img-preview preview-sm" style="border: 1px solid #ccc; margin: 10px; width: 28px; height: 28px;"></div>
 			</div>
 		</div>
 	</div>

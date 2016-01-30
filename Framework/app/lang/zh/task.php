@@ -40,6 +40,7 @@ return array(
 	'check' => '任务验收',
 	'finish' => '任务结束',
 
+	'commit' => '交稿',
 	'quote' => '报价',
 	'price' => '价钱',
 	'quote-summary' => '报价说明',

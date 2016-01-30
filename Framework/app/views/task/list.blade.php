@@ -8,6 +8,7 @@
 }
 .item-inline .avatar-sm{
 	float: left;
+	margin-bottom: -2px;
 }
 .amount{
 	font-size: 16px;
@@ -19,6 +20,7 @@
 .cw-task-title{
 	font-size: 16px;
 	padding-left: 8px;
+	max-width: 700px;
 }
 .cw-task-title a{
 	color: #111;
@@ -278,7 +280,7 @@ h1{
 							</span>
 						</div>
 
-						<div class="item-inline pull-right metadata" style="width: 140px;">
+						<div class="item-inline pull-right metadata" style="width: 170px; padding-top: 10px;">
 							<h4>
 								@if ($task->winning_commit_id != 0 || $task->winning_quote_id != 0)
 									<span data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.people-win-bid', array('number'=>1))}}">1</span>

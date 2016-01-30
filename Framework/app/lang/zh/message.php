@@ -8,7 +8,7 @@ return array(
 	'search' => '搜索',
 	'school' => '校区',
 	'select-school' => '选择校区',
-	'help' => '帮助',
+	'help' => '新手帮助',
 	'message' => '消息',
 	'login' => '登录',
 	'register' => '注册',
@@ -35,6 +35,9 @@ return array(
 
 	'think-out-a-username' => '想一个好听的用户名',
 
+	'unfold' => '展开',
+	'fold' => '折叠',
+
 
 
 	'unread-message' => '未读消息',
@@ -57,4 +60,9 @@ return array(
 	'search-for' => '搜索',
 	'found' => '找到',
 	'task(s)' => '条任务',
+
+
+	'summary' => '说明',
+	'you-are-not-logged-in' => '您未登录',
+	'you-are-not-allowed-unless-pass-through-realname-authentication' => '您未通过实名认证，请点击网站右上角的头像进入用户中心进行实名认证',
 );

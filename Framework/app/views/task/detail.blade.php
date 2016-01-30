@@ -121,6 +121,9 @@
 	.breadcrumb{
 		background-color: rgba(0, 0, 0, 0.0);
 	}
+	.content-heading{
+		margin-top: 40px;
+	}
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
@@ -324,7 +327,7 @@
 					</div>
 					<div></div>
 					<span>
-						<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block" title="{{$task->title}}">
+						<h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 700px;" title="{{$task->title}}">
 							{{$task->title}}
 						</h3>
 					</span>
@@ -473,7 +476,7 @@
 					</div>
 				@endif
 
-				<h4><strong>{{Lang::get('task.description')}}:</strong></h4>
+				<h4 class="content-heading"><strong>{{Lang::get('task.description')}}:</strong></h4>
 				<div class="detail" id="detail">
 					@if ($attachment != NULL)
 						<p>
@@ -489,27 +492,30 @@
 				</div>
 				@if (mb_strlen($task->detail) > 2000)
 					<div>
-						<a href="javascript:;" id="more">
-							More
+						<a href="javascript:;" id="unfold">
+							<i class='fa fa-arrow-down'></i> {{Lang::get('message.unfold')}}
 							 ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)
 						</a>
 					</div>
 					<script>
-					$('#more').click(function() {
+					$('#unfold').attr('folded', "true");
+					$('#unfold').click(function() {
 						// alert($(this).html());
 						$('#detail').html("{{$task->detail}}");
-						if($(this).html() == 'Fold') {
-							// alert('fold');
-							$(this).html("More ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)");
+						if($(this).attr('folded') == "false") {
+							$(this).html("<i class='fa fa-arrow-down'></i> {{Lang::get('message.unfold')}} ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)");
 							$('#detail').html("{{str_limit($task->detail, 2000)}}");
+							$(this).attr('folded', "true");
 						} else {
-							$(this).html('Fold');
+							// alert($(this).attr('folded'));
+							$(this).html("<i class='fa fa-arrow-up'></i> {{Lang::get('message.fold')}}");
+							$(this).attr('folded', "false");
 						}
 					})
 					</script>
 				@endif
 
-				<h4>
+				<h4 class="content-heading">
 					@if (isset($commit_sum))
 						<strong>
 							{{Lang::get('task.bidder')}}
@@ -743,7 +749,7 @@
 
 
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}
-								{{Form::label('summary', 'Summary')}}
+								{{Form::label('summary', Lang::get('message.summary'))}}
 								{{-- <div class="form-group emoji-picker-container">
 									{{Form::textarea('summary', '', ['class'=>'form-control textarea-control textarea', 'placeholder'=>'Commit summary', 'data-emojiable'=>'true', 'rows'=>'5'])}}
 								</div> --}}
@@ -791,12 +797,16 @@
 
 						@if ($task->user->id != Auth::user()->id && $task->state != 4)
 							{{Form::open()}}
-								{{Form::label('summary', 'Summary')}}
+								{{Form::label('summary', Lang::get('message.summary'))}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not allowed unless pass through realname authentication.', 'disabled'])}}
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.you-are-not-allowed-unless-pass-through-realname-authentication'), 'disabled'])}}
 								</div>
 								<div class="form-group">
-									{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
+								@if ($task->type == 1)
+									{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger', 'disabled'])}}
+								@else if ($task->type == 2)
+									{{Form::submit(Lang::get('task.quote'), ['class'=>'btn btn-danger', 'disabled'])}}
+								@endif
 								</div>
 							{{Form::close()}}
 						@endif
@@ -809,12 +819,16 @@
 
 					@if ($task->state != 4)
 						{{Form::open()}}
-							{{Form::label('summary', 'Commit')}}
+							{{Form::label('summary', Lang::get('message.summary'))}}
 							<div class="form-group">
-								{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>'You are not logined in', 'disabled'])}}
+								{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.you-are-not-logged-in'), 'disabled'])}}
 							</div>
 							<div class="form-group">
-								{{Form::submit('Quote', ['class'=>'btn btn-danger', 'disabled'])}}
+								@if ($task->type == 1)
+									{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger', 'disabled'])}}
+								@else if ($task->type == 2)
+									{{Form::submit(Lang::get('task.quote'), ['class'=>'btn btn-danger', 'disabled'])}}
+								@endif
 							</div>
 						{{Form::close()}}
 					@endif
