@@ -31,6 +31,13 @@ return array(
             'CSS.AllowedProperties'    => '',
             'AutoFormat.AutoParagraph' => false,
             'AutoFormat.RemoveEmpty'   => false,
+        ),
+        'plainText' => array(
+            'HTML.Doctype'             => 'XHTML 1.0 Strict',
+            'HTML.Allowed'             => '',
+            'CSS.AllowedProperties'    => '',
+            'AutoFormat.AutoParagraph' => false,
+            'AutoFormat.RemoveEmpty'   => false,
         )
     ),
 );

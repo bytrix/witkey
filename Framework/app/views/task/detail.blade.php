@@ -128,7 +128,7 @@
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
 {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}}
-{{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}}
+{{-- {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}} --}}
 @stop
 
 @section('script')
@@ -183,16 +183,15 @@
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/emoji-picker.js'))}}
 -->
 
-{{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
-{{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
-{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
+{{-- {{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}} --}}
+{{-- {{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}} --}}
+{{-- {{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}} --}}
 
 @stop
 
 @section('content')
 
 	<div class="container">
-
 		{{-- Modify Category Dialog --}}
 		<div class="modal fade" id="categoryDialog">
 			<div class="modal-dialog modal-sm">
@@ -205,16 +204,17 @@
 					</div>
 					<div class="modal-body">
 						{{-- {{Form::select('category', $categories, false, ['class'=>'form-control'])}} --}}
-						@foreach ($categories as $category)
+						{{-- {{dd('dd')}} --}}
+{{-- 						@foreach ($categories as $category)
 							<div class="radio">
-								@if ($category->id == $task->category->id)
+								@if ($category->id == $task->category_id)
 									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}" checked>
 								@else
 									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}">
 								@endif
 								<label for="{{$category->id}}">{{$category->name_outside}}</label>
 							</div>
-						@endforeach
+						@endforeach --}}
 					</div>
 					<div class="modal-footer">
 						<a href="javascript:;" class="btn btn-default" data-dismiss="modal">Close</a>
@@ -353,11 +353,11 @@
 				</script>
 			</div>
 
-
+{{-- {{dd('dd')}} --}}
 			<ol class="breadcrumb">
 				<li><a href="/">{{Lang::get('task.list')}}</a></li>
 				<li>
-					<a href="/school/{{$task->place}}/category/{{$task->category->id}}">{{$task->category->name_outside}}</a>
+					<a href="/school/{{$task->place}}/category/{{$task->category_id}}">{{$task->category->name_outside}}</a>
 				</li>
 			</ol>
 			
@@ -476,6 +476,7 @@
 					</div>
 				@endif
 
+				{{-- count: {{mb_strlen(Purifier::clean($task->detail, 'plainText'))}} --}}
 				<h4 class="content-heading"><strong>{{Lang::get('task.description')}}:</strong></h4>
 				<div class="detail" id="detail">
 					@if ($attachment != NULL)
@@ -490,11 +491,11 @@
 					@endif
 					{{str_limit($task->detail, 2000)}}
 				</div>
-				@if (mb_strlen($task->detail) > 2000)
+				@if (mb_strlen(Purifier::clean($task->detail, 'plainText')) > 2000)
 					<div>
 						<a href="javascript:;" id="unfold">
 							<i class='fa fa-arrow-down'></i> {{Lang::get('message.unfold')}}
-							 ({{ round((mb_strlen($task->detail) - 2000) / mb_strlen($task->detail) * 100) }}%)
+							 ({{ round((mb_strlen(Purifier::clean($task->detail, 'plainText')) - 2000) / mb_strlen(Purifier::clean($task->detail, 'plainText')) * 100) }}%)
 						</a>
 					</div>
 					<script>

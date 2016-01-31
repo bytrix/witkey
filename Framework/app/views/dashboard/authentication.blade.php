@@ -37,7 +37,8 @@
 			<div class="col-md-12 column">
 				<div class="alert alert-dismissable alert-info">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<strong>Tip:</strong> Your authenticated infomation is secret and we will not expose it to others.
+					{{-- <strong>Tip:</strong> Your authenticated infomation is secret and we will not expose it to others. --}}
+					<strong>提醒：</strong>网站将对您的个人信息进行严格保密，不会将它公布或出售给第三方个人或机构，请如实填写，方便我们确认您的真实身份。
 				</div>
 			</div>
 		</div>
@@ -73,6 +74,7 @@
 					<div class="label label-success">{{Lang::get('authentication.authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 1)
 					<div class="label label-warning">{{Lang::get('authentication.to-be-authenticated')}}</div>
+					<span class="text-warning">您的信息大约会在2个工作日内通过核实</span>
 				@elseif (Auth::user()->authenticated == 0)
 					<div class="label label-default">{{Lang::get('authentication.non-authenticated')}}</div>
 				@elseif (Auth::user()->authenticated == 3)

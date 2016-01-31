@@ -10,11 +10,16 @@
 </style>
 
 {{HTML::style(URL::asset('assets/style/font-awesome.min.css'))}}
-{{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}}
+{{-- {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}} --}}
+{{HTML::style(URL::asset('assets/style/simditor.css'))}}
 
-{{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}}
-{{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}}
-{{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}}
+{{-- {{HTML::script(URL::asset('assets/script/wysihtml5x-toolbar.min.js'))}} --}}
+{{-- {{HTML::script(URL::asset('assets/script/handlebars.runtime.min.js'))}} --}}
+{{-- {{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}} --}}
+{{HTML::script(URL::asset('assets/script/module.js'))}}
+{{HTML::script(URL::asset('assets/script/hotkeys.js'))}}
+{{HTML::script(URL::asset('assets/script/simditor.js'))}}
+
 
 @stop
 
@@ -39,7 +44,7 @@
 			</div>
 			<div class="form-group">
 				{{Form::label('detail', Lang::get('task.detail'), ['class'=>'control-label'])}}
-				{{Form::textarea('detail', $task->detail, ['placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14'])}}
+				{{Form::textarea('detail', $task->detail, ['id'=>'editor', 'placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14'])}}
 
 
 {{-- 
@@ -58,12 +63,14 @@
 
 
 	<script>
-  $('.textarea').wysihtml5({
-    toolbar: {
-      fa: true
-    }
-  });
-
+  // $('.textarea').wysihtml5({
+  //   toolbar: {
+  //     fa: true
+  //   }
+  // });
+		var editor = new Simditor({
+			textarea: '#editor'
+		});
 	</script>
 
 

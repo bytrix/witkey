@@ -19,6 +19,11 @@
 
 @section('style')
 	{{HTML::style('assets/style/task-procedure.css')}}
+  <style>
+  img{
+    max-width: 800px;
+  }
+  </style>
 @stop
 {{-- 
 @section('procedure-style')

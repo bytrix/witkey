@@ -137,6 +137,7 @@ References
 - [awesome-bootstrap-checkbox](https://github.com/flatlogic/awesome-bootstrap-checkbox)
 - [particles.js](https://github.com/VincentGarreau/particles.js)
 - [cropper](https://github.com/fengyuanchen/cropper)
+- [jquery_lazyload](https://github.com/tuupola/jquery_lazyload)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png
@@ -170,10 +171,10 @@ Project Fee
 			<td>1</td>
 		</tr>
 
-		<tr>
-			<td>Total</td>
-			<td>&yen; 327.24</td>
-			<td>1</td>
+		<tr class="info">
+			<td><b>Total</b></td>
+			<td><b>&yen; 327.24</b></td>
+			<td><b>3</b></td>
 		</tr>
 	</tbody>
 </table>

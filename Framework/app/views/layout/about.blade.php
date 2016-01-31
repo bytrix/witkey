@@ -96,11 +96,12 @@ $(document).ready(function(){
 
 		<div class="menu" id="myScrollSpy">
 			<ul class="nav nav-tabs nav-stacked" id="myNav">
-				<li><a href="#help-1">什么是校园威客？</a></li>
-				<li><a href="#help-2">How to play with it?</a></li>
-				<li><a href="#help-3">什么是悬赏和招标？</a></li>
-				<li><a href="#help-4">新手流程</a></li>
-				<li><a href="#help-5">出现问题怎么办？</a></li>
+				<li><a href="#help-374FD1497E9F063C">什么是校园威客？</a></li>
+				{{-- <li><a href="#help-2">How to play with it?</a></li> --}}
+				<li><a href="#help-C525ECB61FB0A505">什么是悬赏和招标？</a></li>
+				<li><a href="#help-122089F75308C788">新手流程</a></li>
+				<li><a href="#help-66AE869B5F3AA2AA">如何通过实名认证？</a></li>
+				<li><a href="#help-1AC98EF635CBBE68">出现问题怎么办？</a></li>
 			</ul>
 		</div>
 	<div class="container content">
@@ -111,21 +112,21 @@ $(document).ready(function(){
 			<h1 class="page-header">
 				{{Lang::get('message.help')}}
 			</h1>
-			<h2 id="help-1">什么是校园威客？</h2>
+			<h2 id="help-374FD1497E9F063C">什么是校园威客？</h2>
 			<p>
 				校园威客是一个致力于鼓励学生利用课余时间将知识与技能转化为经济收益的在线平台，在校园威客您可以帮同学买早饭；学习太忙，没时间打游戏？来校园威客找专业的游戏玩家为您打怪升级；临近期末，苦于找不到各种复习资料？来校园威客找超级学霸！在这里，每一个人都可以成为服务提供者或服务享受者，还能赚外快哦！
 			</p>
 		</section>
 
-		<section>
+{{-- 		<section>
 			<h2 id="help-2">How to play with it?</h2>
 			<p>
 				how how how how how how how how
 			</p>
-		</section>
+		</section> --}}
 
 		<section>
-			<h2 id="help-3">什么是悬赏和招标？</h2>
+			<h2 id="help-C525ECB61FB0A505">什么是悬赏和招标？</h2>
 			<p>
 				一般来说，威客任务分为两种：<b>悬赏任务</b>和<b>招标任务</b>。
 			</p>
@@ -135,13 +136,20 @@ $(document).ready(function(){
 		</section>
 
 		<section>
-			<h2 id="help-4">新手流程</h2>
+			<h2 id="help-122089F75308C788">新手流程</h2>
 			<img data-original="https://raw.githubusercontent.com/bytrix/witkey/master/Diagram/Flowchart/Flowchart.png">
+		</section>
+
+		<section>
+			<h2 id="help-66AE869B5F3AA2AA">如何通过实名认证？</h2>
+			<p>
+				用户登录后点击网站右上角的菜单项进入用户中心，在左侧的面板选择实名认证，正确填写个人身份信息后提交，若您的信息核实后无误，即可在2个工作日之内通过实名认证。
+			</p>
 		</section>
 
 
 		<section>
-			<h2 id="help-5">出现问题怎么办？</h2>
+			<h2 id="help-1AC98EF635CBBE68">出现问题怎么办？</h2>
 			<p>
 				若您在交易过程中遇到任何困难、疑惑，请发邮件至 <a href="mailto:problem@campuswitkey.com">problem@campuswitkey.com</a> 详细描述您的问题，我们会尽快为您找到最佳解决方案。
 			</p>

@@ -64,6 +64,7 @@ h1{
 @stop
 
 @section('script')
+@parent
 {{HTML::script(URL::asset('assets/script/moment.js'))}}
 {{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
 {{HTML::script(URL::asset('assets/script/angular.js'))}}

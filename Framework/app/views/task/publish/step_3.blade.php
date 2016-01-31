@@ -123,9 +123,9 @@
 			<p>
 				<strong>{{Lang::get('task.description')}}: </strong>
 				<br>
-				<p class="detail">
+				<div class="detail">
 					{{Session::get('detail')}}
-				</p>
+				</div>
 			</p>
 
 				<div class="end-price-bar">
