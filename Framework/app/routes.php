@@ -18,6 +18,9 @@ Route::get('register'                                  , 'UserController@registe
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
 Route::get('reportUser/{user_id}', 'UserController@report');
+// Route::get('we-want-you', function() {
+// 	return View::make('layout.we-want-you');
+// });
 
 // Route::get('task/list'                              , 'TaskController@listTask');
 Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');
@@ -135,14 +138,14 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 
 Route::controller('password', 'RemindersController');
 
-// App::error(function($exception, $code) {
-// 	return Response::view('error.404', array(), 404);
+App::error(function($exception, $code) {
+	return Response::view('error.404', array(), 404);
+});
+
+// Route::get('/test', function() {
+// 	return View::make('test');
 // });
 
-Route::get('/test', function() {
-	return View::make('test');
-});
-
-Route::post('/test', function() {
-	return var_dump(Input::all());
-});
+// Route::post('/test', function() {
+// 	return var_dump(Input::all());
+// });

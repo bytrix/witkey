@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master-pure')
 
 @section('style')
 @parent
@@ -7,6 +7,7 @@
 		font-size: 140px;
 		margin-top: 40px;
 		color: #aaa;
+		font-family: "3D";
 	}
 	.container{
 		color: #777;

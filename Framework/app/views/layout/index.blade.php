@@ -167,7 +167,14 @@
     <div class="jumbotron">
       {{-- <h1>Campus Witkey</h1> --}}
       <h1>{{Lang::get('message.campus-witkey')}}</h1>
-      <p>Share your witness with school mates</p>
+      {{-- <p>Share your witness with school mates</p> --}}
+      <p style="color: #666;">
+        <span>智慧</span>
+        &bull;
+        <span>分享</span>
+        &bull;
+        <span>创造</span>
+      </p>
 
       <div class="list-group school-select-list center-block">
 

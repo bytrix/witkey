@@ -27,7 +27,13 @@ Let's keep on track
 
 This will create the directories ignored by .gitignore
 
-> Make sure the permission of the directories created above and ``/Framework/app/storage`` is 777
+    ├── /Framework/public/avatar/
+    ├── /Framework/public/file/
+    ├── /Framework/public/student_card/
+    └── /Framework/public/upload/cache/
+
+> Make sure the permission of the directories created above and ``/Framework/app/storage`` is writable.
+> Just change the file's group to ``www-data`` so that it can work under nginx.
 
 **Configure**
 
@@ -125,7 +131,8 @@ Core
 References
 ----------
 
-- [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)
+~~- [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)~~
+- [simditor](https://github.com/mycolorway/simditor)
 - [laravel-jquery-file-upload](https://github.com/zimt28/laravel-jquery-file-upload)
 - [moment.js](https://github.com/moment/moment)
 - [countdown.js](https://github.com/kbwood/countdown)
@@ -138,6 +145,7 @@ References
 - [particles.js](https://github.com/VincentGarreau/particles.js)
 - [cropper](https://github.com/fengyuanchen/cropper)
 - [jquery_lazyload](https://github.com/tuupola/jquery_lazyload)
+- [NProgress](https://github.com/rstacruz/nprogress)
 
 
   [1]: https://github.com/bytrix/witkey/raw/master/Diagram/DataModel/DataModel.png
@@ -161,7 +169,7 @@ Project Fee
 			<td>1</td>
 		</tr>
 		<tr>
-			<td>Aliyun ECS server</td>
+			<td>Aliyun ECS</td>
 			<td>&yen; 58.24</td>
 			<td>1</td>
 		</tr>
@@ -171,7 +179,7 @@ Project Fee
 			<td>1</td>
 		</tr>
 
-		<tr class="info">
+		<tr>
 			<td><b>Total</b></td>
 			<td><b>&yen; 327.24</b></td>
 			<td><b>3</b></td>

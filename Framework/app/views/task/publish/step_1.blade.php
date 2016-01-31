@@ -19,6 +19,8 @@
 
 	{{-- <link rel="stylesheet" href="http://simditor.tower.im/assets/styles/simditor.css"> --}}
 	{{HTML::style(URL::asset('assets/style/simditor.css'))}}
+	{{-- {{HTML::style('https://github.com/mycolorway/simditor-emoji/raw/master/styles/simditor-emoji.css')}} --}}
+	{{HTML::style('assets/style/simditor-emoji.css')}}
 
 @stop
 
@@ -40,6 +42,8 @@
 	{{HTML::script(URL::asset('assets/script/module.js'))}}
 	{{HTML::script(URL::asset('assets/script/hotkeys.js'))}}
 	{{HTML::script(URL::asset('assets/script/simditor.js'))}}
+	{{-- {{HTML::script('https://github.com/mycolorway/simditor-emoji/raw/master/lib/simditor-emoji.js')}} --}}
+	{{HTML::script('assets/script/simditor-emoji.js')}}
 
 
 	@if ($hired_user != NULL)
@@ -158,7 +162,8 @@
 			<div class="form-group">
 				<div class="row clearfix">
 					<div class="col-md-10">
-						<span id="filedata">Upload File</span>
+						{{-- <span id="filedata">{{Lang::get('task.upload-attachment')}}</span> --}}
+						{{Form::label('upload-attachment', Lang::get('task.upload-attachment'), ['class'=>'control-label'])}}
 						<div class="progress">
 							<div class="progress-bar progress-bar-striped active" style="width: 0%" id="progress-bar"></div>
 						</div>
@@ -195,9 +200,13 @@
 			// 	}
 			// });
 			var editor = new Simditor({
-				textarea: "#editor"
+				textarea: "#editor",
+				toolbar: ['bold', 'italic', 'underline', 'strikethrough', 'ol', 'ul', 'blockquote', 'code', 'link', 'image', 'indent', 'outdent', 'emoji'],
+				// toolbar: ['emoji'],
+				emoji: {
+					imagePath: "/assets/image/emoji/"
+				}
 			});
-			// $('img').removeAttr('height');
 			$('#uploader').fileupload({
 				url: '/upload',
 				progress: function(e, data) {

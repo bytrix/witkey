@@ -1,3 +1,8 @@
+/*!
+* Simditor v2.3.6
+* http://simditor.tower.im/
+* 2015-12-21
+*/
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
@@ -469,8 +474,7 @@ Formatter = (function(superClass) {
     this.editor = this._module;
     this._allowedTags = $.merge(['br', 'span', 'a', 'img', 'b', 'strong', 'i', 'strike', 'u', 'font', 'p', 'ul', 'ol', 'li', 'blockquote', 'pre', 'code', 'h1', 'h2', 'h3', 'h4', 'hr'], this.opts.allowedTags);
     this._allowedAttributes = $.extend({
-      // img: ['src', 'alt', 'width', 'height', 'data-non-image'],
-      img: ['src', 'alt', 'data-non-image'],
+      img: ['src', 'alt', 'width', 'height', 'data-non-image'],
       a: ['href', 'target'],
       font: ['color'],
       code: ['class']
@@ -4536,13 +4540,13 @@ ImageButton = (function(superClass) {
         if (!$img.hasClass('loading') && !$img.hasClass('uploading')) {
           return;
         }
-        // width = img.width;
-        // height = img.height;
+        width = img.width;
+        height = img.height;
         $img.attr({
           src: src,
-          // width: width,
-          // height: height,
-          // 'data-image-size': width + ',' + height
+          width: width,
+          height: height,
+          'data-image-size': width + ',' + height
         }).removeClass('loading');
         if ($img.hasClass('uploading')) {
           _this.editor.util.reflow(_this.editor.body);

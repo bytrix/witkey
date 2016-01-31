@@ -31,6 +31,7 @@ return array(
 	'next' => '继续',
 	'attach-file' => '添加附件',
 	'publish' => '发布',
+	'upload-attachment' => '上传附件',
 
 	'task-prev' => '上一条任务',
 	'task-next' => '下一条任务',
