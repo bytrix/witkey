@@ -299,7 +299,7 @@ h1{
 										<span class="text-success task-state">{{Lang::get('task.bidding')}}...</span>
 									@elseif($task->state ==5)
 										<i class="fa fa-clock-o"></i>
-										<span class="task-state">Expired</span>
+										<span class="task-state">{{Lang::get('task.expired')}}</span>
 									@endif
 								</span>
 							</h4>

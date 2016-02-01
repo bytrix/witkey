@@ -391,9 +391,9 @@
 					@if ($task->state == 4)
 						<span class="text-danger">Task End</span>
 					@elseif($task->state == 5)
-						<span class="text-muted" data-toggle="tooltip" data-placement="bottom" title="{{$task->expiration}}">Expired</span>
+						<span class="text-muted" data-toggle="tooltip" data-placement="bottom" title="{{$task->expiration}}">{{Lang::get('task.expired')}}</span>
 						@if (Auth::check() && $task->user->id == Auth::user()->id)
-							<a href="javascript:;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Delay</a>
+							<a href="javascript:;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">{{Lang::get('task.delay')}}</a>
 
 							<!-- Modal -->
 							<div class="modal fade" data-backdrop="static" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -404,7 +404,7 @@
 							      	{{Form::open(['url'=>"/task/$task_id/delay"])}}
 								      <div class="modal-header">
 								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								        <h4 class="modal-title" id="myModalLabel">Set datetime</h4>
+								        <h4 class="modal-title" id="myModalLabel">{{Lang::get('task.delay-time')}}</h4>
 								      </div>
 								      <div class="modal-body">
 											{{Form::text('expiration', '', ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00:00'])}}
@@ -416,9 +416,9 @@
 											</script>
 								      </div>
 								      <div class="modal-footer">
-								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        <button type="button" class="btn btn-default" data-dismiss="modal">{{Lang::get('message.cancel')}}</button>
 								        {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
-								        {{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+								        {{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
 								      </div>
 							      	{{Form::close()}}
 

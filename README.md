@@ -90,6 +90,8 @@ Development Progress
 - [x] 任务收藏
 - [x] 任务评价
 - [x] 任务搜索
+- [ ] 同校校友都在搜
+- [ ] 条件筛选（最新发布、赏金最多、最短周期、只要悬赏、只要招标、认证发布人、最少参与人数）
 - [x] 任务分类
 - [x] 任务附件上传
 - [ ] 日程安排?
@@ -115,7 +117,6 @@ Architecture
 ![Class Diagram][3]
 
 > The 3 diagrams above are made with:
-> 
 > - [MySQL Workbench](http://dev.mysql.com/downloads/workbench/) (E-R Diagram)
 > - [yEd](http://www.yworks.com/products/yed) (Flowchart)
 > - [StarUML](http://staruml.io/) (Class Diagram)
@@ -131,7 +132,7 @@ Core
 References
 ----------
 
-~~- [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)~~
+- ~~[bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg)~~
 - [simditor](https://github.com/mycolorway/simditor)
 - [laravel-jquery-file-upload](https://github.com/zimt28/laravel-jquery-file-upload)
 - [moment.js](https://github.com/moment/moment)
@@ -152,6 +153,32 @@ References
   [2]: https://github.com/bytrix/witkey/raw/master/Diagram/Flowchart/Flowchart.png
   [3]: https://github.com/bytrix/witkey/raw/master/Diagram/ClassDiagram/ClassDiagram.jpg
   
+
+Server Configuration
+--------------------
+
+**Database backup**
+
+Edit the crontab with command: `crontab -e`.
+Save the backup in every morning 3am
+
+    # m h  dom mon dow   command
+      0 3  *   *   *     (ROOT_PATH)/Server/mysql_backup.sh
+
+**Mysql event schedule**
+
+Turn on event scheduler:
+
+    SET GLOBAL event_scheduler=ON;
+Check the status of event scheduler:
+
+    show variables like '%event%';
+
+```
+CREATE EVENT mark_as_expired_task
+ON SCHEDULE EVERY 1 MINUTE
+DO UPDATE Task SET state = 5 WHERE state = 1 AND expiration < now()
+```
 
 Project Fee
 -----------

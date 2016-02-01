@@ -15,6 +15,9 @@ return array(
 	'no-budget' => '暂无预算',
 	'task-end' => '任务结束',
 	'bidding' => '竞标中',
+	'expired' => '任务过期',
+	'delay' => '延期',
+	'delay-time' => '延期时间',
 
 	'create-task' => '创建任务',
 	'set-reward' => '设置赏金',
