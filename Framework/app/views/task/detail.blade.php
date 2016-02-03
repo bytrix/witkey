@@ -737,7 +737,7 @@
 					@endforeach
 
  --}}
-					@if (Auth::user()->realname())
+					@if (Auth::user()->truename())
 
 						@if ($task->winningQuote != NULL && $task->winningQuote->user->id == Auth::user()->id)
 							<p class="text-success">You are the best person the demander wanted, please commit your job soon!</p>
@@ -798,7 +798,7 @@
 							{{Form::open()}}
 								{{Form::label('summary', Lang::get('message.summary'))}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.you-are-not-allowed-unless-pass-through-realname-authentication'), 'disabled'])}}
+									{{Form::textarea('summary', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.you-are-not-allowed-unless-pass-through-truename-authentication'), 'disabled'])}}
 								</div>
 								<div class="form-group">
 								@if ($task->type == 1)
@@ -868,7 +868,7 @@
 				<p>{{Lang::get('user.joined-on')}} {{explode(' ', $task->user->created_at)[0]}}</p>
 
 				@if (strlen($task->user->tel))
-					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
+					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
 						<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
 					@else
 						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
@@ -876,7 +876,7 @@
 				@endif
 
 				@if (strlen($task->user->qq))
-					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
+					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
 						<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
 					@else
 						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskQQ()}}</p>
@@ -884,7 +884,7 @@
 				@endif
 
 				@if (strlen($task->user->dorm))
-					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
+					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
 						@if ($task->user->dorm == 'no')
 							<span class="label label-warning">Non-resident</span>
 						@else

@@ -140,9 +140,9 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 
 Route::controller('password', 'RemindersController');
 
-App::error(function($exception, $code) {
-	return Response::view('error.404', array(), 404);
-});
+// App::error(function($exception, $code) {
+// 	return Response::view('error.404', array(), 404);
+// });
 
 // Route::get('/test', function() {
 // 	var_dump(Auth::user()->getPermission());
