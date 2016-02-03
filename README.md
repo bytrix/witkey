@@ -9,9 +9,9 @@ About myself
 ------------
 
 > Software Engineering student in school, crazy about technology and art
-> but not much proficient. A short time ago, a little conflict happened in
-> school between someone and me so that I have to quit school.
-> However, it's a chance for me because I am able to spend all my spare
+> but not much proficient. A short time ago, someone in the school had
+> a conflict with me so that I have to quit school.
+> However, it's a good opportunity for me because I am able to spend all my spare
 > time in programming learning. To summarize the self-study plan,
 > acturally I did learn something new that I didn't know before like
 > linux, git and web framework.Previously, I did almost work in windows
@@ -30,9 +30,11 @@ This will create the directories ignored by .gitignore
     ├── /Framework/public/avatar/
     ├── /Framework/public/file/
     ├── /Framework/public/student_card/
-    └── /Framework/public/upload/cache/
+    ├── /Framework/public/upload/cache/
+    └── /Server/db_backup/
 
 > Make sure the permission of the directories created above and ``/Framework/app/storage`` is writable.
+>
 > Just change the file's group to ``www-data`` so that it can work under nginx.
 
 **Configure**
@@ -76,8 +78,8 @@ Development Progress
 - [x] 忘记密码
 - [ ] 用户积分
 - [ ] 用户等级
-- [ ] 用户角色控制
-- [ ] 校园负责人
+- [x] 用户角色控制
+- [x] 校区负责人
 - [ ] OAuth开放认证
 - [x] 任务发布/编辑
 - [x] 校区选择
@@ -91,7 +93,7 @@ Development Progress
 - [x] 任务评价
 - [x] 任务搜索
 - [ ] 同校校友都在搜
-- [ ] 条件筛选（最新发布、赏金最多、最短周期、只要悬赏、只要招标、认证发布人、最少参与人数）
+- [ ] 条件筛选（最新发布、最多赏金、最短周期、只要悬赏、只要招标、认证发布人、最少参与人数）
 - [x] 任务分类
 - [x] 任务附件上传
 - [ ] 日程安排?
@@ -160,12 +162,13 @@ Server Configuration
 **Database backup**
 
 Edit the crontab with command: `crontab -e`.
-Save the backup in every morning 3am
+
+Save the backup in every morning 3am:
 
     # m h  dom mon dow   command
       0 3  *   *   *     (ROOT_PATH)/Server/mysql_backup.sh
 
-**Mysql event schedule**
+**Mysql event scheduler**
 
 Turn on event scheduler:
 
@@ -174,10 +177,12 @@ Check the status of event scheduler:
 
     show variables like '%event%';
 
-```
+Create event:
+
+```sql
 CREATE EVENT mark_as_expired_task
 ON SCHEDULE EVERY 1 MINUTE
-DO UPDATE Task SET state = 5 WHERE state = 1 AND expiration < now()
+DO UPDATE Task SET state = 5 WHERE state = 1 AND expiration < now();
 ```
 
 Project Fee

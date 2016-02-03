@@ -393,19 +393,24 @@ class TaskController extends BaseController {
 
 	public function deleteTask($task_id) {
 		// dd(Input::all());
-		$task = Task::where('id', $task_id)->first();
-		$task->state = 0;
-		$task->save();
-		$reasonForDeleting = new ReasonForDeleting;
-		$reasonForDeleting->task_id = $task_id;
-		$reasonForDeleting->reason = Input::get('reason');
-		$reasonForDeleting->save();
-		$message = new Message;
-		$message->from_user_id = Auth::user()->id;
-		$message->to_user_id = $task->user->id;
-		$message->message = "Your task has been closed by campus witkey manager with following reason:<br>----------------------------------------<br>" . Input::get('reason');
-		$message->save();
-		return Redirect::to("/task/$task_id");
+		$validator = Validator::make(['reason'=>Input::get('reason')], ['reason'=>'required']);
+		if ($validator->passes()) {
+			$task = Task::where('id', $task_id)->first();
+			$task->state = 0;
+			$task->save();
+			$reasonForDeleting = new ReasonForDeleting;
+			$reasonForDeleting->task_id = $task_id;
+			$reasonForDeleting->reason = Input::get('reason');
+			$reasonForDeleting->save();
+			$message = new Message;
+			$message->from_user_id = Auth::user()->id;
+			$message->to_user_id = $task->user->id;
+			$message->message = "Your task has been closed by campus witkey manager with following reason:<br>----------------------------------------<br>" . Input::get('reason');
+			$message->save();
+			return Redirect::to("/task/$task_id");
+		} else {
+			return Redirect::back();
+		}
 	}
 
 	public function postEdit($task_id) {

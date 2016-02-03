@@ -19,13 +19,27 @@ class CreateUserTable extends Migration {
 			$table->string('password');
 
 			/*
-				User's role
+				|-------------------------------|
+				|		User's permission       |
+				|-------------------------------|
+				| Manager |  Admin  | Permision |
+				|---------|---------|-----------|
+				|    0    |    0    |     0     |
+				|---------|---------|-----------|
+				|    0    |    1    |     1     |
+				|---------|---------|-----------|
+				|    1    |    0    |     2     |
+				|---------|---------|-----------|
+				|    1    |    1    |     3     |
+				|-------------------------------|
+
 				0: normal user
 				1: vip user
 				2: manager
 				3: admin
 			*/
-			$table->tinyInteger('role')->default(0);
+			// $table->tinyInteger('role')->default(0);
+			$table->tinyInteger('permission')->default(0);
 			$table->char('gender')->default('M');
 			$table->string('email');
 			$table->string('tel')->nullable();

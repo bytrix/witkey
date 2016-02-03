@@ -74,4 +74,22 @@ class AdminController extends BaseController {
 
 	}
 
+
+	public function permission() {
+		$users = User::all();
+		return View::make('admin.permission')
+			->with('users', $users);
+	}
+
+	public function chmod($user_id, $permission) {
+		if ($user_id != 1) {
+			$user = User::where('id', $user_id)->first();
+			if ($user->authenticated == 2) {
+				$user->permission = $permission;
+				$user->save();
+			}
+		}
+		return Redirect::back();
+	}
+
 }

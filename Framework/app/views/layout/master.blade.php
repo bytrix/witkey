@@ -43,6 +43,7 @@
   {{-- // <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script> --}}
   {{HTML::script(URL::asset('assets/script/bootstrap-datepicker.zh-CN.js'))}}
   {{HTML::script(URL::asset('assets/script/main.js'))}}
+  {{-- {{HTML::script(URL::asset('assets/script/angular.js'))}} --}}
   <script>
   $(document).ready(function() {
     NProgress.start();

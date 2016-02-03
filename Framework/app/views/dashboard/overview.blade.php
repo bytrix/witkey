@@ -121,6 +121,13 @@
 
 			<div class="greeting">
 				<h3>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">{{Auth::user()->username}}</a>!</h3>
+				<div>
+					@foreach (Auth::user()->getPermission() as $key=>$value)
+						@if ($value[2])
+							<span class="label label-primary">{{$key}}</span>
+						@endif
+					@endforeach
+				</div>
 				<span>
 					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if (Auth::user()->gender == 'M')
@@ -129,7 +136,7 @@
 						<i class="fa fa-venus"></i>
 					@endif
 				</span>
-				<p>Joined on {{explode(' ', Auth::user()->created_at)[0]}}</p>
+				<p>{{Lang::get('user.joined-on')}} {{explode(' ', Auth::user()->created_at)[0]}}</p>
 				{{-- <p>Living in {{Auth::user()->city}}</p> --}}
 			</div>
 		</div>

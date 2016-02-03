@@ -13,4 +13,4 @@ create_dir('/Framework/public/avatar/')
 create_dir('/Framework/public/file/')
 create_dir('/Framework/public/student_card/')
 create_dir('/Framework/public/upload/cache/')
-
+create_dir('/Server/db_backup/')

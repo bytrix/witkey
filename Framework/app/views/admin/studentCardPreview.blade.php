@@ -70,9 +70,9 @@
 			@endif
 		</p>
 		<p>
-			<strong>Realname:</strong>
-			@if ($user->realname)
-				{{$user->realname}}
+			<strong>Truename:</strong>
+			@if ($user->truename)
+				{{$user->truename}}
 			@else
 				{{-- <span class="glyphicon glyphicon-remove text-danger"></span> --}}
 				<i class="fa fa-times text-danger"></i>

@@ -22,7 +22,7 @@
 <div ng-app>
 
 	<ol class="breadcrumb">
-		<li><a href="/">Admin</a></li>
+		<li><a href="/myAdmin">MyAdmin</a></li>
 		<li class="active">Authentication Board</li>
 	</ol>
 		<div class="col-md-4">
@@ -45,7 +45,7 @@
 				<tr>
 					<th>Status</th>
 					<th>ID</th>
-					<th>Realname</th>
+					<th>Truename</th>
 					<th>Username</th>
 					<th>Email</th>
 					<th>Student Card</th>
@@ -65,13 +65,13 @@
 					</td>
 					<td ng-bind="user.id"></td>
 					<td>
-						<span ng-show="user.realname != null">@{{user.realname}}</span>
-						<i class="fa fa-times text-danger" ng-show="user.realname == null"></i>
+						<span ng-show="user.truename != null">@{{user.truename}}</span>
+						<i class="fa fa-times text-danger" ng-show="user.truename == null"></i>
 					</td>
 					<td ng-bind="user.username"></td>
 					<td ng-bind="user.email"></td>
 					<td>
-						<a href="/admin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
+						<a href="/myAdmin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
 							<img src="{{URL::asset('student_card/')}}/@{{user.student_card}}" alt="">
 						</a>
 						<i class="fa fa-times text-danger" ng-show="user.student_card == null"></i>

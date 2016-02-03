@@ -111,7 +111,7 @@ class ApiController extends BaseController {
 		return User::orderBy('authenticated')->get([
 				'id',
 				'authenticated',
-				'realname',
+				'truename',
 				'username',
 				'email',
 				'student_card',

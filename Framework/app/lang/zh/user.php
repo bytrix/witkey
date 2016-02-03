@@ -20,6 +20,10 @@ return array(
 	'major' => '专业',
 	'grade' => '年级',
 
+	'joined-on' => '加入于',
+
 	'authenticated-user' => '认证用户',
+
+	'your-account-has-been-locked, please-email-administrator-for-help' => "由于某些原因，您的账户已被锁定，如需帮助请致电管理员邮箱：<br><a class='alert-link' href='mailto::email'>:email</a>",
 
 );

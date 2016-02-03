@@ -24,6 +24,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public function getPermission() {
+		$arrPermission = array();
+		$permission = $this->permission;
+		$permission_bit = sprintf('%02d', base_convert($permission, 10, 2));
+		// $str_length = strlen($permission_bit);
+		// for ($i=0; $i < $str_length; $i++) {
+		// 	array_push($arrPermission, substr($permission_bit, $i, $i+1));
+		// }
+		$arrPermission['Manager'] = [2 ,1 , (bool)substr($permission_bit, 0, 1)];
+		$arrPermission['Admin'] = [1, 2, (bool)substr($permission_bit, 1, 2)];
+		return $arrPermission;
+		// return $permission_bit;
+		// return substr($permission_bit, 0, -1);
+	}
+
 	// user(1) -------------- demand(n)
 	public function order() {
 

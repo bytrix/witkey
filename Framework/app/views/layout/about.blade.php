@@ -1,4 +1,4 @@
-@extends('layout.home')
+@extends('layout.master')
 
 @section('style')
 <style>
@@ -61,12 +61,12 @@
 @stop
 
 @section('script')
-@parent
+{{-- @parent --}}
 {{-- {{HTML::script(URL::asset('https://github.com/tuupola/jquery_lazyload/raw/master/jquery.lazyload.js'))}} --}}
 {{HTML::script(URL::asset('assets/script/jquery.lazyload.js'))}}
 <script>
 $(document).ready(function(){
-	$("#myNav").affix();
+	// $("#myNav").affix();
 	$('img').lazyload({
 		placeholder: "http://localhost/assets/image/loading.gif"
 	});
@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 
 		<div class="menu" id="myScrollSpy">
-			<ul class="nav nav-tabs nav-stacked" id="myNav">
+			<ul class="nav nav-tabs nav-stacked">
 				<li><a href="#help-374FD1497E9F063C">什么是校园威客？</a></li>
 				{{-- <li><a href="#help-2">How to play with it?</a></li> --}}
 				<li><a href="#help-C525ECB61FB0A505">什么是悬赏和招标？</a></li>
@@ -131,7 +131,7 @@ $(document).ready(function(){
 				一般来说，威客任务分为两种：<b>悬赏任务</b>和<b>招标任务</b>。
 			</p>
 			<p>
-				悬赏任务通常为简单易操作的任务，任务周期也较短，如发传单、QQ群推广等，因此需要提前托管赏金以保障任务执行者的权益；而悬赏任务通常是任务工程量比较大，如软件开发、海报设计，雇主无法预估任务所需的执行周期与价格，因此可以先给出一个大概的价格范围，然后反复与威客协商价格，待威客给出一个确定的报价后，雇主才托管赏金。
+				悬赏任务通常为简单易操作的任务，任务周期也较短，如发传单、QQ群推广等，因此需要提前托管赏金以保障任务执行者的权益；而悬赏任务通常是任务工程量比较大，如软件开发、海报设计，雇主无法预估任务所需的执行周期与价格，因此可以先给出一个大概的价格范围，然后反复与威客协商价格，待威客给出一个确定的报价后，雇主才开始托管赏金。
 			</p>
 		</section>
 

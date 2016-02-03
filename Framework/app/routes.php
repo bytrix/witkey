@@ -17,7 +17,7 @@ Route::get('logout'                                    , 'UserController@logout'
 Route::get('register'                                  , 'UserController@register');
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
-Route::get('reportUser/{user_id}', 'UserController@report');
+Route::get('reportUser/{user_id}', array('before'=>'permision', 'uses'=>'UserController@report'));
 // Route::get('we-want-you', function() {
 // 	return View::make('layout.we-want-you');
 // });
@@ -88,14 +88,16 @@ Route::group(['before'=>'auth'], function() {
 });
 
 
-// Route::get('admin/auth'                               , 'AdminController@auth');
-// Route::get('admin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
+Route::get('myAdmin/auth'                               , 'AdminController@auth');
+Route::get('myAdmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
-// Route::get('admin/academy'              , 'AdminController@academy');
-// Route::get('admin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
-// Route::post('admin/academy'             , 'AdminController@postAcademy');
-// Route::post('admin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
+Route::get('myAdmin/academy'              , 'AdminController@academy');
+Route::get('myAdmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
+Route::post('myAdmin/academy'             , 'AdminController@postAcademy');
+Route::post('myAdmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
 
+Route::get('myAdmin/permission', 'AdminController@permission');
+Route::get('myAdmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
 
 
 
@@ -138,13 +140,13 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 
 Route::controller('password', 'RemindersController');
 
-App::error(function($exception, $code) {
-	return Response::view('error.404', array(), 404);
-});
-
-// Route::get('/test', function() {
-// 	return View::make('test');
+// App::error(function($exception, $code) {
+// 	return Response::view('error.404', array(), 404);
 // });
+
+Route::get('/test', function() {
+	var_dump(Auth::user()->getPermission());
+});
 
 // Route::post('/test', function() {
 // 	return var_dump(Input::all());

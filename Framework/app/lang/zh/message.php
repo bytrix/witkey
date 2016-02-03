@@ -21,7 +21,10 @@ return array(
 	'password' => '密码',
 	'confirm-password' => '确认密码',
 	'min-password' => '不能少于 :min 位字符',
-	'password-incorrect' => '密码错误',
+	'password-incorrect' => '密码错误',	// old password in dashboard security
+	'email-or-password-is-incorrect!' => '邮箱或密码错误！',
+
+	'admin' => '管理',
 	'edit' => '编辑',
 	'collect' => '收藏',
 	'uncollect' => '取消收藏',
@@ -47,6 +50,8 @@ return array(
 
 	'send-to-friend' => '发给好友',
 	'send' => '发送',
+
+	'post' => '提交',
 
 
 	'you-have-no-unread-messages' => '您没有未读消息',

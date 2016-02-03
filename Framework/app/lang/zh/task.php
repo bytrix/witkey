@@ -23,6 +23,13 @@ return array(
 	'set-reward' => '设置赏金',
 	'edit-task' => '编辑任务',
 
+	'move-to-another-category' => '移动分类',
+	'delete-this-task' => '删除任务',
+	'report-this-user' => '举报用户',
+
+	'reason-for-deleting' => '删除理由',
+	'reason-for-reporting' => '举报理由',
+
 
 	'title' => '任务标题',
 	'detail' => '任务描述',
@@ -47,6 +54,7 @@ return array(
 	'commit' => '交稿',
 	'quote' => '报价',
 	'price' => '价钱',
+	'commit-summary' => '交稿说明',
 	'quote-summary' => '报价说明',
 	'average-quote' => '平均报价',
 

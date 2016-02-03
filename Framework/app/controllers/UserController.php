@@ -140,13 +140,15 @@ class UserController extends BaseController {
 				} else {
 					Auth::logout();
 					return View::make('user.login')
-						->with('message', 'Your account has been locked, please email administrator for help: <a class="alert-link" href="/">admin@campuswitkey.com</a>');
+						// ->with('message', 'Your account has been locked, please email administrator for help: <a class="alert-link" href="/">admin@campuswitkey.com</a>');
+						->with('message', Lang::get('user.your-account-has-been-locked, please-email-administrator-for-help', ['email'=>'admin@campuswitkey.com']));
 				}
 				// return Redirect::back();
 
 			} else {
 				return View::make('user.login')
-					->with('message', 'email or password is incorrect!');
+					// ->with('message', 'email or password is incorrect!');
+					->with('message', Lang::get('message.email-or-password-is-incorrect!'));
 			}
 
 		} else {
@@ -273,16 +275,21 @@ class UserController extends BaseController {
 	}
 
 	public function postReport($user_id) {
-		$reasonForReporting = new ReasonForReporting;
-		$reasonForReporting->user_id = $user_id;
-		$reasonForReporting->reason = Input::get('reason');
-		$reasonForReporting->reporter_id = Auth::user()->id;
-		$reasonForReporting->save();
+		$validator = Validator::make(['reason'=>Input::get('reason')], ['reason'=>'required']);
+		if ($validator->passes()) {
+			$reasonForReporting = new ReasonForReporting;
+			$reasonForReporting->user_id = $user_id;
+			$reasonForReporting->reason = Input::get('reason');
+			$reasonForReporting->reporter_id = Auth::user()->id;
+			$reasonForReporting->save();
 
-		$user = User::where('id', $user_id)->first();
-		$user->active = false;
-		$user->save();
-		return Redirect::to("/reportUser/$user_id");
+			$user = User::where('id', $user_id)->first();
+			$user->active = false;
+			$user->save();
+			return Redirect::to("/reportUser/$user_id");
+		} else {
+			return Redirect::back();
+		}
 	}
 
 		// if (strlen(Auth::user()->fingerprint) && !Input::hasFile('idcard_image')) {

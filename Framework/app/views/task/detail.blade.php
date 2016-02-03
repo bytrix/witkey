@@ -19,7 +19,7 @@
 		color: #999;
 		display: block;
 		text-align: center;
-	} 
+	}
 	.item-inline{
 		display: inline-block;
 	}
@@ -126,8 +126,8 @@
 	}
 </style>
 {{HTML::style(URL::asset('assets/style/cover.css'))}}
-{{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}}
-{{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}}
+{{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}} --}}
+{{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}} --}}
 {{-- {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}} --}}
 @stop
 
@@ -167,12 +167,12 @@
 
 	});
 </script>
+{{HTML::script(URL::asset('assets/script/angular.js'))}}
 {{HTML::script(URL::asset('assets/script/moment.js'))}}
 {{HTML::script(URL::asset('assets/script/moment-with-locales.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.plugin.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
-{{HTML::script(URL::asset('assets/script/angular.js'))}}
 
 <!--
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/nanoscroller.min.js'))}}
@@ -191,7 +191,7 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container" ng-app>
 		{{-- Modify Category Dialog --}}
 		<div class="modal fade" id="categoryDialog">
 			<div class="modal-dialog modal-sm">
@@ -200,26 +200,25 @@
 					{{Form::open(['url'=>"/task/$task->id/changeCategory/"])}}
 
 					<div class="modal-header">
-						<h4 class="modal-title">Move to another category</h4>
+						<h4 class="modal-title">{{Lang::get('task.move-to-another-category')}}</h4>
 					</div>
 					<div class="modal-body">
 						{{-- {{Form::select('category', $categories, false, ['class'=>'form-control'])}} --}}
-						{{-- {{dd('dd')}} --}}
-{{-- 						@foreach ($categories as $category)
+						@foreach ($categories as $category)
 							<div class="radio">
 								@if ($category->id == $task->category_id)
 									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}" checked>
 								@else
 									<input type="radio" name="category_id" value="{{$category->id}}" id="{{$category->id}}">
 								@endif
-								<label for="{{$category->id}}">{{$category->name_outside}}</label>
+								<label for="{{$category->id}}">{{$category->name2}}</label>
 							</div>
-						@endforeach --}}
+						@endforeach
 					</div>
 					<div class="modal-footer">
-						<a href="javascript:;" class="btn btn-default" data-dismiss="modal">Close</a>
+						<a href="javascript:;" class="btn btn-default" data-dismiss="modal">{{Lang::get('message.cancel')}}</a>
 						{{Form::hidden('task_id', $task->id)}}
-						{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+						{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
 					</div>
 
 					{{Form::close()}}
@@ -232,18 +231,18 @@
 		<div class="modal fade" id="deleteDialog">
 			<div class="modal-dialog modal-sm">
 
-				{{Form::open(['url'=>"/task/$task->id/delete"])}}
+				{{Form::open(['url'=>"/task/$task->id/delete", 'name'=>'deleteForm'])}}
 
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Reason for deleting</h4>
+						<h4 class="modal-title">{{Lang::get('task.reason-for-deleting')}}</h4>
 					</div>
 					<div class="modal-body">
-						{{Form::textarea('reason', '', ['class'=>'form-control'])}}
+						{{Form::textarea('reason', '', ['class'=>'form-control', 'required', 'ng-model'=>'reason'])}}
 					</div>
 					<div class="modal-footer">
-						<a href="javascript:;" data-dismiss="modal" class="btn btn-default">Close</a>
-						{{Form::submit('Save', ['class'=>'btn btn-primary'])}}
+						<a href="javascript:;" data-dismiss="modal" class="btn btn-default">{{Lang::get('message.cancel')}}</a>
+						{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary', 'ng-disabled'=>'deleteForm.$invalid'])}}
 					</div>
 				</div>
 
@@ -279,30 +278,6 @@
 					@endif
 
 					<div class="pull-right" style="font-size: 25px; margin-top: -10px; width: 190px;">
-						{{-- Admin Area --}}
-						<div class="col-sm-4">
-							@if (Auth::check() && Auth::user()->role >= 2)
-
-								<div class="dropdown">
-									
-									<a class="widget" id="admin" data-toggle="dropdown" data-placement="top" title="Admin">
-										<span class="widget-body">
-											<i class="fa fa-folder-open-o"></i>
-											<i class="fa fa-folder-open-o"></i>
-										</span>
-									</a>
-
-									<ul class="dropdown-menu">
-										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#categoryDialog">Move to another category</a></li>
-										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#deleteDialog">Delete this task</a></li>
-										<li><a target="blank" href="/reportUser/{{$task->user->id}}">Report this user</a></li>
-									</ul>
-
-								</div>
-
-							@endif
-						</div>
-
 						{{-- Edit Button --}}
 						<div class="col-sm-4">
 							@if (Auth::check() && $task->user_id == Auth::user()->id)
@@ -324,6 +299,30 @@
 							</a>
 							{{-- <span id="tip">favorite</span> --}}
 						</div>
+						{{-- Admin Area --}}
+						<div class="col-sm-4">
+							@if (Auth::check() && Auth::user()->getPermission()['Manager'][2])
+
+								<div class="dropdown">
+									
+									<a class="widget" id="admin" data-toggle="dropdown" data-placement="top" title="{{Lang::get('message.admin')}}">
+										<span class="widget-body">
+											<i class="fa fa-folder-open-o"></i>
+											<i class="fa fa-folder-open-o"></i>
+										</span>
+									</a>
+
+									<ul class="dropdown-menu">
+										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#categoryDialog">{{Lang::get('task.move-to-another-category')}}</a></li>
+										<li><a href="javascript:;" data-backdrop="static" data-toggle="modal" data-target="#deleteDialog">{{Lang::get('task.delete-this-task')}}</a></li>
+										<li><a target="blank" href="/reportUser/{{$task->user->id}}">{{Lang::get('task.report-this-user')}}</a></li>
+									</ul>
+
+								</div>
+
+							@endif
+						</div>
+
 					</div>
 					<div></div>
 					<span>
@@ -353,11 +352,10 @@
 				</script>
 			</div>
 
-{{-- {{dd('dd')}} --}}
 			<ol class="breadcrumb">
 				<li><a href="/">{{Lang::get('task.list')}}</a></li>
 				<li>
-					<a href="/school/{{$task->place}}/category/{{$task->category_id}}">{{$task->category->name_outside}}</a>
+					<a href="/school/{{$task->place}}/category/{{$task->category_id}}">{{$task->category->name2}}</a>
 				</li>
 			</ol>
 			
@@ -755,10 +753,10 @@
 									{{Form::textarea('summary', '', ['class'=>'form-control textarea-control textarea', 'placeholder'=>'Commit summary', 'data-emojiable'=>'true', 'rows'=>'5'])}}
 								</div> --}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control textarea', 'placeholder'=>'Commit summary'])}}
+									{{Form::textarea('summary', '', ['class'=>'form-control textarea', 'placeholder'=>Lang::get('task.commit-summary')])}}
 								</div>
 								<div class="form-group">
-									{{Form::submit('Commit', ['class'=>'btn btn-danger'])}}
+									{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger'])}}
 								</div>
 								{{Form::hidden('type', $task->type)}}
 								@if ($task->winningCommit != NULL)
@@ -867,7 +865,7 @@
 					</span>
 				</h4>
 
-				<p>Joined on {{explode(' ', $task->user->created_at)[0]}}</p>
+				<p>{{Lang::get('user.joined-on')}} {{explode(' ', $task->user->created_at)[0]}}</p>
 
 				@if (strlen($task->user->tel))
 					@if (Auth::check() && ( $task->user->realname() || Auth::user()->id == $task->user->id ) )
@@ -937,7 +935,7 @@
 
 
 	</div>
-
+{{-- 
 	<script>
 		$(function() {
 			$('.textarea').wysihtml5({
@@ -947,5 +945,5 @@
 			});
 		});
 	</script>
-
+ --}}
 @stop

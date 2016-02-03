@@ -1,9 +1,13 @@
 @extends('user.master')
 
+@section('script')
+{{HTML::script(URL::asset('assets/script/angular.js'))}}
+@stop
+
 @section('content')
-	<div class="container">
+	<div class="container" ng-app>
 		<div class="page-header">
-			<h1>Report User</h1>
+			<h1>{{Lang::get('task.report-this-user')}}</h1>
 		</div>
 
 
@@ -16,11 +20,11 @@
 				</div>
 				
 				<div class="form-group">
-					{{Form::label('user', '', ['class'=>'control-label col-md-6'])}}
+					{{Form::label('user', Lang::get('user.username'), ['class'=>'control-label col-md-6'])}}
 					<div class="col-md-6">
 						<img src="/avatar/{{$user->avatar}}" class="avatar-md img-rounded">
 						<p style="width: 130px; text-align: center">
-							{{$user->username}}
+							<a href="/user/{{$user->id}}">{{$user->username}}</a>
 						</p>
 					</div>
 				</div>
@@ -35,15 +39,15 @@
 
 		<div class="col-md-5">
 			
-			{{Form::open(['class'=>'form-horizontal'])}}
+			{{Form::open(['class'=>'form-horizontal', 'name'=>'reportForm'])}}
 				<div class="form-group">
-					{{Form::label('reason', '', ['class'=>'control-label'])}}
+					{{Form::label('reason', Lang::get('task.reason-for-reporting'), ['class'=>'control-label'])}}
 				</div>
 				<div class="form-group">
-					{{Form::textarea('reason', '', ['class'=>'form-control'])}}
+					{{Form::textarea('reason', '', ['class'=>'form-control', 'required', 'ng-model'=>'reason'])}}
 				</div>
 				<div class="form-group">
-					{{Form::submit('Send', ['class'=>'btn btn-primary pull-right'])}}
+					{{Form::submit(Lang::get('message.send'), ['class'=>'btn btn-primary pull-right', 'ng-disabled'=>'reportForm.$invalid'])}}
 				</div>
 			{{Form::close()}}
 

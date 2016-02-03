@@ -61,6 +61,12 @@ Route::filter('realname', function() {
 	}
 });
 
+Route::filter('permision', function() {
+	if (Auth::check() && Auth::user()->permission == 0 || Auth::guest()) {
+		return Redirect::to('/');
+	}
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
