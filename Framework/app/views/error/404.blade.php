@@ -1,4 +1,4 @@
-@extends('layout.master-pure')
+@extends('layout.master_pure')
 
 @section('style')
 @parent

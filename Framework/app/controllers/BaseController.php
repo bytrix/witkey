@@ -13,7 +13,6 @@ class BaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 		}
-		App::setLocale('zh');
 		View::share('mySchool', $this->mySchool());
 		View::share('schools', $this->allSchools());
 		if (Auth::check() && Auth::user()->active == true) {
