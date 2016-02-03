@@ -18,8 +18,8 @@ Route::get('register'                                  , 'UserController@registe
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
 Route::get('reportUser/{user_id}', array('before'=>'permision', 'uses'=>'UserController@report'));
-// Route::get('we-want-you', function() {
-// 	return View::make('layout.we-want-you');
+// Route::get('recruit', function() {
+// 	return View::make('layout.recruit');
 // });
 
 // Route::get('task/list'                              , 'TaskController@listTask');
@@ -140,13 +140,13 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 
 Route::controller('password', 'RemindersController');
 
-// App::error(function($exception, $code) {
-// 	return Response::view('error.404', array(), 404);
-// });
-
-Route::get('/test', function() {
-	var_dump(Auth::user()->getPermission());
+App::error(function($exception, $code) {
+	return Response::view('error.404', array(), 404);
 });
+
+// Route::get('/test', function() {
+// 	var_dump(Auth::user()->getPermission());
+// });
 
 // Route::post('/test', function() {
 // 	return var_dump(Input::all());

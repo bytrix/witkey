@@ -154,7 +154,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
-	public function realname() {
+	public function truename() {
 		if (Auth::check()) {
 			if (Auth::user()->authenticated == 2) {
 				return true;

@@ -41,7 +41,7 @@ This will create the directories ignored by .gitignore
 
 First you need to config the username/password of database in ``Framework/app/config/database.php``.
 
-```php
+```
 'mysql' => array(
 	'driver'    => 'mysql',
 	'host'      => 'localhost',
@@ -179,7 +179,7 @@ Check the status of event scheduler:
 
 Create event:
 
-```sql
+```
 CREATE EVENT mark_as_expired_task
 ON SCHEDULE EVERY 1 MINUTE
 DO UPDATE Task SET state = 5 WHERE state = 1 AND expiration < now();
