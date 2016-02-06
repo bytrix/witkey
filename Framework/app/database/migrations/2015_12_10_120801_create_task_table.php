@@ -38,6 +38,7 @@ class CreateTaskTable extends Migration {
 			$table->datetime('expiration');
 			$table->string('place');
 			$table->integer('category_id');
+			$table->integer('participator_count');
 			$table->timestamps();
 		});
 	}

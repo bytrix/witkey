@@ -13,8 +13,12 @@ return array(
 	'amount-reward' => '悬赏金额',
 	'amount-budget' => '预算金额',
 	'no-budget' => '暂无预算',
+
 	'task-end' => '任务结束',
 	'bidding' => '竞标中',
+	'waiting-for-check' => '等待验收',
+
+	'over' => '已结束',
 	'expired' => '任务过期',
 	'delay' => '延期',
 	'delay-time' => '延期时间',
@@ -57,6 +61,8 @@ return array(
 	'commit-summary' => '交稿说明',
 	'quote-summary' => '报价说明',
 	'average-quote' => '平均报价',
+
+	'committed-at' => '交稿于',
 
 	'when-you-wish-to-finish-task' => '您希望何时完成任务',
 

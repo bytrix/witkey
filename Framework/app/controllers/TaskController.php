@@ -234,10 +234,38 @@ class TaskController extends BaseController {
 		$academies = Academy::all();
 		$categories = Category::all();
 
-		$tasks = Task::where('place', $academy_id)
-			->where('state', '!=', 0)
-			->orderBy('created_at', 'desc')
-			->paginate(10);
+
+		switch (Input::get('sort')) {
+			case 'more-reward':
+				$tasks = Task::where('place', $academy_id)
+					->where('state', '!=', 0)
+					->orderBy('amount', 'desc')
+					->paginate(10);
+				break;
+			
+			case 'less-expiration':
+				$tasks = Task::where('place', $academy_id)
+					->where('state', '!=', 0)
+					->orderBy('expiration', 'asc')
+					->paginate(10);
+				break;
+
+			case 'less-participator':
+				$tasks = Task::where('place', $academy_id)
+					->where('state', '!=', 0)
+					->where('state', '!=', 4)
+					->where('state', '!=', 5)
+					->orderBy('participator_count', 'asc')
+					->paginate(10);
+				break;
+
+			default:
+				$tasks = Task::where('place', $academy_id)
+					->where('state', '!=', 0)
+					->orderBy('created_at', 'desc')
+					->paginate(10);
+				break;
+		}
 
 		return View::make('task.list')
 			->with('tasks', $tasks)
@@ -532,6 +560,7 @@ class TaskController extends BaseController {
 			$task = Task::where('id', $task_id)->first();
 			if ($task->type == 1) {
 				$task->state = 2;
+				$task->participator_count = count($task->bidder);
 			} else if ($task->type == 2) {
 				$task->state = 3;
 			}
@@ -560,6 +589,9 @@ class TaskController extends BaseController {
 			$quote->summary = $userInput['summary'];
 			$quote->price = $userInput['price'];
 			$quote->save();
+			$task = Task::where('id', $task_id)->first();
+			$task->participator_count = count($task->bidder);
+			$task->save();
 			return Redirect::to("/task/$task_id");
 		} else {
 			return Redirect::to("/task/$task_id")

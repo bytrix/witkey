@@ -465,9 +465,11 @@
 				@if ($task->state != 4)
 					<div class="time">
 						距离任务结束时间：
-						<span id="countdown">
-							countdown
-						</span>
+						@if ($task->state != 5)
+							<span id="countdown"></span>
+						@else
+							<span>{{Lang::get('task.over')}}</span>
+						@endif
 						<script>
 							$('#countdown').countdown({until: expiration});
 						</script>
@@ -570,7 +572,7 @@
 									<a href="/user/{{$task->winningQuote->latestCommit->first()->user->id}}">
 										<strong>{{$task->winningQuote->latestCommit->first()->user->username}}</strong>
 									</a>
-									committed at {{$task->winningQuote->latestCommit->first()->created_at}}
+									committed at <span id="committed_at">{{$task->winningQuote->latestCommit->first()->created_at}}</span>
 								</p>
 								<div id="summary">
 									{{$task->winningQuote->latestCommit->first()->summary}}
@@ -601,8 +603,12 @@
 										{{-- date --}}
 										<span class="metadata">
 											<a href="/user/{{$commit->user->id}}"><strong>{{$commit->user->username}}</strong></a>
-											committed at 
-											{{$commit->created_at}}
+											{{Lang::get('task.committed-at')}}
+											<span id="committed_at" data-toggle="tooltip" data-placement="right" title="{{$commit->created_at}}"></span>
+											<script>
+											var date = new Date("{{$commit->created_at}}");
+											$('#committed_at').html(moment("{{$commit->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
+											</script>
 										</span>
 
 										@if ($task->winning_commit_id == $commit->id)
@@ -637,7 +643,7 @@
 										{{-- date --}}
 										<span class="metadata">
 											<a href="/user/{{$bidder->id}}"><strong>{{$bidder->username}}</strong></a>
-											committed at 
+											{{Lang::get('task.committed-at')}}
 											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
 										</span>
 

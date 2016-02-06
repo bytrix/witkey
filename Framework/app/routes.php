@@ -18,9 +18,9 @@ Route::get('register'                                  , 'UserController@registe
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
 Route::get('reportUser/{user_id}', array('before'=>'permision', 'uses'=>'UserController@report'));
-// Route::get('recruit', function() {
-// 	return View::make('layout.recruit');
-// });
+Route::get('recruit', function() {
+	return View::make('layout.recruit');
+});
 
 // Route::get('task/list'                              , 'TaskController@listTask');
 Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');

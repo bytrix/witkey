@@ -51,6 +51,14 @@
 	line-height: 28px;
 	color: #888;
 }
+.sort-option{
+	margin-top: 18px;
+}
+.sort-option>li{
+	margin: 0px 12px;
+	float: left;
+	list-style-type: none;
+}
 h1{
 	margin: 0px;
 }
@@ -59,6 +67,13 @@ h1{
 }
 .text-color-888{
 	color: #888;
+}
+.sort-active,
+.sort-active:focus,
+.sort-active:hover,
+.sort-option .open a:focus{
+	color: #337ab7;
+	text-decoration: none;
 }
 </style>
 @stop
@@ -212,8 +227,17 @@ h1{
 				@endforeach
 			</ul>
 		</div>
-	</div>
 
+		<div class="col-md-12">
+			<hr>
+			<ul class="sort-option">
+				<li><a href="?sort=default" ng-class="{'sort-active': '{{Input::get("sort") == "default"}}'}">{{Lang::get('sort.default')}}</a></li>
+				<li><a href="?sort=more-reward" ng-class="{'sort-active': '{{Input::get("sort") == "more-reward"}}'}">{{Lang::get('sort.more-reward')}}</a></li>
+				<li><a href="?sort=less-expiration" ng-class="{'sort-active': '{{Input::get("sort") == "less-expiration"}}'}">{{Lang::get('sort.less-expiration')}}</a></li>
+				<li><a href="?sort=less-participator" ng-class="{'sort-active': '{{Input::get("sort") == "less-participator"}}'}">{{Lang::get('sort.less-participator')}}</a></li>
+			</ul>
+		</div>
+	</div>
 
 
 	<div class="container">
@@ -294,7 +318,7 @@ h1{
 									@if ($task->state == 4)
 										<i class="text-danger fa fa-clock-o"></i>
 										<span class="text-danger task-state">{{Lang::get('task.task-end')}}</span>
-									@elseif($task->state == 1)
+									@elseif($task->state == 1 || $task->state == 2)
 										<i class="text-success fa fa-clock-o"></i>
 										<span class="text-success task-state">{{Lang::get('task.bidding')}}...</span>
 									@elseif($task->state ==5)
