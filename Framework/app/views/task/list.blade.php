@@ -231,7 +231,7 @@ h1{
 		<div class="col-md-12">
 			<hr>
 			<ul class="sort-option">
-				<li><a href="?sort=default" ng-class="{'sort-active': '{{Input::get("sort") == "default"}}'}">{{Lang::get('sort.default')}}</a></li>
+				<li><a href="?sort=latest" ng-class="{'sort-active': '{{Input::get("sort") == "latest"}}'}">{{Lang::get('sort.latest')}}</a></li>
 				<li><a href="?sort=more-reward" ng-class="{'sort-active': '{{Input::get("sort") == "more-reward"}}'}">{{Lang::get('sort.more-reward')}}</a></li>
 				<li><a href="?sort=less-expiration" ng-class="{'sort-active': '{{Input::get("sort") == "less-expiration"}}'}">{{Lang::get('sort.less-expiration')}}</a></li>
 				<li><a href="?sort=less-participator" ng-class="{'sort-active': '{{Input::get("sort") == "less-participator"}}'}">{{Lang::get('sort.less-participator')}}</a></li>
@@ -291,10 +291,10 @@ h1{
 								<a href="/user/{{$task->user->id}}" class="property">
 									<i class="fa fa-user"></i> {{{$task->user->username}}}
 								</a>
-								<span class="property">
+								<span class="property" data-toggle="tooltip" data-placement="right" title="{{$task->created_at}}">
 									<i class="fa fa-calendar"></i>
 									{{-- {{explode(' ', $task->created_at)[0]}} --}}
-									<span data-toggle="tooltip" data-placement="right" title="{{$task->created_at}}" id="created_at_{{$task->id}}"></span>
+									<span id="created_at_{{$task->id}}"></span>发布
 								</span>
 								{{-- <p id="test{{$task->id}}"></p> --}}
 								<script>

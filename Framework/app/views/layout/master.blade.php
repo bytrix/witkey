@@ -169,8 +169,14 @@
       <p class="text-muted">
         {{-- <span class="col-sm-4"></span> --}}
         <span class="col-sm-12" style="text-align: center">
-          &copy; Campus Witkey.
-          Made with <i class="fa fa-heart-o"></i>
+          <span class="light slogon">
+            Made with <i class="fa fa-heart-o"></i>
+          </span>
+          <br>
+          <span class="light">
+            &copy; 2016 Campus Witkey
+            闽ICP备16003505号-1
+          </span>
         </span>
       </p>
     </div>
