@@ -204,18 +204,6 @@
   });
   </script>
 
-
-  <footer class="footer">
-    <div class="container">
-      <p class="text-muted">
-        {{-- <span class="col-sm-4"></span> --}}
-        <span class="col-sm-12" style="text-align: center">
-          &copy; Campus Witkey.
-          Made with <i class="fa fa-heart-o"></i>
-        </span>
-      </p>
-    </div>
-  </footer>
   </div>
 </body>
 </html>

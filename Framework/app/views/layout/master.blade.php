@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="qc:admins" content="165725240763150537143516375" />
 	<title>Campus Witkey</title>
 
   {{-- style --}}
@@ -181,6 +182,7 @@
       </p>
     </div>
   </footer>
+  
   </div>
 </body>
 </html>

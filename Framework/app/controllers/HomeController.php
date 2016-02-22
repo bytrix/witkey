@@ -27,7 +27,7 @@ class HomeController extends BaseController {
 			return Redirect::to("/school/$academy_id");
 		}
 
-		return View::make('layout.index')
+		return View::make('home.index')
 			->with('academies', $academies);
 
 	}
