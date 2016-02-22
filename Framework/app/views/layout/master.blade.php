@@ -175,7 +175,7 @@
           <br>
           <span class="light">
             &copy; 2016 Campus Witkey
-            闽ICP备16003505号-1
+            <a href="http://www.miitbeian.gov.cn/" target="blank">闽ICP备16003505号</a>
           </span>
         </span>
       </p>
