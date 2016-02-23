@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta property="qc:admins" content="165725240763150537143516375" />
+  <meta property="wb:webmaster" content="af939121ed235ec7" />
 	<title>Campus Witkey</title>
 
   {{-- style --}}
