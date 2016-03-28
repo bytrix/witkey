@@ -28,8 +28,8 @@
 			<div class="form-group" ng-class="{'has-error': registerForm.email.$invalid && !registerForm.email.$pristine, 'has-success': registerForm.email.$valid}">
 			@endif
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-					{{Form::email('email', '', ['placeholder'=>Lang::get('message.email'), 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'A valid email address'])}}
+					<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+					{{Form::email('email', '', ['placeholder'=>Lang::get('message.phoneNumber'), 'class'=>'form-control', 'ng-valid-email', 'required', 'ng-model'=>'email', 'data-toggle'=>'popover', 'data-container'=>'body', 'data-content'=>'A valid email address'])}}
 				</div>
 			</div>
 			@if ($errors->first('password'))

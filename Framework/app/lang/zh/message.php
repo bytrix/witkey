@@ -17,6 +17,7 @@ return array(
 	'remember-me' => '记住我',
 	'forget-password' => '忘记密码',
 	'register-for-new-account' => '注册新账号',
+	'phoneNumber' => '手机号码',
 	'email' => '邮箱',
 	'password' => '密码',
 	'confirm-password' => '确认密码',

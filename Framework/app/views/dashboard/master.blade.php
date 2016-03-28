@@ -1,4 +1,4 @@
-@extends('layout.home')
+@extends('layout.master')
 
 @section('menu')
   <ul class="nav navbar-nav">

@@ -153,21 +153,21 @@ Route::controller('password', 'RemindersController');
 // });
 
 Route::get('request', function() {
-	require_once '../vendor/autoload.php'; //加载Composer自动生成的autoload
-	$service = new Eva\EvaOAuth\Service('Weibo', [
-		'key' => '101290815',
-		'secret' => 'd7d4c475f2229df62bcc9ee64cd8eb9c',
+	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
+	$service = new Eva\EvaOAuth\Service('Tencent', [
+		'key' => '1105196242',
+		'secret' => 'A9afBmqZudoVoXkY',
 		'callback' => 'http://localhost/access'
 	]);
-	echo '<pre>';
-	var_dump($service);
-	echo '</pre>';
+	// echo '<pre>';
+	// var_dump($service);
+	// echo '</pre>';
 	$service->requestAuthorize();
 });
 
 Route::get('access', function() {
-	dd('dd');
-	require_once '../vendor/autoload.php'; //加载Composer自动生成的autoload
+	// dd('dd');
+	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
 	$token = $service->getAccessToken();
 	$httpClient = new Eva\EvaOAuth\AuthorizedHttpClient($token);
 	$response = $httpClient->get('https://graph.qq.com/user/get_user_info?oauth_consumer_key=100330589&access_token=C8DC5F803954B582B6AD215083B6EDE7&openid=133C2F3092CE16620BF629F756660C45&format=json');

@@ -39,7 +39,7 @@ This will create the directories ignored by .gitignore
 
 **Configure**
 
-First you need to config the username/password of database in ``Framework/app/config/database.php``.
+First you need to config the username & password of database in ``Framework/app/config/database.php``.
 
 ```php
 'mysql' => array(
@@ -80,7 +80,6 @@ Development Progress
 - [ ] 用户等级
 - [x] 用户角色控制
 - [x] 校区负责人
-- [ ] OAuth开放认证
 - [x] 任务发布/编辑
 - [x] 校区选择
 - [x] 实名身份认证
