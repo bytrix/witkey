@@ -8,7 +8,8 @@
 		"laravel/framework": "4.2.*",
 		"mews/purifier": "dev-master-l4",
 		"frozennode/administrator": "4.*",
-		"evaengine/eva-oauth": "~1.0"
+		"evaengine/eva-oauth": "~1.0",
+		"lokielse/omnipay-alipay": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

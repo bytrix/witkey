@@ -9,6 +9,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+use Omnipay\Omnipay;
 //GET
 Route::get('/'                                         , 'HomeController@index');
 Route::get('about'                                     , 'HomeController@about');
@@ -152,23 +153,98 @@ Route::controller('password', 'RemindersController');
 // 	return var_dump(Input::all());
 // });
 
-Route::get('request', function() {
-	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
-	$service = new Eva\EvaOAuth\Service('Tencent', [
-		'key' => '1105196242',
-		'secret' => 'A9afBmqZudoVoXkY',
-		'callback' => 'http://localhost/access'
-	]);
-	// echo '<pre>';
-	// var_dump($service);
-	// echo '</pre>';
-	$service->requestAuthorize();
+// Route::get('request', function() {
+// 	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
+// 	$service = new Eva\EvaOAuth\Service('Tencent', [
+// 		'key' => '1105196242',
+// 		'secret' => 'A9afBmqZudoVoXkY',
+// 		'callback' => 'http://localhost/access'
+// 	]);
+// 	// echo '<pre>';
+// 	// var_dump($service);
+// 	// echo '</pre>';
+// 	$service->requestAuthorize();
+// });
+
+// Route::get('access', function() {
+// 	// dd('dd');
+// 	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
+// 	$token = $service->getAccessToken();
+// 	$httpClient = new Eva\EvaOAuth\AuthorizedHttpClient($token);
+// 	$response = $httpClient->get('https://graph.qq.com/user/get_user_info?oauth_consumer_key=100330589&access_token=C8DC5F803954B582B6AD215083B6EDE7&openid=133C2F3092CE16620BF629F756660C45&format=json');
+// });
+
+
+Route::get('gateway', function() {
+
+	$gateway = Omnipay::create('Alipay_Express');
+	$gateway->setPartner('2088002026520434');
+	$gateway->setKey('MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB');
+	$gateway->setSellerEmail('wengzhijie@126.com');
+	$gateway->setReturnUrl('http://www.campuswitkey.com/return');
+	$gateway->setNotifyUrl('http://www.campuswitkey.com/notify');
+
+	//For 'Alipay_MobileExpress', 'Alipay_WapExpress'
+	//$gateway->setPrivateKey('/such-as/private_key.pem');
+
+	$options = [
+	    'out_trade_no' => date('YmdHis') . mt_rand(1000,9999), //your site trade no, unique
+	    'subject'      => 'test', //order title
+	    'total_fee'    => '0.01', //order total fee
+	];
+
+	$response = $gateway->purchase($options)->send();
+
+	$demo = $response->getRedirectUrl();
+	$demo1 = $response->getRedirectData();
+	echo '<pre>';
+	// var_dump($response->getOrderString());
+	echo '</pre>';
+
+	//For 'Alipay_MobileExpress'
+	//Use the order string with iOS or Android SDK
+	// $response->getOrderString();
+
+
+
 });
 
-Route::get('access', function() {
-	// dd('dd');
-	require_once './vendor/autoload.php'; //加载Composer自动生成的autoload
-	$token = $service->getAccessToken();
-	$httpClient = new Eva\EvaOAuth\AuthorizedHttpClient($token);
-	$response = $httpClient->get('https://graph.qq.com/user/get_user_info?oauth_consumer_key=100330589&access_token=C8DC5F803954B582B6AD215083B6EDE7&openid=133C2F3092CE16620BF629F756660C45&format=json');
+Route::get('sms/{code}/{phone}', function($code, $userPhone) {
+
+	if (!Session::has('code')) {
+		Session::put('code', $code);
+	}
+
+	function str2hex($str){
+		// $str .= '00';
+		$hex = '';
+		for($i=0,$length=mb_strlen($str); $i<$length; $i++){
+			$hex .= dechex(ord($str{$i}));
+		}
+		return $hex;
+	}
+
+	$code_hex = strtoupper(str2hex(iconv('UTF-8', 'GBK', Session::get('code'))));
+
+	$username = 'N13358212686';
+	$password = '511913';
+	$sm = 'A1BED0A3D4B0CDFEBFCDA1BFC4FAB5C4D1E9D6A4C2EBCAC7A3BA'.$code_hex.'A3ACB4CBD1E9D6A4C2EBBDF6CACAD3C3D3DAD0A3D4B0CDFEBFCDCDF8D5BEB5C4D7A2B2E1BACDB5C7C2BCA3ACCEAAB1A3BBA4C4FAB5C4D5CBBAC5B0B2C8ABC7EBCEF0D7AAB7A2A1A3';
+	
+	$ch = curl_init();
+	// $timeout = 5;
+	curl_setopt ($ch, CURLOPT_URL, 'http://222.73.117.138:7891/mt?un='.$username.'&pw='.$password.'&da='.$userPhone.'&sm='.$sm.'&dc=15&rd=1');
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	// curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+	$file_contents = curl_exec($ch);
+	curl_close($ch);
+
 });
+
+
+// Route::get('demo-put', function() {
+// 	Session::put('hello', 'world');
+// });
+
+// Route::get('demo-get', function() {
+// 	echo Session::get('hello', '-');
+// });

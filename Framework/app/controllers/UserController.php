@@ -160,29 +160,39 @@ class UserController extends BaseController {
 	public function postRegister() {
 
 		// echo '<pre>';
-		// var_dump(Input::all());
+		// die(var_dump(Input::all()));
 		// echo '</pre>';
 
 		$userInput = [
-			'email'                 => Input::get('email'),
+			'phone'                 => Input::get('phone'),
 			'password'              => Input::get('password'),
-			'password_confirmation' => Input::get('password_confirmation')
+			'code' => Input::get('reg_code'),
+			// 'password_confirmation' => Input::get('password_confirmation')
 		];
 
 		$rules = [
-			'email'    => 'required|email|unique:User,email',
-			'password' => 'required|min:6|confirmed',
+			'phone'    => 'required|regex:/^[0-9]{11}$/|unique:User,tel',
+			'password' => 'required|min:6',
+			'code' => 'regex:/^[0-9]{6}$/',
 		];
 
 		$validator = Validator::make($userInput, $rules);
 
 		if($validator->passes()) {
 
+			if ($userInput['code'] != Session::get('code')) {
+				return View::make('user.register')
+					->with('message', Lang::get('message.wrong-reg-code'));
+				// die('wrong code');
+			} else {
+				// die('right');
+			}
+
 			$user           = new User;
 			$user->username = rand();
 			$user->password = Hash::make($userInput['password']);
 			$user->random_name  = true;
-			$user->email    = $userInput['email'];
+			$user->tel    = $userInput['phone'];
 			$user->ip       = Request::ip();
 			// $user->city     = Util::getCity();
 			$user->save();

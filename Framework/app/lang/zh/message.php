@@ -21,7 +21,7 @@ return array(
 	'email' => '邮箱',
 	'password' => '密码',
 	'confirm-password' => '确认密码',
-	'min-password' => '不能少于 :min 位字符',
+	'min-password' => '不少于 :min 位字符',
 	'password-incorrect' => '密码错误',	// old password in dashboard security
 	'email-or-password-is-incorrect!' => '邮箱或密码错误！',
 
@@ -71,4 +71,6 @@ return array(
 	'summary' => '说明',
 	'you-are-not-logged-in' => '您未登录',
 	'you-are-not-allowed-unless-pass-through-truename-authentication' => '您未通过实名认证，请点击网站右上角的头像进入用户中心进行实名认证',
+
+	'wrong-reg-code' => '验证码错误'
 );

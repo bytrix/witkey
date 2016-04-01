@@ -43,12 +43,13 @@
 			@if (isset($message) || $errors->get('email'))
 			<div class="form-group has-error">
 			@else
-			<div class="form-group" ng-class="{'has-error': loginForm.email.$invalid && !loginForm.email.$pristine, 'has-success': loginForm.email.$valid}">
+			<div class="form-group" ng-class="{'has-error': loginForm.phone.$invalid && !loginForm.phone.$pristine, 'has-success': loginForm.phone.$valid}">
 			@endif
 				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+					<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
 					{{-- {{Form::text('email', '', ['placeholder'=>'Email', 'class'=>'form-control'])}} --}}
-					{{Form::email('email', '', ['placeholder'=>Lang::get('message.email'), 'class'=>'form-control', 'ng-invalid-email', 'required', 'ng-model'=>'email'])}}
+					{{-- {{Form::email('email', '', ['placeholder'=>Lang::get('message.email'), 'class'=>'form-control', 'ng-invalid-email', 'required', 'ng-model'=>'email'])}} --}}
+					{{ Form::text('phone', '', ['class'=>'form-control', 'placeholder'=>Lang::get('message.phoneNumber'), 'ng-pattern'=>'/^[0-9]{11}$/', 'required', 'ng-model'=>'phone']) }}
 				</div>
 {{-- 				@if ($errors->first('email'))
 					<p class="help-block">{{$errors->first('email')}}</p>

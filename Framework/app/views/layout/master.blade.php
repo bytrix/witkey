@@ -112,7 +112,7 @@
                   </a>
 
                   <ul class="dropdown-menu">
-                    <li><a class="disabled-dropdown-item">{{Auth::user()->email}}</a></li>
+                    <li><a class="disabled-dropdown-item">{{Auth::user()->tel}}</a></li>
                     <li class="divider"></li>
                     <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
                     @if (count($unreadMessages))
