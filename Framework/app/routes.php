@@ -25,6 +25,9 @@ Route::get('recruit', function() {
 
 // Route::get('task/list'                              , 'TaskController@listTask');
 Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');
+
+// Route::get('school/{academy_id}', array('https', 'TaskController@listTask'))->where('academy_id', '[0-9]+');
+
 Route::get('school/{academy_id}/category/{category_id}', 'TaskController@subCategory')->where('academy_id', '[0-9]+')->where('category_id', '[0-9]+');
 Route::get('school/{academy_id}/search/{keyword}', 'TaskController@search');
 Route::get('school'                                    , function() { return Redirect::to('/'); });
@@ -179,7 +182,7 @@ Route::get('gateway', function() {
 
 	$gateway = Omnipay::create('Alipay_Express');
 	$gateway->setPartner('2088002026520434');
-	$gateway->setKey('MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB');
+	$gateway->setKey('4q1b99qcqp65o1b1v9yiapx0fwhejz58');
 	$gateway->setSellerEmail('wengzhijie@126.com');
 	$gateway->setReturnUrl('http://www.campuswitkey.com/return');
 	$gateway->setNotifyUrl('http://www.campuswitkey.com/notify');

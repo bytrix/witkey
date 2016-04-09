@@ -133,8 +133,10 @@ h1{
 						</button>
 					</span>
 				</div>
-
-
+<!-- 				<div style="margin-top: 10px;">
+					Hot searching:
+					<a href="#">demo</a>
+				</div> -->
 			</div>
 			<div class="col-md-3">
 
