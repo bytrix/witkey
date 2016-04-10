@@ -1,6 +1,17 @@
 <?php
 
 class AdminController extends BaseController {
+
+	public function home() {
+		// if (Auth::user()->permission == 1 || Auth::user()->permission == 3) {
+		// 	return View::make('admin.home');
+		// } else {
+		// 	return 'You are not admin!';
+		// }
+		return View::make('admin.home');
+		// var_dump(Auth::user());
+	}
+
 	public function auth() {
 		return View::make('admin.auth');
 	}

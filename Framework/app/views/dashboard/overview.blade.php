@@ -120,7 +120,17 @@
 
 
 			<div class="greeting">
-				<h3>{{$greeting}}, <a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">{{Auth::user()->username}}</a>!</h3>
+				<h3>
+					{{$greeting}},
+					<a href="/dashboard/myProfile" data-toggle="tooltip" data-placement="bottom" title="{{Lang::get('dashboard.change-username')}}">
+						{{Auth::user()->username}}
+					</a>!
+					@if ( Auth::user()->authenticated == 2 )
+						<span class="label label-success">认证用户</span>
+					@else
+						<span class="label label-default">未认证用户</span>
+					@endif
+				</h3>
 				<div>
 					@foreach (Auth::user()->getPermission() as $key=>$value)
 						@if ($value[2])

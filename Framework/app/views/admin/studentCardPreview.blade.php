@@ -79,8 +79,20 @@
 			@endif
 		</p>
 		<p>
+			<strong>Phone:</strong>
+			@if ($user->tel)
+				{{$user->tel}}
+			@else
+				<i class="fa fa-times text-danger"></i>
+			@endif
+		</p>
+		<p>
 			<strong>Email:</strong>
-			{{$user->email}}
+			@if ($user->email)
+				{{$user->email}}
+			@else
+				<i class="fa fa-times text-danger"></i>
+			@endif
 		</p>
 		<p>
 			<strong>School:</strong>

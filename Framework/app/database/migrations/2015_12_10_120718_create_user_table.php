@@ -42,7 +42,7 @@ class CreateUserTable extends Migration {
 			$table->tinyInteger('permission')->default(0);
 			$table->char('gender')->default('M');
 			$table->string('email');
-			$table->string('tel')->nullable();
+			$table->string('tel');
 			$table->string('qq')->nullable();
 			$table->integer('school')->nullable();
 			$table->string('dorm')->nullable();

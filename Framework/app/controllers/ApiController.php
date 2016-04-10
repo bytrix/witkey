@@ -113,6 +113,7 @@ class ApiController extends BaseController {
 				'authenticated',
 				'truename',
 				'username',
+				'tel',
 				'email',
 				'student_card',
 				'school',

@@ -162,7 +162,7 @@
 			<div class="form-group">
 				<div class="row clearfix">
 					<div class="col-md-10">
-						{{-- <span id="filedata">{{Lang::get('task.upload-attachment')}}</span> --}}
+						<span id="filedata">{{Lang::get('task.upload-attachment')}}</span>
 						{{Form::label('upload-attachment', Lang::get('task.upload-attachment'), ['class'=>'control-label'])}}
 						<div class="progress">
 							<div class="progress-bar progress-bar-striped active" style="width: 0%" id="progress-bar"></div>

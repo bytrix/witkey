@@ -16,7 +16,7 @@
 					<tr>
 						<td>{{$academy->id}}</td>
 						<td>
-							<a href="/admin/academy/{{$academy->id}}">{{$academy->name}}</a>
+							<a href="/myAdmin/academy/{{$academy->id}}">{{$academy->name}}</a>
 						</td>
 						<td>{{$academy->created_at}}</td>
 					</tr>

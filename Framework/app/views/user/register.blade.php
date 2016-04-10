@@ -78,7 +78,7 @@
 								} else {
 									var userPhone = $('#phone').val();
 									$.ajax({
-										url: "/sms/" + generateCode() + "/13358212686"
+										// url: "/sms/" + generateCode() + "/13358212686"
 									});
 									// console.log('code sending to ' + userPhone);
 									// console.log('false');

@@ -47,6 +47,7 @@
 					<th>ID</th>
 					<th>Truename</th>
 					<th>Username</th>
+					<th>Phone</th>
 					<th>Email</th>
 					<th>Student Card</th>
 					<th>School</th>
@@ -69,6 +70,7 @@
 						<i class="fa fa-times text-danger" ng-show="user.truename == null"></i>
 					</td>
 					<td ng-bind="user.username"></td>
+					<td ng-bind="user.tel"></td>
 					<td ng-bind="user.email"></td>
 					<td>
 						<a href="/myAdmin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">

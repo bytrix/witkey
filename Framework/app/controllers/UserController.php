@@ -120,12 +120,14 @@ class UserController extends BaseController {
 	public function postLogin() {
 
 		$userInput = [
-			'email'    => Input::get('email'),
+			// 'email'    => Input::get('email'),
+			'tel'    => Input::get('phone'),
 			'password' => Input::get('password'),
 		];
 
 		$rules = [
-			'email'    => 'required|email',
+			// 'email'    => 'required|email',
+			'tel'    => 'required|regex:/^[0-9]{11}$/',
 			'password' => 'required|min:6'
 		];
 
@@ -180,7 +182,7 @@ class UserController extends BaseController {
 
 		if($validator->passes()) {
 
-			if ($userInput['code'] != Session::get('code')) {
+			if ($userInput['code'] != Session::get('code') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
 				return View::make('user.register')
 					->with('message', Lang::get('message.wrong-reg-code'));
 				// die('wrong code');

@@ -10,9 +10,11 @@
   .school-select-list{
     margin-top: 40px;
     width: 300px;
+    box-shadow: 0 0 30px #e9e9e9;
   }
   .school-select-list a{
     font-size: 18px;
+    opacity: 0.8;
   }
   .enter:hover{
     text-indent: 6px;

@@ -518,7 +518,7 @@ class TaskController extends BaseController {
 				mkdir(public_path() . '/file/' . Auth::user()->id . '/');
 			}
 			if ($attachment->file_ext == "") {
-				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.s');
+				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash);
 			} else {
 				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.' . $attachment->file_ext);
 			}
