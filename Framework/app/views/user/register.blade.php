@@ -50,7 +50,7 @@
 					{{ Form::text('reg_code', '', ['id'=>'reg_code', 'ng-model'=>'reg_code', 'placeholder'=>'验证码', 'class'=>'form-control', 'required', 'ng-pattern'=>'/^[0-9]{6}$/']) }}
 					<span class="input-group-btn">
 						<!-- <input type="button" id="reg_code_btn" value="s" class="form-control"></input> -->
-						<button class="btn btn-default btn-lg" type="button" id="reg_code_btn" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px; text-shadow: none; color: #666;">获取</button>
+						<button class="btn btn-default btn-lg" type="button" id="reg_code_btn" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px; text-shadow: none; color: #666; font-size: 17px;">获取</button>
 						<script type="text/javascript">
 							$('#reg_code_btn').click(function() {
 								var i = 60;
