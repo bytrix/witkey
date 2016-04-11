@@ -9,7 +9,6 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-
 class UploadHandler
 {
 
@@ -161,6 +160,7 @@ class UploadHandler
             ),
             'print_response' => true
         );
+        var_dump($this->options);
         if ($options) {
             $this->options = $options + $this->options;
         }
@@ -1387,3 +1387,4 @@ class UploadHandler
     }
 
 }
+$uh = new UploadHandler();

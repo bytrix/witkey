@@ -5,7 +5,6 @@ paths = [
 	'/Framework/public/avatar/',
 	'/Framework/public/file/',
 	'/Framework/public/student_card/',
-	# '/Framework/public/upload/',
 	'/Framework/public/upload/cache/',
 	'/Server/db_backup/',
 ]

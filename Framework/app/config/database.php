@@ -56,8 +56,8 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'witkey',
-			'username'  => 'root',
-			'password'  => 'root',
+			'username'  => 'root',	//USERNAME_OF_DATABASE
+			'password'  => 'root',	//PASSWORD_OF_DATABASE
 			'charset'   => 'utf8mb4',
 			'collation' => 'utf8mb4_unicode_ci',
 			'prefix'    => '',

@@ -208,7 +208,7 @@
 				}
 			});
 			$('#uploader').fileupload({
-				url: '/upload',
+				url: '/upload/',
 				progress: function(e, data) {
 					var percent = parseInt((data.loaded / data.total) * 100);
 					console.log(percent);
