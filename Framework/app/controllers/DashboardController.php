@@ -123,7 +123,7 @@ class DashboardController extends BaseController {
 		$userModify = [
 			'username'  => Input::get('username'),
 			'gender'    => Input::get('gender'),
-			'tel'       => Input::get('tel'),
+			'email'       => Input::get('email'),
 			'qq'        => Input::get('qq'),
 			'dorm'      => Input::get('dorm_state') == 'no' ? 'no' : Input::get('dorm'),
 			'biography' => Input::get('biography'),

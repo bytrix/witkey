@@ -179,8 +179,24 @@
 		<div class="col-sm-4">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-				{{Form::text('tel', Auth::user()->tel, ['class'=>'form-control'])}}
+				{{Form::text('tel', Auth::user()->tel, ['class'=>'form-control', 'disabled'=>'disabled'])}}
 			</div>
+		</div>
+	</div>
+
+	{{-- Email --}}
+	<div class="form-group">
+		{{Form::label('email', Lang::get('user.email'), ['class'=>'control-label col-sm-2'])}}
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+				{{ Form::email('email', Auth::user()->email, ['class'=>'form-control']) }}
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<p class="text-success control-text">
+				绑定邮箱可用于找回密码
+			</p>
 		</div>
 	</div>
 

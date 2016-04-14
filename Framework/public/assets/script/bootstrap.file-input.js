@@ -24,7 +24,7 @@ $.fn.bootstrapFileInput = function() {
     }
 
     // Set the word to be displayed on the button
-    var buttonWord = 'Browse';
+    var buttonWord = '选择图片';
 
     if (typeof $elem.attr('title') != 'undefined') {
       buttonWord = $elem.attr('title');

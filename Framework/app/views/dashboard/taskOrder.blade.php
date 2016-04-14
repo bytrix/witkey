@@ -59,7 +59,7 @@
 						@if ($order->state == 4 && $order->winningCommit->comment['id'] == NULL)
 							<a href="/dashboard/rate/{{$order->id}}" class="btn btn-success btn-xs">
 								<i class="fa fa-star-o"></i>
-								Rate
+								{{ Lang::get('task.comment') }}
 							</a>
 						@endif
 						@if ($order->state != 4)

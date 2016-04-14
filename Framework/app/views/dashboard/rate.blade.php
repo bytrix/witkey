@@ -3,17 +3,17 @@
 @section('control-panel')
 <div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar nav-list">
-  	<li><a href="/dashboard">Overview</a></li>
-    <li><a href="/dashboard/myProfile">My Profile</a></li>
-    <li><a href="/dashboard/changeAvatar">Change Avatar</a></li>
-    <li class="active"><a href="/dashboard/taskOrder">Task Order<span class="sr-only">(current)</span></a></li>
-    <li><a href="/dashboard/favoriteTask">Favorite Task</a></li>
-  	<li><a href="/dashboard/myFriends">My Friends</a></li>
+  	<li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
+    <li><a href="/dashboard/myProfile">{{Lang::get('dashboard.my-profile')}}</a></li>
+    <li><a href="/dashboard/changeAvatar">{{Lang::get('dashboard.change-avatar')}}</a></li>
+    <li class="active"><a href="/dashboard/taskOrder">{{Lang::get('dashboard.task-order')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/favoriteTask">{{Lang::get('dashboard.favorite-task')}}</a></li>
+  	<li><a href="/dashboard/myFriends">{{Lang::get('dashboard.my-friend')}}</a></li>
   </ul>
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
     <li><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}</a></li>
-    <li><a href="/dashboard/security">Security</a></li>
+    <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
 @stop
@@ -22,6 +22,10 @@
 @parent
 	<style>
 		.rate-info{
+			padding-top: 7px;
+			/*width: 120px;*/
+		}
+		.rate-star{
 			padding-top: 7px;
 			width: 120px;
 		}
@@ -58,30 +62,30 @@
 
 	@section('header')
 	@parent
-		Rate
+		{{ Lang::get('task.comment') }}
 	@stop
 	<a href="/dashboard/taskOrder">
 		<i class="fa fa-angle-double-left"></i>
-		back
+		{{ Lang::get('task.previous') }}
 	</a>
 	
 	{{Form::open(['class'=>'form-horizontal'])}}
 		<div class="form-group">
-			{{Form::label('title', 'Task Title', ['class'=>'control-label col-md-2'])}}
-			<span class="col-md-4 rate-info">
+			{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label col-md-2'])}}
+			<span class="col-md-8 rate-info">
 				<a href="/task/{{$task->id}}">{{$task->title}}</a>
 			</span>
 		</div>
 		<div class="form-group">
-			{{Form::label('winner', 'Task Winner', ['class'=>'control-label col-md-2'])}}
+			{{Form::label('winner', Lang::get('task.winner'), ['class'=>'control-label col-md-2'])}}
 			<span class="col-md-4 rate-info">
-				<a href="/user/{{$winner->id}}">{{$winner->username}}</a>
+				<a href="/user/{{$winner->id}}" target="_blank">{{$winner->username}}</a>
 			</span>
 			{{Form::hidden('user_id', $winner->id)}}
 		</div>
 		<div class="form-group">
-			{{Form::label('rate', 'Rate', ['class'=>'control-label col-md-2'])}}
-			<span class="col-md-4 rate-info">
+			{{Form::label('rate', Lang::get('task.star'), ['class'=>'control-label col-md-2'])}}
+			<span class="col-md-4 rate-star">
 				<div class="rating">
 					<i class="fa fa-star-o fa-lg" star=5></i>
 					<i class="fa fa-star-o fa-lg" star=4></i>
@@ -93,7 +97,7 @@
 			{{Form::hidden('star', 0, ['id'=>'star'])}}
 		</div>
 		<div class="form-group">
-			{{Form::label('content', 'Content', ['class'=>'control-label col-md-2'])}}
+			{{Form::label('content', Lang::get('task.comment-content'), ['class'=>'control-label col-md-2'])}}
 			<span class="col-md-4">
 				{{Form::textarea('content', '', ['class'=>'form-control content', 'rows'=>5])}}
 			</span>
@@ -101,7 +105,7 @@
 		<div class="form-group">
 			<span class="col-md-2"></span>
 			<span class="col-md-4">
-				{{Form::submit('Rate', ['class'=>'btn btn-primary'])}}
+				{{Form::submit(Lang::get('task.comment'), ['class'=>'btn btn-primary'])}}
 			</span>
 		</div>
 	{{Form::close()}}

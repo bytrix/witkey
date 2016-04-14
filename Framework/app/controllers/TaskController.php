@@ -45,6 +45,7 @@ class TaskController extends BaseController {
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
+				// 'title' => Input::get('title'),
 				'detail' => Input::get('detail'),
 				'hire'   => Input::get('hire'),
 				'file_name' => Input::get('file_name'),

@@ -78,4 +78,12 @@ return array(
 
 	'no-comment' => '没有评价',
 
+	'comment' => '评价',
+
+	'winner' => '中标威客',
+
+	'star' => '满意度',
+	
+	'comment-content' => '评价留言',
+
 );

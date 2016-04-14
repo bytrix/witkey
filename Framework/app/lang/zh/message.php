@@ -24,6 +24,7 @@ return array(
 	'min-password' => '不少于 :min 位字符',
 	'password-incorrect' => '密码错误',	// old password in dashboard security
 	'email-or-password-is-incorrect!' => '邮箱或密码错误！',
+	'phone-or-password-is-incorrect!' => '手机号码或密码错误！',
 
 	'admin' => '管理',
 	'edit' => '编辑',

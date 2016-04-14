@@ -150,7 +150,7 @@ class UserController extends BaseController {
 			} else {
 				return View::make('user.login')
 					// ->with('message', 'email or password is incorrect!');
-					->with('message', Lang::get('message.email-or-password-is-incorrect!'));
+					->with('message', Lang::get('message.phone-or-password-is-incorrect!'));
 			}
 
 		} else {

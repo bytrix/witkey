@@ -433,7 +433,8 @@
 					<script>
 						moment.lang('zh-cn');
 						var strExpiration = "{{ $task->expiration }}";
-						var expiration = new Date(strExpiration.replace(/-/g, "/"));
+						// var expiration = new Date(strExpiration.replace(/-/g, "/"));
+						var expiration = new Date(strExpiration);
 						var deltaSecond = expiration - new Date();
 						$('#expiration').html(moment().add(deltaSecond).calendar());
 					</script>
