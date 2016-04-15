@@ -4,8 +4,8 @@ return array(
 
 	'username' => '用户名',
 	'gender' => '性别',
-	'male' => '汉子',
-	'female' => '妹子',
+	'male' => '萌汉纸',
+	'female' => '软妹纸',
 	'email' => '邮箱',
 	'tel' => '电话',
 	'dorm' => '宿舍',

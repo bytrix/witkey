@@ -217,7 +217,7 @@
 				},
 				done: function(e, data) {
 					// console.log('done');
-					// console.log(data);
+					console.log(data);
 					$('#filedata').html("<a href='/upload/cache/" + data.files[0].name + "'>" + data.files[0].name + "</a>" + " 上传成功！");
 					$('#file_name').attr('value', data.files[0].name);
 				}

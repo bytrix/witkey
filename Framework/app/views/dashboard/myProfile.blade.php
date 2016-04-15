@@ -195,7 +195,7 @@
 		</div>
 		<div class="col-sm-4">
 			<p class="text-success control-text">
-				绑定邮箱可用于找回密码
+				填写邮箱可用于找回密码
 			</p>
 		</div>
 	</div>

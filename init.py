@@ -54,7 +54,7 @@ if len(sys.argv) != 2:
 	print '\t\tremove the directories'
 
 	print '\t\033[1;32;40mchmod\033[0m'
-	print '\t\tchange the mode of directories so that they can be writed by server program'
+	print '\t\tchange the mode of directories so that they can be written by server program'
 
 	print '\t\033[1;32;40mview\033[0m'
 	print '\t\tview the status of directories'
