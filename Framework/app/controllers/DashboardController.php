@@ -287,7 +287,7 @@ class DashboardController extends BaseController {
 			return Redirect::to('/dashboard/authentication')
 				// ->with('schoolList'       , Academy::allAcademies())
 				// ->with('majorList'        , Academy::allMajors())
-				->with('message'          , 'Save successfully!');
+				->with('message'          , Lang::get('message.data-has-been-saved-successfully'));
 
 		} else {
 

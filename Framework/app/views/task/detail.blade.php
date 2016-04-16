@@ -387,7 +387,7 @@
 				<h4>
 					<span>{{Lang::get('task.expiration')}}:</span>
 					@if ($task->state == 4)
-						<span class="text-danger">Task End</span>
+						<span class="text-danger">{{ Lang::get('task.task-end') }}</span>
 					@elseif($task->state == 5)
 						<span class="text-muted" data-toggle="tooltip" data-placement="bottom" title="{{$task->expiration}}">{{Lang::get('task.expired')}}</span>
 						@if (Auth::check() && $task->user->id == Auth::user()->id)
@@ -578,7 +578,7 @@
 								<div id="summary">
 									{{$task->winningQuote->latestCommit->first()->summary}}
 									@if ($task->user->id == Auth::user()->id && $task->state == 3)
-										<a href="/pay/{{$task->winningQuote->latestCommit->first()->uuid}}" class="btn btn-success pull-right">Pay</a>
+										<a href="/pay/{{$task->winningQuote->latestCommit->first()->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 									@endif
 								</div>
 							</div>
@@ -621,7 +621,7 @@
 
 										{{-- bid_btn --}}
 										@if ($task->user->id == Auth::user()->id && $task->id != 4)
-											<a href="/pay/{{$commit->uuid}}" class="btn btn-success pull-right">Pay</a>
+											<a href="/pay/{{$commit->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 										@endif
 
 										<div id="summary">
@@ -653,13 +653,13 @@
 										@if ($task->winning_commit_id == $bidder->findLatestCommitById($bidder->id, $task->id)->first()->id)
 											<span class="label label-danger">
 												<i class="fa fa-flag"></i>
-												Win
+												{{ Lang::get('task.win') }}
 											</span>
 										@endif
 
 										{{-- bid_btn --}}
 										@if ($task->user->id == Auth::user()->id && $task->state != 4)
-											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->uuid}}" class="btn btn-success pull-right">Pay</a>
+											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 										@endif
 
 										<div id="summary">

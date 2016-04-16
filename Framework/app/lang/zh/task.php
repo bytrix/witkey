@@ -80,10 +80,25 @@ return array(
 
 	'comment' => '评价',
 
+	'win' => '中标',
 	'winner' => '中标威客',
 
 	'star' => '满意度',
 	
 	'comment-content' => '评价留言',
+
+
+	'pay' => '付款',
+	'payment-confirmation' => '确认付款',
+
+	'payer' => '付款人',
+	'payee' => '收款人',
+	'commit-no' => '稿件编号',
+	'committed-at' => '交稿时间',
+	'payment-amount' => '支付金额',
+
+	'pay-success' => '支付成功',
+	'you-have-paid-successfully' => '您已向:email成功支付金额 ¥:amount',
+	'back-to-task' => '返回任务',
 
 );
