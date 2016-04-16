@@ -164,6 +164,7 @@ class UserController extends BaseController {
 		// echo '<pre>';
 		// die(var_dump(Input::all()));
 		// echo '</pre>';
+		$avatar_path = public_path() . '/avatar/';
 
 		$userInput = [
 			'phone'                 => Input::get('phone'),
@@ -190,25 +191,30 @@ class UserController extends BaseController {
 				// die('right');
 			}
 
-			$user           = new User;
-			$user->username = rand();
-			$user->password = Hash::make($userInput['password']);
-			$user->random_name  = true;
-			$user->tel    = $userInput['phone'];
-			$user->ip       = Request::ip();
-			// $user->city     = Util::getCity();
-			$user->save();
+			if (is_writable($avatar_path)) {
+				$user           = new User;
+				$user->username = rand();
+				$user->password = Hash::make($userInput['password']);
+				$user->random_name  = true;
+				$user->tel    = $userInput['phone'];
+				$user->ip       = Request::ip();
+				// $user->city     = Util::getCity();
+				$user->save();
 
-			$avatar = md5('avatar' . $user->id . $user->created_at);
-			$user->avatar = $avatar;
+				$avatar = md5('avatar' . $user->id . $user->created_at);
+				$user->avatar = $avatar;
 
-			// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
-			copy(public_path() . '/assets/image/default_avatar/' . rand(1, 293) . '.jpg', public_path() . '/avatar/' . $avatar);
+				// $avatarFile = Response::download(public_path() . '/assets/image/default_avatar/1.jpg', 'name');
+				copy(public_path() . '/assets/image/default_avatar/' . rand(1, 293) . '.jpg', $avatar_path . $avatar);
 
 
-			$user->save();
-			Auth::login($user);
-			return Redirect::to('/');
+				$user->save();
+				Auth::login($user);
+				return Redirect::to('/');
+			} else {
+				return 'avatar path is not writable';
+			}
+
 
 		} else {
 			

@@ -2,6 +2,7 @@ import os
 import sys
 
 paths = [
+	'/Framework/app/storage/',
 	'/Framework/public/avatar/',
 	'/Framework/public/file/',
 	'/Framework/public/student_card/',
@@ -21,7 +22,7 @@ def chmod_dir(dir):
 	full_path = os.getcwd() + dir
 	if(os.path.exists(full_path)):
 		print "\033[1;33;40m  Changing mode of directory\t" + dir + "\033[0m"
-		os.system('chmod o+w ' + full_path)
+		os.system('chmod o+w -R ' + full_path)
 	else:
 		print "\033[7;40;31mPath " + dir + " does not exists!\033[0m"
 
@@ -68,7 +69,10 @@ else:
 
 	if sys.argv[1] == 'remove':
 		for p in paths:
-			remove_dir(p)
+			if 'storage' in p:
+				print '\033[7;40;31mstorage can not be removed!\033[0m'
+			else:
+				remove_dir(p)
 
 	if sys.argv[1] == 'chmod':
 		for p in paths:
