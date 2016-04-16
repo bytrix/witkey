@@ -209,11 +209,16 @@ Project Fee
 			<td>&yen; 39.00</td>
 			<td>1</td>
 		</tr>
+		<tr>
+			<td>Short Message Service</td>
+			<td>&yen; 1200.00</td>
+			<td>1</td>
+		</tr>
 
 		<tr>
 			<td><b>Total</b></td>
-			<td><b>&yen; 327.24</b></td>
-			<td><b>3</b></td>
+			<td><b>&yen; 1527.24</b></td>
+			<td><b>4</b></td>
 		</tr>
 	</tbody>
 </table>
