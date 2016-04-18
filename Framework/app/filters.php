@@ -67,6 +67,12 @@ Route::filter('admin', function() {
 		App::abort(404);
 	}
 });
+Route::filter('adminLogin', function() {
+	$secret = 'NzZjODY2ND';
+	if (Session::get('secret') != $secret) {
+		return Redirect::to('myadmin/login');
+	}
+});
 
 Route::filter('permision', function() {
 	if (Auth::check() && Auth::user()->permission == 0 || Auth::guest()) {

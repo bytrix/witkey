@@ -105,6 +105,9 @@
     font-size: 24px;
     padding-left: 6px;
   }
+  .breadcrumb{
+    background-color: rgba(0,0,0,0);
+  }
 
   </style>
   @yield('style')
@@ -121,7 +124,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/myAdmin">MyAdmin</a>
+          <a class="navbar-brand" href="/myadmin">MyAdmin</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
@@ -139,14 +142,21 @@
   <footer class="footer">
     <div class="container">
       <p class="text-muted">
-        <span class="col-sm-4"></span>
-        <span class="col-sm-4" align="center">
-          &copy; Campus Witkey.
-          Made with <i class="fa fa-heart-o"></i>
+        {{-- <span class="col-sm-4"></span> --}}
+        <span class="col-sm-12" style="text-align: center">
+          <span class="light slogon">
+            Made with <i class="fa fa-heart-o"></i>
+          </span>
+          <br>
+          <span class="light">
+            &copy; 2016 Campus Witkey
+            <a href="http://www.miitbeian.gov.cn/" target="blank">闽ICP备16003505号</a>
+          </span>
         </span>
       </p>
     </div>
   </footer>
+  
   </div>
 </body>
 </html>

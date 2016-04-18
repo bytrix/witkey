@@ -18,7 +18,7 @@
 <div ng-app>
 
 	<ol class="breadcrumb">
-		<li><a href="/myAdmin/permission">MyAdmin</a></li>
+		<li><a href="/myadmin">MyAdmin</a></li>
 		<li class="active">Permission</li>
 	</ol>
 		<div class="col-md-4">
@@ -68,9 +68,9 @@
 						<td>
 							@foreach ($user->getPermission() as $key=>$value)
 								@if ($value[2])
-									<a href="/myAdmin/chmod/{{$user->id}}/{{$user->permission & $value[1]}}" class="label label-primary">{{$key}}</a>
+									<a href="/myadmin/chmod/{{$user->id}}/{{$user->permission & $value[1]}}" class="label label-primary">{{$key}}</a>
 								@else
-									<a href="/myAdmin/chmod/{{$user->id}}/{{$user->permission | $value[0]}}" class="label label-default">{{$key}}</a>
+									<a href="/myadmin/chmod/{{$user->id}}/{{$user->permission | $value[0]}}" class="label label-default">{{$key}}</a>
 								@endif
 							@endforeach
 						</td>

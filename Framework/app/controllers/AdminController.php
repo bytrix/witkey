@@ -12,6 +12,22 @@ class AdminController extends BaseController {
 		// var_dump(Auth::user());
 	}
 
+	public function login() {
+		return View::make('admin.login');
+	}
+
+	public function postLogin() {
+		$password = Input::get('password');
+		$secret = 'NzZjODY2ND';
+		if ($password == $secret) {
+			Session::put('secret', $secret);
+			return Redirect::to('/myadmin');
+		} else {
+			return Redirect::to('/myadmin/login')
+				->with('message', 'wrong password');
+		}
+	}
+
 	public function auth() {
 		return View::make('admin.auth');
 	}

@@ -95,17 +95,25 @@ Route::group(['before'=>'auth'], function() {
 
 	Route::group(['before'=>'admin'], function() {
 
-		Route::get('myAdmin', 'AdminController@home');
-		Route::get('myAdmin/auth'                               , 'AdminController@auth');
-		Route::get('myAdmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
+		Route::get('myadmin/login', 'AdminController@login');
+		Route::post('myadmin/login', 'AdminController@postLogin');
 
-		Route::get('myAdmin/academy'              , 'AdminController@academy');
-		Route::get('myAdmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
-		Route::post('myAdmin/academy'             , 'AdminController@postAcademy');
-		Route::post('myAdmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
+		Route::group(['before'=>'adminLogin'], function() {
 
-		Route::get('myAdmin/permission', 'AdminController@permission');
-		Route::get('myAdmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
+			Route::get('myadmin', 'AdminController@home');
+			Route::get('myadmin/auth'                               , 'AdminController@auth');
+			Route::get('myadmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
+
+			Route::get('myadmin/academy'              , 'AdminController@academy');
+			Route::get('myadmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
+			Route::post('myadmin/academy'             , 'AdminController@postAcademy');
+			Route::post('myadmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
+
+			Route::get('myadmin/permission', 'AdminController@permission');
+			Route::get('myadmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
+
+		});
+
 
 	});
 
@@ -264,10 +272,10 @@ Route::get('sms/{code}/{phone}', function($code, $userPhone) {
 // });
 
 
-Route::get('ip', function() {
-	// echo $_SERVER['SERVER_ADDR'];
-	echo '<pre>';
-	print_r($_SERVER);
-	echo '</pre>';
-	// echo Config::get('server.ip');
-});
+// Route::get('ip', function() {
+// 	// echo $_SERVER['SERVER_ADDR'];
+// 	echo '<pre>';
+// 	print_r($_SERVER);
+// 	echo '</pre>';
+// 	// echo Config::get('server.ip');
+// });

@@ -1,7 +1,14 @@
 @extends('admin.master')
 
 @section('content')
+
+	<ol class="breadcrumb">
+		<li><a href="/myadmin">MyAdmin</a></li>
+		<li class="active">Academy</li>
+	</ol>
+
 	<div class="container">
+
 		<h1>Academy</h1>
 
 		<table class="table">

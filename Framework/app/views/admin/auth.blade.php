@@ -22,7 +22,7 @@
 <div ng-app>
 
 	<ol class="breadcrumb">
-		<li><a href="/myAdmin">MyAdmin</a></li>
+		<li><a href="/myadmin">MyAdmin</a></li>
 		<li class="active">Authentication Board</li>
 	</ol>
 		<div class="col-md-4">
@@ -73,7 +73,7 @@
 					<td ng-bind="user.tel"></td>
 					<td ng-bind="user.email"></td>
 					<td>
-						<a href="/myAdmin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
+						<a href="/myadmin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
 							<img src="{{URL::asset('student_card/')}}/@{{user.student_card}}" alt="">
 						</a>
 						<i class="fa fa-times text-danger" ng-show="user.student_card == null"></i>
