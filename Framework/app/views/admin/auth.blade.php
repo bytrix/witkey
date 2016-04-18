@@ -88,7 +88,8 @@
 					</td>
 					<td>
 						<span ng-show="user.major != null">
-							@{{majors[user.major].name}}
+							<!-- @{{majors[user.major].name}} -->
+							@{{ findMajorById(user.major).name }}
 							(@{{user.major}})
 						</span>
 						<i class="fa fa-times text-danger" ng-show="user.major == null"></i>

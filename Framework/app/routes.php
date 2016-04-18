@@ -101,6 +101,7 @@ Route::group(['before'=>'auth'], function() {
 		Route::group(['before'=>'adminLogin'], function() {
 
 			Route::get('myadmin', 'AdminController@home');
+			Route::get('myadmin/quit', 'AdminController@quit');
 			Route::get('myadmin/auth'                               , 'AdminController@auth');
 			Route::get('myadmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 

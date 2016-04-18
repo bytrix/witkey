@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder {
 			'dorm'            => 'no',
 			'truename'        => '杰',
 			'enrollment_date' => '2013-09-10',
-			'major'           => 13,
+			'major'           => 14,
 			'authenticated'   => 2,
 			'city'            => '福州',
 			'random_name'     => false

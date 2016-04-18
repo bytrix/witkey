@@ -30,6 +30,7 @@ class AdminController extends BaseController {
 
 	public function quit() {
 		Session::forget('secret');
+		return Redirect::back();
 	}
 
 	public function auth() {

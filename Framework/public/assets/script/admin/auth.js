@@ -37,6 +37,16 @@ var UserController = function($scope, $http) {
 		return myAcademy;
 	}
 
+	$scope.findMajorById = function(major_id) {
+		var myMajor = {};
+		angular.forEach($scope.majors, function(major) {
+			if (major.id == major_id) {
+				myMajor =major;
+			}
+		});
+		return myMajor;
+	}
+
 	$scope.authTobe = function(user_id) {
 		$http.get('/api/postAuthTobe/' + user_id);
 		if ($scope.findUserById(user_id).authenticated != 0) {
