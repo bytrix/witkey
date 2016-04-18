@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Campus Witkey</title>
+	<title>校园威客</title>
 
   {{-- style --}}
   {{-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
@@ -107,12 +107,19 @@
       <p class="text-muted">
         {{-- <span class="col-sm-4"></span> --}}
         <span class="col-sm-12" style="text-align: center">
-          &copy; Campus Witkey.
-          Made with <i class="fa fa-heart-o"></i>
+          <span class="light slogon">
+            Made with <i class="fa fa-heart-o"></i>
+          </span>
+          <br>
+          <span class="light">
+            &copy; 2016 Campus Witkey
+            <a href="http://www.miitbeian.gov.cn/" target="blank">闽ICP备16003505号</a>
+          </span>
         </span>
       </p>
     </div>
   </footer>
+  
   </div>
 </body>
 </html>
