@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 
 paths = [
 	'/Framework/app/storage/',
@@ -43,6 +44,18 @@ def view_dir(dir):
 	else:
 		print "[\033[1;33;40m---\033[0m] [\033[1;31;40mNOT FOUND\033[0m] " + dir
 
+def genAvatar():
+	full_path = os.getcwd()
+	file_name = '96d6f2e7e1f705ab5e59c84a6dc009b2'
+	source_path = full_path + '/Framework/public/assets/image/default_avatar/'
+	dest_path = full_path + '/Framework/public/avatar/'
+	if(os.path.exists(dest_path + file_name)):
+		print 'admin logo already exists!'
+	else:
+		shutil.copy(source_path + file_name, dest_path)
+		os.system('chmod o+r ' + dest_path + file_name)
+		print 'admin logo copying complete!'
+
 
 if len(sys.argv) != 2:
 	print 'This script is used to operate directories for the project automatically, the operation arguments are as below:'
@@ -77,7 +90,9 @@ else:
 	if sys.argv[1] == 'chmod':
 		for p in paths:
 			chmod_dir(p)
+		genAvatar()
 
 	if sys.argv[1] == 'view':
 		for p in paths:
 			view_dir(p)
+

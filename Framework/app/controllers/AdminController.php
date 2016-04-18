@@ -28,6 +28,10 @@ class AdminController extends BaseController {
 		}
 	}
 
+	public function quit() {
+		Session::forget('secret');
+	}
+
 	public function auth() {
 		return View::make('admin.auth');
 	}
