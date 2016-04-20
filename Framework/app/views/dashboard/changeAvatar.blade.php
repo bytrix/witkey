@@ -85,6 +85,12 @@
 			formData.append("croppedCanvas", croppedCanvas.toDataURL("image/png"));
 			xhr.open("POST", "/dashboard/changeAvatar/");
 			xhr.send(formData);
+			// console.log('URL: ' + URL);
+			// console.log('croppedCanvas: ' + croppedCanvas);
+			// console.log('formData: ' + formData);
+			// console.log('xhr: ' + xhr);
+			alert('Save successfully!');
+			return false;
 			// alert('s');
 			// croppedCanvas = $('#image').cropper('getCroppedCanvas');
 			// croppedImg = convertCanvasToImage(croppedCanvas);
