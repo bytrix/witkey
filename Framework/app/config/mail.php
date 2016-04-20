@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.126.com',
+	'host' => 'smtp.mxhichina.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'wengzhijie@126.com', 'name' => 'Campus Witkey'),
+	'from' => array('address' => 'password-reset@campuswitkey.com', 'name' => '校园威客'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'wengzhijie@126.com',
+	'username' => 'password-reset@campuswitkey.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => '36968573+920759',
+	'password' => 'Saehait4',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -119,6 +119,15 @@
 					You are hiring <a href="javascript:;" class="alert-link" id="postcard">{{$hired_user->username}}</a>, please complete your task description
 				</p>
 			@endif
+			@if (Auth::user()->authenticated != 2)
+				<div class="form-group">
+					<p class="alert alert-danger">
+						您尚未通过实名认证，请通过
+						<a class="alert-link" href="/dashboard/authentication">实名认证</a>
+						后继续发布任务
+					</p>
+				</div>
+			@endif
 			<div class="form-group">
 				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
 				{{Form::text('title', Session::get('title'), ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
@@ -182,7 +191,11 @@
 
 			<div class="form-group">
 				{{-- {{Form::submit('Next', ['class'=>'btn btn-primary'])}} --}}
-				<button type="submit" class="btn btn-primary">
+				@if (Auth::user()->authenticated != 2)
+					<button type="submit" class="btn btn-primary" disabled="disabled">
+				@else
+					<button type="submit" class="btn btn-primary">
+				@endif
 					{{Lang::get('task.next')}}
 					<i class="fa fa-angle-double-right"></i>
 				</button>
@@ -222,7 +235,13 @@
 					$('#file_name').attr('value', data.files[0].name);
 				}
 			});
-		})
+
+			$('form').submit(function() {
+				@if (Auth::user()->authenticated != 2)
+					return false;
+				@endif
+			});
+		});
 		</script>
 
 		{{Form::close()}}

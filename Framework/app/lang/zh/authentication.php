@@ -8,4 +8,5 @@ return array(
 	'authentication-failure' => '认证失败',
 
 	'should-be-the-same-name-as-in-student-card' => '必须与学生证上的姓名保持一致',
+
 );

@@ -34,6 +34,9 @@ class TaskController extends BaseController {
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
 	public function step_2() {
+		if (Auth::user()->authenticated != 2) {
+			return Redirect::action('TaskController@step_1');
+		}
 		if (isset($_POST['hire'])) {
 			$hired_user = User::where('id', $_POST['hire'])->first();
 		} else if (Session::has('hire')) {
