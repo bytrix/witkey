@@ -21,7 +21,7 @@ return array(
 	'major' => '专业',
 	'grade' => '年级',
 
-	'joined-on' => '加入于',
+	'joined-on' => '于 :date 加入校园威客',
 
 	'authenticated-user' => '认证用户',
 

@@ -129,16 +129,28 @@ class DashboardController extends BaseController {
 			'biography' => Input::get('biography'),
 			'skill_tag' => Input::get('skill_tag'),
 		];
-		if ($userModify['username'] != Auth::user()->username) {
+
+		$rules = [
+			'email' => 'email|unique:User,email',
+		];
+
+		$validator = Validator::make($userModify, $rules);
+
+		if ($validator->passes()) {
+			if ($userModify['username'] != Auth::user()->username) {
+				User::where('id', Auth::user()->id)
+					->update(['random_name'=>false]);
+			}
 			User::where('id', Auth::user()->id)
-				->update(['random_name'=>false]);
+				->update($userModify);
+
+			return Redirect::to('dashboard/myProfile')
+				->with('message', Lang::get('message.data-has-been-saved-successfully'));
+		} else {
+			// TODO...
+			// Redirect to with message
+			return 'email not unique';
 		}
-
-		User::where('id', Auth::user()->id)
-			->update($userModify);
-
-		return Redirect::to('dashboard/myProfile')
-			->with('message', Lang::get('message.data-has-been-saved-successfully'));
 	}
 
 	public function postAvatar() {

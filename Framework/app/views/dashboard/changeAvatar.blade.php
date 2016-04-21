@@ -3,7 +3,8 @@
 @section('style')
 @parent
 	{{HTML::style(URL::asset('assets/style/bootstrap-tagsinput.css'))}}
-	{{HTML::style('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.css')}}
+	<!-- {{HTML::style('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.css')}} -->
+	{{ HTML::style(URL::asset('assets/style/cropper.min.css')) }}
 	<style>
 		.bootstrap-tagsinput{
 			display: block;
@@ -19,12 +20,16 @@
 		.img-container{
 			margin-bottom: 12px;
 		}
+		#success-tip{
+			display: none;
+		}
 	</style>
 @stop
 
 @section('script')
 	{{HTML::script(URL::asset('assets/script/bootstrap-tagsinput.js'))}}
-	{{HTML::script('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.js')}}
+	<!-- {{HTML::script('https://cdnjs.cloudflare.com/ajax/libs/cropper/2.2.5/cropper.min.js')}} -->
+	{{ HTML::script(URL::asset('assets/script/cropper.min.js')) }}
 	<script>
 	$(function() {
 		$('input[type=file]').bootstrapFileInput();
@@ -85,11 +90,17 @@
 			formData.append("croppedCanvas", croppedCanvas.toDataURL("image/png"));
 			xhr.open("POST", "/dashboard/changeAvatar/");
 			xhr.send(formData);
-			// console.log('URL: ' + URL);
-			// console.log('croppedCanvas: ' + croppedCanvas);
-			// console.log('formData: ' + formData);
-			// console.log('xhr: ' + xhr);
-			alert('Save successfully!');
+			console.log('URL: ' + URL);
+			console.log('croppedCanvas: ' + croppedCanvas);
+			console.log('formData: ' + formData);
+			console.log('xhr: ' + xhr);
+			if (xhr.status == 200 || xhr.status == 0) {
+				// alert('Save successfully!');
+				$('#success-tip').css('display', 'block');
+				// location.reload(true);
+			} else {
+				alert('error status: ' + xhr.status);
+			}
 			return false;
 			// alert('s');
 			// croppedCanvas = $('#image').cropper('getCroppedCanvas');
@@ -126,11 +137,12 @@
 @parent
 	{{Lang::get('dashboard.change-avatar')}}
 @stop
-
+<!-- 
 @if (Session::has('message'))
 	<div class="alert alert-success">{{Session::get('message')}}</div>
 @endif
-
+ -->
+ <div class="alert alert-success" id="success-tip">{{ Lang::get('message.data-has-been-saved-successfully') }}</div>
 {{Form::open(['class'=>'form-horizontal', 'id'=>'form'])}}
 {{Form::token()}}
 

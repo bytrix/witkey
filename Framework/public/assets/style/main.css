@@ -204,7 +204,9 @@ body {
   height: 40px;
   position: relative;
   left: 40px;
-  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
   line-height: 40px;
   display: inline-block;
 }

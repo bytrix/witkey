@@ -141,7 +141,7 @@
 				</div>
 				<h4>
 					@if ($user->authenticated == 2)
-						<i class="fa fa-credit-card text-primary" data-toggle="tooltip" data-placement="left" title="{{Lang::get('user.authenticated-users')}}"></i>
+						<i class="fa fa-credit-card text-primary" data-toggle="tooltip" data-placement="left" title="{{Lang::get('user.authenticated-user')}}"></i>
 					@endif
 					{{$user->username}}
 
@@ -157,7 +157,6 @@
 						@endif
 					</span>
 				</h4>
-				<p>{{$user->email}}</p>
 
 {{-- 
 				<p>
@@ -187,6 +186,52 @@
 						{{$grade}}
 					@endif
 				</p>
+
+				<div class="contact">
+					@if ($user->email != NULL)
+						@if (Auth::check() && ($user->truename || Auth::user()->id == $user->id))
+							<p>
+								<i class="fa fa-envelope"></i>
+								{{$user->email}}
+							</p>
+						@else
+							<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见">
+								<i class="fa fa-envelope"></i>
+								{{$user->asteriskEmail()}}
+							</p>
+						@endif
+					@endif
+
+					@if ($user->tel != NULL)
+						@if (Auth::check() && ($user->truename || Auth::user()->id == $user->id))
+							<p>
+								<i class="fa fa-phone"></i>
+								{{ $user->tel }}
+							</p>
+						@else
+							<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见">
+								<i class="fa fa-phone"></i>
+								{{ $user->asteriskTel() }}
+							</p>
+						@endif
+					@endif
+
+					@if ($user->qq != NULL)
+						@if (Auth::check() && ($user->truename || Auth::user()->id == $user->id))
+							<p>
+								<i class="fa fa-qq"></i>
+								{{ $user->qq }}
+							</p>
+						@else
+							<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见">
+								<i class="fa fa-qq"></i>
+								{{ $user->asteriskQQ() }}
+							</p>
+						@endif
+					@endif
+				</div>
+
+				<p style="color: #ccc;">{{Lang::get('user.joined-on', array('date'=>explode(' ', $user->created_at)[0]))}}</p>
 
 				@if (Auth::check() && $user->id != Auth::user()->id)
 					<p ng-controller="followController">

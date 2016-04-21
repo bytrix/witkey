@@ -66,6 +66,9 @@
       /*line-height: 22px;*/
       display: inline-block;
     }
+    .contact{
+      color: #777;
+    }
   </style>
 @show
    

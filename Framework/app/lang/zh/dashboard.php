@@ -3,6 +3,7 @@
 return array(
 
 	'change-username' => '修改用户名',
+	'email-is-not-tied-to-your-account' => '您的账号未绑定邮箱',
 
 	'overview' => '用户中心',
 	'my-profile' => '修改资料',

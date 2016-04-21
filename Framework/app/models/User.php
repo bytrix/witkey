@@ -165,6 +165,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return false;
 	}
 
+	public function asteriskEmail() {
+		
+		$userEmail = $this->email;
+		$domain = explode('@', $userEmail)[1];
+		$domainLength = strlen($domain);
+		return Util::asterisk($userEmail, 1, $domainLength + 1);
+		// return var_dump($domainLength);
+	}
+
 	public function asteriskTel() {
 		
 		return Util::asterisk($this->tel, 1, 1);

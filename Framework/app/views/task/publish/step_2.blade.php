@@ -223,7 +223,7 @@
 					</div>
 				</div>
 			</div>
-
+<!-- 
 			<div class="form-group" id="profitWarning">
 				<span class="col-md-2"></span>
 				<div class="col-md-4">
@@ -233,7 +233,7 @@
 					</p>
 				</div>
 			</div>
-
+ -->
 			@if ($hired_user != NULL || Session::has('hire'))
 				{{Form::hidden('hire', $hired_user->id)}}
 				<div class="form-group" id="hired-user-group">

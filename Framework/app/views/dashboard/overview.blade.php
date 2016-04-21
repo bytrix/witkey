@@ -96,15 +96,17 @@
 	@stop
 
 
-
+		@if (empty(Auth::user()->email))
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-{{-- 				<div class="alert alert-dismissable alert-info">
+ 				<div class="alert alert-dismissable alert-danger">
 					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						We use Gravatar as our avatar service, go <a href="https://cn.gravatar.com/" target="blank"><strong>here</strong></a> to register a gravatar account.
-				</div> --}}
+						{{ Lang::get('dashboard.email-is-not-tied-to-your-account') }}
+						<a class="alert-link" href="/dashboard/myProfile">立即绑定</a>
+				</div>
 			</div>
 		</div>
+		@endif
 
 
 

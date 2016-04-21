@@ -4,7 +4,7 @@ class ApiController extends BaseController {
 
 	public function hasFavoriteTask($task_id) {
 
-		if (Auth::user()->hasFavoriteTask($task_id)) {
+		if (Auth::check() && Auth::user()->hasFavoriteTask($task_id)) {
 			return 'true';
 
 		} else {

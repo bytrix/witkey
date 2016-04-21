@@ -125,7 +125,7 @@
 		margin-top: 40px;
 	}
 </style>
-{{HTML::style(URL::asset('assets/style/cover.css'))}}
+<!-- {{HTML::style(URL::asset('assets/style/cover.css'))}} -->
 {{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}} --}}
 {{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}} --}}
 {{-- {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}} --}}
@@ -153,6 +153,7 @@
 			type: 'post',
 			url: '/api/hasFavoriteTask/'+{{$task_id}},
 			success: function(state) {
+				// alert(state);
 				if (state == 'true') {
 					favorite();
 				} else if(state == 'false') {
@@ -872,23 +873,7 @@
 					</span>
 				</h4>
 
-				<p>{{Lang::get('user.joined-on')}} {{explode(' ', $task->user->created_at)[0]}}</p>
-
-				@if (strlen($task->user->tel))
-					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
-						<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
-					@else
-						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
-					@endif
-				@endif
-
-				@if (strlen($task->user->qq))
-					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
-						<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
-					@else
-						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskQQ()}}</p>
-					@endif
-				@endif
+				
 
 				@if (strlen($task->user->dorm))
 					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
@@ -902,7 +887,25 @@
 					@endif
 				@endif
 
+				<div class="contact">
+					
+					@if (strlen($task->user->tel))
+						@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
+							<p><i class="fa fa-phone"></i> {{$task->user->tel}}</p>
+						@else
+							<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-phone"></i> {{$task->user->asteriskTel()}}</p>
+						@endif
+					@endif
 
+					@if (strlen($task->user->qq))
+						@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
+							<p><i class="fa fa-qq"></i> {{$task->user->qq}}</p>
+						@else
+							<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-qq"></i> {{$task->user->asteriskQQ()}}</p>
+						@endif
+					@endif
+
+				</div>
 
 			</div>
 		</div>
