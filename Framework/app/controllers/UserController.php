@@ -183,7 +183,7 @@ class UserController extends BaseController {
 
 		if($validator->passes()) {
 
-			if ($userInput['code'] != Session::get('code') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+			if ($userInput['code'] != Session::get($userInput['phone']) && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
 				return View::make('user.register')
 					->with('message', Lang::get('message.wrong-reg-code'));
 				// die('wrong code');
