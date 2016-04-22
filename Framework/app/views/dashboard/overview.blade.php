@@ -148,7 +148,7 @@
 						<i class="fa fa-venus"></i>
 					@endif
 				</span>
-				<p>{{Lang::get('user.joined-on')}} {{explode(' ', Auth::user()->created_at)[0]}}</p>
+				<p>{{Lang::get('user.joined-on', array('date'=>explode(' ', Auth::user()->created_at)[0]))}}</p>
 				{{-- <p>Living in {{Auth::user()->city}}</p> --}}
 			</div>
 		</div>

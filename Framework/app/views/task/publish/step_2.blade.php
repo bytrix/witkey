@@ -16,6 +16,60 @@
 		#hired_user .close{
 			transition: 0.3s;
 		}
+		.task-type-radio{
+			display: inline-block;
+			width: 170px;
+			height: 60px;
+			margin: 0px;
+			margin-left: 8px;
+			/*text-align: center;*/
+			/*background-color: blue;*/
+		}
+		.task-type-radio input[type='radio']{
+			margin: 0px;
+			opacity: 0;
+		}
+		.task-type-radio label{
+			cursor: pointer;
+			background-color: #fff;
+			width: 165px;
+			font-size: 16px;
+			height: 50px;
+			line-height: 48px;
+			color: #666;
+			margin-left: -20px;
+			text-indent: 60px;
+			border: 1px solid #bbb;
+			border-radius: 4px;
+			transition: 0.1s;
+		}
+		.task-type-radio label:after{
+			content: "\f058";
+			margin-left: -50px;
+			margin-top: 9px;
+			font-family: "FontAwesome";
+			font-size: 20px;
+			line-height: 30px;
+			height: 30px;
+			/*width: 20px;*/
+			/*height: 20px;*/
+			color: rgba(0,0,0,0);
+			/*display: inline-block;*/
+			/*background-color: red;*/
+			position: absolute;
+			border-radius: 50%;
+		}
+
+		.task-type-radio input[type='radio']:checked + label:after{
+			color: #fff;
+		}
+
+		.task-type-radio input[type='radio']:checked + label{
+			color: #fff;
+			border: 1px solid #337ab7;
+			background-color: #337ab7;
+			/*box-shadow: 0 0 6px #337ab7;*/
+		}
 	</style>
 @stop
 
@@ -154,13 +208,21 @@
 			<div class="form-group">
 				<div class="col-md-2"></div>
 				<div class="col-md-4">
-					<div class="radio radio-inline">
+<!-- 					<div class="radio radio-inline">
 						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked'])}}
 						<label for="reward">{{Lang::get('task.reward')}}</label>
 					</div>
 					<div class="radio radio-inline">
 						{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
 						<label for="bid">{{Lang::get('task.bid')}}</label>
+					</div> -->
+					<div class="task-type-radio">
+	 					{{ Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked']) }}
+						<label for="reward">{{ Lang::get('task.reward') }}</label>
+					</div>
+					<div class="task-type-radio">
+						{{ Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid']) }}
+						<label for="bid">{{ Lang::get('task.bid') }}</label>
 					</div>
 				</div>
 			</div>

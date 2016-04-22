@@ -22,6 +22,7 @@ Route::get('reportUser/{user_id}', array('before'=>'permision', 'uses'=>'UserCon
 Route::get('recruit', function() {
 	return View::make('layout.recruit');
 });
+Route::get('task/manual'                            , 'TaskController@manual');
 
 // Route::get('task/list'                              , 'TaskController@listTask');
 Route::get('school/{academy_id}/'                       , 'TaskController@listTask')->where('academy_id', '[0-9]+');

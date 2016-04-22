@@ -112,6 +112,7 @@
 
 	<div class="container">
 		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom'])}}
+
 			@if ($hired_user != NULL)
 				{{Form::hidden('hire', $hired_user->id)}}
 				<p class="alert alert-success">
@@ -119,9 +120,19 @@
 					You are hiring <a href="javascript:;" class="alert-link" id="postcard">{{$hired_user->username}}</a>, please complete your task description
 				</p>
 			@endif
+
+			@if (Auth::user()->dorm == '')
+				<p class="alert alert-danger">
+					<span class="close" data-dismiss="alert">&times;</span>
+					您的宿舍地址尚未填写，可能导致威客无法联系到您，
+					<a href="/dashboard/myProfile" class="alert-link">立即填写</a>
+				</p>
+			@endif
+
 			@if (Auth::user()->authenticated != 2)
 				<div class="form-group">
 					<p class="alert alert-danger">
+						<span class="close" data-dismiss="alert">&times;</span>
 						您尚未通过实名认证，请通过
 						<a class="alert-link" href="/dashboard/authentication">实名认证</a>
 						后继续发布任务
@@ -131,6 +142,15 @@
 			<div class="form-group">
 				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
 				{{Form::text('title', Session::get('title'), ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
+				<p style="margin-top: 8px; margin-left: 18px;">
+					<a class="link" href="manual" target="_blank" style="border-bottom: 1px dashed #888;">
+						<b>
+							<i class="fa fa-question-circle"></i>
+							{{ Lang::get('task.how-to-publish-a-qualified-task') }}
+							（发布任务前请认真阅读该链接）
+						</b>
+					</a>
+				</p>
 			</div>
 
 			<div class="form-group row">

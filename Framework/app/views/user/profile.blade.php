@@ -231,7 +231,7 @@
 					@endif
 				</div>
 
-				<p style="color: #ccc;">{{Lang::get('user.joined-on', array('date'=>explode(' ', $user->created_at)[0]))}}</p>
+				<p style="color: #ccc;">{{Lang::get('user.joined-on-with-capital', array('date'=>explode(' ', $user->created_at)[0]))}}</p>
 
 				@if (Auth::check() && $user->id != Auth::user()->id)
 					<p ng-controller="followController">

@@ -2,6 +2,9 @@
 
 class TaskController extends BaseController {
 
+	public function manual() {
+		return View::make('task.manual');
+	}
 
 	public function edit($task_id) {
 		$task = Task::where([

@@ -129,6 +129,9 @@ class DashboardController extends BaseController {
 			'biography' => Input::get('biography'),
 			'skill_tag' => Input::get('skill_tag'),
 		];
+		if (Input::get('email') == Auth::user()->email) {
+			unset($userModify['email']);
+		}
 
 		$rules = [
 			'email' => 'email|unique:User,email',

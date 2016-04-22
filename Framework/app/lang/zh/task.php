@@ -101,4 +101,6 @@ return array(
 	'you-have-paid-successfully' => '您已向:email成功支付金额 ¥:amount',
 	'back-to-task' => '返回任务',
 
+	'how-to-publish-a-qualified-task' => '如何发布一条合格的任务',
+
 );
