@@ -94,7 +94,7 @@ return array(
 	'payer' => '付款人',
 	'payee' => '收款人',
 	'commit-no' => '稿件编号',
-	'committed-at' => '交稿时间',
+	'commit-time' => '交稿时间',
 	'payment-amount' => '支付金额',
 
 	'pay-success' => '支付成功',

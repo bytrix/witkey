@@ -32,8 +32,8 @@ class HomeController extends BaseController {
 
 	}
 
-	public function about() {
+	public function help() {
 		
-		return View::make('layout.about');
+		return View::make('layout.help');
 	}
 }

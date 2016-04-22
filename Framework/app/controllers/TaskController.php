@@ -304,7 +304,6 @@ class TaskController extends BaseController {
 	public function search($academy_id, $keyword) {
 		$categories = Category::all();
 		$tasks = Task::where('title', 'like', '%' . $keyword . '%')->paginate(10);
-		// dd($tasks);
 		return View::make('task.list')
 			->with('tasks', $tasks)
 			->with('category_id', 0)

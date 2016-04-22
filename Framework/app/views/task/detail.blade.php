@@ -12,6 +12,9 @@
 	.avatar-sm:hover{
 		box-shadow: 0 0 2px #337ab7;
 	}*/
+	.avatar-sm{
+		margin-top: 5px;
+	}
 	.thumbnail{
 		margin-bottom: 35px;
 	}
@@ -28,7 +31,8 @@
 	}
 	div#summary{
 		font-size: 18px;
-		padding-left: 50px;
+		padding-left: 70px;
+		word-break: break-all;
 	}
 	.no{
 		font-size: 20px;
@@ -606,10 +610,10 @@
 										<span class="metadata">
 											<a href="/user/{{$commit->user->id}}"><strong>{{$commit->user->username}}</strong></a>
 											{{Lang::get('task.committed-at')}}
-											<span id="committed_at" data-toggle="tooltip" data-placement="right" title="{{$commit->created_at}}"></span>
+											<span id="committed_at_{{ $commit->id }}" data-toggle="tooltip" data-placement="right" title="{{$commit->created_at}}"></span>
 											<script>
 											var date = new Date("{{$commit->created_at}}");
-											$('#committed_at').html(moment("{{$commit->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
+											$("#committed_at_{{ $commit->id }}").html(moment("{{$commit->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
 											</script>
 										</span>
 

@@ -191,34 +191,58 @@ Project Fee
 	<thead>
 		<th>Fee Name</th>
 		<th>Fee Amount</th>
+		<th>Remark</th>
 		<th>Quantity</th>
 	</thead>
 	<tbody>
 		<tr>
 			<td>Yunti VPN</td>
 			<td>&yen; 230.00</td>
+			<td></td>
 			<td>1</td>
 		</tr>
 		<tr>
 			<td>Aliyun ECS</td>
 			<td>&yen; 58.24</td>
+			<td></td>
 			<td>1</td>
 		</tr>
 		<tr>
 			<td>Domain Name</td>
 			<td>&yen; 39.00</td>
+			<td></td>
 			<td>1</td>
 		</tr>
 		<tr>
 			<td>Short Message Service</td>
 			<td>&yen; 1200.00</td>
+			<td>20000 text messages</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>Aliyun Server Renewal</td>
+			<td>&yen; 816.00</td>
+			<td>2 years</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>Domain Renewal</td>
+			<td>&yen; 310.00</td>
+			<td>2 years</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>User Coupons</td>
+			<td>&yen; 2000.00</td>
+			<td></td>
 			<td>1</td>
 		</tr>
 
 		<tr>
 			<td><b>Total</b></td>
-			<td><b>&yen; 1527.24</b></td>
-			<td><b>4</b></td>
+			<td><b>&yen; 4653.24</b></td>
+			<td></td>
+			<td><b>7</b></td>
 		</tr>
 	</tbody>
 </table>

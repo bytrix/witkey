@@ -224,6 +224,12 @@
 						{{ Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid']) }}
 						<label for="bid">{{ Lang::get('task.bid') }}</label>
 					</div>
+					<p style="text-align: right;">
+						<a href="/help" target="_blank" style="border-bottom: 1px dashed #888;">
+							<i class="fa fa-question-circle"></i>
+							<b>什么是悬赏和招标</b>
+						</a>
+					</p>
 				</div>
 			</div>
 

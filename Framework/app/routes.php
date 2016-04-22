@@ -12,7 +12,7 @@
 use Omnipay\Omnipay;
 //GET
 Route::get('/'                                         , 'HomeController@index');
-Route::get('about'                                     , 'HomeController@about');
+Route::get('help'                                     , 'HomeController@help');
 Route::get('login'                                     , 'UserController@login');
 Route::get('logout'                                    , 'UserController@logout');
 Route::get('register'                                  , 'UserController@register');
