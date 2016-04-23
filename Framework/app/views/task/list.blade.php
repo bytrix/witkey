@@ -223,7 +223,7 @@ h1{
 		</div>
 		<div class="col-md-11">
 			<ul class="nav nav-pills">
-				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/">{{Lang::get('category.all')}}</a></li>
+				<li role="presentation" ng-class="{'active': 0=={{$category_id}}}"><a href="/school/{{ $mySchool->id }}">{{Lang::get('category.all')}}</a></li>
 				@foreach ($categories as $category)
 					<li role="presentation" ng-class="{'active': {{$category->id}}=={{$category_id}}}"><a href="/school/{{$mySchool->id}}/category/{{$category->id}}">{{$category->name2}}</a></li>
 				@endforeach

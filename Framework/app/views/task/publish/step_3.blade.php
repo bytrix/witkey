@@ -38,7 +38,7 @@
 @section('content')
 @parent
 
-@if (!Session::has('school_id_session'))
+@if (!Cookie::has('school_id_session'))
 	
 <div class="modal fade" id="no-school-dialog" ng-app>
 	<div class="modal-dialog modal-sm">

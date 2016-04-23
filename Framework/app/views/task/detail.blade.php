@@ -612,7 +612,7 @@
 											{{Lang::get('task.committed-at')}}
 											<span id="committed_at_{{ $commit->id }}" data-toggle="tooltip" data-placement="right" title="{{$commit->created_at}}"></span>
 											<script>
-											var date = new Date("{{$commit->created_at}}");
+											// var date = new Date("{{$commit->created_at}}");
 											$("#committed_at_{{ $commit->id }}").html(moment("{{$commit->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
 											</script>
 										</span>
@@ -650,7 +650,13 @@
 										<span class="metadata">
 											<a href="/user/{{$bidder->id}}"><strong>{{$bidder->username}}</strong></a>
 											{{Lang::get('task.committed-at')}}
-											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
+											<span id="committed_at_{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}" data-toggle="tooltip" title="{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}" data-placement="right">
+												{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
+											</span>
+											<script type="text/javascript">
+												$('#committed_at_{{ $bidder->findLatestCommitById($bidder->id, $task->id)->first()->id }}').html(moment("{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
+											</script>
+
 										</span>
 
 										{{-- {{var_dump($task->winning_commit_id)}} --}}
@@ -669,7 +675,15 @@
 
 										<div id="summary">
 											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->summary}}
+											<p style="margin-top: 20px; text-align: right; font-size: 14px;">
+												<a href="/">
+													<!-- more history task description(s) -->
+													{{ Lang::get('task.more-history-task-description', array('commit_num'=>$bidder->commit_num($task_id, $bidder->commit) - 1)) }}
+												</a>
+											</p>
 										</div>
+
+
 									</div>
 								@endforeach
 							@endif

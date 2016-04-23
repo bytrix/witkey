@@ -116,9 +116,10 @@ class TaskController extends BaseController {
 
 		if (Request::method() == "POST") {
 			// dd(Input::all());
-			if (Input::has('academy_id') && !Session::has('school_id_session')) {
+			if (Input::has('academy_id') && !Cookie::has('school_id_session')) {
 				$academy_id = Input::get('academy_id');
-				Session::set('school_id_session', $academy_id);
+				// Session::set('school_id_session', $academy_id);
+				Cookie::queue('school_id_session', $academy_id, 7*24*60);	// 7 days
 				return Redirect::to('/task/create/step-3');
 			}
 			if (Input::get('type') == 1) {
@@ -236,7 +237,9 @@ class TaskController extends BaseController {
 	}
 
 	public function listTask($academy_id) {
-		Session::set('school_id_session', $academy_id);
+		// Session::set('school_id_session', $academy_id);
+		Cookie::queue('school_id_session', $academy_id, 7*24*60);	// 7 days
+
 		$myAcademy = Academy::where('id', $academy_id)->first();
 		$academies = Academy::all();
 		$categories = Category::all();
@@ -284,7 +287,8 @@ class TaskController extends BaseController {
 
 
 	public function subCategory($academy_id, $category_id) {
-		Session::set('school_id_session', $academy_id);
+		// Session::set('school_id_session', $academy_id);
+		Cookie::queue('school_id_session', $academy_id, 7*24*60);	// 7 days
 		$myAcademy = Academy::where('id', $academy_id)->first();
 		$academies = Academy::all();
 		$categories = Category::all();
@@ -381,6 +385,7 @@ class TaskController extends BaseController {
 				}
 
 				$commits = $all_commits->orderBy('created_at', 'desc')->paginate(5);
+				// $commits = 's';
 
 				return View::make('task.detail')
 					->with('commits', $commits)
@@ -470,7 +475,8 @@ class TaskController extends BaseController {
 	}
 
 	public function postCreate() {
-		$academy_id = Session::get('school_id_session');
+		// $academy_id = Session::get('school_id_session');
+		$academy_id = Cookie::get('school_id_session');
 		if ($academy_id == NULL) {
 			return Redirect::to('/task/create/step-3')
 				->with('message', 'no-school');

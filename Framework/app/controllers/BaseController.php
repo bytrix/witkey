@@ -23,7 +23,8 @@ class BaseController extends Controller {
 	}
 
 	public function mySchool() {
-		$academy_id = Session::get('school_id_session');
+		// $academy_id = Session::get('school_id_session');
+		$academy_id = Cookie::get('school_id_session');
 		$mySchool = Academy::where('id', $academy_id)->first();
 		return $mySchool;
 	}

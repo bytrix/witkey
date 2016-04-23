@@ -3,6 +3,23 @@
 @section('script')
 @parent
 	{{HTML::script(URL::asset('assets/script/angular.js'))}}
+	<script type="text/javascript">
+		$(function() {
+			$('#remember').attr('checked', false);
+			var form = $('form');
+			$('#remember').click(function() {
+				if ($(this).attr('checked') == undefined) {
+					$(this).attr('checked', true);
+					console.log('checked');
+					form.attr('action', 'login?remember=true');
+				} else {
+					$(this).attr('checked', false);
+					console.log('undefined');
+					form.attr('action', 'login?remember=false');
+				}
+			});
+		});
+	</script>
 @stop
 
 @section('content')
@@ -36,7 +53,7 @@
 			</div>
 		@endif
  --}}
-		{{Form::open(['class'=>'form-signin', 'name'=>'loginForm'])}}
+		{{Form::open(['url'=>'login?remember=false', 'class'=>'form-signin', 'name'=>'loginForm'])}}
 		{{Form::token()}}
 			<h2 class="form-signin-heading">{{Lang::get('message.login')}}</h2>
 

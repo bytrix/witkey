@@ -20,7 +20,7 @@
 				{{$commit->uuid}}
 			</p>
 			<p>
-				<strong>{{ Lang::get('task.committed-at') }}:</strong>
+				<strong>{{ Lang::get('task.commit-time') }}:</strong>
 				{{$commit->created_at}}
 			</p>
 			<p>

@@ -72,6 +72,7 @@ return array(
 	"unique"               => "该 :attribute 已被注册",
 	"url"                  => "The :attribute format is invalid.",
 	"timezone"             => "The :attribute must be a valid zone.",
+	"future" => "时间过期",
 
 	/*
 	|--------------------------------------------------------------------------

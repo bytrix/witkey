@@ -103,4 +103,6 @@ return array(
 
 	'how-to-publish-a-qualified-task' => '如何发布一条合格的任务',
 
+	'more-history-task-description' => '还有 :commit_num 条历史交稿'
+
 );

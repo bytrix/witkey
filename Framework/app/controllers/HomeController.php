@@ -19,7 +19,8 @@ class HomeController extends BaseController {
 
 		$academies = Academy::all();
 
-		$academy_id = Session::get('school_id_session');
+		// $academy_id = Session::get('school_id_session');
+		$academy_id = Cookie::get('school_id_session');
 		$school = Academy::where('id', $academy_id)->first();
 		// dd(var_dump($school));
 

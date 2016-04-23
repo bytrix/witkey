@@ -285,3 +285,14 @@ Route::get('sms/{code}/{phone}', function($code, $userPhone) {
 // 	echo '</pre>';
 // 	// echo Config::get('server.ip');
 // });
+
+
+// Route::get('set', function() {
+// 	Cookie::queue('value', 'testValue', 10);
+// 	// var_dump(Session::get('value'));
+// 	// var_dump(Cookie::get('value'));
+// });
+
+// Route::get('get', function() {
+// 	var_dump(Cookie::get('value'));
+// });

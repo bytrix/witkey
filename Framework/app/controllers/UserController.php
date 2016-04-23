@@ -119,6 +119,11 @@ class UserController extends BaseController {
 	// POST
 	public function postLogin() {
 
+		$remember = Input::get('remember', false);
+		// $remember = false;
+		// dd((boolean)'false');
+		// dd(var_dump((bool)'false'));
+
 		$userInput = [
 			// 'email'    => Input::get('email'),
 			'tel'    => Input::get('phone'),
@@ -135,7 +140,7 @@ class UserController extends BaseController {
 
 		if($validator->passes()) {
 
-			if(Auth::attempt($userInput)) {
+			if(Auth::attempt($userInput, $remember)) {
 				// return Redirect::to('dashboard');
 				if (Auth::user()->active == true) {
 					return Redirect::intended('/');

@@ -226,7 +226,7 @@ Project Fee
 			<td>1</td>
 		</tr>
 		<tr>
-			<td>Domain Renewal</td>
+			<td>Domain Name Renewal</td>
 			<td>&yen; 310.00</td>
 			<td>2 years</td>
 			<td>1</td>
