@@ -60,7 +60,8 @@ var UserController = function($scope, $http) {
 		}
 	}
 	$scope.authFail = function(user_id) {
-		$http.get('/api/postAuthFail/' + user_id);
+		var reason = prompt('The reason for No-pass');
+		$http.get('/api/postAuthFail/' + user_id + '/' + reason);
 		if ($scope.findUserById(user_id).authenticated != 0) {
 			$scope.findUserById(user_id).authenticated = 3;
 		}

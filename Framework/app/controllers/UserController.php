@@ -123,6 +123,13 @@ class UserController extends BaseController {
 		// $remember = false;
 		// dd((boolean)'false');
 		// dd(var_dump((bool)'false'));
+		// PHP string 强转 bool 的原理：空字符串为false，否则为true
+		if ($remember == 'false') {
+			$remember = false;
+		} elseif ($remember == 'true') {
+			$remember = true;
+		}
+		// dd(var_dump($remember));
 
 		$userInput = [
 			// 'email'    => Input::get('email'),
@@ -314,6 +321,15 @@ class UserController extends BaseController {
 			return Redirect::back();
 		}
 	}
+
+	// public function postAuthenticationFailed($user_id) {
+	// 	$message = new Message;
+	// 	$message->from_user_id = Auth::user()->id;
+	// 	$message->to_user_id = $user_id;
+	// 	$message->message = 'Authentication Failed!';
+	// 	$message->read = false;
+	// 	$message->save();
+	// }
 
 		// if (strlen(Auth::user()->fingerprint) && !Input::hasFile('idcard_image')) {
 		// 	return View::make('user.dashboard.authentication')->with('error', 'No file selected!');

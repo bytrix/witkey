@@ -237,20 +237,20 @@
 					<p ng-controller="followController">
 						<a href="javascript:;" class="btn btn-default btn-xs" ng-click="unfollow()" ng-show="follower">
 							<i class="fa fa-minus"></i>
-							Unfollow
+							{{ Lang::get('user.unfollow') }}
 						</a>
 						<a href="javascript:;" class="btn btn-danger btn-xs" ng-click="follow()" ng-show="!follower">
 							<i class="fa fa-plus"></i>
-							Follow
+							{{ Lang::get('user.follow') }}
 						</a>
 					</p>
 				@endif
 
 				<p>
-					@if ($user->authenticated == 2 && $user->id != 1)
+					@if (Auth::check() && $user->authenticated == 2 && $user->id != 1 && Auth::user()->id != $user->id)
 						<a href="/task/create?hire={{$user->id}}" class="btn btn-success btn-xs">
 							<i class="fa fa-hand-o-right"></i>
-							Hire TA
+							{{ Lang::get('user.hire') }}
 						</a>
 					@endif
 				</p>

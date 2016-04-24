@@ -18,6 +18,7 @@ Route::get('logout'                                    , 'UserController@logout'
 Route::get('register'                                  , 'UserController@register');
 Route::get('user/{user_id}'                            , 'UserController@profile')->where('user_id', '[0-9]+');
 Route::get('task/{task_id}'                            , 'TaskController@detail')->where('task_id', '[0-9]+');
+Route::get('task/{task_id}/commit/{bidder_id}', 'TaskController@historyCommit')->where(array('task_id'=>'[0-9]+', 'bidder_id'=>'[0-9]+'));
 Route::get('reportUser/{user_id}', array('before'=>'permision', 'uses'=>'UserController@report'));
 Route::get('recruit', function() {
 	return View::make('layout.recruit');
@@ -143,7 +144,7 @@ Route::get('api/getUsers'                   , 'ApiController@getUsers');
 Route::get('api/authUser'                   , 'ApiController@authUser');
 Route::get('api/postAuthTobe/{user_id}'     , 'ApiController@postAuthTobe');
 Route::get('api/postAuthSuccess/{user_id}'  , 'ApiController@postAuthSuccess');
-Route::get('api/postAuthFail/{user_id}'     , 'ApiController@postAuthFail');
+Route::get('api/postAuthFail/{user_id}/{reason}'     , 'ApiController@postAuthFail');
 
 // Academy Configuration
 // Route::get('config/academy/'                  , 'ApiController@allAcademies');

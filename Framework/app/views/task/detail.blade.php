@@ -29,11 +29,11 @@
 	.item-inline .avatar-sm{
 		float: left;
 	}
-	div#summary{
+/*	div#summary{
 		font-size: 18px;
 		padding-left: 70px;
 		word-break: break-all;
-	}
+	}*/
 	.no{
 		font-size: 20px;
 		color: #ccc;
@@ -641,6 +641,12 @@
 										{{-- no --}}
 										{{-- <span class="no"># {{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}</span> --}}
 
+										<!-- commit id -->
+										<p class="commit_id">
+											<!-- Commit ID: -->
+											{{ Lang::get('task.commit-id') }}：#{{ $commit_id = $bidder->findLatestCommitById($bidder->id, $task->id)->first()->id }}
+										</p>
+
 										{{-- avatar --}}
 										<a href="/user/{{$bidder->id}}">
 											{{HTML::image(URL::asset('/avatar/' . $bidder->avatar ), '', ['class'=>'avatar-sm', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>$bidder->username])}}
@@ -659,6 +665,7 @@
 
 										</span>
 
+
 										{{-- {{var_dump($task->winning_commit_id)}} --}}
 
 										@if ($task->winning_commit_id == $bidder->findLatestCommitById($bidder->id, $task->id)->first()->id)
@@ -676,7 +683,7 @@
 										<div id="summary">
 											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->summary}}
 											<p style="margin-top: 20px; text-align: right; font-size: 14px;">
-												<a href="/">
+												<a href="/task/{{ $task_id }}/commit/{{ $bidder->id }}">
 													<!-- more history task description(s) -->
 													{{ Lang::get('task.more-history-task-description', array('commit_num'=>$bidder->commit_num($task_id, $bidder->commit) - 1)) }}
 												</a>
@@ -893,10 +900,13 @@
 
 				
 
+
+				<div class="contact">
+				
 				@if (strlen($task->user->dorm))
 					@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )
 						@if ($task->user->dorm == 'no')
-							<span class="label label-warning">Non-resident</span>
+							<p><i class="fa fa-map-marker"></i> <span class="label label-warning">{{ Lang::get('user.non-resident') }}</span></p>
 						@else
 							<p><i class="fa fa-map-marker"></i> {{$task->user->dorm}}</p>
 						@endif
@@ -904,8 +914,6 @@
 						<p data-toggle="tooltip" data-placement="left" title="通过实名认证后可见"><i class="fa fa-map-marker"></i> {{$task->user->asteriskResident()}}</p>
 					@endif
 				@endif
-
-				<div class="contact">
 					
 					@if (strlen($task->user->tel))
 						@if (Auth::check() && ( $task->user->truename() || Auth::user()->id == $task->user->id ) )

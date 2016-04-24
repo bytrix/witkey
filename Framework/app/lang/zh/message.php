@@ -75,5 +75,6 @@ return array(
 
 	'wrong-reg-code' => '验证码错误',
 
-	
+	'from' => '来自于',
+	'sent-at' => '发送于',
 );

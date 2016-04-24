@@ -196,20 +196,36 @@
 											<th>{{Lang::get('task.title')}}</th>
 											<th>{{Lang::get('task.amount')}}</th>
 											<th>{{Lang::get('task.date-published')}}</th>
+											<th>{{Lang::get('task.state')}}</th>
 										</tr>
 									</thead>
 									<tbody>
 										{{-- @foreach (Auth::user()->orders->orderBy('created_at', 'desc')->get() as $order) --}}
 										@foreach ($orders as $order)
 										<tr>
-											<th>{{$order->id}}</th>
+											<th style="width: 100px;">{{$order->id}}</th>
 											<td>
-												<div class="cw-task-title">
-													<a href="/task/{{$order->id}}" target="blank">{{$order->title}}</a>
-												</div>
+												<!-- <div class="cw-task-title"> -->
+													<a href="/task/{{$order->id}}" target="_blank">{{$order->title}}</a>
+												<!-- </div> -->
 											</td>
-											<td>&yen; {{$order->amount}}</td>
-											<td>{{$order->created_at}}</td>
+											<td style="width: 140px; text-align: right;">&yen; {{$order->amount}}</td>
+											<td style="width: 170px;">{{$order->created_at}}</td>
+											<td style="width: 120px;">
+												@if ($order->state == 0)
+													<span class="label label-danger">Closed</span>
+												@elseif ($order->state == 1)
+													<span class="label label-primary">Published</span>
+												@elseif ($order->state == 2)
+													<span class="label label-primary">Performing</span>
+												@elseif ($order->state == 3)
+													<span class="label label-primary">Check</span>
+												@elseif ($order->state == 4)
+													<span class="label label-success">Finished</span>
+												@elseif ($order->state == 5)
+													<span class="label label-default">Expired</span>
+												@endif
+											</td>
 										</tr>
 										@endforeach
 									</tbody>
@@ -225,9 +241,7 @@
 							@endif
 						</div>
 
-
-
-						{{-- Tab: Tasks --}}
+						{{-- Tab: Tasks Done --}}
 						<div class="tab-pane" id="panel-239884">
 							@if (count(Auth::user()->task->all()))
 								<table class="table table-hover table-striped">
@@ -242,10 +256,12 @@
 									<tbody>
 										@foreach (Auth::user()->task->all() as $task)
 										<tr>
-											<th>{{$task->id}}</th>
-											<td>{{$task->title}}</td>
-											<td align="right">&yen; {{$task->amount}}</td>
-											<td>{{$task->created_at}}</td>
+											<th style="width: 100px;">{{$task->id}}</th>
+											<td>
+												<a href="/task/{{ $task->id }}" target="_blank">{{$task->title}}</a>
+											</td>
+											<td style="width: 140px; text-align: right;">&yen; {{$task->amount}}</td>
+											<td style="width: 170px;">{{$task->created_at}}</td>
 										</tr>
 										@endforeach
 									</tbody>

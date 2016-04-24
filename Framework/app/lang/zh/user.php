@@ -21,6 +21,10 @@ return array(
 	'major' => '专业',
 	'grade' => '年级',
 
+	'follow' => '关注',
+	'unfollow' => '取消关注',
+	'hire' => '雇佣',
+
 	'joined-on' => '于 :date 加入',
 	'joined-on-with-capital' => '于 :date 加入校园威客',
 

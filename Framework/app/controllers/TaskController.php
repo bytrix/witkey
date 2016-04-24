@@ -417,6 +417,16 @@ class TaskController extends BaseController {
 		}
 	}
 
+	public function historyCommit($task_id, $user_id) {
+		$commit = CommitPivot::where(array('user_id'=>$user_id, 'task_id'=>$task_id))->orderBy('created_at', 'desc')->first();
+		$historyCommit = CommitPivot::where('task_id', $task_id)->orderBy('created_at', 'desc')->get();
+		unset($historyCommit[0]);
+		return View::make('task.historyCommit')
+			->with('task_id', $task_id)
+			->with('commit', $commit)
+			->with('historyCommit', $historyCommit);
+	}
+
 	public function changeCategory($task_id) {
 		// dd(Input::all());
 		$task = Task::where('id', $task_id)->first();
@@ -432,6 +442,7 @@ class TaskController extends BaseController {
 
 	public function deleteTask($task_id) {
 		// dd(Input::all());
+		$task = Task::where('id', $task_id)->get();
 		$validator = Validator::make(['reason'=>Input::get('reason')], ['reason'=>'required']);
 		if ($validator->passes()) {
 			$task = Task::where('id', $task_id)->first();
@@ -444,7 +455,9 @@ class TaskController extends BaseController {
 			$message = new Message;
 			$message->from_user_id = Auth::user()->id;
 			$message->to_user_id = $task->user->id;
-			$message->message = "Your task has been closed by campus witkey manager with following reason:<br>----------------------------------------<br>" . Input::get('reason');
+			$task_title = "<b style='color: #777;'>$task->title</b>";
+			$template = '您的任务 ' . $task_title . ' 由于以下原因被关闭：<br />----------------------------------------------------<br />';
+			$message->message = $template . Input::get('reason');
 			$message->save();
 			return Redirect::to("/task/$task_id");
 		} else {

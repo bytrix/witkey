@@ -140,15 +140,22 @@ class ApiController extends BaseController {
 		return Redirect::back();
 	}
 
-	public function postAuthFail($user_id) {
+	public function postAuthFail($user_id, $reason) {
 		$user = User::where(['id'=>$user_id])->first();
 		if ($user->authenticated != 0) {
 			$user->authenticated = 3;
 			$user->save();
 		}
+		$message = new Message;
+		$message->from_user_id = Auth::user()->id;
+		$message->to_user_id = $user_id;
+		$template = '您的实名认证通过失败，原因如下：<br />---------------------------------------------<br />';
+		$message->message = $template . $reason;
+		$message->read = false;
+		$message->save();
+
 		return Redirect::back();
 	}
-
 
 
 	public function follow($user_id) {

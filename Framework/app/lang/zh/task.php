@@ -103,6 +103,14 @@ return array(
 
 	'how-to-publish-a-qualified-task' => '如何发布一条合格的任务',
 
-	'more-history-task-description' => '还有 :commit_num 条历史交稿'
+	'more-history-task-description' => '还有 :commit_num 份历史交稿',
+
+	'latest-commit' => '最新交稿',
+	'history-commit' => '历史交稿',
+	'commit-id' => '稿件编号',
+
+	'this-task-has-been-closed' => '该任务已被关闭',
+
+	'state' => '任务状态',
 
 );

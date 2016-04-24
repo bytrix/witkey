@@ -377,3 +377,14 @@ body {
 .control-text{
   padding-top: 7px;
 }
+
+div#summary{
+  font-size: 18px;
+  padding-left: 70px;
+  word-break: break-all;
+}
+
+.commit_id{
+  color: #aaa;
+  font-size: 12px;
+}
