@@ -101,7 +101,7 @@ class UserController extends BaseController {
 
 		$user = User::where('id', $user_id)->first();
 		// $tasks = $user->task()->paginate(10);
-		$commits = CommitPivot::where('user_id', $user_id)->get();
+		$commits = CommitPivot::where('user_id', $user_id)->groupBy('task_id')->get();
 		$comments = Comment::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
 
 		$schoolAge = Util::secToYear(strtotime(date('Y-m-d')) - strtotime($user->enrollment_date));

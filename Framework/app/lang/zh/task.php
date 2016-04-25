@@ -113,4 +113,7 @@ return array(
 
 	'state' => '任务状态',
 
+	'took-part-in-the-task' => '参与任务',
+	'won-the-task' => '任务中标',
+
 );

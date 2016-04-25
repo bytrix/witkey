@@ -274,7 +274,7 @@ body {
 }
 .task-chain li,
 .task-chain li:before{
-  transition: 0.2s;
+  transition: 0.15s;
 }
 .task-chain li{
   list-style-type: none;
@@ -283,11 +283,17 @@ body {
   color: #999;
   /*background-color: red;*/
 }
+.task-chain li a{
+  font-weight: bold;
+}
 
 .task-chain li:hover:before,
 .task-chain li:hover{
-  border-color: #999;
-  color: #888;
+  border-color: #337ab7;
+  color: #337ab7;
+}
+.task-chain li:hover a{
+  color: #286090;
 }
 
 .task-chain li:before{
@@ -319,7 +325,7 @@ body {
 
 .task-chain li:first-child:after{
   height: 25px;
-  top: 90px;
+  top: 70px;
 }
 
 .task-chain li:last-child:after{

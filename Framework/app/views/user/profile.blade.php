@@ -62,14 +62,16 @@
 										 	@if ($commit->win)
 										 		<li>
 											 		<span class="created_at">{{explode(' ', $commit->created_at)[0]}}</span>
-											 		won the task
+											 		<!-- won the task -->
+											 		{{ Lang::get('task.won-the-task') }}
 												 	<a href="/task/{{$commit->id}}">{{$commit->task->title}}</a>
 												 	<i class="fa fa-flag text-danger" data-toggle="tooltip" data-placement="right" title="contrib+1"></i>
 										 		</li>
 											 @else
 											 	<li>
 											 		<span class="created_at">{{explode(' ', $commit->created_at)[0]}}</span>
-											 		take part in the task
+											 		<!-- take part in the task -->
+											 		{{ Lang::get('task.took-part-in-the-task') }}
 												 	<a href="/task/{{$commit->id}}">{{$commit->task->title}}</a>
 											 	</li>
 										 	@endif
