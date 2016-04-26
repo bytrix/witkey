@@ -128,6 +128,19 @@
 	.content-heading{
 		margin-top: 40px;
 	}
+	.iter-task i,
+	.iter-task-disabled i{
+		width: 16px;
+		height: 16px;
+		line-height: 16px;
+		text-align: center;
+		border-radius: 4px;
+		/*transition: 0.15s;*/
+	}
+	.iter-task:hover i{
+		color: #fff;
+		background-color: #31708f;
+	}
 </style>
 <!-- {{HTML::style(URL::asset('assets/style/cover.css'))}} -->
 {{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}} --}}
@@ -941,28 +954,36 @@
 			<div class="col-md-12">
 				<div style="clear: both">
 					@if ($prev_task != NULL)
-						<div class="cw-pager"><a href="/task/{{$prev_task->id}}" class="text-info">
-							<i class="fa fa-angle-up"></i>
-							{{Lang::get('task.task-prev')}}: {{$prev_task->title}}</a>
+						<div class="cw-pager">
+							<a href="/task/{{$prev_task->id}}" class="text-info iter-task">
+								<i class="fa fa-angle-up"></i>
+								{{Lang::get('task.task-prev')}}: {{$prev_task->title}}
+							</a>
 						</div>
 					@else
-						<div class="cw-pager"><span class="text-muted">
-							<i class="fa fa-angle-up"></i>
-							{{Lang::get('task.task-prev')}}: {{Lang::get('message.none')}}</span>
+						<div class="cw-pager">
+							<span class="text-muted iter-task-disabled">
+								<i class="fa fa-angle-up"></i>
+								{{Lang::get('task.task-prev')}}: {{Lang::get('message.none')}}
+							</span>
 						</div>
 					@endif
 				</div>
 				<div style="clear: both">
 					@if ($next_task != NULL)
-						<div class="cw-pager"><a href="/task/{{$next_task->id}}" class="text-info">
-							<i class="fa fa-angle-down"></i>
-							{{Lang::get('task.task-next')}}: {{$next_task->title}}
-						</a></div>
+						<div class="cw-pager">
+							<a href="/task/{{$next_task->id}}" class="text-info iter-task">
+								<i class="fa fa-angle-down"></i>
+								{{Lang::get('task.task-next')}}: {{$next_task->title}}
+							</a>
+						</div>
 					@else
-						<div class="cw-pager"><span class="text-muted">
-							<i class="fa fa-angle-down"></i>
-							{{Lang::get('task.task-next')}}: {{Lang::get('message.none')}}
-						</span></div>
+						<div class="cw-pager">
+							<span class="text-muted iter-task-disabled">
+								<i class="fa fa-angle-down"></i>
+								{{Lang::get('task.task-next')}}: {{Lang::get('message.none')}}
+							</span>
+						</div>
 					@endif
 				</div>
 			</div>

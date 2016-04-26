@@ -221,8 +221,8 @@ Project Fee
 		</tr>
 		<tr>
 			<td>Aliyun Server Renewal</td>
-			<td>&yen; 816.00</td>
-			<td>2 years</td>
+			<td>&yen; 1224.00</td>
+			<td>3 years</td>
 			<td>1</td>
 		</tr>
 		<tr>
@@ -233,14 +233,14 @@ Project Fee
 		</tr>
 		<tr>
 			<td>User Coupons</td>
-			<td>&yen; 2000.00</td>
+			<td>&yen; 1935.00</td>
 			<td></td>
 			<td>1</td>
 		</tr>
 
 		<tr>
 			<td><b>Total</b></td>
-			<td><b>&yen; 4653.24</b></td>
+			<td><b>&yen; 4996.24</b></td>
 			<td></td>
 			<td><b>7</b></td>
 		</tr>
