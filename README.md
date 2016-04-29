@@ -240,7 +240,7 @@ Project Fee
 
 		<tr>
 			<td><b>Total</b></td>
-			<td><b>&yen; 4996.24</b></td>
+			<td><b>&yen; 5000</b></td>
 			<td></td>
 			<td><b>7</b></td>
 		</tr>

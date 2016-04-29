@@ -220,7 +220,7 @@
 
 	<div class="container" ng-app>
 		{{-- Modify Price Dialog --}}
-		<div class="modal fade" id="priceDialog">
+<!-- 		<div class="modal fade" id="priceDialog">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 
@@ -248,7 +248,7 @@
 
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		{{-- Modify Category Dialog --}}
 		<div class="modal fade" id="categoryDialog">
@@ -423,11 +423,12 @@
 				@if ($task->type == 1)
 					<h4>
 						<span>{{Lang::get('task.amount-reward')}}:</span>
-						@if (Auth::check() && Auth::user()->id == $task->user->id)
+<!-- 						@if (Auth::check() && Auth::user()->id == $task->user->id)
 							<span class="amount cw-text-red price" id="edit-price" data-toggle="tooltip" data-placement="right" title="点击修改">&yen; {{$task->amount}}</span>
 						@else
 							<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
-						@endif
+						@endif -->
+						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
 					</h4>
 				@elseif ($task->type == 2)
 					<h4>
