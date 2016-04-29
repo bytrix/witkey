@@ -502,9 +502,9 @@
 						<p>
 							Attachment: 
 							@if ($attachment->file_ext == "")
-								<a href="/file/{{Auth::user()->id}}/{{$attachment->file_hash}}">{{$attachment->file_name}}</a>
+								<a href="/file/{{$task->user->id}}/{{$attachment->file_hash}}">{{$attachment->file_name}}</a>
 							@else
-								<a href="/file/{{Auth::user()->id}}/{{$attachment->file_hash}}.{{$attachment->file_ext}}">{{$attachment->file_name}}</a>
+								<a href="/file/{{$task->user->id}}/{{$attachment->file_hash}}.{{$attachment->file_ext}}">{{$attachment->file_name}}</a>
 							@endif
 						</p>
 					@endif

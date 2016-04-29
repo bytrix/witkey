@@ -40,6 +40,7 @@
 	// <script src="http://simditor.tower.im/assets/scripts/simditor.js"></script> --}}
 
 	{{HTML::script(URL::asset('assets/script/module.js'))}}
+	{{ HTML::script(URL::asset('assets/script/uploader.js')) }}
 	{{HTML::script(URL::asset('assets/script/hotkeys.js'))}}
 	{{HTML::script(URL::asset('assets/script/simditor.js'))}}
 	{{-- {{HTML::script('https://github.com/mycolorway/simditor-emoji/raw/master/lib/simditor-emoji.js')}} --}}
@@ -111,7 +112,7 @@
 	@stop
 
 	<div class="container">
-		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom'])}}
+		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom', 'files'=>true])}}
 
 			@if ($hired_user != NULL)
 				{{Form::hidden('hire', $hired_user->id)}}
@@ -185,7 +186,7 @@
 
 			<div class="form-group">
 				{{Form::label('detail', Lang::get('task.detail'), ['class'=>'control-label'])}}
-				{{Form::textarea('detail', Session::get('detail'), ['id'=>'editor', 'placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14'])}}
+				{{Form::textarea('detail', Session::get('detail'), ['id'=>'editor', 'placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14', 'autofocus'=>'autofocus'])}}
 			</div>
 
 			<div class="form-group">
@@ -223,9 +224,9 @@
 
 		<script>
 		$(function() {
-			$('select').select2({
-				theme: "bootstrap"
-			});
+			// $('select').select2({
+			// 	theme: "bootstrap"
+			// });
 			// $('.textarea').wysihtml5({
 			// 	toolbar: {
 			// 		fa: true,
@@ -233,11 +234,20 @@
 			// 	}
 			// });
 			var editor = new Simditor({
-				textarea: "#editor",
+				textarea: $('#editor'),
 				toolbar: ['bold', 'italic', 'underline', 'strikethrough', 'ol', 'ul', 'blockquote', 'code', 'link', 'image', 'indent', 'outdent', 'emoji'],
 				// toolbar: ['emoji'],
 				emoji: {
 					imagePath: "/assets/image/emoji/"
+				},
+				// defaultImage: '',
+				pasteImage: true,
+				upload: {
+					url : '/task/create/uploadImage', //文件上传的接口地址
+					params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+					fileKey: 'fileData', //服务器端获取文件数据的参数名
+					connectionCount: 3,
+					leaveConfirm: '正在上传文件'
 				}
 			});
 			$('#uploader').fileupload({

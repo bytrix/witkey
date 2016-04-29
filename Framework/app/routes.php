@@ -79,6 +79,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
 	Route::post('task/create/step-2'      , 'TaskController@step_2');
 	Route::post('task/create/step-3'      , 'TaskController@step_3');
+	Route::post('task/create/uploadImage', 'TaskController@uploadImage');
 	Route::post('task/{task_id}/edit'     , 'TaskController@postEdit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delay'    , 'TaskController@postDelay')->where('task_id', '[0-9]+');
@@ -270,13 +271,18 @@ Route::get('sms/{code}/{phone}', function($code, $userPhone) {
 });
 
 
-// Route::get('demo-put', function() {
-// 	Session::put('hello', 'world');
-// });
+Route::get('demo-push', function() {
+	// Session::push('hello', 'hehe');
+	Session::pull('hello');
+});
 
-// Route::get('demo-get', function() {
-// 	echo Session::get('hello', '-');
-// });
+Route::get('demo-get', function() {
+	// var_dump(Session::get('images', '-'));
+	foreach (Session::get('images') as $image) {
+		var_dump($image);
+		echo '<br />';
+	}
+});
 
 
 // Route::get('ip', function() {
@@ -297,3 +303,27 @@ Route::get('sms/{code}/{phone}', function($code, $userPhone) {
 // Route::get('get', function() {
 // 	var_dump(Cookie::get('value'));
 // });
+
+
+Route::post('upload/post', function() {
+	$user = new User;
+	$user->username = Input::all();
+	$user->save();
+});
+
+Route::get('demo', function() {
+	return route('home');
+	// return View::make('demo');
+	// return date('YmdHis');
+	// var_dump(public_path() . '/upload');
+});
+
+Route::post('demo', function() {
+	echo '<pre>';
+	var_dump(Input::file('file'));
+	echo '</pre>';
+	// var_dump(Input::hasFile('file'));
+});
+
+
+Route::get('upload-demo', 'TaskController@uploadImage');

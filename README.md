@@ -227,13 +227,13 @@ Project Fee
 		</tr>
 		<tr>
 			<td>Domain Name Renewal</td>
-			<td>&yen; 310.00</td>
+			<td>&yen; 190.00</td>
 			<td>2 years</td>
 			<td>1</td>
 		</tr>
 		<tr>
 			<td>User Coupons</td>
-			<td>&yen; 1935.00</td>
+			<td>&yen; 2058.76</td>
 			<td></td>
 			<td>1</td>
 		</tr>

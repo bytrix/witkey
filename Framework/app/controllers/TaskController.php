@@ -236,6 +236,39 @@ class TaskController extends BaseController {
 
 	}
 
+	public function uploadImage() {
+		$data = [
+			'success' => false,
+			'msg' => 'wrong',
+			'file_path' => ''
+		];
+		$file = Input::file('fileData');
+		// $user = new User;
+		// $user->username = $file->getRealPath();
+		// $user->save();
+		// $filePath = public_path() . '/upload/cache/' . Auth::user()->id;
+		if ($file) {
+			$filePath = public_path() . '/file/' . Auth::user()->id;
+			$fileName = 'IMG_' . date('YmdHis');
+			$file->move($filePath, $fileName);
+			$data['success'] = true;
+			$data['msg'] = 'ok';
+			$data['file_path'] = '/file/' . Auth::user()->id . '/' . $fileName;
+		}
+		return $data;
+
+		// $attachment = new Attachment;
+		// $attachment->user_id = Auth::user()->id;
+		// $attachment->file_name = $fileName;
+		// $attachment->save();
+
+		// $image = new Image;
+		// $image->user_id = Auth::user()->id;
+		// $image->file_name = $fileName;
+		// $image->save();
+		// Session::push('images', $fileName);
+	}
+
 	public function listTask($academy_id) {
 		// Session::set('school_id_session', $academy_id);
 		Cookie::queue('school_id_session', $academy_id, 7*24*60);	// 7 days
@@ -548,6 +581,24 @@ class TaskController extends BaseController {
 				copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.' . $attachment->file_ext);
 			}
 		}
+
+		// if (Session::has('images')) {
+		// 	if (!file_exists(public_path() . '/file/' . Auth::user()->id . '/')) {
+		// 		mkdir(public_path() . '/file/' . Auth::user()->id . '/');
+		// 	}
+		// 	$images = Session::get('images');
+		// 	foreach ($images as $imageName) {
+		// 		$oldName = public_path() . '/upload/cache/' . Auth::user()->id . '/' . $imageName;
+		// 		$newName = public_path() . '/file/' . Auth::user()->id . '/' .$imageName;
+		// 		rename($oldName, $newName);
+
+		// 		$image = new Image;
+		// 		$image->user_id = Auth::user()->id;
+		// 		$image->task_id = $task->id;
+		// 		$image->file_name = $imageName;
+		// 		$image->save();
+		// 	}
+		// }
 
 		Session::forget('title');
 		Session::forget('detail');

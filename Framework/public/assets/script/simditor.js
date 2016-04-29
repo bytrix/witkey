@@ -4336,7 +4336,8 @@ ImageButton = (function(superClass) {
           type: 'file',
           title: _this._t('uploadImage'),
           multiple: true,
-          accept: 'image/*'
+          accept: 'image/*',
+          name: 'fileData',
         }).appendTo($uploadItem);
       };
     })(this);
@@ -4440,6 +4441,8 @@ ImageButton = (function(superClass) {
           img_path = _this.defaultImage;
         } else {
           img_path = result.file_path;
+          // alert(img_path);
+          $img.attr('src', img_path);
         }
         _this.loadImage($img, img_path, function() {
           var $mask;
@@ -4732,7 +4735,8 @@ ImagePopover = (function(superClass) {
           type: 'file',
           title: _this._t('uploadImage'),
           multiple: true,
-          accept: 'image/*'
+          accept: 'image/*',
+          name: 'fileData',
         }).appendTo($uploadBtn);
       };
     })(this);
