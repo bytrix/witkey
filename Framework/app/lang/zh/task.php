@@ -27,6 +27,7 @@ return array(
 	'set-reward' => '设置赏金',
 	'edit-task' => '编辑任务',
 
+	'modify-price' => '修改价格',
 	'move-to-another-category' => '移动分类',
 	'delete-this-task' => '删除任务',
 	'report-this-user' => '举报用户',

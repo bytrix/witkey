@@ -116,11 +116,14 @@
 		height: 35px;
 		line-height: 30px;
 		padding-left: 10px;
-		padding-right: 20px;
+		/*padding-right: 20px;*/
 	}
 	.price>h4{
 		font-weight: bold;
 		color: orange;
+	}
+	#edit-price{
+		cursor: pointer;
 	}
 	.breadcrumb{
 		background-color: rgba(0, 0, 0, 0.0);
@@ -183,6 +186,12 @@
 			theme: "bootstrap"
 		});
 
+		$('#edit-price').click(function() {
+			$('#priceDialog').modal({
+				backdrop: false
+			});
+		});
+
 	});
 </script>
 {{HTML::script(URL::asset('assets/script/angular.js'))}}
@@ -210,6 +219,37 @@
 @section('content')
 
 	<div class="container" ng-app>
+		{{-- Modify Price Dialog --}}
+		<div class="modal fade" id="priceDialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					{{Form::open(['url'=>"/task/$task->id/modifyPrice/"])}}
+
+					<div class="modal-header">
+						<h4 class="modal-title">{{Lang::get('task.modify-price')}}</h4>
+					</div>
+					<div class="modal-body">
+						{{-- {{Form::select('category', $categories, false, ['class'=>'form-control'])}} --}}
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-yen"></i>
+							</span>
+							{{ Form::text('price', $task->amount, ['class'=>'form-control']) }}
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="javascript:;" class="btn btn-default" data-dismiss="modal">{{Lang::get('message.cancel')}}</a>
+						{{Form::hidden('task_id', $task->id)}}
+						{{Form::submit(Lang::get('message.save'), ['class'=>'btn btn-primary'])}}
+					</div>
+
+					{{Form::close()}}
+
+				</div>
+			</div>
+		</div>
+
 		{{-- Modify Category Dialog --}}
 		<div class="modal fade" id="categoryDialog">
 			<div class="modal-dialog modal-sm">
@@ -383,7 +423,11 @@
 				@if ($task->type == 1)
 					<h4>
 						<span>{{Lang::get('task.amount-reward')}}:</span>
-						<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
+						@if (Auth::check() && Auth::user()->id == $task->user->id)
+							<span class="amount cw-text-red price" id="edit-price" data-toggle="tooltip" data-placement="right" title="点击修改">&yen; {{$task->amount}}</span>
+						@else
+							<span class="amount cw-text-red price">&yen; {{$task->amount}}</span>
+						@endif
 					</h4>
 				@elseif ($task->type == 2)
 					<h4>

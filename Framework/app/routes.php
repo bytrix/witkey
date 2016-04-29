@@ -84,6 +84,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('task/{task_id}/postQuit' , 'TaskController@postQuit')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delay'    , 'TaskController@postDelay')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/changeCategory', 'TaskController@changeCategory')->where('task_id', '[0-9]+');
+	Route::post('task/{task_id}/modifyPrice', 'TaskController@modifyPrice')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delete', 'TaskController@deleteTask')->where('task_id', '[0-9]+');
 	Route::post('message/send', 'UserController@postMessage');
 

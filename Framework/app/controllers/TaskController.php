@@ -460,6 +460,13 @@ class TaskController extends BaseController {
 			->with('historyCommit', $historyCommit);
 	}
 
+	public function modifyPrice($task_id) {
+		$task = Task::where('id', $task_id)->first();
+		$task->amount = Input::get('price');
+		$task->save();
+		return Redirect::to("/task/$task_id");
+	}
+
 	public function changeCategory($task_id) {
 		// dd(Input::all());
 		$task = Task::where('id', $task_id)->first();
