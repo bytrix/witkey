@@ -13,8 +13,10 @@
  * 该页面可以使用PHP开发工具调试，也可以使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyReturn
  */
 
-require_once("alipay.config.php");
-require_once("lib/alipay_notify.class.php");
+// require_once("alipay.config.php");
+// require_once("lib/alipay_notify.class.php");
+require_once(public_path() . "/alipay/alipay.config.php");
+require_once(public_path() . "/alipay/lib/alipay_notify.class.php");
 ?>
 <!DOCTYPE HTML>
 <html>

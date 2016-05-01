@@ -63,7 +63,7 @@ class AlipayController extends BaseController {
 		// require_once("alipay.config.php");
 		// require_once("lib/alipay_notify.class.php");
 		require_once(public_path() . "/alipay/alipay.config.php");
-		require_once(public_path() . "/alipay/lib/alipay_submit.class.php");
+		require_once(public_path() . "/alipay/lib/alipay_notify.class.php");
 
 		//计算得出通知验证结果
 		$alipayNotify = new AlipayNotify($alipay_config);
