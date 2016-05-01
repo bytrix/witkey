@@ -312,12 +312,12 @@ Route::post('upload/post', function() {
 	$user->save();
 });
 
-Route::get('demo', function() {
-	return route('home');
-	// return View::make('demo');
-	// return date('YmdHis');
-	// var_dump(public_path() . '/upload');
-});
+// Route::get('demo', function() {
+// 	return route('home');
+// 	// return View::make('demo');
+// 	// return date('YmdHis');
+// 	// var_dump(public_path() . '/upload');
+// });
 
 Route::post('demo', function() {
 	echo '<pre>';
