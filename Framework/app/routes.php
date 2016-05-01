@@ -9,7 +9,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-use Omnipay\Omnipay;
+use App\Controllers\Test;
 //GET
 Route::get('/'                                         , 'HomeController@index');
 Route::get('help'                                     , 'HomeController@help');
@@ -328,3 +328,14 @@ Route::post('demo', function() {
 
 
 Route::get('upload-demo', 'TaskController@uploadImage');
+
+
+Route::get('/test', 'TestController@index');
+
+
+Route::get('pay', function() {
+	return View::make('pay.index');
+});
+Route::post('alipayapi', 'AlipayController@alipayapi');
+Route::get('notify_url', 'AlipayController@notifyUrl');
+Route::get('return_url', 'AlipayController@returnUrl');

@@ -41,10 +41,9 @@
 		width: 40px;
 	}
 
-	#editor {
+/*	#editor {
 		overflow:scroll;
-		/*max-height:300px;*/
-	}
+	}*/
 
 	#edit,#admin{
 		padding-left: 3px;
@@ -142,13 +141,14 @@
 	}
 	.iter-task:hover i{
 		color: #fff;
-		background-color: #31708f;
+		background-color: #245269;
 	}
 </style>
 <!-- {{HTML::style(URL::asset('assets/style/cover.css'))}} -->
 {{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/nanoscroller.css'))}} --}}
 {{-- {{HTML::style(URL::asset('assets/extension/emoji-picker/lib/css/emoji.css'))}} --}}
 {{-- {{HTML::style(URL::asset('assets/style/bootstrap3-wysihtml5.min.css'))}} --}}
+{{ HTML::style(URL::asset('assets/style/simditor.css')) }}
 @stop
 
 @section('script')
@@ -192,6 +192,11 @@
 			});
 		});
 
+		var editor = new Simditor({
+			textarea: $('#editor'),
+			upload: true,
+		});
+
 	});
 </script>
 {{HTML::script(URL::asset('assets/script/angular.js'))}}
@@ -200,6 +205,11 @@
 {{HTML::script(URL::asset('assets/script/jquery.plugin.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown.min.js'))}}
 {{HTML::script(URL::asset('assets/script/jquery.countdown-zh-CN.js'))}}
+
+{{ HTML::script(URL::asset('assets/script/module.js')) }}
+{{ HTML::script(URL::asset('assets/script/hotkeys.js')) }}
+{{ HTML::script(URL::asset('assets/script/uploader.js')) }}
+{{ HTML::script(URL::asset('assets/script/simditor.js')) }}
 
 <!--
 {{HTML::script(URL::asset('assets/extension/emoji-picker/lib/js/nanoscroller.min.js'))}}
@@ -844,7 +854,7 @@
 									{{Form::textarea('summary', '', ['class'=>'form-control textarea-control textarea', 'placeholder'=>'Commit summary', 'data-emojiable'=>'true', 'rows'=>'5'])}}
 								</div> --}}
 								<div class="form-group">
-									{{Form::textarea('summary', '', ['class'=>'form-control textarea', 'placeholder'=>Lang::get('task.commit-summary')])}}
+									{{Form::textarea('summary', '', ['id'=>'editor', 'class'=>'form-control textarea', 'placeholder'=>Lang::get('task.commit-summary')])}}
 								</div>
 								<div class="form-group">
 									{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger'])}}
