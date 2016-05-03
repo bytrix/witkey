@@ -339,3 +339,9 @@ Route::get('pay', function() {
 Route::post('alipayapi', 'AlipayController@alipayapi');
 Route::get('notify_url', 'AlipayController@notifyUrl');
 Route::get('return_url', 'AlipayController@returnUrl');
+
+
+Route::get('uuid', function() {
+	// echo date('Ymdhis');
+	echo date('Ymdhis') . rand(1000, 9999);
+});

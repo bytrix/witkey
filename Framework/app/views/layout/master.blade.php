@@ -175,7 +175,8 @@
         {{-- <span class="col-sm-4"></span> --}}
         <span class="col-sm-12" style="text-align: center">
           <span class="light slogon">
-            Made with <i class="fa fa-heart-o"></i>
+            <span>Made with</span>
+            <i class="fa fa-heart-o heart"></i>
           </span>
           <br>
           <span class="light">

@@ -21,11 +21,18 @@ body {
   color: #aaa;
 }
 
-.footer .slogon{
+.heart,
+.footer .slogon span{
   transition: 0.3s;
 }
 .footer .slogon:hover{
-  color: #777;
+  cursor: none;
+}
+.footer .slogon:hover span{
+  color: #888;
+}
+.footer .slogon:hover .fa-heart-o{
+  color: rgba(200, 0, 0, 0.6);
 }
 
 

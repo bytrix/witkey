@@ -21,7 +21,62 @@
 			content: "{{Lang::get('dashboard.change-avatar');}}";
 			background-color: rgba(0, 0, 0, 0.4);
 		}
+		.user-possession #hongbao-wrap,
+		.user-possession #balance-wrap{
+			width: 200px;
+			position: relative;
+			font-size: 30px;
+			/*background-color: blue;*/
+			overflow: hidden;
+			font-weight: bold;
+			height: 70px;
+			line-height: 70px;
+			display: block;
+			text-align: center;
+			cursor: pointer;
+		}
+		.user-possession .separate{
+/*			border-bottom-width: 50px;
+			border-bottom-color: -webkit-linear-gradient(top,blue,red);
+			border-bottom-style: solid;*/
+			width: 200px;
+			height: 2px;
+			display: block;
+			/*background-color: radial-gradient(blue,red);*/
+			background: radial-gradient(135px,#eee,#fff);
+			border-radius: 50%;
+			/*background-color: red;*/
+		}
+		.user-possession #hongbao,
+		.user-possession #balance{
+			/*border-bottom: 1px solid #ddd;*/
+			transition: 0.3s;
+		}
+		.user-possession #hongbao{
+			color: #d00;
+		}
+		.user-possession #balance{
+			margin-top: -70px;
+			color: orange;
+		}
+		.user-possession #hongbao-wrap:hover #hongbao{
+			margin-top: -70px;
+		}
+		.user-possession #balance-wrap:hover #balance{
+			margin-top: 0px;
+		}
 	</style>
+@stop
+
+@section('script')
+@parent
+	<script type="text/javascript">
+		$(function() {
+			$('#hongbao').mouseover(function() {
+				// alert('s');
+			});
+		});
+	</script>
 @stop
 
 @section('control-panel')
@@ -152,13 +207,27 @@
 				{{-- <p>Living in {{Auth::user()->city}}</p> --}}
 			</div>
 		</div>
-		<div class="col-md-4">
-			<p>
-				<h3>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h3>
-			</p>
-			<p>
-				<h3>{{Lang::get('dashboard.balance')}}: &yen; {{Auth::user()->balance}}</h3>
-			</p>
+		<div class="col-md-4 user-possession">
+			<div id="hongbao-wrap" data-toggle="tooltip" data-placement="top" title="查看红包">
+				<div id="hongbao">
+					<!-- <h3>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h3> -->
+					<div>{{ Lang::get('dashboard.hongbao') }}</div>
+					<div>
+						3
+						<span style="font-size: 18px;">个</span>
+					</div>
+				</div>
+			</div>
+			<div class="separate"></div>
+			<div id="balance-wrap" data-toggle="tooltip" data-placement="bottom" title="点击充值">
+				<div id="balance">
+					<div>
+						0.00
+						<span style="font-size: 18px;">元</span>
+					</div>
+					{{Lang::get('dashboard.balance')}}
+				</div>
+			</div>
 		</div>
 	</div>
 

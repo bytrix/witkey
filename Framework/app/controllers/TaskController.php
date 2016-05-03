@@ -636,11 +636,12 @@ class TaskController extends BaseController {
 			$commit->type = Input::get('type');
 			$commit->quote_id = Input::get('quote_id');
 			$commit->save();
+			$task = Task::where('id', $task_id)->first();
 			CommitPivot::where('id', '=', $commit->id)
 				->update([
-						'uuid' => md5($commit->id . $commit->created_at . $commit->task_id . $commit->user_id . $commit->summary . $commit->type . $commit->quote_id . $commit->file_hash)
+						// 'uuid' => md5($commit->id . $commit->created_at . $commit->task_id . $commit->user_id . $commit->summary . $commit->type . $commit->quote_id . $commit->file_hash)
+						'uuid' => date('Ymdhis') . $task->type . rand(1000, 9999)
 					]);
-			$task = Task::where('id', $task_id)->first();
 			if ($task->type == 1) {
 				$task->state = 2;
 				$task->participator_count = count($task->bidder);
@@ -726,13 +727,13 @@ class TaskController extends BaseController {
 		$task_id = Session::get('task_id_session');
 		Session::set('commit_uuid_session', $commit_uuid);
 		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
-		$commit->win = true;
-		$commit->save();
+		// $commit->win = true;
+		// $commit->save();
 		$task = Task::where('id', $task_id)->first();
-		if ($task->type == 1) {
-			$task->winning_commit_id = $commit->id;
-			$task->save();
-		}
+		// if ($task->type == 1) {
+		// 	$task->winning_commit_id = $commit->id;
+		// 	$task->save();
+		// }
 		return View::make('task.pay')
 			->with('task', $task)
 			->with('commit', $commit);
@@ -743,8 +744,8 @@ class TaskController extends BaseController {
 		$commit_uuid = Session::get('commit_uuid_session');
 		$commit = CommitPivot::where('uuid', $commit_uuid)->first();
 		$task = Task::where('id', $task_id)->first();
-		$task->state = 4;
-		$task->save();
+		// $task->state = 4;
+		// $task->save();
 		return View::make('task.successPay')
 			->with('task', $task)
 			->with('commit', $commit);

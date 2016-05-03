@@ -192,10 +192,10 @@
 			});
 		});
 
-		var editor = new Simditor({
-			textarea: $('#editor'),
-			upload: true,
-		});
+		// var editor = new Simditor({
+		// 	textarea: $('#editor'),
+		// 	upload: true,
+		// });
 
 	});
 </script>
@@ -865,6 +865,13 @@
 								@elseif ($task->winningQuote != NULL)
 									{{Form::hidden('quote_id', $task->winningQuote->id)}}
 								@endif
+
+								<script type="text/javascript">
+									var editor = new Simditor({
+										textarea: $('#editor'),
+										upload: true,
+									});
+								</script>
 
 
 							{{Form::close()}}

@@ -15,6 +15,7 @@ return array(
 	'security' => '安全设置',
 
 	'credit' => '积分',
+	'hongbao' => '红包',
 	'balance' => '余额',
 
 	'my-orders' => '我的任务订单',
