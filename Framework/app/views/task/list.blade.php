@@ -110,7 +110,6 @@ h1{
 @section('content')
 	<div class="container">
 
-
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-3">

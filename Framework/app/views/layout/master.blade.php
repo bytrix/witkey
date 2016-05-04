@@ -75,10 +75,6 @@
 </head>
 <body data-spy="scroll" data-target="#myScrollSpy">
 
-
-
-
-
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">

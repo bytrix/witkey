@@ -54,14 +54,14 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/create'                            , 'TaskController@step_1');
 	Route::get('task/create/step-2'                     , 'TaskController@step_2');
 	Route::get('task/create/step-3'                     , 'TaskController@step_3');
-	Route::get('task/create/postCreate'                 , 'TaskController@postCreate');
+	// Route::get('task/create/postCreate'                 , 'TaskController@postCreate');
 	Route::get('task/{task_id}/edit'                    , 'TaskController@edit')->where('task_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/1{bid_id}'       , 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/2{bid_id}'       , 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
 	Route::get('pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
-	Route::get('order/{trade_no}/success', 'TaskController@success')->where('trade_no' ,'[0-9]{18}');
+	Route::get('order/{trade_no}/success', 'TaskController@orderSuccess')->where('trade_no' ,'[0-9]{18}');
 
 	Route::get('message', 'UserController@message');
 	Route::get('message/{message_id}', 'UserController@detailMessage')->where('message_id', '[0-9]+');

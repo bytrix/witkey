@@ -809,10 +809,12 @@ class TaskController extends BaseController {
 			->with('commit', $commit);
 	}
 
-	public function success($trade_no) {
+	public function orderSuccess($trade_no) {
 		// return $trade_no;
+		$task = Task::where('trade_no', $trade_no)->first();
 		return View::make('task.orderSuccess')
-			->with('trade_no', $trade_no);
+			->with('trade_no', $trade_no)
+			->with('task', $task);
 	}
 
 

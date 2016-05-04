@@ -176,13 +176,118 @@ class AlipayController extends BaseController {
 				//判断该笔订单是否在商户网站中已经做过处理
 					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 					//如果有做过处理，不执行商户的业务程序
+
+
+
+
+
+
+		    	// POST TASK
+				$academy_id = Cookie::get('school_id_session');
+				$sTask = Session::get('task');
+				if ($academy_id == NULL) {
+					return Redirect::to('/task/create/step-3')
+						->with('message', 'no-school');
+				}
+				$task             = new Task;
+				$task->trade_no = $out_trade_no;
+				$task->user_id    = Auth::user()->id;
+				// $task->type       = Session::get('type');
+				// $task->title      = Session::get('title');
+				// $task->detail     = Session::get('detail');
+				// $task->category_id   = Session::get('category_id');
+				$task->type = $sTask['type'];
+				$task->title = $sTask['title'];
+				$task->detail = $sTask['detail'];
+				$task->category_id = $sTask['category_id'];
+
+				if (/* Session::get('type') == 1 */ $sTask['type'] == 1) {
+					// $task->amount     = Session::get('amount');
+					$task->amount = $sTask['amount'];
+				} else if (/* Session::get('type') == 2 */ $sTask['type'] == 2) {
+					// $task->amountStart     = Session::get('amountStart');
+					// $task->amountEnd     = Session::get('amountEnd');
+					$task->amountStart = $sTask['amountStart'];
+					$task->amountEnd = $sTask['amountEnd'];
+				}
+
+				// $task->amount     = Session::get('amount');
+				// $task->expiration = Session::get('expiration');
+				$task->expiration = $sTask['expiration'];
+				$task->state      = 1;
+				$task->place = $academy_id;
+				$task->save();
+				$credit = Auth::user()->credit;
+
+				// dd($task->category_id);
+
+				User::where('id', Auth::user()->id)
+					->update(['credit' => ($credit - 50)]);
+
+				if (/* Session::get('hire') != NULL */ $sTask['hire'] != NULL) {
+					// $hired_user = User::where('id', Session::get('hire'))->first();
+					$hired_user = User::where('id', $sTask['hire'])->first();
+					$message = new Message;
+					$message->from_user_id = Auth::user()->id;
+					$message->to_user_id = $hired_user->id;
+					$message->message = "Can you help me do this task " . "<a class='message-task-title' target='blank' href=\"/task/$task->id\">$task->title</a> ?";
+					$message->save();
+				}
+
+				// if (Session::has('file_name') && Session::get('file_name') != "") {
+				if ($sTask['file_name'] != "") {
+					// dd(Session::get('file_name'));
+					$attachment = new Attachment;
+					// $attachment->file_name = Session::get('file_name');
+					$attachment->file_name = $sTask['file_name'];
+					$attachment->task_id = $task->id;
+					$attachment->save();
+					$attachment->file_hash = md5($attachment->id . $attachment->created_at . $attachment->file_name . $attachment->task_id);
+					$attachment->file_ext = Util::getExtension($attachment->file_name);
+					$attachment->save();
+					// Session::set('file_hash', $attachment->file_hash);
+					if (!file_exists(public_path() . '/file/' . Auth::user()->id . '/')) {
+						mkdir(public_path() . '/file/' . Auth::user()->id . '/');
+					}
+					if ($attachment->file_ext == "") {
+						copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash);
+					} else {
+						copy(public_path() . '/upload/cache/' . $attachment->file_name, public_path() . '/file/' . Auth::user()->id . '/' . $attachment->file_hash . '.' . $attachment->file_ext);
+					}
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				return Redirect::to('order/' . $out_trade_no . '/success');
 		    }
 		    else {
 		      echo "trade_status=".$_GET['trade_status'];
 		    }
 				
 			// echo "验证成功<br />";
-			return Redirect::to('order/' . $out_trade_no . '/success');
 
 			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 			
