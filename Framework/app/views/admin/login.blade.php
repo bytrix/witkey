@@ -29,7 +29,7 @@
 
 				{{ Form::open(['class'=>'form-wrap']) }}
 					<div class="form-group">
-						{{ Form::password('password', ['class'=>'form-control']) }}
+						{{ Form::password('password', ['class'=>'form-control', 'autofocus'=>true]) }}
 					</div>
 
 					@if (Session::has('message'))

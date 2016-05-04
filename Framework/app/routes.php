@@ -87,6 +87,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('task/{task_id}/changeCategory', 'TaskController@changeCategory')->where('task_id', '[0-9]+');
 	// Route::post('task/{task_id}/modifyPrice', 'TaskController@modifyPrice')->where('task_id', '[0-9]+');
 	Route::post('task/{task_id}/delete', 'TaskController@deleteTask')->where('task_id', '[0-9]+');
+	Route::post('pay/{commit_uuid}', 'TaskController@postPay')->where('commit_uuid', '[0-9a-z]+');
 	Route::post('message/send', 'UserController@postMessage');
 
 	// realname Authentication
@@ -107,16 +108,23 @@ Route::group(['before'=>'auth'], function() {
 
 			Route::get('myadmin', 'AdminController@home');
 			Route::get('myadmin/quit', 'AdminController@quit');
+
+			// 用户认证管理
 			Route::get('myadmin/auth'                               , 'AdminController@auth');
 			Route::get('myadmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
 
+			// 用户权限管理
+			Route::get('myadmin/permission', 'AdminController@permission');
+			Route::get('myadmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
+
+			// 学院管理
 			Route::get('myadmin/academy'              , 'AdminController@academy');
 			Route::get('myadmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
 			Route::post('myadmin/academy'             , 'AdminController@postAcademy');
 			Route::post('myadmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
 
-			Route::get('myadmin/permission', 'AdminController@permission');
-			Route::get('myadmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
+			// 订单管理
+			Route::get('myadmin/order', 'AdminController@order');
 
 		});
 

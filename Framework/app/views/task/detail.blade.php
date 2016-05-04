@@ -751,10 +751,12 @@
 										<div id="summary">
 											{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->summary}}
 											<p style="margin-top: 20px; text-align: right; font-size: 14px;">
-												<a href="/task/{{ $task_id }}/commit/{{ $bidder->id }}">
-													<!-- more history task description(s) -->
-													{{ Lang::get('task.more-history-task-description', array('commit_num'=>$bidder->commit_num($task_id, $bidder->commit) - 1)) }}
-												</a>
+												@if ($bidder->commit_num($task_id, $bidder->commit) - 1 != 0)
+													<a href="/task/{{ $task_id }}/commit/{{ $bidder->id }}">
+														<!-- more history task description(s) -->
+														{{ Lang::get('task.more-history-task-description', array('commit_num'=>$bidder->commit_num($task_id, $bidder->commit) - 1)) }}
+													</a>
+												@endif
 											</p>
 										</div>
 

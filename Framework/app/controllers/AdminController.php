@@ -124,4 +124,12 @@ class AdminController extends BaseController {
 		return Redirect::back();
 	}
 
+	public function order() {
+		$orders = Task::orderBy('created_at', 'desc')->get();
+		$unpaid_orders_num = count(Task::where('state', 4)->get());
+		return View::make('admin.taskOrder')
+			->with('orders', $orders)
+			->with('unpaid_orders_num', $unpaid_orders_num);
+	}
+
 }

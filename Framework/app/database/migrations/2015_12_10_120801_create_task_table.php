@@ -34,6 +34,7 @@ class CreateTaskTable extends Migration {
 			 *	3 for CHECK
 			 *	4 for FINISH
 			 *	5 for EXPIRED
+			 *	6 for SUCCESSFUL_TRADE
 			 */
 			$table->tinyInteger('state');
 			$table->datetime('expiration');

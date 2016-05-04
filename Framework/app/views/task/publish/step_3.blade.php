@@ -117,11 +117,11 @@
 </pre>
  --}}
 
-
+<!-- 
 <pre>
 {{ var_dump($task) }}
 </pre>
-
+ -->
 		<div class="form-custom">
 
 			<p>

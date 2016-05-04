@@ -40,7 +40,7 @@
 
 		<div class="row">
 
-			<div class="col-md-4 module">
+			<div class="col-md-3 module">
 				<a class="thumbnail" href="/myadmin/auth">
 					<img src="#">
 					<div class="caption">
@@ -49,7 +49,7 @@
 				</a>
 			</div>
 			
-			<div class="col-md-4 module">
+			<div class="col-md-3 module">
 				<a class="thumbnail" href="/myadmin/permission">
 					<img src="#">
 					<div class="caption">
@@ -58,11 +58,20 @@
 				</a>
 			</div>
 
-			<div class="col-md-4 module">
+			<div class="col-md-3 module">
 				<a class="thumbnail" href="/myadmin/academy">
 					<img src="#">
 					<div class="caption">
 						<h3>学院管理</h3>
+					</div>
+				</a>
+			</div>
+
+			<div class="col-md-3 module">
+				<a class="thumbnail" href="/myadmin/order">
+					<img src="#">
+					<div class="caption">
+						<h3>订单管理</h3>
 					</div>
 				</a>
 			</div>

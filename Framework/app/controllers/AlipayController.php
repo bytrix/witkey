@@ -4,6 +4,16 @@ class AlipayController extends BaseController {
 
 	public function alipayapi() {
 
+		// $username = Auth::user()->username;
+		// $password = Input::get('password');
+		
+		// $userPassword = Auth::user()->password;
+
+		// if (! Auth::validate(array('username'=>$username, 'password'=>$password))) {
+		// 	return Redirect::back()
+		// 		->with('message', 'wrong-credential');
+		// }
+
 		// dd(public_path());
 		// require_once("alipay.config.php");
 		// require_once("lib/alipay_submit.class.php");

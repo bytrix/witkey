@@ -209,11 +209,11 @@
 		</ul>
 	@stop
 	<div class="container" ng-app>
-
+<!-- 
 <pre>
 {{ var_dump($task) }}
 </pre>
-
+ -->
 		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-horizontal', 'ng-controller'=>'profitController', 'autocomplete'=>'off'])}}
 
 			<div class="form-group">

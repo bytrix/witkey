@@ -797,6 +797,21 @@ class TaskController extends BaseController {
 			->with('commit', $commit);
 	}
 
+	public function postPay($commit_uuid) {
+
+		// dd('dd');
+
+		$username = Auth::user()->username;
+		$password = Input::get('password');
+		
+		$userPassword = Auth::user()->password;
+
+		if (! Auth::validate(array('username'=>$username, 'password'=>$password))) {
+			return Redirect::back()
+				->with('message', 'wrong-credential');
+		}
+	}
+
 	public function successPay($commit_uuid) {
 		$task_id = Session::get('task_id_session');
 		$commit_uuid = Session::get('commit_uuid_session');

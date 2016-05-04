@@ -112,11 +112,11 @@
 	@stop
 
 	<div class="container">
-
+<!-- 
 <pre>
 {{ var_dump(Session::get('task')) }}
 </pre>
-
+ -->
 
 		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom', 'files'=>true])}}
 

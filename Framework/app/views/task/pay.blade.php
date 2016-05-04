@@ -1,13 +1,18 @@
 @extends('task.master')
 
+@section('script')
+@parent
+	{{ HTML::script(URL::asset('/assets/script/angular.js')) }}
+@stop
+
 @section('content')
-	<div class="container">
+	<div class="container ng-app">
 
 		<h1 class="page-header">{{ Lang::get('task.payment-confirmation') }}</h1>
 		
 		<div class="narrow">
 
-			{{ Form::open(['url'=>'alipayapi']) }}
+			{{ Form::open(['name'=>'checkPay']) }}
 
 				{{ Form::text('WIDout_trade_no', $commit->uuid, ['hidden'=>true]) }}
 				{{ Form::text('WIDsubject', '校园威客订单:' . $commit->uuid, ['hidden'=>true]) }}
@@ -42,10 +47,31 @@
 					</button>
 				</p>
  -->
-				{{ Form::submit(Lang::get('task.pay'), ['class'=>'btn btn-success']) }}
+
+ 				<div class="row">
+	 				<div class="col-md-6">
+		 				<div class="form-group">
+		 					{{ Form::password('password', ['class'=>'form-control', 'ng-model'=>'password', 'required', 'ng-minlength'=>6]) }}
+		 				</div>
+	 				</div>
+ 				</div>
+
+				<div class="form-group">
+					{{ Form::submit(Lang::get('task.pay'), ['class'=>'btn btn-success', 'ng-disabled'=>'checkPay.$invalid']) }}
+				</div>
 
 			{{ Form::close() }}
 
+
+			@if (Session::has('message'))
+				<div class="row">
+				<div class="col-md-6">
+					<div class="alert alert-danger">
+						{{ Session::get('message') }}
+					</div>
+				</div>
+				</div>
+			@endif
 
 		</div>
 	</div>
