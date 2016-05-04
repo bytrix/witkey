@@ -70,6 +70,12 @@
 			background-color: #337ab7;
 			/*box-shadow: 0 0 6px #337ab7;*/
 		}
+		.text-control{
+			padding: 6px 12px;
+			height: 34px;
+			line-height: 22px;
+		}
+
 	</style>
 @stop
 
@@ -100,6 +106,7 @@
 			$('#inputBid').hide();
 			$('#profitWarning').show();
 			enableAmount();
+			// $scope.amount = 1;
 		}
 
 		function changeToBid() {
@@ -203,6 +210,10 @@
 	@stop
 	<div class="container" ng-app>
 
+<pre>
+{{ var_dump($task) }}
+</pre>
+
 		{{Form::open(['url'=>'/task/create/step-3', 'method'=>'post', 'class'=>'form-horizontal', 'ng-controller'=>'profitController', 'autocomplete'=>'off'])}}
 
 			<div class="form-group">
@@ -217,11 +228,11 @@
 						<label for="bid">{{Lang::get('task.bid')}}</label>
 					</div> -->
 					<div class="task-type-radio">
-	 					{{ Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked']) }}
+	 					{{ Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked', 'ng-click'=>'showAmount()']) }}
 						<label for="reward">{{ Lang::get('task.reward') }}</label>
 					</div>
 					<div class="task-type-radio">
-						{{ Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid']) }}
+						{{ Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid', 'ng-click'=>'cleanAmount()']) }}
 						<label for="bid">{{ Lang::get('task.bid') }}</label>
 					</div>
 					<p style="text-align: right;">
@@ -242,7 +253,7 @@
 							<i class="fa fa-calendar fa-fw"></i>
 						</div>
 						{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
-						{{Form::text('expiration', Session::get('expiration'), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
+						{{Form::text('expiration', $task['expiration'], ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
 						<script>
 						$('#expiration').datetimepicker({
 							language: 'zh-CN',
@@ -259,7 +270,7 @@
 					<select name="category_id" id="" class="form-control">
 						<option></option>
 						@foreach ($categories as $category)
-							@if ($category->id == Session::get('category_id'))
+							@if ($category->id == $task['category_id'])
 								<option value="{{$category->id}}" selected="selected">{{$category->name}}</option>
 							@else
 								<option value="{{$category->id}}">{{$category->name}}</option>
@@ -276,7 +287,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-yen fa-fw"></i>
 						</div>
-						{{Form::text('amount', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount', 'ng-model'=>'amount'])}}
+						{{Form::text('amount', 'ss', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount', 'ng-model'=>'amount'])}}
 					</div>
 					<div class="input-group" id="inputBid">
 						{{Form::text('amountStart', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
@@ -290,9 +301,16 @@
 						<label for="budgetCheckbox">{{Lang::get('task.no-budget')}}</label>
 					</div>
 				</div>
+				<div class="col-md-4">
+					<div class="text-danger text-control" ng-show="amount">
+						<i class="fa fa-warning"></i>
+						网站收取费用
+						<b>@{{(amount * profitPercent / 100).toFixed(2)}} 元</b>
+					</div>
+				</div>
 			</div>
 <!-- 
-			<div class="form-group" id="profitWarning">
+			<div class="form-group" id="profitWarning" ng-show="amount">
 				<span class="col-md-2"></span>
 				<div class="col-md-4">
 					<p class="alert alert-danger">
@@ -384,10 +402,19 @@
 					placeholder: "{{Lang::get('category.select')}}"
 				});
 			});
-
-
 			var profitController = function($scope) {
-				$scope.profitPercent = 0;
+				// if profitPercent equals 1 means 1%
+				$scope.profitPercent = 1;
+				var tempAmount;
+				$scope.cleanAmount = function() {
+					// alert('s');
+					// $scope.profitPercent = 2;
+					tempAmount = $scope.amount;
+					$scope.amount = '';
+				}
+				$scope.showAmount = function() {
+					$scope.amount = tempAmount;
+				}
 			}
 		</script>
 

@@ -20,6 +20,7 @@ class TaskController extends BaseController {
 
 	// 1. CREATE A DEMAND WITH TITLE AND DETAIL
 	public function step_1() {
+		$task = Session::get('task');
 		$friends = Auth::user()->friend()->get();
 		if (isset($_GET['hire']) && $_GET['hire'] != Auth::user()->id && $_GET['hire'] != 1) {
 			$hired_user = User::where('id', $_GET['hire'])->first();
@@ -32,7 +33,8 @@ class TaskController extends BaseController {
 		}
 		return View::make('task.publish.step_1')
 			->with('friends', $friends)
-			->with('hired_user', $hired_user);
+			->with('hired_user', $hired_user)
+			->with('task', $task);
 	}
 
 	// 2. SET A REWARD AMOUNT FOR YOUR DEMAND
@@ -48,24 +50,48 @@ class TaskController extends BaseController {
 			$hired_user = NULL;
 		}
 		// dd(Input::all());
+		$task = Session::get('task');
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				// 'title' => Input::get('title'),
 				'detail' => Input::get('detail'),
-				'hire'   => Input::get('hire'),
-				'file_name' => Input::get('file_name'),
-				'category_id' => Input::get('category_id')
+				// 'hire'   => Input::get('hire'),
+				// 'file_name' => Input::get('file_name'),
+				// 'expiration' => Input::get('expiration'),
+				// 'category_id' => Input::get('category_id'),
+				'hire' => $task['hire'],
+				'file_name' => $task['file_name'],
+				'expiration' => $task['expiration'],
+				'category_id' => $task['category_id'],
 			];
 		} else {
+			// $userInput = [
+			// 	'title'  => e(Session::get('title')),
+			// 	'detail' => Session::get('detail'),
+			// 	'hire'   => Session::get('hire'),
+			// 	'file_name' => Session::get('file_name'),
+			// 	'category_id' => Session::get('category_id')
+			// ];
 			$userInput = [
-				'title'  => e(Session::get('title')),
-				'detail' => Session::get('detail'),
-				'hire'   => Session::get('hire'),
-				'file_name' => Session::get('file_name'),
-				'category_id' => Session::get('category_id')
+				'title' => e($task['title']),
+				'detail' => $task['detail'],
+				'hire' => $task['hire'],
+				'file_name' => $task['file_name'],
+				'expiration' => $task['expiration'],
+				'category_id' => $task['category_id'],
 			];
 		}
+		// $userInput = [
+		// 	'title' => e($task['title']),
+		// 	'detail' => $task['detail'],
+		// 	'hire' => $task['hire'],
+		// 	'file_name' => $task['file_name'],
+		// 	'expiration' => $task['expiration'],
+		// 	'category_id' => $task['category_id'],
+		// ];
+
+		// dd(var_dump($userInput));
 
 		$rules = [
 			'title'  => 'required',
@@ -75,16 +101,38 @@ class TaskController extends BaseController {
 		$validator = Validator::make($userInput, $rules);
 
 		if ($validator->passes()) {
-			Session::set('title' , $userInput['title']);
-			Session::set('detail', $userInput['detail']);
+
+			// Session::set('title' , $userInput['title']);
+			// Session::set('detail', $userInput['detail']);
 			// Session::set('type', $userInput['type']);
-			Session::set('hire', $userInput['hire']);
-			Session::set('file_name', $userInput['file_name']);
-			Session::set('category_id', $userInput['category_id']);
+			// Session::set('hire', $userInput['hire']);
+			// Session::set('file_name', $userInput['file_name']);
+			// Session::set('category_id', $userInput['category_id']);
+
+			// $task = array(
+			// 	'title' => $userInput['title'],
+			// 	'detail' => $userInput['detail'],
+			// 	// 'type' => $userInput['type'],
+			// 	'hire' => $userInput['hire'],
+			// 	'file_name' => $userInput['file_name'],
+			// 	'expiration' => $userInput['expiration'],
+			// 	'category_id' => $userInput['category_id'],
+			// 	);
+
+			$task['title'] = $userInput['title'];
+			$task['detail'] = $userInput['detail'];
+			$task['hire'] = $userInput['hire'];
+			$task['file_name'] = $userInput['file_name'];
+			$task['expiration'] = $userInput['expiration'];
+			$task['category_id'] = $userInput['category_id'];
+
+			Session::set('task', $task);
+
 			$categories = Category::all();
 			return View::make('task.publish.step_2')
 				->with('categories', $categories)
-				->with('hired_user', $hired_user);
+				->with('hired_user', $hired_user)
+				->with('task', $task);
 
 		} else {
 			return Redirect::to('/task/create')->withErrors($validator);
@@ -112,7 +160,7 @@ class TaskController extends BaseController {
 			}
 		}, "Expiration is out of date!");
 
-
+		$task = Session::get('task', array());
 
 		if (Request::method() == "POST") {
 			// dd(Input::all());
@@ -207,23 +255,33 @@ class TaskController extends BaseController {
 		// 	'expiration' => 'required|date|future',
 		// 	'category_id'=> 'required'
 		// ];
+		$task = Session::get('task');
 		if (isset($userInput) && isset($rules)) {
 			$validator = Validator::make($userInput, $rules);
 			// dd($userInput);
 			if ($validator->passes()) {
-				Session::set('type'      , $userInput['type']);
+				// Session::set('type'      , $userInput['type']);
+				$task['type'] = $userInput['type'];
 
 				if (Session::get('type') == 1) {
-					Session::set('amount'    , $userInput['amount']);
+					// Session::set('amount'    , $userInput['amount']);
+					$task['amount'] = $userInput['amount'];
 				} else if (Session::get('type') == 2) {
-					Session::set('amountStart'    , $userInput['amountStart']);
-					Session::set('amountEnd'    , $userInput['amountEnd']);
+					// Session::set('amountStart'    , $userInput['amountStart']);
+					// Session::set('amountEnd'    , $userInput['amountEnd']);
+					$task['amountStart'] = $userInput['amountStart'];
+					$task['amountEnd'] = $userInput['amountEnd'];
 				}
 
-				Session::set('expiration', $userInput['expiration']);
-				Session::set('category_id', $userInput['category_id']);
+				// Session::set('expiration', $userInput['expiration']);
+				// Session::set('category_id', $userInput['category_id']);
+				$task['expiration'] = $userInput['expiration'];
+				$task['category_id'] = $userInput['category_id'];
+				$task['trade_no'] = date('ymdHis') . '0' . $task['type'] . rand(1000, 9999);	// 0 stands for task
+				Session::set('task', $task);
 
-				return View::make('task.publish.step_3');
+				return View::make('task.publish.step_3')
+					->with('task', $task);
 			} else {
 				// return Redirect::back()->withErrors($validator);
 				return Redirect::to('/task/create/step-2')
@@ -640,7 +698,7 @@ class TaskController extends BaseController {
 			CommitPivot::where('id', '=', $commit->id)
 				->update([
 						// 'uuid' => md5($commit->id . $commit->created_at . $commit->task_id . $commit->user_id . $commit->summary . $commit->type . $commit->quote_id . $commit->file_hash)
-						'uuid' => date('Ymdhis') . $task->type . rand(1000, 9999)
+						'uuid' => date('ymdHis') . '1' . $task->type . rand(1000, 9999)	// 1 stands for commit
 					]);
 			if ($task->type == 1) {
 				$task->state = 2;
@@ -749,6 +807,12 @@ class TaskController extends BaseController {
 		return View::make('task.successPay')
 			->with('task', $task)
 			->with('commit', $commit);
+	}
+
+	public function success($trade_no) {
+		// return $trade_no;
+		return View::make('task.orderSuccess')
+			->with('trade_no', $trade_no);
 	}
 
 

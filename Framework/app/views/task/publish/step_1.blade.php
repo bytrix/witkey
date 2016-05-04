@@ -112,6 +112,12 @@
 	@stop
 
 	<div class="container">
+
+<pre>
+{{ var_dump(Session::get('task')) }}
+</pre>
+
+
 		{{Form::open(['url'=>'task/create/step-2', 'method'=>'post', 'class'=>'form-custom', 'files'=>true])}}
 
 			@if ($hired_user != NULL)
@@ -142,7 +148,7 @@
 			@endif
 			<div class="form-group">
 				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
-				{{Form::text('title', Session::get('title'), ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
+				{{Form::text('title', $task['title'], ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}
 				<p style="margin-top: 8px; margin-left: 18px;">
 					<a class="link" href="manual" target="_blank" style="border-bottom: 1px dashed #888;">
 						<b>
@@ -186,7 +192,7 @@
 
 			<div class="form-group">
 				{{Form::label('detail', Lang::get('task.detail'), ['class'=>'control-label'])}}
-				{{Form::textarea('detail', Session::get('detail'), ['id'=>'editor', 'placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14', 'autofocus'=>'autofocus'])}}
+				{{Form::textarea('detail', $task['detail'], ['id'=>'editor', 'placeholder'=>Lang::get('task.detail'), 'class'=>'form-control textarea', 'rows'=>'14', 'autofocus'=>'autofocus'])}}
 			</div>
 
 			<div class="form-group">

@@ -16,6 +16,9 @@
 	.cw-task-title{
 		max-width: 900px;
 	}
+	.publish-task::before{
+		content: 'ss';
+	}
 </style>
 @stop
 
@@ -113,25 +116,33 @@
 	{{dd(Session::all())}}
 </pre>
  --}}
+
+
+<pre>
+{{ var_dump($task) }}
+</pre>
+
 		<div class="form-custom">
 
 			<p>
 				<strong>{{Lang::get('task.title')}}: </strong>
-				<h2 class="cw-task-title">{{Session::get('title')}}</h2>
+				<h2 class="cw-task-title">{{ $task['title'] }}</h2>
 			</p>
 			{{-- <p><strong>Reward:</strong> &yen;{{Session::get('amount')}}</p> --}}
 			<p>
 				<strong>{{Lang::get('task.description')}}: </strong>
 				<br>
 				<div class="detail">
-					{{Session::get('detail')}}
+					<!-- {{Session::get('detail')}} -->
+					{{ $task['detail'] }}
 				</div>
 			</p>
 
 				<div class="end-price-bar">
 					@if (Session::get('type') == 1)
 						<span>{{Lang::get('task.amount-reward')}}:</span>
-						<strong>&yen;{{{Session::get('amount')}}}</strong>
+						<!-- <strong>&yen;{{{Session::get('amount')}}}</strong> -->
+						<strong>&yen;{{ $task['amount'] }}</strong>
 					@elseif (Session::get('type') == 2)
 						<span>{{Lang::get('task.amount-budget')}}:</span>
 						<strong>&yen;{{{Session::get('amountStart')}}} ~ {{{Session::get('amountEnd')}}}</strong>
@@ -141,14 +152,32 @@
 			<div style="clear: both">
 				{{-- {{HTML::link('task/create/step-2', 'Previous', ['class'=>'btn btn-default'])}} --}}
 				{{-- {{HTML::link('task/create/postCreate', 'Publish', ['class'=>'btn btn-primary'])}} --}}
-				<a href="/task/create/step-2" class="btn btn-default">
-					<i class="fa fa-angle-double-left"></i>
-					{{Lang::get('task.previous')}}
-				</a>
-				<a href="/task/create/postCreate" class="btn btn-success">
+
+				{{ Form::open(['url'=>'alipayapi']) }}
+
+					{{ Form::text('WIDout_trade_no', $task['trade_no'], ['hidden'=>true]) }}
+					{{ Form::text('WIDsubject', '校园威客订单:' . $task['trade_no'], ['hidden'=>true]) }}
+					{{ Form::text('WIDtotal_fee', $task['amount'], ['hidden'=>true]) }}
+					{{ Form::text('WIDbody', $task['title'], ['hidden'=>true]) }}
+
+					<a href="/task/create/step-2" class="btn btn-default">
+						<i class="fa fa-angle-double-left"></i>
+						{{Lang::get('task.previous')}}
+					</a>
+
+<!-- 				<a href="/task/create/postCreate" class="btn btn-success">
 					{{Lang::get('task.publish')}}
 					<i class="fa fa-check"></i>
-				</a>
+				</a> -->
+
+					<!-- {{ Form::submit(Lang::get('task.publish'), ['class'=>'publish-task btn btn-success']) }} -->
+					<button type="submit" class="btn btn-success">
+						{{ Lang::get('task.publish') }}
+						<i class="fa fa-angle-double-right"></i>
+					</button>
+
+				{{ Form::close() }}
+
 			</div>
 
 		</div>

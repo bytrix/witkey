@@ -61,6 +61,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('task/{task_id}/hosting/{bid_id}/win_bid', 'TaskController@winBid')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('pay/{commit_uuid}'                     , 'TaskController@pay')->where('commit_uuid', '[0-9a-z]+');
 	Route::get('pay/{commit_uuid}/success'             , 'TaskController@successPay')->where('commit_uuid', '[0-9a-z]+');
+	Route::get('order/{trade_no}/success', 'TaskController@success')->where('trade_no' ,'[0-9]{18}');
 
 	Route::get('message', 'UserController@message');
 	Route::get('message/{message_id}', 'UserController@detailMessage')->where('message_id', '[0-9]+');
@@ -343,5 +344,22 @@ Route::get('return_url', 'AlipayController@returnUrl');
 
 Route::get('uuid', function() {
 	// echo date('Ymdhis');
-	echo date('Ymdhis') . rand(1000, 9999);
+	echo date('y-m-d H:i:s ') . rand(1000, 9999);
+});
+
+Route::get('push', function() {
+	$task = array(
+		'task_id' => 1,
+		'task_title' => 'hello',
+		'user_id' => 2,
+		);
+	Session::set('task', $task);
+
+});
+
+Route::get('get', function() {
+	echo '<pre>';
+	// var_dump(Session::get('task'));
+	var_dump(Session::all());
+	echo '</pre>';
 });
