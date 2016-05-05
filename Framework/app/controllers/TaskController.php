@@ -792,14 +792,17 @@ class TaskController extends BaseController {
 		// 	$task->winning_commit_id = $commit->id;
 		// 	$task->save();
 		// }
-		return View::make('task.pay')
-			->with('task', $task)
-			->with('commit', $commit);
+		if ($task->winning_commit_id != 6) {
+			return View::make('task.pay')
+				->with('task', $task)
+				->with('commit', $commit);
+		} else {
+			App::abort('404', 'Trade Over');
+		}
 	}
 
 	public function postPay($commit_uuid) {
 
-		// dd('dd');
 
 		$username = Auth::user()->username;
 		$password = Input::get('password');
@@ -809,6 +812,18 @@ class TaskController extends BaseController {
 		if (! Auth::validate(array('username'=>$username, 'password'=>$password))) {
 			return Redirect::back()
 				->with('message', 'wrong-credential');
+		} else {
+			$commit = CommitPivot::where('uuid', $commit_uuid)->first();
+			// dd(var_dump($commit->task->id));
+			$commit->win = true;
+			$commit->save();
+			$task = $commit->task;
+			if ($task->type == 1) {
+				$task->winning_commit_id = $commit->id;
+				$task->state = 4;
+				$task->save();
+			}
+			return Redirect::to("/task/" . $task->id);
 		}
 	}
 

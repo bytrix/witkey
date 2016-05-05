@@ -650,7 +650,7 @@
 								</p>
 								<div id="summary">
 									{{$task->winningQuote->latestCommit->first()->summary}}
-									@if ($task->user->id == Auth::user()->id && $task->state == 3)
+									@if ($task->user->id == Auth::user()->id && $task->state >= 1 && $task->state <= 3)
 										<a href="/pay/{{$task->winningQuote->latestCommit->first()->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 									@endif
 								</div>
@@ -678,7 +678,7 @@
 										<span class="metadata">
 											<a href="/user/{{$commit->user->id}}"><strong>{{$commit->user->username}}</strong></a>
 											{{Lang::get('task.committed-at')}}
-											<span id="committed_at_{{ $commit->id }}" data-toggle="tooltip" data-placement="right" title="{{$commit->created_at}}"></span>
+											<span id="committed_at_{{ $commit->id }}" data-toggle="tooltip" data-placement="top" title="{{$commit->created_at}}"></span>
 											<script>
 											// var date = new Date("{{$commit->created_at}}");
 											$("#committed_at_{{ $commit->id }}").html(moment("{{$commit->created_at}}", "YYYY-MM-DD hh:mm:ss").fromNow());
@@ -693,7 +693,7 @@
 										@endif
 
 										{{-- bid_btn --}}
-										@if ($task->user->id == Auth::user()->id && $task->id != 4)
+										@if ($task->user->id == Auth::user()->id && $task->state >= 1 && $task->state <= 3)
 											<a href="/pay/{{$commit->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 										@endif
 
@@ -724,7 +724,7 @@
 										<span class="metadata">
 											<a href="/user/{{$bidder->id}}"><strong>{{$bidder->username}}</strong></a>
 											{{Lang::get('task.committed-at')}}
-											<span id="committed_at_{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}" data-toggle="tooltip" title="{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}" data-placement="right">
+											<span id="committed_at_{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->id}}" data-toggle="tooltip" title="{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}" data-placement="top">
 												{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->created_at}}
 											</span>
 											<script type="text/javascript">
@@ -744,7 +744,7 @@
 										@endif
 
 										{{-- bid_btn --}}
-										@if ($task->user->id == Auth::user()->id && $task->state != 4)
+										@if ($task->user->id == Auth::user()->id && $task->state >= 1 && $task->state <= 3)
 											<a href="/pay/{{$bidder->findLatestCommitById($bidder->id, $task->id)->first()->uuid}}" class="btn btn-success pull-right">{{ Lang::get('task.pay') }}</a>
 										@endif
 
