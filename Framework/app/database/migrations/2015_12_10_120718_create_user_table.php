@@ -43,6 +43,7 @@ class CreateUserTable extends Migration {
 			$table->char('gender')->default('M');
 			$table->string('email');
 			$table->string('tel');
+			$table->string('alipay_account');
 			$table->string('qq')->nullable();
 			$table->integer('school')->nullable();
 			$table->string('dorm')->nullable();

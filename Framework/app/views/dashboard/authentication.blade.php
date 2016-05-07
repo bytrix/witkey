@@ -15,6 +15,7 @@
   <ul class="nav nav-sidebar nav-list">
     {{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
     <li class="active"><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}<span class="sr-only">(current)</span></a></li>
+    <li><a href="/dashboard/pay-setting">{{Lang::get('dashboard.pay-setting')}}</a></li>
     <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
@@ -64,7 +65,8 @@
 		</div>
 	@endif
 
-
+<div ng-app="academyApp">
+	
 	{{Form::open(['class'=>'form-horizontal', 'enctype'=>'multipart/form-data', 'ng-controller'=>'academyController'])}}
 		{{-- Authenticated --}}
 		<div class="form-group">
@@ -334,5 +336,6 @@
 		</script>
 	{{Form::close()}}
 
+</div>
 
 @stop

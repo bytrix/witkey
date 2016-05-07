@@ -146,6 +146,17 @@
 					</p>
 				</div>
 			@endif
+<!-- 
+			@if (Auth::user()->alipay_account == "")
+				<div class="form-group">
+					<p class="alert alert-danger">
+						<span class="close" data-dismiss="alert">&times;</span>
+						您未绑定支付宝账号，
+						<a class="alert-link" href="/dashboard/pay-setting">立即绑定</a>
+					</p>
+				</div>
+			@endif
+			 -->
 			<div class="form-group">
 				{{Form::label('title', Lang::get('task.title'), ['class'=>'control-label'])}}
 				{{Form::text('title', $task['title'], ['placeholder'=>Lang::get('task.title'), 'class'=>'form-control'])}}

@@ -125,11 +125,26 @@ class AdminController extends BaseController {
 	}
 
 	public function order() {
+
 		$orders = Task::orderBy('created_at', 'desc')->get();
 		$unpaid_orders_num = count(Task::where('state', 4)->get());
+
 		return View::make('admin.taskOrder')
 			->with('orders', $orders)
 			->with('unpaid_orders_num', $unpaid_orders_num);
+	}
+
+	public function postOrder() {
+
+		$task_ids = explode(',', Input::get('taskIds'));
+
+		foreach ($task_ids as $task_id) {
+			$task = Task::where('id', $task_id)->first();
+			$winning_commit = $task->winningCommit;
+			echo $winning_commit->user->alipay_account;
+			echo '<br />';
+		}
+		
 	}
 
 }

@@ -4,20 +4,25 @@
 @parent
 <style>
 	.end-price-bar{
-		font-size: 20px;
+		/*font-size: 20px;*/
 		display: block;
 		padding: 10px;
 		float: right;
 	}
+	.end-price-bar span{
+		width: 70px;
+		/*background-color: red;*/
+		display: inline-block;
+	}
 	.end-price-bar strong{
-		font-size: 25px;
+		/*font-size: 25px;*/
 		padding-left: 12px;
+	}
+	.end-price-bar .total-fee strong{
+		font-size: 30px;
 	}
 	.cw-task-title{
 		max-width: 900px;
-	}
-	.publish-task::before{
-		content: 'ss';
 	}
 </style>
 @stop
@@ -117,11 +122,6 @@
 </pre>
  --}}
 
-<!-- 
-<pre>
-{{ var_dump($task) }}
-</pre>
- -->
 		<div class="form-custom">
 
 			<p>
@@ -139,11 +139,20 @@
 			</p>
 
 				<div class="end-price-bar">
-					@if (Session::get('type') == 1)
-						<span>{{Lang::get('task.amount-reward')}}:</span>
-						<!-- <strong>&yen;{{{Session::get('amount')}}}</strong> -->
-						<strong>&yen;{{ $task['amount'] }}</strong>
-					@elseif (Session::get('type') == 2)
+					@if ($task['type'] == 1)
+						<p class="amount-reward">
+							<span>{{Lang::get('task.amount-reward')}}</span>
+							<strong>&yen;{{ number_format($task['amount'], 2) }}</strong>
+						</p>
+						<p class="service-charge">
+							<span>{{Lang::get('task.service-charge')}}</span>
+							<strong>&yen;{{ number_format($task['totalAmount'] - $task['amount'], 2) }}</strong>
+						</p>
+						<p class="total-fee">
+							<span>{{Lang::get('task.total-fee')}}</span>
+							<strong class="text-danger">&yen;{{ number_format($task['totalAmount'], 2) }}</strong>
+						</p>
+					@elseif ($task['type'] == 2)
 						<span>{{Lang::get('task.amount-budget')}}:</span>
 						<strong>&yen;{{{Session::get('amountStart')}}} ~ {{{Session::get('amountEnd')}}}</strong>
 					@endif
@@ -153,7 +162,8 @@
 				{{-- {{HTML::link('task/create/step-2', 'Previous', ['class'=>'btn btn-default'])}} --}}
 				{{-- {{HTML::link('task/create/postCreate', 'Publish', ['class'=>'btn btn-primary'])}} --}}
 
-				{{ Form::open(['url'=>'alipayapi']) }}
+				<!-- {{ Form::open(['url'=>'alipayapi']) }} -->
+				{{ Form::open(['url'=>'task/create/postCreate']) }}
 
 					{{ Form::text('WIDout_trade_no', $task['trade_no'], ['hidden'=>true]) }}
 					{{ Form::text('WIDsubject', '校园威客订单:' . $task['trade_no'], ['hidden'=>true]) }}

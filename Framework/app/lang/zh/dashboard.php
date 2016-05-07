@@ -12,6 +12,7 @@ return array(
 	'favorite-task' => '收藏任务',
 	'my-friend' => '我的好友',
 	'truename-authentication' => '实名认证',
+	'pay-setting' => '支付设置',
 	'security' => '安全设置',
 
 	'credit' => '积分',

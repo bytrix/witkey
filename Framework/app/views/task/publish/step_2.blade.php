@@ -19,7 +19,7 @@
 		.task-type-radio{
 			display: inline-block;
 			width: 170px;
-			height: 60px;
+			height: 60px;tas
 			margin: 0px;
 			margin-left: 8px;
 			/*text-align: center;*/
@@ -219,20 +219,12 @@
 			<div class="form-group">
 				<div class="col-md-2"></div>
 				<div class="col-md-4">
-<!-- 					<div class="radio radio-inline">
-						{{Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked'])}}
-						<label for="reward">{{Lang::get('task.reward')}}</label>
-					</div>
-					<div class="radio radio-inline">
-						{{Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid'])}}
-						<label for="bid">{{Lang::get('task.bid')}}</label>
-					</div> -->
 					<div class="task-type-radio">
-	 					{{ Form::radio('type', '1', Session::get('type') == '1', ['id'=>'reward', 'checked'=>'checked', 'ng-click'=>'showAmount()']) }}
+	 					{{ Form::radio('type', '1', $task['type'] == '1', ['id'=>'reward', 'ng-click'=>'showAmount()']) }}
 						<label for="reward">{{ Lang::get('task.reward') }}</label>
 					</div>
 					<div class="task-type-radio">
-						{{ Form::radio('type', '2', Session::get('type') == '2', ['id'=>'bid', 'ng-click'=>'cleanAmount()']) }}
+						{{ Form::radio('type', '2', $task['type'] == '2', ['id'=>'bid', 'ng-click'=>'cleanAmount()']) }}
 						<label for="bid">{{ Lang::get('task.bid') }}</label>
 					</div>
 					<p style="text-align: right;">
@@ -282,12 +274,13 @@
 
 			<div class="form-group">
 				{{Form::label('amount', '', ['class'=>'control-label col-md-2', 'id'=>'moneyType'])}}
+
 				<div class="col-md-4">
 					<div class="input-group" id="inputReward">
 						<div class="input-group-addon">
 							<i class="fa fa-yen fa-fw"></i>
 						</div>
-						{{Form::text('amount', 'ss', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount', 'ng-model'=>'amount'])}}
+						{{Form::text('amount', $task['amount'], ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
 					</div>
 					<div class="input-group" id="inputBid">
 						{{Form::text('amountStart', '', ['placeholder'=>'0.1 ~ 5000', 'class'=>'form-control', 'id'=>'amount'])}}
@@ -301,13 +294,17 @@
 						<label for="budgetCheckbox">{{Lang::get('task.no-budget')}}</label>
 					</div>
 				</div>
+<!-- 
 				<div class="col-md-4">
 					<div class="text-danger text-control" ng-show="amount">
 						<i class="fa fa-warning"></i>
 						网站收取费用
 						<b>@{{(amount * profitPercent / 100).toFixed(2)}} 元</b>
+						，实际支付
+						<b>@{{ (amount.toFixed(2) +'+'+ amount * profitPercent / 100) }} 元</b>
 					</div>
 				</div>
+ -->
 			</div>
 <!-- 
 			<div class="form-group" id="profitWarning" ng-show="amount">
@@ -404,7 +401,7 @@
 			});
 			var profitController = function($scope) {
 				// if profitPercent equals 1 means 1%
-				$scope.profitPercent = 1;
+				$scope.profitPercent = 4;
 				var tempAmount;
 				$scope.cleanAmount = function() {
 					// alert('s');

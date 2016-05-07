@@ -849,6 +849,13 @@
 						{{-- COMMIT AREA --}}
 						@if (( ($task->type == 1 && $task->state == 1) || ($task->state == 2 || $task->state == 3) )  && $task->user->id != Auth::user()->id )
 
+							@if (Auth::user()->alipay_account == "")
+								<div class="alert alert-danger">
+									<span class="close" data-dismiss="alert">&times;</span>
+									您未绑定支付宝账号，
+									<a class="alert-link" href="/dashboard/pay-setting" target="_blank">立即绑定</a>
+								</div>
+							@endif
 
 							{{Form::open(['url'=>"/task/$task_id/commit"])}}
 								{{Form::label('summary', Lang::get('message.summary'))}}
@@ -859,7 +866,11 @@
 									{{Form::textarea('summary', '', ['id'=>'editor', 'class'=>'form-control textarea', 'placeholder'=>Lang::get('task.commit-summary')])}}
 								</div>
 								<div class="form-group">
-									{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger'])}}
+									@if (Auth::user()->alipay_account == "")
+										{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger', 'disabled'=>true])}}
+									@else
+										{{Form::submit(Lang::get('task.commit'), ['class'=>'btn btn-danger'])}}
+									@endif
 								</div>
 								{{Form::hidden('type', $task->type)}}
 								@if ($task->winningCommit != NULL)

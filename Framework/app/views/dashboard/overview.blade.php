@@ -29,8 +29,8 @@
 			/*background-color: blue;*/
 			overflow: hidden;
 			font-weight: bold;
-			height: 70px;
-			line-height: 70px;
+			height: 60px;
+			line-height: 60px;
 			display: block;
 			text-align: center;
 			cursor: pointer;
@@ -56,11 +56,11 @@
 			color: #d00;
 		}
 		.user-possession #balance{
-			margin-top: -70px;
+			margin-top: -60px;
 			color: orange;
 		}
 		.user-possession #hongbao-wrap:hover #hongbao{
-			margin-top: -70px;
+			margin-top: -60px;
 		}
 		.user-possession #balance-wrap:hover #balance{
 			margin-top: 0px;
@@ -96,7 +96,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						{{Form::text('username', '', ['class'=>'form-control', 'placeholder'=>Lang::get('user.username')])}}
+						{{Form::text('username', '', ['class'=>'form-control', 'placeholder'=>Lang::get('user.username'), 'autofocus'=>true])}}
 					</div>
 					@if (count($errors))
 						<p class="text-danger">{{$errors->first('username')}}</p>
@@ -134,6 +134,7 @@
   <ul class="nav nav-sidebar nav-list">
   	{{-- <li><a href="/dashboard/postcard">Postcard</a></li> --}}
     <li><a href="/dashboard/authentication">{{Lang::get('dashboard.truename-authentication')}}</a></li>
+    <li><a href="/dashboard/pay-setting">{{Lang::get('dashboard.pay-setting')}}</a></li>
     <li><a href="/dashboard/security">{{Lang::get('dashboard.security')}}</a></li>
   </ul>
 </div>
@@ -213,7 +214,7 @@
 					<!-- <h3>{{Lang::get('dashboard.credit')}}: {{Auth::user()->credit}}</h3> -->
 					<div>{{ Lang::get('dashboard.hongbao') }}</div>
 					<div>
-						3
+						0
 						<span style="font-size: 18px;">个</span>
 					</div>
 				</div>

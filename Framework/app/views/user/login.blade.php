@@ -97,7 +97,7 @@
 			</div>
 			
 			<div class="form-group">
-				{{Form::submit(Lang::get('message.login'), ['class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'loginForm.$invalid'])}}
+				{{Form::submit(Lang::get('message.login'), ['id'=>'loginBtn', 'class'=>'btn btn-lg btn-primary btn-block', 'ng-disabled'=>'loginForm.$invalid'])}}
 			</div>
 
 			<div class="form-group">

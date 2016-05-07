@@ -13,6 +13,8 @@ return array(
 	'amount-reward' => '悬赏金额',
 	'amount-budget' => '预算金额',
 	'no-budget' => '暂无预算',
+	'service-charge' => '服务费',
+	'total-fee' => '总金额',
 
 	'task-end' => '任务结束',
 	'bidding' => '竞标中',

@@ -51,10 +51,11 @@ Route::group(['before'=>'auth'], function() {
 	Route::get('dashboard/myFriends'                 , 'DashboardController@myFriends');
 	Route::get('dashboard/security'                     , 'DashboardController@security');
 	Route::get('dashboard/authentication'               , 'DashboardController@authentication');
+	Route::get('dashboard/pay-setting'               , 'DashboardController@paySetting');
 	Route::get('task/create'                            , 'TaskController@step_1');
 	Route::get('task/create/step-2'                     , 'TaskController@step_2');
 	Route::get('task/create/step-3'                     , 'TaskController@step_3');
-	// Route::get('task/create/postCreate'                 , 'TaskController@postCreate');
+	Route::post('task/create/postCreate'                 , 'TaskController@postCreate');
 	Route::get('task/{task_id}/edit'                    , 'TaskController@edit')->where('task_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/1{bid_id}'       , 'TaskController@commitHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
 	Route::get('task/{task_id}/hosting/2{bid_id}'       , 'TaskController@quoteHosting')->where('task_id', '[0-9]+')->where('bid_id', '[0-9]+');
@@ -78,6 +79,7 @@ Route::group(['before'=>'auth'], function() {
 	Route::post('dashboard/changeAvatar', 'DashboardController@postAvatar');
 	Route::post('dashboard/rate/{task_id}', 'DashboardController@postRate')->where('task_id', '[0-9]+');
 	Route::post('dashboard/authentication', 'DashboardController@postAuthentication');
+	Route::post('dashboard/pay-setting', 'DashboardController@postPaySetting');
 	Route::post('task/create/step-2'      , 'TaskController@step_2');
 	Route::post('task/create/step-3'      , 'TaskController@step_3');
 	Route::post('task/create/uploadImage', 'TaskController@uploadImage');
@@ -125,6 +127,7 @@ Route::group(['before'=>'auth'], function() {
 
 			// 订单管理
 			Route::get('myadmin/order', 'AdminController@order');
+			Route::post('myadmin/order', 'AdminController@postOrder');
 
 		});
 
@@ -328,11 +331,22 @@ Route::post('upload/post', function() {
 // 	// var_dump(public_path() . '/upload');
 // });
 
-Route::post('demo', function() {
-	echo '<pre>';
-	var_dump(Input::file('file'));
-	echo '</pre>';
+Route::get('demo', function() {
+	// echo '<pre>';
+	// var_dump(Input::file('file'));
+	// echo '</pre>';
 	// var_dump(Input::hasFile('file'));
+	// var_dump(Util::isPhone("1335821268"));
+	// var_dump(Util::isEmail("admin@campuswitkey.com"));
+	// echo number_format(1, 2);
+	// $demo = [];
+	if (true) {
+		// $demo['test'] = 5;
+		$demo = [
+			'test' => 7,
+		];
+	}
+	echo $demo['test'];
 });
 
 

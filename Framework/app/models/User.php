@@ -184,15 +184,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function asteriskEmail() {
 		
 		$userEmail = $this->email;
-		$domain = explode('@', $userEmail)[1];
-		$domainLength = strlen($domain);
-		return Util::asterisk($userEmail, 1, $domainLength + 1);
+		if ($userEmail == "") {
+			return "EMAIL NOT FOUND!";
+		} else {
+			$domain = explode('@', $userEmail)[1];
+			$domainLength = strlen($domain);
+			return Util::asterisk($userEmail, 3, $domainLength + 1);
+		}
 		// return var_dump($domainLength);
 	}
 
 	public function asteriskTel() {
 		
-		return Util::asterisk($this->tel, 1, 1);
+		return Util::asterisk($this->tel, 0, 4);
 	}
 
 	public function asteriskQQ() {
@@ -207,7 +211,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function asteriskResident() {
 
-		return '***';
+		return '******';
 	}
 
 

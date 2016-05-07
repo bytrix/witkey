@@ -82,4 +82,48 @@ class Util {
 			return end($arr);
 		}
 	}
+
+	public static function isPhone($val) {
+		if (preg_match("/^[0-9]{11}$/", $val)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static function isEmail($val) {
+		if (preg_match("/^\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$/", $val)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	// 0 - 1000			1.1%	1.011
+	// 1000 - 2000		1.0%	1.010
+	// 2000 - 3000		0.9%	1.009
+	// 3000 - 4000		0.8%	1.008
+	// 4000 - 5000		0.7%	1.007
+	// 5000 - ?			0.6%	1.006
+
+	public static function getTotalFee($fee) {
+		if ($fee > 0 && $fee < 1000) {
+			$profit = 1.1;
+		} elseif ($fee >= 1000 && $fee < 2000) {
+			$profit = 1.0;
+		} elseif ($fee >= 2000 && $fee < 3000) {
+			$profit = 0.9;
+		} elseif ($fee >= 3000 && $fee < 4000) {
+			$profit = 0.8;
+		} elseif ($fee >= 4000 && $fee <=5000) {
+			$profit = 0.7;
+		} else {
+			$profit = 0.6;
+		}
+		$factor = $profit / 100 + 1;
+		return $fee * $factor;
+	}
+
+
 }

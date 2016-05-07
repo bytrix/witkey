@@ -51,21 +51,30 @@ class TaskController extends BaseController {
 		}
 		// dd(Input::all());
 		$task = Session::get('task');
+		// $userInput = [];
 		if (Request::method() == "POST") {
 			$userInput = [
 				'title'  => Purifier::clean(Input::get('title'), 'titles'),
 				// 'title' => Input::get('title'),
 				'detail' => Input::get('detail'),
-				// 'hire'   => Input::get('hire'),
-				// 'file_name' => Input::get('file_name'),
+				'hire'   => Input::get('hire'),
+				'file_name' => Input::get('file_name'),
 				// 'expiration' => Input::get('expiration'),
 				// 'category_id' => Input::get('category_id'),
-				'hire' => $task['hire'],
-				'file_name' => $task['file_name'],
-				'expiration' => $task['expiration'],
-				'category_id' => $task['category_id'],
+				'amount' => '',
+				'expiration' => '',
+				'category_id' => '',
+				'type' => 1,
+				// 'hire' => $task['hire'],
+				// 'file_name' => $task['file_name'],
+				// 'expiration' => $task['expiration'],
+				// 'category_id' => $task['category_id'],
 			];
+			// echo '<pre>';
+			// dd(var_dump($task));
+			// echo '</pre>';
 		} else {
+			// dd('dd');
 			// $userInput = [
 			// 	'title'  => e(Session::get('title')),
 			// 	'detail' => Session::get('detail'),
@@ -76,10 +85,12 @@ class TaskController extends BaseController {
 			$userInput = [
 				'title' => e($task['title']),
 				'detail' => $task['detail'],
+				'amount' => $task['amount'],
 				'hire' => $task['hire'],
 				'file_name' => $task['file_name'],
 				'expiration' => $task['expiration'],
 				'category_id' => $task['category_id'],
+				'type' => $task['type'],
 			];
 		}
 		// $userInput = [
@@ -121,12 +132,20 @@ class TaskController extends BaseController {
 
 			$task['title'] = $userInput['title'];
 			$task['detail'] = $userInput['detail'];
+			$task['amount'] = $userInput['amount'];
 			$task['hire'] = $userInput['hire'];
 			$task['file_name'] = $userInput['file_name'];
 			$task['expiration'] = $userInput['expiration'];
 			$task['category_id'] = $userInput['category_id'];
+			$task['type'] = $userInput['type'];
+
+			// dd('dd');
 
 			Session::set('task', $task);
+
+			// echo '<pre>';
+			// dd(var_dump($task));
+			// echo '</pre>';
 
 			$categories = Category::all();
 			return View::make('task.publish.step_2')
@@ -142,7 +161,10 @@ class TaskController extends BaseController {
 	// 3. VALIDATE THE USER INPUT AND INSERT INTO DATABASE
 	public function step_3() {
 		// dd(Session::all());
+		// echo '<pre>';
 		// dd(var_dump(Input::all()));
+		// dd(var_dump(Session::get('task')));
+		// echo '</pre>';
 		// Validator::extend('positive', function($attribute, $value, $parameters) {
 		// 	if ($value < 0) {
 		// 		return false;
@@ -163,6 +185,7 @@ class TaskController extends BaseController {
 		$task = Session::get('task', array());
 
 		if (Request::method() == "POST") {
+			$taskType = Input::get('type');
 			// dd(Input::all());
 			if (Input::has('academy_id') && !Cookie::has('school_id_session')) {
 				$academy_id = Input::get('academy_id');
@@ -170,39 +193,63 @@ class TaskController extends BaseController {
 				Cookie::queue('school_id_session', $academy_id, 7*24*60);	// 7 days
 				return Redirect::to('/task/create/step-3');
 			}
-			if (Input::get('type') == 1) {
-				$userInput = [
-					'type'       => Input::get('type'),
-					'amount'     => Input::get('amount'),
-					'expiration' => Input::get('expiration'),
-					'category_id'=> Input::get('category_id')
-				];
-			} else if (Input::get('type') == 2) {
-				$userInput = [
-					'type'       => Input::get('type'),
-					'amountStart'     => Input::get('amountStart'),
-					'amountEnd'     => Input::get('amountEnd'),
-					'expiration' => Input::get('expiration'),
-					'category_id'=> Input::get('category_id')
-				];
+			$userInput = [
+				'type' => Input::get('type'),
+				'expiration' => Input::get('expiration'),
+				'category_id' => Input::get('category_id'),
+			];
+			if ($taskType == 1) {
+				// $userInput = [
+					// 'type'       => Input::get('type'),
+					// 'amount'     => Input::get('amount'),
+					// 'expiration' => Input::get('expiration'),
+					// 'category_id'=> Input::get('category_id')
+				// ];
+				$userInput['amount'] = Input::get('amount');
+				// $userInput['totalAmount'] = Input::get('totalAmount');
+			} else if ($taskType == 2) {
+				// $userInput = [
+					// 'type'       => Input::get('type'),
+					// 'amountStart'     => Input::get('amountStart'),
+					// 'amountEnd'     => Input::get('amountEnd'),
+					// 'expiration' => Input::get('expiration'),
+					// 'category_id'=> Input::get('category_id')
+				// ];
+				$userInput['amountStart'] = Input::get('amountStart');
+				$userInput['amountEnd'] = Input::get('amountEnd');
 			}
-			Session::set('type', Input::get('type'));
+			// Session::set('type', Input::get('type'));
 		} else {
-			if (Session::get('type') == 1) {
-				$userInput = [
-					'type'       => Session::get('type'),
-					'amount'     => Session::get('amount'),
-					'expiration' => Session::get('expiration'),
-					'category_id'=> Session::get('category_id')
-				];
-			} else if (Session::get('type') == 2) {
-				$userInput = [
-					'type'       => Session::get('type'),
-					'amountStart'     => Session::get('amountStart'),
-					'amountEnd'     => Session::get('amountEnd'),
-					'expiration' => Session::get('expiration'),
-					'category_id'=> Session::get('category_id')
-				];
+			$taskType = $task['type'];
+			// echo '<pre>';
+			// dd(var_dump(Session::all()));
+			// echo '</pre>';
+			// if (Session::get('type') == 1) {
+			// 	$userInput = [
+			// 		'type'       => Session::get('type'),
+			// 		'amount'     => Session::get('amount'),
+			// 		'expiration' => Session::get('expiration'),
+			// 		'category_id'=> Session::get('category_id')
+			// 	];
+			// } else if (Session::get('type') == 2) {
+			// 	$userInput = [
+			// 		'type'       => Session::get('type'),
+			// 		'amountStart'     => Session::get('amountStart'),
+			// 		'amountEnd'     => Session::get('amountEnd'),
+			// 		'expiration' => Session::get('expiration'),
+			// 		'category_id'=> Session::get('category_id')
+			// 	];
+			// }
+			$userInput = [
+				'type' => $task['type'],
+				'expiration' => $task['expiration'],
+				'category_id' => $task['category_id'],
+			];
+			if ($taskType == 1) {
+				$userInput['amount'] = $task['amount'];
+			} elseif ($taskType == 2) {
+				$userInput['amountStart'] = $task['amountStart'];
+				$userInput['amountEnd'] = $task['amountEnd'];
 			}
 		}
 
@@ -231,14 +278,32 @@ class TaskController extends BaseController {
 
 
 
-		if (Input::get('type') == 1 || Session::get('type') == 1) {
+		// if (Input::get('type') == 1 || Session::get('type') == 1) {
+		// 	$rules = [
+		// 		'type'       => 'required',
+		// 		'amount'     => 'required|numeric|between:0.1,5000',
+		// 		'expiration' => 'required|date|future',
+		// 		'category_id'=> 'required'
+		// 	];
+		// } else  if (Input::get('type') == 2 || Session::get('type') == 2) {
+		// 	$rules = [
+		// 		'type'       => 'required',
+		// 		'amountStart'     => 'required|numeric|between:0.1,5000',
+		// 		'amountEnd'     => 'required|numeric|between:0.1,5000',
+		// 		'expiration' => 'required|date|future',
+		// 		'category_id'=> 'required'
+		// 	];
+		// }
+
+		// $taskType = Input::get('type');
+		if ($taskType == 1) {
 			$rules = [
 				'type'       => 'required',
 				'amount'     => 'required|numeric|between:0.1,5000',
 				'expiration' => 'required|date|future',
 				'category_id'=> 'required'
 			];
-		} else  if (Input::get('type') == 2 || Session::get('type') == 2) {
+		} else  if ($taskType == 2) {
 			$rules = [
 				'type'       => 'required',
 				'amountStart'     => 'required|numeric|between:0.1,5000',
@@ -256,17 +321,21 @@ class TaskController extends BaseController {
 		// 	'category_id'=> 'required'
 		// ];
 		$task = Session::get('task');
+		// dd('dd');
 		if (isset($userInput) && isset($rules)) {
 			$validator = Validator::make($userInput, $rules);
 			// dd($userInput);
+			// dd($validator->passes());
 			if ($validator->passes()) {
 				// Session::set('type'      , $userInput['type']);
 				$task['type'] = $userInput['type'];
 
-				if (Session::get('type') == 1) {
+				if ($task['type'] == 1) {
 					// Session::set('amount'    , $userInput['amount']);
 					$task['amount'] = $userInput['amount'];
-				} else if (Session::get('type') == 2) {
+					// $task['totalAmount'] = $userInput['amount'] * (1 + 0.04);
+					$task['totalAmount'] = Util::getTotalFee($userInput['amount']);
+				} else if ($task['type'] == 2) {
 					// Session::set('amountStart'    , $userInput['amountStart']);
 					// Session::set('amountEnd'    , $userInput['amountEnd']);
 					$task['amountStart'] = $userInput['amountStart'];
@@ -279,6 +348,10 @@ class TaskController extends BaseController {
 				$task['category_id'] = $userInput['category_id'];
 				$task['trade_no'] = date('ymdHis') . '0' . $task['type'] . rand(1000, 9999);	// 0 stands for task
 				Session::set('task', $task);
+
+				// echo '<pre>';
+				// dd(var_dump(Session::get('task')));
+				// echo '</pre>';
 
 				return View::make('task.publish.step_3')
 					->with('task', $task);
@@ -592,22 +665,32 @@ class TaskController extends BaseController {
 			return Redirect::to('/task/create/step-3')
 				->with('message', 'no-school');
 		}
+		$sTask = Session::get('task');
 		$task             = new Task;
 		$task->user_id    = Auth::user()->id;
-		$task->type       = Session::get('type');
-		$task->title      = Session::get('title');
-		$task->detail     = Session::get('detail');
-		$task->category_id   = Session::get('category_id');
+		// $task->type       = Session::get('type');
+		// $task->title      = Session::get('title');
+		// $task->detail     = Session::get('detail');
+		// $task->category_id   = Session::get('category_id');
+		$task->type = $sTask['type'];
+		$task->title = $sTask['title'];
+		$task->detail = $sTask['detail'];
+		$task->category_id = $sTask['category_id'];
 
-		if (Session::get('type') == 1) {
-			$task->amount     = Session::get('amount');
-		} else if (Session::get('type') == 2) {
-			$task->amountStart     = Session::get('amountStart');
-			$task->amountEnd     = Session::get('amountEnd');
+		if ($sTask['type'] == 1) {
+			// $task->amount     = Session::get('amount');
+			$task->amount = $sTask['amount'];
+			$task->totalAmount = $sTask['totalAmount'];
+		} else if ($sTask['type'] == 2) {
+			// $task->amountStart     = Session::get('amountStart');
+			// $task->amountEnd     = Session::get('amountEnd');
+			$task->amountStart = $sTask['amountStart'];
+			$task->amountEnd = $sTask['amountEnd'];
 		}
 
-		$task->amount     = Session::get('amount');
-		$task->expiration = Session::get('expiration');
+		// $task->amount     = Session::get('amount');
+		// $task->expiration = Session::get('expiration');
+		$task->expiration = $sTask['expiration'];
 		$task->state      = 1;
 		$task->place = $academy_id;
 		$task->save();
@@ -686,7 +769,7 @@ class TaskController extends BaseController {
 			'summary' => 'required',
 		];
 		$validator = Validator::make($userInput, $rules);
-		if ($validator->passes()) {
+		if ($validator->passes() && Auth::user()->alipay_account != "") {
 			$commit = new CommitPivot;
 			$commit->task_id = $task_id;
 			$commit->user_id = Auth::user()->id;

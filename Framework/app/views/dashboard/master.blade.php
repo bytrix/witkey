@@ -34,7 +34,9 @@
 
 @section('content')
 
-    <div class="container-fluid" ng-app="academyApp">
+    <!-- <div class="container-fluid" ng-app="academyApp"> -->
+    <!-- <div class="container-fluid" ng-app> -->
+    <div class="container-fluid">
       <div class="row">
 
 

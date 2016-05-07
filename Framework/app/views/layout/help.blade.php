@@ -101,6 +101,7 @@ $(document).ready(function(){
 				<li><a href="#help-C525ECB61FB0A505">什么是悬赏和招标？</a></li>
 				<li><a href="#help-122089F75308C788">新手流程</a></li>
 				<li><a href="#help-66AE869B5F3AA2AA">如何通过实名认证？</a></li>
+				<li><a href="#help-EC0755E0EAEDE58C">计费方案</a></li>
 				<li><a href="#help-1AC98EF635CBBE68">出现问题怎么办？</a></li>
 			</ul>
 		</div>
@@ -145,6 +146,42 @@ $(document).ready(function(){
 			<p>
 				用户登录后点击网站右上角的菜单项进入用户中心，在左侧的面板选择实名认证，正确填写个人身份信息后提交，若您的信息核实后无误，即可在2个工作日之内通过实名认证。
 			</p>
+		</section>
+
+		<section>
+			<h2 id="help-EC0755E0EAEDE58C">计费方案</h2>
+			<table class="table table-bordered" style="width: 300px;">
+				<thead>
+					<th>价格区间</th>
+					<th>费率</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0 ~ 1000元</td>
+						<td>1.1%</td>
+					</tr>
+					<tr>
+						<td>1000 ~ 2000元</td>
+						<td>1.0%</td>
+					</tr>
+					<tr>
+						<td>2000 ~ 3000元</td>
+						<td>0.9%</td>
+					</tr>
+					<tr>
+						<td>3000 ~ 4000元</td>
+						<td>0.8%</td>
+					</tr>
+					<tr>
+						<td>4000 ~ 5000元</td>
+						<td>0.7%</td>
+					</tr>
+					<tr>
+						<td>&ge; 5000元</td>
+						<td>0.6%</td>
+					</tr>
+				</tbody>
+			</table>
 		</section>
 
 

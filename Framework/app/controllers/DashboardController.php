@@ -99,12 +99,19 @@ class DashboardController extends BaseController {
 			->with('majorList'        , $majorList);
 	}
 
+	public function paySetting() {
+		return View::make('dashboard.paySetting');
+	}
+
 	public function security() {
 		return View::make('dashboard.security');
 	}
 
 
 	public function postMyProfile() {
+		// echo '<pre>';
+		// dd(var_dump(Input::all()));
+		// echo '</pre>';
 		// if (isset($_POST["croppedCanvas"])) {
 		// 	// $category = new Category;
 		// 	// $category->name = $_POST["croppedCanvas"];
@@ -310,6 +317,21 @@ class DashboardController extends BaseController {
 				// ->with('schoolList'       , Academy::allAcademies())
 				// ->with('majorList'        , Academy::allMajors())
 				->withErrors($validator);
+		}
+	}
+
+	public function postPaySetting() {
+		// var_dump(Input::all());
+		// var_dump(Input::has('alipay_account'));
+		// dd();
+		if (Input::has('alipay_account')) {
+			$user = Auth::user();
+			$user->alipay_account = Input::get('alipay_account');
+			$user->save();
+			return Redirect::to('/dashboard/pay-setting')
+				->with('message', Lang::get('message.data-has-been-saved-successfully'));
+		} else {
+			echo 'NO OPTION SELECTED!';
 		}
 	}
 

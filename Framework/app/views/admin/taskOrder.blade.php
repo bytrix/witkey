@@ -6,7 +6,14 @@
 		var groupPay = new Array();
 		var selectedPays = new Array();
 		var selectedTasks = new Array();
+		var arrayTaskId = new Array();
 		$(function() {
+
+			Array.prototype.remove = function(val) {
+				var indexOf = this.indexOf(val);
+				this.splice(indexOf, 1);
+			};
+
 			if (selectedPays.length == 0) {
 				$('#submit').attr('disabled', true);
 			} else {
@@ -69,6 +76,10 @@
 
 		<h1>订单管理</h1>
 
+		<div id="taskId">
+			task_id
+		</div>
+
 		<p>
 			<div class="checkbox checkbox-primary">
 				<input type="checkbox" id="unpaid"></input>
@@ -121,7 +132,7 @@
 							@if ($order->state == 4)
 
 								<div class="checkbox checkbox-success" style="margin: 0px;">
-									<input type="checkbox" id="pay_item_{{ $order->id }}"></input>
+									<input type="checkbox" id="pay_item_{{ $order->id }}" taskid = "{{ $order->id }}"></input>
 									<label for="pay_item_{{ $order->id }}">Pay Now</label>
 								</div>
 								
@@ -134,9 +145,13 @@
 											// alert('s');
 											$(this).attr('checked', 'checked');
 											selectedPays.push($(this));
+											// alert($(this).attr('taskid'));
+											arrayTaskId.push($(this).attr('taskid'));
 										} else {
 											$(this).removeAttr('checked');
 											selectedPays.pop($(this));
+											// arrayTaskId.pop($(this).attr('taskid'));
+											arrayTaskId.remove($(this).attr('taskId'));
 										}
 										// console.log(selectedPays.length);
 										// selectedPays.push(payItem)
@@ -146,6 +161,8 @@
 										} else {
 											$('#submit').removeAttr('disabled');
 										}
+										// console.log(arrayTaskId);
+										$('#taskIds').val(arrayTaskId);
 									});
 								</script>
 							@endif
@@ -157,7 +174,11 @@
 		</table>
 
 		<div>
-			<input type="submit" value="批量付款（选中0项）" id="submit" class="btn btn-primary"></input>
+			<!-- <input type="submit" value="批量付款（选中0项）" id="submit" class="btn btn-primary"></input> -->
+			{{ Form::open() }}
+				{{ Form::text('taskIds', 'value', ['id'=>'taskIds', 'hidden'=>true]) }}
+				{{ Form::submit('批量付款（选中0项）', ['id'=>'submit', 'class'=>'btn btn-primary']) }}
+			{{ Form::close() }}
 		</div>
 
 	</div>

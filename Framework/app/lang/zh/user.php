@@ -8,6 +8,7 @@ return array(
 	'female' => '软妹纸',
 	'email' => '邮箱',
 	'tel' => '电话',
+	'alipay_account' => '支付宝账号',
 	'dorm' => '宿舍',
 	'non-resident' => '走读',
 	'biography' => '一句话介绍',
