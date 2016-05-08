@@ -62,9 +62,13 @@ Route::filter('realname', function() {
 });
 
 Route::filter('admin', function() {
-	if (Auth::user()->permission != 1 && Auth::user()->permission != 3) {
-		// return "You are not admin";
+	if (! Auth::check()) {
 		App::abort(404);
+	} else {
+		if (Auth::user()->permission != 1 && Auth::user()->permission != 3) {
+			// return "You are not admin";
+			App::abort(404);
+		}
 	}
 });
 Route::filter('adminLogin', function() {

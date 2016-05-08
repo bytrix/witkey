@@ -109,6 +109,11 @@
     background-color: rgba(0,0,0,0);
   }
 
+  .dropdown-menu .fa{
+    width: 18px;
+    text-align: center;
+  }
+
   </style>
   @yield('style')
 </head>
@@ -129,8 +134,9 @@
         <div id="navbar" class="navbar-collapse collapse">
 
           @yield('menu')
-          <a class="btn btn-primary navbar-btn" style="float: right; text-shadow: none;" href="/myadmin/quit">Quite</a>
-          <a class="btn btn-default  navbar-btn" style="float: right; text-shadow: none;" href="/">Home</a>
+          <a class="btn btn-primary navbar-btn" style="float: right; text-shadow: none;" href="/myadmin/quit">退出</a>
+          <!-- <a class="btn btn-link" style="float: right;">ss</a> -->
+          <a class="btn btn-default  navbar-btn" style="float: right; text-shadow: none;" href="/">前台</a>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

@@ -68,7 +68,7 @@
 $(document).ready(function(){
 	// $("#myNav").affix();
 	$('img').lazyload({
-		placeholder: "http://localhost/assets/image/loading.gif"
+		placeholder: "{{ URL::asset('/assets/image/loading.gif') }}"
 	});
 });
 </script>
@@ -80,11 +80,11 @@ $(document).ready(function(){
 	{{-- <li><a href="/">Home</a></li> --}}
 	<li><a href="/school/{{Session::get('school_id_session')}}">{{Lang::get('task.list')}}</a></li>
 	<li><a href="/task/create">{{Lang::get('task.task-publish')}}</a></li>
-	<li class="active"><a href="/about">{{Lang::get('message.help')}}</a></li>
+	<li class="active"><a href="/help">{{Lang::get('message.help')}}</a></li>
 {{-- 	<li class="active" class="dropdown">
 	  <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Lang::get('message.help')}} <span class="caret"></span></a>
 	  <ul class="dropdown-menu">
-	    <li><a href="/about">About</a></li>
+	    <li><a href="/help">About</a></li>
 	  </ul>
 	</li> --}}
 

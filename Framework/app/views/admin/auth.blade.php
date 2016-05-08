@@ -21,12 +21,42 @@
 @section('content')
 <div ng-app>
 
+
+<div class="container">
 	<ol class="breadcrumb">
 		<li><a href="/myadmin">MyAdmin</a></li>
-		<li class="active">Authentication Board</li>
+
+		<li class="dropdown">
+			<a href="javascript:;" data-toggle="dropdown" class="active">{{ Lang::get('admin.auth-management') }}</a>
+			<ul class="dropdown-menu">
+				<li><a href="/myadmin/permission">
+					<i class="fa fa-lock"></i>
+					{{ Lang::get('admin.permission-management') }}
+				</a></li>
+				<li><a href="/myadmin/academy">
+					<i class="fa fa-university"></i>
+					{{ Lang::get('admin.academy-management') }}
+					</a></li>
+				<li><a href="/myadmin/order">
+					<i class="fa fa-cube"></i>
+					{{ Lang::get('admin.order-management') }}
+				</a></li>
+			</ul>
+		</li>
+		<!-- <li class="active">Authentication Board</li> -->
+
 	</ol>
-		<div class="col-md-4">
-			<strong>Number of users:</strong>
+
+	<h1>
+		<i class="fa fa-user"></i>
+		{{ Lang::get('admin.auth-management') }}
+	</h1>
+
+
+
+
+		<div class="col-md-4" style="color: #888">
+			<strong>用户数:</strong>
 			<span>
 				{{count(User::all())}}
 			</span>
@@ -40,29 +70,37 @@
 		</div>
 		<div class="col-md-4"></div>
 
+</div>
+
+
+<div class="container">
+	
+
+
+
 		<table class="table table-bordered table-hover table-condensed" ng-controller="UserController">
 			<thead>
 				<tr>
-					<th>Status</th>
+					<th>状态</th>
 					<th>ID</th>
-					<th>Truename</th>
-					<th>Username</th>
-					<th>Phone</th>
-					<th>Email</th>
-					<th>Student Card</th>
-					<th>School</th>
-					<th>Major</th>
-					<th>Enrollment Date</th>
-					<th>Authentication Operation</th>
+					<th>实名</th>
+					<th>用户名</th>
+					<th>电话</th>
+					<!-- <th>Email</th> -->
+					<th>学生证</th>
+					<th>学校</th>
+					<th>专业</th>
+					<th>入学日期</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="user in users | filter: value" ng-class="{'success':user.authenticated==2, 'danger':user.authenticated==3, 'warning':user.authenticated==1}">
 					<td style="width: 140px;">
-						<span class="label label-default" ng-show="user.authenticated==0">Unauthenticated</span>
-						<span class="label label-warning" ng-show="user.authenticated==1">Tobe-authenticated</span>
-						<span class="label label-success" ng-show="user.authenticated==2">Authenticated</span>
-						<span class="label label-danger" ng-show="user.authenticated==3">Authenticate Fail</span>
+						<span class="label label-default" ng-show="user.authenticated==0">{{ Lang::get('authentication.non-authenticated') }}</span>
+						<span class="label label-warning" ng-show="user.authenticated==1">{{ Lang::get('authentication.to-be-authenticated') }}</span>
+						<span class="label label-success" ng-show="user.authenticated==2">{{ Lang::get('authentication.authenticated') }}</span>
+						<span class="label label-danger" ng-show="user.authenticated==3">{{ Lang::get('authentication.authentication-failure') }}</span>
 					</td>
 					<td ng-bind="user.id"></td>
 					<td>
@@ -71,7 +109,7 @@
 					</td>
 					<td ng-bind="user.username"></td>
 					<td ng-bind="user.tel"></td>
-					<td ng-bind="user.email"></td>
+					<!-- <td ng-bind="user.email"></td> -->
 					<td>
 						<a href="/myadmin/auth/student-card/preview/@{{user.id}}" ng-show="user.student_card != null" target="blank">
 							<img src="{{URL::asset('student_card/')}}/@{{user.student_card}}" alt="">
@@ -104,14 +142,28 @@
 						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-success" ng-click="authSuccess(user.id)"><i class="fa fa-check"></i> Pass</button>
 						<button ng-disabled="user.authenticated==0" class="btn btn-xs btn-danger" ng-click="authFail(user.id)"><i class="fa fa-times"></i> No pass</button>
  --}}
-						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-warning" ng-click="authTobe(user.id)"><i class="fa fa-circle-o"></i> To-be pass</a>
-						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-success" ng-click="authSuccess(user.id)"><i class="fa fa-check"></i> Pass</a>
-						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-danger" ng-click="authFail(user.id)"><i class="fa fa-times"></i> No pass</a>
+						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-warning" ng-click="authTobe(user.id)">
+							<i class="fa fa-circle-o"></i>
+							<!-- To-be pass -->
+						</a>
+						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-success" ng-click="authSuccess(user.id)">
+							<i class="fa fa-check"></i>
+							<!-- Pass -->
+						</a>
+						<a href="javascript:;" ng-disabled="user.authenticated==0" class="btn btn-xs btn-danger" ng-click="authFail(user.id)">
+							<i class="fa fa-times"></i>
+							<!-- No pass -->
+						</a>
 					</td>
 				</tr>
 
 			</tbody>
 		</table>
+
+
+
+</div>
+
 
 	{{HTML::script(URL::asset('assets/script/admin/auth.js'))}}
 

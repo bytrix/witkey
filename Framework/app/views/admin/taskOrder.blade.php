@@ -71,13 +71,34 @@
 
 	<ol class="breadcrumb">
 		<li><a href="/myadmin">MyAdmin</a></li>
-		<li class="active">Order Management</li>
+
+		<li class="dropdown">
+			<a href="javascript:;" data-toggle="dropdown" class="active">{{ Lang::get('admin.order-management') }}</a>
+			<ul class="dropdown-menu">
+				<li><a href="/myadmin/permission">
+					<i class="fa fa-lock"></i>
+					{{ Lang::get('admin.permission-management') }}
+				</a></li>
+				<li><a href="/myadmin/auth">
+					<i class="fa fa-user"></i>
+					{{ Lang::get('admin.auth-management') }}
+				</a></li>
+				<li><a href="/myadmin/academy">
+					<i class="fa fa-university"></i>
+					{{ Lang::get('admin.academy-management') }}
+				</a></li>
+			</ul>
+		</li>
+		<!-- <li class="active">Order Management</li> -->
 	</ol>
 
-		<h1>订单管理</h1>
+		<h1>
+			<i class="fa fa-cube"></i>
+			{{ Lang::get('admin.order-management') }}
+		</h1>
 
 		<div id="taskId">
-			task_id
+			<!-- task_id -->
 		</div>
 
 		<p>

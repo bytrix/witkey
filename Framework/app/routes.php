@@ -101,44 +101,44 @@ Route::group(['before'=>'auth'], function() {
 
 
 
-	Route::group(['before'=>'admin'], function() {
-
-		Route::get('myadmin/login', 'AdminController@login');
-		Route::post('myadmin/login', 'AdminController@postLogin');
-
-		Route::group(['before'=>'adminLogin'], function() {
-
-			Route::get('myadmin', 'AdminController@home');
-			Route::get('myadmin/quit', 'AdminController@quit');
-
-			// 用户认证管理
-			Route::get('myadmin/auth'                               , 'AdminController@auth');
-			Route::get('myadmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
-
-			// 用户权限管理
-			Route::get('myadmin/permission', 'AdminController@permission');
-			Route::get('myadmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
-
-			// 学院管理
-			Route::get('myadmin/academy'              , 'AdminController@academy');
-			Route::get('myadmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
-			Route::post('myadmin/academy'             , 'AdminController@postAcademy');
-			Route::post('myadmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
-
-			// 订单管理
-			Route::get('myadmin/order', 'AdminController@order');
-			Route::post('myadmin/order', 'AdminController@postOrder');
-
-		});
-
-
-	});
-
-
 
 
 });
 
+
+
+Route::group(['before'=>'admin'], function() {
+
+	Route::get('myadmin/login', 'AdminController@login');
+	Route::post('myadmin/login', 'AdminController@postLogin');
+
+	Route::group(['before'=>'adminLogin'], function() {
+
+		Route::get('myadmin', 'AdminController@home');
+		Route::get('myadmin/quit', 'AdminController@quit');
+
+		// 用户认证管理
+		Route::get('myadmin/auth'                               , 'AdminController@auth');
+		Route::get('myadmin/auth/student-card/preview/{user_id}', 'AdminController@studentCardPreview')->where('user_id', '[0-9]+');
+
+		// 用户权限管理
+		Route::get('myadmin/permission', 'AdminController@permission');
+		Route::get('myadmin/chmod/{user_id}/{permission}', 'AdminController@chmod')->where('user_id', '[0-9]+')->where('permission', '[0-3]+');
+
+		// 学院管理
+		Route::get('myadmin/academy'              , 'AdminController@academy');
+		Route::get('myadmin/academy/{academy_id}' , 'AdminController@academyDetail')->where('academy_id', '[0-9]+');
+		Route::post('myadmin/academy'             , 'AdminController@postAcademy');
+		Route::post('myadmin/academy/{academy_id}', 'AdminController@postMajor')->where('academy_id', '[0-9]+');
+
+		// 订单管理
+		Route::get('myadmin/order', 'AdminController@order');
+		Route::post('myadmin/order', 'AdminController@postOrder');
+
+	});
+
+
+});
 
 
 

@@ -109,10 +109,16 @@
 {{--                     <i class="fa fa-user"></i>
                     {{Auth::user()->username}} --}}
                   </a>
-
+<!-- <pre>
+{{ var_dump(Auth::user()->getPermission()['Admin']) }}
+</pre>
+ -->
                   <ul class="dropdown-menu">
                     <li><a class="disabled-dropdown-item">{{Auth::user()->tel}}</a></li>
                     <li class="divider"></li>
+                    @if (Auth::user()->getPermission()['Admin'][2])
+                      <li><a href="/myadmin" target="_blank">管理员后台</a></li>
+                    @endif
                     <li><a href="/dashboard">{{Lang::get('dashboard.overview')}}</a></li>
                     @if (count($unreadMessages))
                       <li>

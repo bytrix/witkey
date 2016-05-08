@@ -76,6 +76,20 @@
 			line-height: 22px;
 		}
 
+		.icon-arrow-left::before,
+		.icon-arrow-right::before{
+			font-family: 'FontAwesome';
+		}
+		.icon-arrow-left:before{
+			content: "\f100";
+		}
+		.icon-arrow-right:before{
+			content: "\f101";
+		}
+
+
+
+
 	</style>
 @stop
 
@@ -239,21 +253,43 @@
 
 			<div class="form-group">
 				{{Form::label('expiration', Lang::get('task.when-you-wish-to-finish-task'), ['class'=>'control-label col-md-2'])}}
+<!-- 
 				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar fa-fw"></i>
 						</div>
 						{{-- {{Form::text('expiration', date( 'Y-m-d H:i', mktime(date('H'), date('i'), date('s'), date('m'), date('d')+7, date('Y')) ), ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'Expiration'])}} --}}
-						{{Form::text('expiration', $task['expiration'], ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00'])}}
+						{{Form::text('expiration', $task['expiration'], ['class'=>'form-control', 'id'=>'expiration', 'placeholder'=>'0000-00-00 00:00', 'readonly'=>true])}}
 						<script>
 						$('#expiration').datetimepicker({
 							language: 'zh-CN',
-							startDate: '2010-01-01'
+							// minDate: new Date(),
+							todayBtn: true,
+							todayHightlight: true,
+							showMeridian: true,
 						});
 						</script>
 					</div>
 				</div>
+ -->
+
+				<div class="col-md-4">
+					<div id="sandbox-container">
+						<div></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					$('#sandbox-container div').datetimepicker({
+						language: 'zh-CN',
+						todayBtn: true,
+						showMeridian: true,
+						// format: 'yyyy-MM-dd HH:mm:ss',
+					})
+				</script>
+
+
+
 			</div>
 
 			<div class="form-group">
