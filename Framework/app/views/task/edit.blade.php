@@ -1,7 +1,7 @@
 @extends('task.master')
 
 @section('style')
-
+@parent
 <style>
 #editor {
 	overflow:scroll;
@@ -18,6 +18,7 @@
 {{-- {{HTML::script(URL::asset('assets/script/bootstrap3-wysihtml5.min.js'))}} --}}
 {{HTML::script(URL::asset('assets/script/module.js'))}}
 {{HTML::script(URL::asset('assets/script/hotkeys.js'))}}
+{{ HTML::script(URL::asset('assets/script/uploader.js')) }}
 {{HTML::script(URL::asset('assets/script/simditor.js'))}}
 
 
@@ -69,7 +70,14 @@
   //   }
   // });
 		var editor = new Simditor({
-			textarea: '#editor'
+			textarea: '#editor',
+			upload: {
+				url : '/task/create/uploadImage', //文件上传的接口地址
+				params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+				fileKey: 'fileData', //服务器端获取文件数据的参数名
+				connectionCount: 3,
+				leaveConfirm: '正在上传文件'
+			}
 		});
 	</script>
 

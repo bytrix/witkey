@@ -29,6 +29,9 @@
 		.cw-circle-unpaid{
 			color: #ddd;
 		}
+		.simditor-body img{
+		max-width: 800px;
+		}
 	</style>
 @stop
 

@@ -154,7 +154,12 @@
 						</p>
 					@elseif ($task['type'] == 2)
 						<span>{{Lang::get('task.amount-budget')}}:</span>
-						<strong>&yen;{{{Session::get('amountStart')}}} ~ {{{Session::get('amountEnd')}}}</strong>
+						<!-- <strong>&yen;{{{Session::get('amountStart')}}} ~ {{{Session::get('amountEnd')}}}</strong> -->
+						@if (isset($task['amountStart']))
+							<strong>&yen;{{{$task['amountStart']}}} ~ {{{$task['amountEnd']}}}</strong>
+						@else
+							<strong>&yen;{{{$task['amount']}}}</strong>
+						@endif
 					@endif
 				</div>
 

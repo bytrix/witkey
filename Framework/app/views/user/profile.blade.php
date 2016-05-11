@@ -150,7 +150,7 @@
 					@if ($user->active == 0)
 						<span class="label label-danger">[ Inactive ]</span>
 					@endif
-					<span>
+					<span style="margin-left: 5px;">
 						{{-- <img src="{{URL::asset('assets/image')}}{{$user->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 						@if ($user->gender == 'M')
 							<i class="fa fa-mars"></i>

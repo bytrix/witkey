@@ -222,7 +222,7 @@
 			<li class="third col-md-4">{{Lang::get('task.task-publish')}}</li>
 		</ul>
 	@stop
-	<div class="container" ng-app>
+	<div class="container" style="margin-bottom: 150px;" ng-app>
 <!-- 
 <pre>
 {{ var_dump($task) }}
@@ -253,7 +253,7 @@
 
 			<div class="form-group">
 				{{Form::label('expiration', Lang::get('task.when-you-wish-to-finish-task'), ['class'=>'control-label col-md-2'])}}
-<!-- 
+
 				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -272,13 +272,14 @@
 						</script>
 					</div>
 				</div>
- -->
-
+ 
+<!-- 
 				<div class="col-md-4">
 					<div id="sandbox-container">
 						<div></div>
 					</div>
 				</div>
+				 -->
 				<script type="text/javascript">
 					$('#sandbox-container div').datetimepicker({
 						language: 'zh-CN',

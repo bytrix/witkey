@@ -108,15 +108,15 @@ class Util {
 	// 5000 - ?			0.6%	1.006
 
 	public static function getTotalFee($fee) {
-		if ($fee > 0 && $fee < 1000) {
+		if ($fee > 0 && $fee <= 1000) {
 			$profit = 1.1;
-		} elseif ($fee >= 1000 && $fee < 2000) {
+		} elseif ($fee > 1000 && $fee <= 2000) {
 			$profit = 1.0;
-		} elseif ($fee >= 2000 && $fee < 3000) {
+		} elseif ($fee > 2000 && $fee <= 3000) {
 			$profit = 0.9;
-		} elseif ($fee >= 3000 && $fee < 4000) {
+		} elseif ($fee > 3000 && $fee <= 4000) {
 			$profit = 0.8;
-		} elseif ($fee >= 4000 && $fee <=5000) {
+		} elseif ($fee > 4000 && $fee <=5000) {
 			$profit = 0.7;
 		} else {
 			$profit = 0.6;

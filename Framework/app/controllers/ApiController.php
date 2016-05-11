@@ -181,4 +181,16 @@ class ApiController extends BaseController {
 		FriendPivot::where(['user_id'=>Auth::user()->id, 'friend_id'=>$user_id])->delete();
 		FriendPivot::where(['user_id'=>$user_id, 'friend_id'=>Auth::user()->id])->delete();
 	}
+
+
+	public function modifyMajor($major_id, $major_name){
+		$major = Major::where('id', $major_id)->first();
+		$major->name = $major_name;
+		$major->save();
+	}
+
+	public function deleteMajor($major_id) {
+		$major = Major::where('id', $major_id)->first();
+		$major->delete();
+	}
 }

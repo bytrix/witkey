@@ -38,6 +38,7 @@ class CreateTaskTable extends Migration {
 			 *	6 for SUCCESSFUL_TRADE
 			 */
 			$table->tinyInteger('state');
+			$table->boolean('paid')->default(false);
 			$table->datetime('expiration');
 			$table->string('place');
 			$table->integer('category_id');

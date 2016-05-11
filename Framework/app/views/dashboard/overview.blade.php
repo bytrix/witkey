@@ -189,14 +189,7 @@
 						<span class="label label-default">未认证用户</span>
 					@endif
 				</h3>
-				<div>
-					@foreach (Auth::user()->getPermission() as $key=>$value)
-						@if ($value[2])
-							<span class="label label-primary">{{$key}}</span>
-						@endif
-					@endforeach
-				</div>
-				<span>
+				<span style="margin-right: 10px;">
 					{{-- <img src="{{URL::asset('assets/image')}}{{Auth::user()->gender == 'M' ? '/iconfont-genderman.png' : '/iconfont-genderwoman.png' }}"> --}}
 					@if (Auth::user()->gender == 'M')
 						<i class="fa fa-mars"></i>
@@ -204,7 +197,14 @@
 						<i class="fa fa-venus"></i>
 					@endif
 				</span>
-				<p>{{Lang::get('user.joined-on', array('date'=>explode(' ', Auth::user()->created_at)[0]))}}</p>
+				<span>
+					@foreach (Auth::user()->getPermission() as $key=>$value)
+						@if ($value[2])
+							<span class="label label-primary">{{ Lang::get('permission.' . $key) }}</span>
+						@endif
+					@endforeach
+				</span>
+				<p class="text-muted" style="margin-top: 10px;">{{Lang::get('user.joined-on', array('date'=>explode(' ', Auth::user()->created_at)[0]))}}</p>
 				{{-- <p>Living in {{Auth::user()->city}}</p> --}}
 			</div>
 		</div>
@@ -283,17 +283,13 @@
 											<td style="width: 170px;">{{$order->created_at}}</td>
 											<td style="width: 120px;">
 												@if ($order->state == 0)
-													<span class="label label-danger">Closed</span>
-												@elseif ($order->state == 1)
-													<span class="label label-primary">Published</span>
-												@elseif ($order->state == 2)
-													<span class="label label-primary">Performing</span>
-												@elseif ($order->state == 3)
-													<span class="label label-primary">Check</span>
+													<span class="label label-danger">{{ Lang::get('task.closed') }}</span>
+												@elseif ($order->state >= 1 && $order->state <= 3)
+													<span class="label label-primary">{{ Lang::get('task.bidding') }}</span>
 												@elseif ($order->state == 4)
-													<span class="label label-success">Finished</span>
+													<span class="label label-success">{{ Lang::get('task.over') }}</span>
 												@elseif ($order->state == 5)
-													<span class="label label-default">Expired</span>
+													<span class="label label-default">{{ Lang::get('task.expired') }}</span>
 												@endif
 											</td>
 										</tr>

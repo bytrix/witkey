@@ -65,12 +65,12 @@
 			<table class="table table-bordered table-hover table-condensed" ng-controller="UserController">
 				<thead>
 					<tr>
-						<th>Status</th>
+						<th>状态</th>
 						<th>ID</th>
-						<th>Truename</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Permission</th>
+						<th>实名</th>
+						<th>用户名</th>
+						<th>邮箱</th>
+						<th>权限</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -94,10 +94,19 @@
 							<td>{{$user->email}}</td>
 							<td>
 								@foreach ($user->getPermission() as $key=>$value)
+<!-- 
+<pre>
+{{ var_dump($key) }}
+</pre>
+<pre>
+{{ var_dump($value) }}
+</pre>
+ -->
 									@if ($value[2])
-										<a href="/myadmin/chmod/{{$user->id}}/{{$user->permission & $value[1]}}" class="label label-primary">{{$key}}</a>
+										<a href="/myadmin/chmod/{{$user->id}}/{{$user->permission & $value[1]}}" class="label label-primary">{{ Lang::get('permission.' . $key) }}</a>
 									@else
-										<a href="/myadmin/chmod/{{$user->id}}/{{$user->permission | $value[0]}}" class="label label-default">{{$key}}</a>
+										<!-- <a href="/myadmin/chmod/{{$user->id}}/{{$user->permission | $value[0]}}" class="label label-default">{{ Lang::get('permission.' . $key) }}</a> -->
+										<a class="label label-default">{{ Lang::get('permission.' . $key) }}</a>
 									@endif
 								@endforeach
 							</td>

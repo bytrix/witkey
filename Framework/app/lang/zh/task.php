@@ -19,7 +19,7 @@ return array(
 	'task-end' => '任务结束',
 	'bidding' => '竞标中',
 	'waiting-for-check' => '等待验收',
-
+	'closed' => '关闭',
 	'over' => '已结束',
 	'expired' => '任务过期',
 	'delay' => '延期',

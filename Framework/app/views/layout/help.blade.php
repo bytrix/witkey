@@ -157,27 +157,27 @@ $(document).ready(function(){
 				</thead>
 				<tbody>
 					<tr>
-						<td>0 ~ 1000元</td>
+						<td>0 ~ 1000(含)元</td>
 						<td>1.1%</td>
 					</tr>
 					<tr>
-						<td>1000 ~ 2000元</td>
+						<td>1000 ~ 2000(含)元</td>
 						<td>1.0%</td>
 					</tr>
 					<tr>
-						<td>2000 ~ 3000元</td>
+						<td>2000 ~ 3000(含)元</td>
 						<td>0.9%</td>
 					</tr>
 					<tr>
-						<td>3000 ~ 4000元</td>
+						<td>3000 ~ 4000(含)元</td>
 						<td>0.8%</td>
 					</tr>
 					<tr>
-						<td>4000 ~ 5000元</td>
+						<td>4000 ~ 5000(含)元</td>
 						<td>0.7%</td>
 					</tr>
 					<tr>
-						<td>&ge; 5000元</td>
+						<td>&gt; 5000元</td>
 						<td>0.6%</td>
 					</tr>
 				</tbody>

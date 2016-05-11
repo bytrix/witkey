@@ -180,6 +180,12 @@ Route::get('api/taskState/{task_id}'          , 'ApiController@taskState')->wher
 
 Route::controller('password', 'RemindersController');
 
+
+
+// FOR ACADEMY_MAJOR API
+Route::get('api/academy/major/modify/{major_id}/{major_name}', 'ApiController@modifyMajor')->where('major_id', '[0-9]+');
+Route::get('api/academy/major/delete/{major_id}', 'ApiController@deleteMajor')->where('major_id', '[0-9]+');
+
 // App::error(function($exception, $code) {
 // 	return Response::view('error.404', array(), 404);
 // });

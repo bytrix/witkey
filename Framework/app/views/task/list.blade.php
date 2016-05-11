@@ -273,17 +273,21 @@ h1{
 						<div class="item-inline">
 							<div class="list-group-item-heading">
 								<div style="float: left; padding-top: 2px">
-									@if ($task->amount == NULL)
-										<i class="fa fa-circle cw-circle-unpaid" data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.bounty-unhosted')}}"></i>
-									@else
+									@if ($task->paid)
 										<i class="fa fa-circle cw-circle-paid" data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.bounty-hosted')}}"></i>
+									@else
+										<i class="fa fa-circle cw-circle-unpaid" data-toggle="tooltip" data-placement="top" title="{{Lang::get('task.bounty-unhosted')}}"></i>
 									@endif
 									@if ($task->type == 1)
 										<span class="label label-success">&yen; {{$task->amount}}</span>
 										<span class="label label-warning">{{Lang::get('task.reward')}}</span>
-									@elseif($task->type == 2)
-										<span class="label label-success">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
-										<span class="label label-danger">{{Lang::get('task.bid')}}</span>
+									@elseif ($task->type == 2)
+										@if (NULL == $task->amount)
+											<span class="label label-success">&yen; {{$task->amountStart}} ~ {{$task->amountEnd}}</span>
+										@else
+											<span class="label label-success">&yen; {{$task->amount}}</span>
+										@endif
+											<span class="label label-danger">{{Lang::get('task.bid')}}</span>
 									@endif
 								</div>
 								<span class="cw-task-title" style="display: inline-block; padding-top: 2px;"><a href="/task/{{$task->id}}">{{{$task->title}}}</a></span>

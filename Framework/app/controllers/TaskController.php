@@ -217,6 +217,16 @@ class TaskController extends BaseController {
 				// ];
 				$userInput['amountStart'] = Input::get('amountStart');
 				$userInput['amountEnd'] = Input::get('amountEnd');
+				if ($userInput['amountStart'] > $userInput['amountEnd']) {
+					$temp = $userInput['amountStart'];
+					$userInput['amountStart'] = $userInput['amountEnd'];
+					$userInput['amountEnd'] = $temp;
+				}
+				if ($userInput['amountStart'] == $userInput['amountEnd']) {
+					$userInput['amount'] = $userInput['amountStart'];
+					unset($task['amountStart']);
+					unset($task['amountEnd']);
+				}
 			}
 			// Session::set('type', Input::get('type'));
 		} else {
@@ -245,9 +255,9 @@ class TaskController extends BaseController {
 				'expiration' => $task['expiration'],
 				'category_id' => $task['category_id'],
 			];
-			if ($taskType == 1) {
+			if ($taskType == 1 || !isset($task['amountStart'])) {
 				$userInput['amount'] = $task['amount'];
-			} elseif ($taskType == 2) {
+			} elseif ($taskType == 2 && isset($task['amountStart'])) {
 				$userInput['amountStart'] = $task['amountStart'];
 				$userInput['amountEnd'] = $task['amountEnd'];
 			}
@@ -306,8 +316,8 @@ class TaskController extends BaseController {
 		} else  if ($taskType == 2) {
 			$rules = [
 				'type'       => 'required',
-				'amountStart'     => 'required|numeric|between:0.1,5000',
-				'amountEnd'     => 'required|numeric|between:0.1,5000',
+				'amountStart'     => 'numeric|between:0.1,5000',
+				'amountEnd'     => 'numeric|between:0.1,5000',
 				'expiration' => 'required|date|future',
 				'category_id'=> 'required'
 			];
@@ -330,7 +340,7 @@ class TaskController extends BaseController {
 				// Session::set('type'      , $userInput['type']);
 				$task['type'] = $userInput['type'];
 
-				if ($task['type'] == 1) {
+				if ($task['type'] == 1 || !isset($userInput['amountStart'])) {
 					// Session::set('amount'    , $userInput['amount']);
 					$task['amount'] = $userInput['amount'];
 					// $task['totalAmount'] = $userInput['amount'] * (1 + 0.04);
@@ -340,6 +350,11 @@ class TaskController extends BaseController {
 					// Session::set('amountEnd'    , $userInput['amountEnd']);
 					$task['amountStart'] = $userInput['amountStart'];
 					$task['amountEnd'] = $userInput['amountEnd'];
+					if ($userInput['amountStart'] == $userInput['amountEnd']) {
+						$task['amount'] = $userInput['amountStart'];
+						unset($task['amountStart']);
+						unset($task['amountEnd']);
+					}
 				}
 
 				// Session::set('expiration', $userInput['expiration']);
@@ -684,8 +699,12 @@ class TaskController extends BaseController {
 		} else if ($sTask['type'] == 2) {
 			// $task->amountStart     = Session::get('amountStart');
 			// $task->amountEnd     = Session::get('amountEnd');
-			$task->amountStart = $sTask['amountStart'];
-			$task->amountEnd = $sTask['amountEnd'];
+			if (isset($sTask['amountStart'])) {
+				$task->amountStart = $sTask['amountStart'];
+				$task->amountEnd = $sTask['amountEnd'];
+			} else {
+				$task->amount = $sTask['amount'];
+			}
 		}
 
 		// $task->amount     = Session::get('amount');
